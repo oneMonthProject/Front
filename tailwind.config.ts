@@ -5,9 +5,12 @@ const config: Config = {
   theme: {
     extend: {
       colors:{
-        primary: '#008A53',
-        primaryDark:'#005538',
-        secondary:'#0E4238',
+        primary:'#008A74',
+        primaryDark:'#007866',
+        secondary:'#005345',
+        secondaryLight:'#00664F',
+        secondaryDark:'#002A23',
+        secondaryDark2:'#001C17',
 
         none: 'transparent',
         white: '#ffffff',
