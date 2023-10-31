@@ -7,7 +7,26 @@ import {modalState} from "@/app/store/ModalStateStore";
 import React from "react";
 import RoundButton from "@/app/components/ui/button/RoundButton";
 import HollowButton from "@/app/components/ui/button/HollowButton";
+import Dropdown, {MenuItem} from "@/app/components/ui/dropdown/Dropdown";
 
+class MenuItemVO implements MenuItem<unknown> {
+    name: string;
+
+    onClickHandler(value: unknown): void {
+    }
+
+    value: unknown;
+
+    constructor(name:string, value:unknown) {
+        this.name = name;
+        this.value = value;
+        this.onClickHandler = (value) => console.log(value);
+    }
+
+}
+const testMenu = [
+    new MenuItemVO('메뉴1','1'), new MenuItemVO('메뉴2', '2'), new MenuItemVO('메뉴3','3')
+];
 export default function HomePage() {
     const setIsOpen = useSetRecoilState(modalState);
     return (
@@ -21,6 +40,7 @@ export default function HomePage() {
             <HollowButton size='md' onClick={() => {}}>프로젝트 참여</HollowButton>
             <HollowButton size='sm' onClick={() => {}}>프로젝트 참여</HollowButton>
             <Button theme='primary' size='md' onClick={() => setIsOpen({isOpen:true})}>모달</Button>
+            <Dropdown menuItems={testMenu} defaultValue='Options'/>
             <Modal>
                 <div className="p-4">
                     <div className="mb-4 text-center opacity-90">
