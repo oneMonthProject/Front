@@ -8,6 +8,7 @@ import React from "react";
 import RoundButton from "@/app/components/ui/button/RoundButton";
 import HollowButton from "@/app/components/ui/button/HollowButton";
 import Dropdown, {MenuItem} from "@/app/components/ui/dropdown/Dropdown";
+import TaskCard from "@/app/components/ui/TaskCard";
 
 class MenuItemVO implements MenuItem<unknown> {
     name: string;
@@ -41,6 +42,9 @@ export default function HomePage() {
             <HollowButton size='sm' onClick={() => {}}>프로젝트 참여</HollowButton>
             <Button theme='primary' size='md' onClick={() => setIsOpen({isOpen:true})}>모달</Button>
             <Dropdown menuItems={testMenu} defaultValue='Options'/>
+            <div className='w-[30rem] mt-10 bg-grey100 p-10'>
+                <TaskCard/>
+            </div>
             <Modal>
                 <div className="p-4">
                     <div className="mb-4 text-center opacity-90">
