@@ -3,7 +3,7 @@ import {Menu, Transition} from "@headlessui/react";
 import {BiChevronDown} from "react-icons/bi";
 
 
-function classNames(...classes) {
+function classNames(...classes:string[]) {
     return classes.filter(Boolean).join(' ')
 }
 
