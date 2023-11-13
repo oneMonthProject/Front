@@ -1,48 +1,50 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
+require('tailwindcss/plugin');
 
 const config: Config = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}", "./index.html", "./app/**/*.{js,jsx,ts,tsx}"],
+  content: ["./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors:{
         primary:'#008A74',
-        primaryDark:'#007866',
         secondary:'#005345',
-        secondaryLight:'#00664F',
-        secondaryDark:'#002A23',
-        secondaryDark2:'#001C17',
 
         none: 'transparent',
         white: '#ffffff',
 
-        black100: '#333333',
+        black100: '#333333', // 선택된 nav, 일반 폰트 색상
         black200: '#222222',
         black300: '#181818',
 
         grey000: '#fafafa',
         grey100: '#f6f6f6',
-        grey200: '#eeeeee',
+        grey200: '#eeeeee', // 취소버튼, 신뢰점수 - 버튼
         grey300: '#e2e2e2',
         grey400: '#cccccc',
         grey500: '#aaaaaa',
         grey600: '#9DA2A7',
+        greyUnselect:'#868E96', // 선택안된 nav
         grey700: '#888888',
         grey800: '#797979',
         grey900: '#555555',
 
-        red: '#ED5C5C',
-        redBg: '#FFF2F2',
-
-        blue: '#4788f4',
-        blueBg: '#EEF4FD',
+        warn: '#ED5C5C',
 
         ground100: '#f8f9fc',
         ground200: '#f5f7fc',
-
-        green: '#00AB83',
+      },
+      backgroundImage: {
+        'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
+        'gradient-conic':
+            'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwindcss/nesting'),
+    require('tailwindcss'),
+    require('autoprefixer')
+  ],
+
 }
 export default config
