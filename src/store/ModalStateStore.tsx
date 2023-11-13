@@ -4,6 +4,9 @@ interface ModalState {
     isOpen: boolean;
 }
 
+//
+//
+
 export const modalState = atom<ModalState>({
     key:'modalState',
     default:{

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonProps} from "@/app/components/ui/button/Button";
+import {ButtonProps} from "@/components/ui/button/Button";
 
 
 function HollowButton({size, children, ...props}:ButtonProps) {

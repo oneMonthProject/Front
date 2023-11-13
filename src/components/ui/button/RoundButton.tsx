@@ -1,5 +1,5 @@
 import React from 'react';
-import {ButtonProps, makeButtonTheme} from "@/app/components/ui/button/Button";
+import {ButtonProps, makeButtonTheme} from "@/components/ui/button/Button";
 
 function RoundButton({size, theme, children}:ButtonProps) {
 

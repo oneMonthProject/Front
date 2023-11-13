@@ -2,7 +2,7 @@
 
 import React, {ReactNode, useEffect, useRef} from 'react';
 import {useRecoilState} from "recoil";
-import {modalState} from "@/app/store/ModalStateStore";
+import {modalState} from "@/store/ModalStateStore";
 
 function Modal({children}:{children:ReactNode}) {
     const [{isOpen}, setIsOpen] = useRecoilState(modalState);
@@ -51,7 +51,7 @@ function Modal({children}:{children:ReactNode}) {
     if(!isOpen) return null;
 
     return (
-        <div className="inset-0 z-10 w-full h-screen overflow-y-auto">
+        <div className="inset-0 z-10 w-full h-screen overflow-y-auto border border-black">
             <div className="absolute inset-0 w-full h-full bg-gray-500 opacity-75">
             </div>
             <div className="flex items-end justify-center min-h-screen px-4 pt-4 pb-20 text-center sm:block sm:p-0">
