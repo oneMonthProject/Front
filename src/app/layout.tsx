@@ -21,6 +21,7 @@ export default function RootLayout({
         <body className='w-full'>
         <Providers>
             {children}
+            <div id='modal' className='absolute top-0 w-full'></div>
         </Providers>
         </body>
         </html>
