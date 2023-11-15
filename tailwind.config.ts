@@ -35,9 +35,9 @@ const config: Config = {
                 ground200: '#f5f7fc',
             },
             screens: {
-                'mobile': {'max': '833px'},
-                'tablet': '834px',
-                'pc': '1440px'
+                'mobile': {'max':'785px'},
+                'tablet': '786px',
+                'pc': '1280px'
             }
         },
     },
