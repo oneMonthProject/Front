@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss';
+import plugin from "tailwindcss/plugin";
 
 require('tailwindcss/plugin');
 
@@ -35,7 +36,7 @@ const config: Config = {
                 ground200: '#f5f7fc',
             },
             screens: {
-                'mobile': {'max':'767px'},
+                'mobile': {'max': '767px'},
                 'tablet': '768px',
                 'pc': '1280px'
             }
@@ -45,7 +46,30 @@ const config: Config = {
         require('tailwindcss/nesting'),
         require('tailwindcss'),
         require('autoprefixer'),
-        require('@tailwindcss/forms')
+        require('@tailwindcss/forms'),
+        plugin(function ({addBase, theme}) {
+
+            const mobile = theme('screens.mobile', {max:'max'});
+            const tablet = theme('screens.tablet', {});
+            const pc = theme('screens.pc', {});
+
+            addBase({
+                '.responsiveContainer': {
+                    [`@media (max-width:${mobile.max})`]: {
+                        maxWidth: '340px'
+                    },
+                    [`@media (min-width:${tablet})`]: {
+                        maxWidth: '750px'
+                    },
+                    [`@media (min-width:${pc})`]: {
+                        maxWidth: '1200px'
+                    },
+                    margin: '0 auto',
+
+                },
+            })
+
+        })
     ],
 
 }
