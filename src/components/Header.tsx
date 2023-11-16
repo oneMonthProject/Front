@@ -7,7 +7,7 @@ import RegisterNav from "@/components/header/RegisterNav";
 
 function Header() {
     return (
-        <header className='pc:max-w-[1200px] tablet:max-w-[750px] mobile:max-w-[340px] mx-auto my-2'>
+        <header className='my-2'>
             <nav>
                 <ul className='flex items-center'>
                     <li className='inline-block relative pc:w-[200px] pc:h-[60px] tablet:w-[150px] tablet:h-[50px] mobile:w-[120px] mobile:h-[40px]'>
