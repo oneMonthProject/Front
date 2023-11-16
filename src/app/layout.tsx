@@ -19,8 +19,10 @@ export default function RootLayout({
     <html lang="en">
       <body className="w-full">
         <Providers>
-          <Header />
-          {children}
+          <div className="responsiveContainer">
+            <Header />
+            {children}
+          </div>
           <div id="modal" className="absolute top-0 w-full"></div>
         </Providers>
       </body>
