@@ -1,7 +1,6 @@
 'use client';
 import React, {Fragment, ReactElement} from 'react';
 import {Menu, Transition} from '@headlessui/react'
-import {DropDownProps} from "@/components/ui/DropDown";
 import Link from "next/link";
 
 function classNames(...classes: string[]) {
@@ -41,10 +40,10 @@ export default function DropDownWithIcon({items, icon, srOnlyButtonName}: DropDo
                             items.map(v =>
                                 <Menu.Item>
                                     {({active}) => (
-                                        v.onCLickHandler ?
+                                        v.onClickHandler ?
                                             <a
                                                 href="#"
-                                                onClick={() => v.onCLickHandler!(v.value)}
+                                                onClick={() => v.onClickHandler!(v.value)}
                                                 className={classNames(
                                                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
                                                     'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
