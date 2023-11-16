@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-
+@layer base {
+    html {
+        font-family:'Inter', 'Noto Sans KR', sans-serif;
+        @apply text-black100;
+    }
 }
-
-
-

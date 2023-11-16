@@ -1,10 +1,9 @@
 import type {Metadata} from 'next'
-import {Inter} from 'next/font/google'
 import './globals.css'
 import Providers from "@/app/Providers";
 import React from "react";
+import Header from "@/components/Header";
 
-const inter = Inter({subsets: ['latin']})
 
 export const metadata: Metadata = {
     title: 'trustcrews',
@@ -20,6 +19,7 @@ export default function RootLayout({
         <html lang="en">
         <body className='w-full'>
         <Providers>
+            <Header/>
             {children}
             <div id='modal' className='absolute top-0 w-full'></div>
         </Providers>
