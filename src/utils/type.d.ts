@@ -7,3 +7,24 @@ type DropDownItem = {
 interface DropDownProps {
     items: DropDownItems[];
 }
+
+interface NavTabItem {
+    name:string;
+    href:string;
+    current:boolean;
+}
+
+interface ProjectNavTabItem extends NavTabItem {
+    name:string;
+    href:string;
+    current:boolean;
+}
+
+type SelectItem = {
+    value: any;
+    name: string;
+}
+
+interface SelectProps {
+    items: SelectItem[];
+}
