@@ -1,6 +1,6 @@
 import React from "react";
-import TrustGradeBadge from "../ui/TrustGradeBadge";
-import PositionBadge from "../ui/PositionBadge";
+import TrustGradeBadge from "../../ui/TrustGradeBadge";
+import PositionBadge from "../../ui/PositionBadge";
 import Image from "next/image";
 
 const PostCard = () => {

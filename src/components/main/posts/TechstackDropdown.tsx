@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Arrow from "../../../public/images/bottomarrow.svg";
+import Arrow from "../../../../public/images/bottomarrow.svg";
 
 interface TechstackDropdownProps {
   onClick: () => void;

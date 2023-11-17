@@ -1,4 +1,4 @@
-type DropDownItems = {
+type DropDownItem = {
     name: string;
     value: string;
     onClickHandler?:(value:string) => void;

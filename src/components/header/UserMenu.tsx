@@ -1,9 +1,7 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Image from "next/image";
 import DropDownWithIcon from "@/components/ui/DropDownWithIcon";
-import {HiOutlineDotsVertical} from "@react-icons/all-files/hi/HiOutlineDotsVertical";
-import {DropDownItem} from "@/components/ui/DropDown";
 import {FaChevronDown} from "@react-icons/all-files/fa/FaChevronDown";
 import {useMediaQuery} from "react-responsive";
 

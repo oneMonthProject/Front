@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Providers from "@/app/Providers";
 import React from "react";
-import Header from "@/components/Header";
+import Header from "@/components/header/Header";
 
 export const metadata: Metadata = {
   title: "trustcrews",
