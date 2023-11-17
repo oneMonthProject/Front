@@ -1,6 +1,6 @@
 import React from "react";
 import Search from "./Search";
-import PostCard from "../postcard/PostCard";
+import PostCard from "../postCard/PostCard";
 import { useSetRecoilState } from "recoil";
 import { positionDropdownState } from "@/store/MainStateStore";
 import PositionDropdown from "./PositionDropdown";

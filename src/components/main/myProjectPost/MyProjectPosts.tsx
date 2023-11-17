@@ -1,5 +1,5 @@
 import React from "react";
-import ProjectCard from "../projectcard/ProjectCard";
+import ProjectCard from "../projectCard/ProjectCard";
 
 const MyProjectPosts = () => {
   return (
