@@ -4,15 +4,20 @@ export function makeBadgeSize(size: string) {
     let px;
     let py;
     switch (size) {
+        case 'xs':
+            textSize = 'text-xs';
+            px = 'px-2';
+            py = 'py-1';
+            break;
         case 'sm':
-            textSize = 'text-sm';
-            px = 'px-4';
+            textSize = 'tablet:text-sm mobile:text-xs';
+            px = 'px-2';
             py = 'py-1';
             break;
         case 'md':
-            textSize = 'text-md';
-            px = 'px-4';
-            py = 'py-2';
+            textSize = 'tablet:text-lg mobile:text-md';
+            px = 'tablet:px-8 mobile:px-4';
+            py = 'tablet:py-4 mobile:py-2';
             break;
         case 'lg':
             textSize = 'text-lg';
@@ -20,9 +25,9 @@ export function makeBadgeSize(size: string) {
             py = 'py-4';
             break;
         default:
-            textSize = 'text-xs';
-            px = 'px-2';
-            py = 'py-1';
+            textSize = 'tablet:text-md mobile:text-sm';
+            px = 'px-4';
+            py = 'tablet:py-2 mobile:py-1';
     }
 
     return {textSize, px, py};

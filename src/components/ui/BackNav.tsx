@@ -8,7 +8,7 @@ interface BackNavProps {
 function BackNav({to}:BackNavProps) {
     return (
         <Link href={to}>
-                <IoMdArrowRoundBack className='h-12 w-12 text-grey700'/>
+                <IoMdArrowRoundBack className='tablet:h-12 tablet:w-12 mobile:h-6 mobile:w-6 text-grey700'/>
         </Link>
     );
 }
