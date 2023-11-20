@@ -23,12 +23,12 @@ export default function MultiSelect({ recoilState, items = [], label, placeholde
     <Listbox value={values} onChange={setValues} multiple>
       {({ open }) => (
         <div>
-          <Listbox.Label className="block text-gray-700">
+          <Listbox.Label className="block text-gray-700 mobile:text-sm">
             {label}
             {required ? <span className="text-red-500 required-dot ml-1.5 align-middle">*</span> : <></>}
           </Listbox.Label>
           <div className="relative">
-            <Listbox.Button className="w-full min-h-[42px] cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+            <Listbox.Button className="mobile:text-sm w-full cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
               <span className={classNames(values.length > 0 ? '' : 'text-greyUnselect', 'block truncate')}>
                 {values.length > 0 ? values.map((value) => value.name).join(', ') : placeholder}
               </span>
@@ -49,8 +49,8 @@ export default function MultiSelect({ recoilState, items = [], label, placeholde
                     key={item.value}
                     className={({ active }) =>
                       classNames(
-                        active ? 'bg-primary text-white' : 'text-gray-900',
-                        'relative cursor-default select-none py-2 pl-3 pr-9'
+                        active ? 'bg-primary opacity-50 text-white' : 'text-gray-900',
+                        'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
                       )
                     }
                     value={item}
