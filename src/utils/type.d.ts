@@ -21,7 +21,7 @@ interface ProjectNavTabItem extends NavTabItem {
 }
 
 type SelectItem = {
-    value: any;
+    value: string | number | null | undefined;
     name: string;
 }
 
