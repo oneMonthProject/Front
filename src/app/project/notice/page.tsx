@@ -1,6 +1,7 @@
 'use client';
 import React from 'react';
 import NoticeBadge from "@/components/ui/NoticeBadge";
+import PaginationEl from "@/components/ui/PaginationEl";
 
 
 class TestItems implements NoticeItem {
@@ -49,6 +50,9 @@ function NoticePage() {
                     </li>
                 ))}
             </ul>
+            <div className='mt-12 mb-10'>
+                <PaginationEl/>
+            </div>
         </section>
     );
 }
