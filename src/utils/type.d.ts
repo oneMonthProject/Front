@@ -20,3 +20,11 @@ interface ProjectNavTabItem extends NavTabItem {
     current:boolean;
 }
 
+type SelectItem = {
+    value: string | number | null | undefined;
+    name: string;
+}
+
+interface SelectProps {
+    items: SelectItem[];
+}
