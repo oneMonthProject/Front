@@ -2,13 +2,9 @@
 import React from "react";
 import { makeBadgeColor, makeBadgeSize } from "@/utils/common";
 
-type Props = {
-  color: string;
-  size: string;
-  text: string;
-};
 
-function TrustGradeBadge({ color, size, text }: Props) {
+
+function TrustGradeBadge({ color = '', size = '', text = '' }: BadgeProps) {
   // 사이즈
   const { textSize, px, py } = makeBadgeSize(size);
 

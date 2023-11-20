@@ -2,12 +2,8 @@
 import React from "react";
 import { makeBadgeSize } from "@/utils/common";
 
-interface PositionBadgeProps {
-  size: string;
-  text: string;
-}
 
-function PositionBadge({ size, text }: PositionBadgeProps) {
+function PositionBadge({ size = '', text = '' }: BadgeProps) {
   const { textSize, px, py } = makeBadgeSize(size);
   return (
     <span
