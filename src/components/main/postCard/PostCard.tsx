@@ -6,24 +6,24 @@ import Image from "next/image";
 const PostCard = () => {
   return (
     <>
-      <div className="p-3 flex-col w-[280px] h-[290px]  rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-3">
+      <div className="p-3 flex-col w-[280px] h-[300px]  rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-3">
         <div className="flex">
           <div className="font-bold text-base mr-3">trustcrews</div>
           <TrustGradeBadge size="xs" text="1등급" color="red" />
         </div>
-        <div className="flex mt-1">
+        <div className="flex mt-2">
           <div className="text-xs">2023.12.05 ~ </div>
           <div className="ml-2 text-xs">2023.01.10</div>
         </div>
         <div className="text-sm mt-2 font-bold text-grey800">
           주제 | 팀프로젝트 매칭 서비스 개발
         </div>
-        <div className="text-xl font-bold ">FE, BE 모집합니다</div>
-        <div className="flex gap-1 mt-2">
+        <div className="text-xl font-bold mt-2">FE, BE 모집합니다</div>
+        <div className="flex gap-1 mt-3">
           <PositionBadge size="xs" text="프론트엔드" />
           <PositionBadge size="xs" text="백엔드" />
         </div>
-        <div className="flex gap-1 border-b-2 pb-4 mt-6">
+        <div className="flex gap-1 border-b-2 pb-4 mt-5">
           <Image
             src="/images/javascript.svg"
             alt="자바스크립트"
