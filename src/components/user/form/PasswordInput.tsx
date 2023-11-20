@@ -17,7 +17,7 @@ function PasswordInput({ id, label, required = false, ...props }: InputProps) {
   }
 
   return (
-    <div className="relative">
+    <div className="relative mobile:text-sm">
       {
         label ? (
           <label htmlFor={id} className="text-gray-700">
@@ -27,7 +27,7 @@ function PasswordInput({ id, label, required = false, ...props }: InputProps) {
         ) : <></>
       }
       <input id={id} type={visible ? "text" : "password"}
-        className="block rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 pr-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+        className="mobile:text-sm block rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 pr-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         {...props} />
       <button className="absolute right-2 bottom-3 text-gray-400" onClick={() => setVisible(!visible)}>
         {getButtonIcon(visible)}

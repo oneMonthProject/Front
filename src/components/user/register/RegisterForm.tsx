@@ -61,7 +61,7 @@ function RegisterForm() {
       <MultiSelect recoilState={interestStackState} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
         value={selfIntroduction} onChange={(e) => setSelfInformation(e.target.value)} />
-      <FormButton onClick={register}>가입하기</FormButton>
+      <FormButton onClick={register}>가입</FormButton>
     </div>
   )
 }
