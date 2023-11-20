@@ -7,4 +7,51 @@
         font-family:'Inter', 'Noto Sans KR', sans-serif;
         @apply text-black100;
     }
+
+    .customPagination ul.pagination {
+        @apply flex items-center justify-center bg-white px-4 py-3 sm:px-6;
+    }
+
+    .customPagination ul.pagination li:nth-of-type(2){
+        @apply mr-2
+    }
+
+    .customPagination ul.pagination li:nth-last-child(2){
+        @apply ml-2
+    }
+
+    .customPagination ul.pagination li:nth-of-type(1),
+    .customPagination ul.pagination li:last-of-type
+    {
+        @apply relative inline-flex items-center bg-white px-[.7rem] py-[.35rem] text-sm font-medium text-gray-700 hover:bg-gray-50;
+    }
+
+
+    .customPagination ul.pagination li:nth-last-child(2),
+    .customPagination ul.pagination li:nth-of-type(2){
+        @apply relative inline-flex items-center bg-white px-[.875rem] py-[.35rem] text-sm font-medium text-gray-700 hover:bg-gray-50;
+    }
+
+    .customPagination ul.pagination li:nth-of-type(1) a,
+    .customPagination ul.pagination li:last-of-type a,
+    .customPagination ul.pagination li:nth-last-child(2) a,
+    .customPagination ul.pagination li:nth-of-type(2) a{
+        @apply tablet:text-lg mobile:text-sm;
+    }
+
+
+    .customPagination ul.pagination li:not(:nth-of-type(1)):not(:last-of-type):not(:nth-of-type(2)):not(:nth-last-child(2)) a
+    {
+        @apply hover:bg-gray-50 focus:outline-offset-0 px-4 py-2 tablet:text-lg mobile:text-sm font-medium text-gray-700 hover:bg-gray-50;
+    }
+
+    .customPagination ul.pagination  li:not(:nth-of-type(1)):not(:nth-of-type(2)):not(:last-of-type):not(:nth-last-child(2)).active a {
+        @apply z-10 bg-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
+
+    }
 }
+
+/*ul.pagination {*/
+/*    width:100%;*/
+/*    display: flex;*/
+/*}*/
