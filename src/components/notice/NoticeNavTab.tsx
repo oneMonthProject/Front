@@ -2,9 +2,6 @@
 import {useRecoilState, useRecoilValue} from "recoil";
 import {currentProjectNoticeNavTabSelector, projectNoticeNavTabStateStore} from "@/store/ProjectNoticeNavTabStateStore";
 import {MouseEvent} from "react";
-import TaskIcon from '../../../public/images/task.svg';
-import CrewsIcon from '../../../public/images/crews.svg';
-import RecruitIcon from '../../../public/images/recruit.svg';
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -43,10 +40,6 @@ export default function NoticeNavTab() {
                             onClick={onClickHandler}
                         >
                             {item.name}
-                            {
-                                item.name === '업무' && <TaskIcon width={18} height={9} className={item.href === currentNoticeNavTab.href ? 'text-primary' : 'text-gray-700'}/>
-                            }
-
             </div>
         </li>
     )
