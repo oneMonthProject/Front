@@ -1,3 +1,5 @@
+import {ReactNode} from "react";
+
 type DropDownItem = {
     name: string;
     value: string;
@@ -40,4 +42,10 @@ interface NoticeItem {
     content:string;
     type:string;
     createDate:string;
+}
+
+interface ModalProps {
+    isOpen: boolean;
+    close: () => void;
+    children: ReactNode;
 }
