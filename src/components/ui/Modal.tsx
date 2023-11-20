@@ -6,8 +6,7 @@ import Button from "@/components/ui/Button";
 import {ModalProps} from "@/utils/type";
 
 
-
-function Modal({isOpen, close, children}: ModalProps) {
+function Modal({isOpen, close, title, children}: ModalProps) {
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -67,9 +66,10 @@ function Modal({isOpen, close, children}: ModalProps) {
                     <div>
                         <div className="rounded-lg pb-8 bg-white shadow">
                             {/* Start modal header */}
-                            <div className='pt-4 px-4 pb-[.25rem] relative w-full flex items-center border-b border-grey200'>
+                            <div
+                                className='pt-4 px-4 pb-[.25rem] relative w-full flex items-center border-b border-grey200'>
                                 <h3 className='mobile:text-2xl tablet:text-[1.75rem] text-black100 font-semibold w-full'>
-                                    업무 알림
+                                    {title}
                                 </h3>
                                 <div className="absolute top-3 right-3">
                                     <button type='button' className="bg-transparent"
@@ -80,11 +80,9 @@ function Modal({isOpen, close, children}: ModalProps) {
                                 </div>
                             </div>
                             {/* End modal header */}
-                            {/* Start modal contents */}
                             <div className='px-8 py-4'>
                                 {children}
                             </div>
-                            {/* End modal contents */}
                             {/* Start modal footer */}
                             <div
                                 className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>

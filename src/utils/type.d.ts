@@ -3,7 +3,7 @@ import {ReactNode} from "react";
 type DropDownItem = {
     name: string;
     value: string;
-    onClickHandler?:(value:string) => void;
+    onClickHandler?: (value: string) => void;
 }
 
 interface DropDownProps {
@@ -11,21 +11,21 @@ interface DropDownProps {
 }
 
 interface NavTabItem {
-    name:string;
-    href:string;
-    current:boolean;
+    name: string;
+    href: string;
+    current: boolean;
 }
 
 interface ProjectNavTabItem extends NavTabItem {
-    name:string;
-    href:string;
-    current:boolean;
+    name: string;
+    href: string;
+    current: boolean;
 }
 
 interface BadgeProps {
-    color?:string;
-    size?:string;
-    text?:string;
+    color?: string;
+    size?: string;
+    text?: string;
 }
 
 type SelectItem = {
@@ -38,13 +38,14 @@ interface SelectProps {
 }
 
 interface NoticeItem {
-    alertId:string;
-    content:string;
-    type:string;
-    createDate:string;
+    alertId: string;
+    content: string;
+    type: string;
+    createDate: string;
 }
 
 interface ModalProps {
+    title: string;
     isOpen: boolean;
     close: () => void;
     children: ReactNode;
