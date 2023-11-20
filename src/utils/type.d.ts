@@ -20,6 +20,11 @@ interface ProjectNavTabItem extends NavTabItem {
     current:boolean;
 }
 
+interface BadgeProps {
+    color?:string;
+    size?:string;
+    text?:string;
+}
 type SelectItem = {
     value: string | number | null | undefined;
     name: string;
