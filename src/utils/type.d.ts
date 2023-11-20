@@ -33,3 +33,9 @@ type SelectItem = {
 interface SelectProps {
     items: SelectItem[];
 }
+interface NoticeItem {
+    alertId:string;
+    content:string;
+    type:string;
+    createDate:string;
+}
