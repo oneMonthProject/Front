@@ -2,7 +2,9 @@ import React from 'react';
 
 function NoticePage() {
     return (
-        <div>notice</div>
+        <section className='basis-4/5 border border-black'>
+
+        </section>
     );
 }
 
