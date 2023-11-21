@@ -1,6 +1,5 @@
 'use client';
 import { Fragment } from 'react'
-import { RecoilState, useRecoilState } from 'recoil';
 import { Listbox, Transition } from '@headlessui/react'
 import { AiFillCaretDown } from "@react-icons/all-files/ai/AiFillCaretDown";
 
@@ -9,15 +8,14 @@ function classNames(...classes: string[]) {
 }
 
 interface SingleSelectProps extends SelectProps {
-  recoilState: RecoilState<SelectItem | null>;
+  value: SelectItem | null;
+  setValue: (value: SelectItem) => void;
   label: string;
   placeholder?: string;
   required?: boolean;
 }
 
-export default function Select({ recoilState, items = [], label, placeholder = "", required = false }: SingleSelectProps) {
-  const [value, setValue] = useRecoilState(recoilState);
-
+export default function Select({ value, setValue, items = [], label, placeholder = "", required = false }: SingleSelectProps) {
   return (
     <Listbox value={value} onChange={setValue}>
       {({ open }) => (

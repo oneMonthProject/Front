@@ -25,6 +25,7 @@ interface BadgeProps {
     size?:string;
     text?:string;
 }
+
 type SelectItem = {
     value: string | number | null | undefined;
     name: string;
@@ -33,6 +34,7 @@ type SelectItem = {
 interface SelectProps {
     items: SelectItem[];
 }
+
 interface NoticeItem {
     alertId:string;
     content:string;
