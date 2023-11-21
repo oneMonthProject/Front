@@ -37,9 +37,9 @@ const testItems = [
 
 function NoticeList() {
     return (
-        <ul role="list" className="divide-y divide-gray-100">
+        <ul role="list" className="divide-y divide-gray-100 mobile:max-h-[23rem] mobile:overflow-y-auto">
             {testItems.map((item) => (
-                <li key={item.alertId} className="flex items-center gap-x-10 py-5 pc:text-lg text-grey900 cursor-pointer">
+                <li key={item.alertId} className="flex items-center gap-x-10 py-5 pc:text-lg mobile:text-sm text-grey900 cursor-pointer">
                     <div className='flex items-center gap-x-4'>
                         <NoticeBadge size='sm' text={item.type}/>
                         {item.content}
