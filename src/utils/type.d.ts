@@ -37,6 +37,19 @@ interface SelectProps {
     items: SelectItem[];
 }
 
+interface SingleSelectProps extends SelectProps {
+    value: SelectItem | null;
+    setValue: (value: SelectItem) => void;
+    label: string;
+    placeholder?: string;
+    required?: boolean;
+}
+
+interface MultiSelectProps extends SingleSelectProps {
+    values: SelectItem[];
+    setValues: (value: SelectItem[]) => void;
+}
+
 interface NoticeItem {
     alertId: string;
     content: string;

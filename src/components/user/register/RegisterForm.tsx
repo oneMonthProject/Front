@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Input from "@/components/user/form/Input";
 import PasswordInput from "@/components/user/form/PasswordInput";
-import MultiSelect from "@/components/user/form/MultiSelect";
-import Select from "@/components/user/form/Select";
+import MultiSelect from "@/components/ui/MultiSelect";
+import Select from "@/components/ui/Select";
 import TextArea from "@/components/user/form/TextArea";
 import FormButton from "@/components/user/form/FormButton";
 import NicknameField from "@/components/user/form/NickNameField";
