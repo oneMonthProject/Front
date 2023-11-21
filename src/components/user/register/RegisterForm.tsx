@@ -1,7 +1,5 @@
 'use client';
 import React, { useState } from "react";
-import { useRecoilValue } from "recoil";
-import { positionState, interestStackState } from "@/store/UserStateStore";
 import Input from "@/components/user/form/Input";
 import PasswordInput from "@/components/user/form/PasswordInput";
 import MultiSelect from "@/components/user/form/MultiSelect";
@@ -40,8 +38,8 @@ function RegisterForm() {
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const position = useRecoilValue(positionState);
-  const interestTechStack = useRecoilValue(interestStackState);
+  const [position, setPosition] = useState<SelectItem | null>(null);
+  const [techStack, setTechStack] = useState<SelectItem[]>([]);
   const [selfIntroduction, setSelfInformation] = useState("");
 
   const register = () => {
@@ -49,7 +47,7 @@ function RegisterForm() {
   }
 
   return (
-    <div className="space-y-4 mobile:space-y-2">
+    <div className="space-y-5 mobile:space-y-3">
       <Input id="email" label="이메일" placeholder="example@trustcrews.com" required
         value={email} onChange={(e) => setEmail(e.target.value)} />
       <PasswordInput id="password" label="비밀번호" placeholder="영문, 숫자 포함 6자 이상" required
@@ -57,8 +55,8 @@ function RegisterForm() {
       <PasswordInput id="passwordConfirmation" label="비밀번호 확인" placeholder="영문, 숫자 포함 6자 이상" required
         value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
       <NicknameField placeholder="닉네임을 입력해주세요." required value={nickname} onChange={(e) => setNickname(e.target.value)} />
-      <Select recoilState={positionState} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
-      <MultiSelect recoilState={interestStackState} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
+      <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
+      <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
         value={selfIntroduction} onChange={(e) => setSelfInformation(e.target.value)} />
       <FormButton onClick={register}>가입</FormButton>

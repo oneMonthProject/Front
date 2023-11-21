@@ -1,6 +1,5 @@
 'use client';
 import { Fragment } from 'react'
-import { RecoilState, useRecoilState } from 'recoil';
 import { Listbox, Transition } from '@headlessui/react'
 import { AiFillCaretDown } from "@react-icons/all-files/ai/AiFillCaretDown";
 import { AiOutlineCheck } from "@react-icons/all-files/ai/AiOutlineCheck";
@@ -10,15 +9,14 @@ function classNames(...classes: string[]) {
 }
 
 interface MultiSelectProps extends SelectProps {
-  recoilState: RecoilState<SelectItem[]>;
+  values: SelectItem[];
+  setValues: (value: SelectItem[]) => void;
   label: string;
   placeholder?: string;
   required?: boolean;
 }
 
-export default function MultiSelect({ recoilState, items = [], label, placeholder = "", required = false }: MultiSelectProps) {
-  const [values, setValues] = useRecoilState(recoilState);
-
+export default function MultiSelect({ values, setValues, items = [], label, placeholder = "", required = false }: MultiSelectProps) {
   return (
     <Listbox value={values} onChange={setValues} multiple>
       {({ open }) => (
