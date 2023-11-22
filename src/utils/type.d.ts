@@ -63,5 +63,6 @@ interface ModalProps {
     title: string;
     isOpen: boolean;
     close: () => void;
+    onClickConfirmHandler?: () => void;
     children: ReactNode;
 }
