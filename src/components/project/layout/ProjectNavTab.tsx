@@ -32,7 +32,7 @@ export default function ProjectNavTab() {
     return (
             <div className='tablet:my-[3.9rem] mobile:my-[3rem]'>
                 <div className="border-b-[3px] border-grey300">
-                    <nav className="-mb-px flex tablet:space-x-10 mobile:space-x-6" aria-label="Tabs">
+                    <nav className="-mb-px flex tablet:space-x-10 mobile:justify-between" aria-label="Tabs">
                         {projectNavTabs.map((tab) => (
                             <Link
                                 key={tab.name}
@@ -41,7 +41,7 @@ export default function ProjectNavTab() {
                                     tab.href === currentProjectNavTab.href
                                         ? 'border-secondary text-secondary'
                                         : 'border-transparent text-gray-500 hover:border-gray-200 hover:text-gray-700',
-                                    'flex whitespace-nowrap border-b-[3px] -mb-[1.8px] py-4 px-1 pc:text-[2rem] tablet:text-[1.5rem] mobile:text-lg font-semibold'
+                                    'flex whitespace-nowrap border-b-[3px] -mb-[1.8px] py-4 px-1 mobile:px-4 pc:text-[2rem] tablet:text-[1.5rem] mobile:text-lg font-semibold'
                                 )}
                                 aria-current={tab.href === currentProjectNavTab.href ? 'page' : undefined}
                                 onClick={onClickHandler}
