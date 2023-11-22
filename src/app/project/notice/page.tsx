@@ -1,6 +1,6 @@
 import React from 'react';
-import NoticeList from "@/components/notice/NoticeList";
-import NoticeListPagination from "@/components/notice/NoticeListPagination";
+import NoticeList from "@/components/project/notice/NoticeList";
+import NoticeListPagination from "@/components/project/notice/NoticeListPagination";
 
 
 function NoticePage() {
