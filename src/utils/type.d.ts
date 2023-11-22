@@ -52,7 +52,7 @@ export interface MultiSelectProps extends SingleSelectProps {
     setValue?: (value: SelectItem) => void;
 }
 
-export interface NoticeItem {
+export interface NoticeItemProp {
     alertId: string;
     content: string;
     type: string;
