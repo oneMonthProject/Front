@@ -54,9 +54,11 @@ export interface MultiSelectProps extends SingleSelectProps {
 
 export interface NoticeItemProp {
     alertId: string;
+    createUserId: string;
     content: string;
     type: string;
     createDate: string;
+    position?: string;
 }
 
 interface ModalProps {
