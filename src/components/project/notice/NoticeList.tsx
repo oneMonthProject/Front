@@ -6,29 +6,33 @@ import NoticeItem from "@/components/project/notice/NoticeItem";
 
 class TestItems implements NoticeItemProp {
     alertId: string;
+    createUserId: string;
     content: string;
     createDate: string;
     type: string;
 
-    constructor(alertId: string, content: string, createDate: string, type: string) {
+    constructor(createUserId:string, alertId: string, content: string, createDate: string, type: string) {
         this.alertId = alertId;
+        this.createUserId = createUserId;
         this.content = content;
         this.createDate = createDate;
         this.type = type;
     }
+
+
 }
 
 const testItems = [
-    new TestItems('1', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
-    new TestItems('2', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
-    new TestItems('3', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
-    new TestItems('4', '찐개발자 님이 db스키마 설계 업무를 완료했습니다.', '2023-01-12', '업무'),
-    new TestItems('5', '찐개발자 님이 db스키마 설계 업무 기한이 만료되었습니다.', '2023-01-12', '업무'),
-    new TestItems('6', '찐개발자 님이 db스키마 설계 업무 기한이 만료되었습니다.', '2023-01-12', '업무'),
-    new TestItems('7', '찐개발자 님이 프로젝트에 합류했습니다.', '2023-01-12', '크루'),
-    new TestItems('8', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루'),
-    new TestItems('9', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루'),
-    new TestItems('10', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루')
+    new TestItems('user1','1', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
+    new TestItems('user1','2', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
+    new TestItems('user1','3', '찐개발자 님이 프론트엔드 포지션에 지원했습니다.', '2023-01-12', '모집'),
+    new TestItems('user1','4', '찐개발자 님이 db스키마 설계 업무를 완료했습니다.', '2023-01-12', '업무'),
+    new TestItems('user1','5', '찐개발자 님이 db스키마 설계 업무 기한이 만료되었습니다.', '2023-01-12', '업무'),
+    new TestItems('user1','6', '찐개발자 님이 db스키마 설계 업무 기한이 만료되었습니다.', '2023-01-12', '업무'),
+    new TestItems('user1','7', '찐개발자 님이 프로젝트에 합류했습니다.', '2023-01-12', '크루'),
+    new TestItems('user1','8', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루'),
+    new TestItems('user1','9', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루'),
+    new TestItems('user1','10', '찐개발자 님이 프로젝트를 탈퇴했습니다', '2023-01-12', '크루')
 ]
 
 
