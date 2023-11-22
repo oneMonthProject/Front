@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useRecoilValue } from "recoil";
 import { techstackDropdownState } from "@/store/MainStateStore";
+import TechStackImage from "@/components/ui/TechStackImage";
 
 interface TechstackDropdownProps {
   onClick: () => void;
@@ -149,6 +150,7 @@ const TechstackDropdown = ({ onClick }: TechstackDropdownProps) => {
                       width={30}
                       height={30}
                     />
+                    <TechStackImage stackName={stack.name}/>
                     <span className="text-base">{stack.name}</span>
                   </li>
                 );
