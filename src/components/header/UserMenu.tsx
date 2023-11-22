@@ -4,6 +4,7 @@ import Image from "next/image";
 import DropDownWithIcon from "@/components/ui/DropDownWithIcon";
 import {FaChevronDown} from "@react-icons/all-files/fa/FaChevronDown";
 import {useMediaQuery} from "react-responsive";
+import {DropDownItem} from "@/utils/type";
 
 interface UserMenuProps {
     nickName:string;
@@ -21,7 +22,7 @@ class UserMenuItem implements DropDownItem {
 
 }
 
-const items = [
+const items:DropDownItem[] = [
     new UserMenuItem('내 프로필','/profile'), new UserMenuItem('로그아웃','/logout')
 ]
 

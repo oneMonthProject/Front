@@ -1,7 +1,7 @@
 "use client";
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
-import { BiChevronDown } from "react-icons/bi";
+import {BiChevronDown} from "@react-icons/all-files/bi/BiChevronDown";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");

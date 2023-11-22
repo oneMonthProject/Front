@@ -2,6 +2,7 @@
 import React, {Fragment, ReactElement} from 'react';
 import {Menu, Transition} from '@headlessui/react'
 import Link from "next/link";
+import {DropDownProps} from "@/utils/type";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -38,10 +39,11 @@ export default function DropDownWithIcon({items, icon, srOnlyButtonName}: DropDo
                     <div className="py-1 ">
                         {
                             items.map(v =>
-                                <Menu.Item>
+                                <Menu.Item key={v.value}>
                                     {({active}) => (
                                         v.onClickHandler ?
                                             <a
+
                                                 href="#"
                                                 onClick={() => v.onClickHandler!(v.value)}
                                                 className={classNames(

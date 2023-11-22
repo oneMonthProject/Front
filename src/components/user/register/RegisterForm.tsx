@@ -7,6 +7,7 @@ import Select from "@/components/ui/Select";
 import TextArea from "@/components/user/form/TextArea";
 import FormButton from "@/components/user/form/FormButton";
 import NicknameField from "@/components/user/form/NickNameField";
+import {SelectItem} from "@/utils/type";
 
 const positionList = [
   { value: 1, name: '프론트엔드' },

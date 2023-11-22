@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { makeBadgeColor, makeBadgeSize } from "@/utils/common";
+import {BadgeProps} from "@/utils/type";
 
 
 
@@ -8,12 +9,8 @@ function TrustGradeBadge({ color = '', size = '', text = '' }: BadgeProps) {
   // 사이즈
   const { textSize, px, py } = makeBadgeSize(size);
 
-  console.log("textSize: ", textSize);
-
   // 색상
   const { bgColor, textColor, ringColor } = makeBadgeColor(color);
-
-  console.log("bgColor: ", bgColor);
 
   return (
     <>

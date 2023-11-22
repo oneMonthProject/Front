@@ -1,5 +1,6 @@
 import React from 'react';
 import {makeBadgeColor, makeBadgeSize} from "@/utils/common";
+import {BadgeProps} from "@/utils/type";
 
 function NoticeBadge({size = '', text = ''}: BadgeProps) {
     // 사이즈

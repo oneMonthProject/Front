@@ -1,4 +1,5 @@
 import {atom, selector} from "recoil";
+import {NavTabItem} from "@/utils/type";
 
 
 class ProjectNoticeNavTabItem implements NavTabItem {

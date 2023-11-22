@@ -3,7 +3,7 @@ import React, {MouseEvent} from 'react';
 import Link from "next/link";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {currentProjectNavTabSelector, projectNavTabState} from "@/store/ProjectNavTabStateStore";
-import {usePathname} from "next/navigation";
+import {ProjectNavTabItem} from "@/utils/type";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -18,7 +18,7 @@ export default function ProjectNavTab() {
     function onClickHandler({target}: MouseEvent<HTMLAnchorElement>) {
         const updatedProjectNavTabs: ProjectNavTabItem[] = [];
 
-        [...projectNavTabs].forEach((v, i) => {
+        [...projectNavTabs].forEach((v) => {
             updatedProjectNavTabs.push({
                 ...v,
                 current: v.href === (target as HTMLAnchorElement).dataset.pathname
