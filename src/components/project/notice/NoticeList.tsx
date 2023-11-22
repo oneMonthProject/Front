@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
 import NoticeBadge from "@/components/ui/NoticeBadge";
-import {NoticeItem} from "@/utils/type";
+import {NoticeItemProp} from "@/utils/type";
+import NoticeItem from "@/components/project/notice/NoticeItem";
 
-class TestItems implements NoticeItem {
+class TestItems implements NoticeItemProp {
     alertId: string;
     content: string;
     createDate: string;
@@ -31,23 +32,20 @@ const testItems = [
 ]
 
 
-// todo - 시간마다 체크 안된 알림 목록(type, alertId, content, createDate) 조회하는 fetch api 추가 (라우트 핸들러 -> 라우트 핸들러에서 fetch)
-// todo - 페이지네이션: 한 페이지에 1 row
-// todo - 모집 / 업무 / 크루 / 전체별 api 필요
+// todo 1 - 시간마다 체크 안된 전체 알림 목록 조회
+//  - 특정시간마다 현재 navTab에 매칭되는, 체크 안된 알림목록 조회하는 fetch api 추가 (라우트 핸들러 -> 라우트 핸들러에서 fetch)
+//  - 페이지네이션: 한 페이지에 10 row
+//  - 모집 / 업무 / 크루 / 전체별 api (시간마다 & 요청시 조회)
+
 
 function NoticeList() {
     return (
-        <ul role="list" className="divide-y divide-gray-100 mobile:max-h-[23rem] mobile:overflow-y-auto">
+        <ul
+            role="list"
+            className="divide-y divide-gray-100 mobile:max-h-[23rem] mobile:overflow-y-auto"
+        >
             {testItems.map((item) => (
-                <li key={item.alertId} className="flex items-center gap-x-10 py-5 pc:text-lg mobile:text-sm text-grey900 cursor-pointer">
-                    <div className='flex items-center gap-x-4'>
-                        <NoticeBadge size='sm' text={item.type}/>
-                        {item.content}
-                    </div>
-                    <div className='ml-auto text-grey600'>
-                        {item.createDate}
-                    </div>
-                </li>
+                <NoticeItem item={item}/>
             ))}
         </ul>
     );
