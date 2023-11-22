@@ -126,20 +126,24 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
     key: 'projectNoticeModalStateSelector',
     get: ({get}) => {
         const currentFormState = get(projectNoticeCurrentFormState);
-        let title;
-        switch (currentFormState?.formType) {
-            case '업무' :
-                title = '업무 알림';
-                break;
-            case '모집':
-                title = '모집 알림';
-                break;
-            case '크루':
-                title = '크루 알림';
-                break;
-            default:
-                throw Error('Unknown Project Notice Form Type');
+        let title = '';
+
+        if(currentFormState !== null){
+            switch (currentFormState?.formType) {
+                case '업무' :
+                    title = '업무 알림';
+                    break;
+                case '모집':
+                    title = '모집 알림';
+                    break;
+                case '크루':
+                    title = '크루 알림';
+                    break;
+                default:
+                    throw Error('Unknown Project Notice Form Type');
+            }
         }
+
         return {isOpen: currentFormState !== null, title: title};
     }
 })

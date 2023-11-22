@@ -49,7 +49,7 @@ function NoticeList() {
             className="divide-y divide-gray-100 mobile:max-h-[23rem] mobile:overflow-y-auto"
         >
             {testItems.map((item) => (
-                <NoticeItem item={item}/>
+                <NoticeItem item={item} key={item.alertId}/>
             ))}
         </ul>
     );
