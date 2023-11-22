@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { makeBadgeSize } from "@/utils/common";
+import {BadgeProps} from "@/utils/type";
 
 
 function PositionBadge({ size = '', text = '' }: BadgeProps) {
