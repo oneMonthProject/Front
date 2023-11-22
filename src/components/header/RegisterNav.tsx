@@ -14,7 +14,7 @@ function RegisterNav() {
 
     useEffect(()=> {
         setDesktop(isWide);
-    });
+    },[setDesktop,isWide]);
 
 
     return (
