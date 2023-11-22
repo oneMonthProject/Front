@@ -1,6 +1,6 @@
 'use client';
 
-import React, {ReactNode, useEffect, useRef} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {RiCloseFill} from "@react-icons/all-files/ri/RiCloseFill";
 import Button from "@/components/ui/Button";
 import {ModalProps} from "@/utils/type";

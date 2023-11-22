@@ -22,7 +22,7 @@ export default function NoticeNavTab() {
     function onClickHandler({target}: MouseEvent<HTMLElement>) {
         const updatedNavTabs: NavTabItem[] = [];
 
-        [...noticeNavTabs].forEach((v, i) => {
+        [...noticeNavTabs].forEach((v) => {
             updatedNavTabs.push({
                 ...v,
                 current: v.href === (target as HTMLElement).dataset.pathname
