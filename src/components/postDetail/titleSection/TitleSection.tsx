@@ -1,11 +1,10 @@
+import BackNav from "@/components/ui/BackNav";
 import React from "react";
-import Image from "next/image";
-import BackIcon from "../../../../public/images/pageback.svg";
 
 const TitleSection = () => {
   return (
     <div className="flex-col">
-      <Image src={BackIcon} alt="" className="w-8 h-8" />
+      <BackNav to="/" />
       <div className="text-black100 font-bold text-4xl mt-5 mobile:text-3xl mobile:text-center">
         FE, BE 모집합니다
       </div>

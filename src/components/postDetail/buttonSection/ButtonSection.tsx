@@ -2,7 +2,6 @@
 import Button from "@/components/ui/Button";
 import React, { useState } from "react";
 import Image from "next/image";
-import Arrow from "../../../../public/images/bottomarrow.svg";
 import { useRecoilValue } from "recoil";
 import { PostPositionState } from "@/store/PostStateStore";
 
@@ -22,7 +21,12 @@ const ButtonSection = () => {
           <div className="relative" onClick={() => setOpen(!open)}>
             <div className="px-4 flex justify-between w-[150px] h-[44px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer">
               <div className="text-lg text-grey800 mobile:text-sm">포지션</div>
-              <Image src={Arrow} alt="화살표버튼" />
+              <Image
+                src="/images/bottomarrow.svg"
+                alt="화살표버튼"
+                width={15}
+                height={8}
+              />
             </div>
             {open && (
               <div className="absolute top-12">

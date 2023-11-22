@@ -1,26 +1,38 @@
 import React from "react";
 import Search from "./Search";
 import PostCard from "../postCard/PostCard";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { positionDropdownState } from "@/store/MainStateStore";
 import PositionDropdown from "./PositionDropdown";
 import TechstackDropdown from "./TechstackDropdown";
 import { techstackDropdownState } from "@/store/MainStateStore";
 
 const Posts = () => {
-  const setPosition = useSetRecoilState(positionDropdownState);
-  const setTechstack = useSetRecoilState(techstackDropdownState);
+  const [positionOpen, setPositionOpen] = useRecoilState(positionDropdownState);
+  const [techstackOpen, setTechstackOpen] = useRecoilState(
+    techstackDropdownState
+  );
+
+  const handleTechstackClick = () => {
+    setTechstackOpen((current) => !current);
+    if (positionOpen) {
+      setPositionOpen(false);
+    }
+  };
+
+  const handlePositionClick = () => {
+    setPositionOpen((current) => !current);
+    if (techstackOpen) {
+      setTechstackOpen(false);
+    }
+  };
   return (
     <>
       <div className="flex-col">
         <div className="mt-6 flex justify-between ">
           <div className=" flex space-x-5">
-            <TechstackDropdown
-              onClick={() => setTechstack((current) => !current)}
-            />
-            <PositionDropdown
-              onClick={() => setPosition((current) => !current)}
-            />
+            <TechstackDropdown onClick={handleTechstackClick} />
+            <PositionDropdown onClick={handlePositionClick} />
           </div>
           <div className="mobile:hidden">
             <Search />

@@ -1,6 +1,5 @@
 import React from "react";
 import Image from "next/image";
-import Arrow from "../../../../public/images/bottomarrow.svg";
 import { useRecoilValue } from "recoil";
 import PositionSelect from "./PositionSelect";
 import {
@@ -21,7 +20,12 @@ const PositionDropdown = ({ onClick }: PositionDropdownProps) => {
         <div className="text-lg text-grey800 mobile:text-sm">
           {selectedPosition}
         </div>
-        <Image src={Arrow} alt="화살표버튼" />
+        <Image
+          src="/images/bottomarrow.svg"
+          alt="화살표버튼"
+          width={15}
+          height={8}
+        />
       </div>
       {currentPosition && <PositionSelect />}
     </div>
