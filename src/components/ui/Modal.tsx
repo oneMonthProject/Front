@@ -104,7 +104,6 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalPro
                 </div>
                 {/*모달 컨텐츠 끝 */}
             </div>
-            가
         </div>
     );
 }
