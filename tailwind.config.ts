@@ -30,6 +30,9 @@ const config: Config = {
         grey800: "#797979",
         grey900: "#555555",
 
+        greyBlue:"#4F5B67",
+        greyDarkblue:"#242D35",
+
         warn: "#ED5C5C",
 
         ground100: "#f8f9fc",
