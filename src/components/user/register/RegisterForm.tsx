@@ -1,13 +1,13 @@
 'use client';
 import React, { useState } from "react";
-import Input from "@/components/user/form/Input";
-import PasswordInput from "@/components/user/form/PasswordInput";
 import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
+import Input from "@/components/user/form/Input";
+import PasswordInput from "@/components/user/form/PasswordInput";
 import TextArea from "@/components/user/form/TextArea";
 import FormButton from "@/components/user/form/FormButton";
 import NicknameField from "@/components/user/form/NickNameField";
-import {SelectItem} from "@/utils/type";
+import { SelectItem } from "@/utils/type";
 
 const positionList = [
   { value: 1, name: '프론트엔드' },
@@ -48,7 +48,7 @@ function RegisterForm() {
   }
 
   return (
-    <div className="space-y-5 mobile:space-y-3">
+    <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3">
       <Input id="email" label="이메일" placeholder="example@trustcrews.com" required
         value={email} onChange={(e) => setEmail(e.target.value)} />
       <PasswordInput id="password" label="비밀번호" placeholder="영문, 숫자 포함 6자 이상" required
