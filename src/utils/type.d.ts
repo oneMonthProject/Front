@@ -52,16 +52,19 @@ export interface MultiSelectProps extends SingleSelectProps {
     setValue?: (value: SelectItem) => void;
 }
 
-export interface NoticeItem {
+export interface NoticeItemProp {
     alertId: string;
+    createUserId: string;
     content: string;
     type: string;
     createDate: string;
+    position?: string;
 }
 
 interface ModalProps {
     title: string;
     isOpen: boolean;
     close: () => void;
+    onClickConfirmHandler?: () => void;
     children: ReactNode;
 }

@@ -6,7 +6,7 @@ import Button from "@/components/ui/Button";
 import {ModalProps} from "@/utils/type";
 
 
-function Modal({isOpen, close, title, children}: ModalProps) {
+function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalProps) {
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -86,7 +86,16 @@ function Modal({isOpen, close, title, children}: ModalProps) {
                             {/* Start modal footer */}
                             <div
                                 className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
-                                <Button size='md' onClickHandler={() => close()}>확인</Button>
+                                <Button
+                                    size='md'
+                                    onClickHandler={
+                                        () => {
+                                            if (typeof onClickConfirmHandler === 'function') onClickConfirmHandler();
+                                            else close();
+                                        }}
+                                >
+                                    확인
+                                </Button>
                                 <Button size='md' theme='cancel' onClickHandler={() => close()}>닫기</Button>
                             </div>
                             {/* End modal footer */}
@@ -95,7 +104,6 @@ function Modal({isOpen, close, title, children}: ModalProps) {
                 </div>
                 {/*모달 컨텐츠 끝 */}
             </div>
-            가
         </div>
     );
 }
