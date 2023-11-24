@@ -33,47 +33,54 @@ function NoticeItemDetail() {
         }
     }
 
+
     return (
-        <section className='flex-col items-center'>
-            {
-                currentNoticeForm instanceof ProjectNoticeRecruitForm
-                && <NoticeItemRecruitInfo/>
-            }
-            <section>
-                <p>{currentNoticeForm?.content}</p>
+        <section className='tablet:w-[450px] max-h-[400px] mb-4 overflow-y-auto flex-col items-center'>
+            <section className='tablet:max-w-[400px] mx-auto mt-4 mb-8'>
+                <div className='flex flex-col px-8 py-4 rounded-md bg-ground200'>
+                    <span className='tablet:text-[1.2rem] mb-3 font-semibold text-grey800'>Message :</span>
+                    <span className='tablet:text-[1.4rem] text-grey900 font-semibold text-center'>{currentNoticeForm?.content}</span>
+                </div>
             </section>
             {
-                currentNoticeForm instanceof ProjectNoticeRecruitForm
+                currentNoticeForm?.formType === '모집'
+                && <NoticeItemRecruitInfo/>
+            }
+
+            {
+                currentNoticeForm?.formType === '모집'
                 && (
-                    <section>
+                    <section className='max-w-[150px] mx-auto my-7 flex flex-col items-stretch'>
+                        <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>프로젝트 합류</label>
                         <Select
                             items={selectItems}
-                            label='찐개발자님의 프로젝트 합류'
+                            label=''
                             setValue={onChangeJoinPermitHandler}
                             value={
                                 {
-                                    name: currentNoticeForm.isPermit === 'true'
+                                    name: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit === 'true'
                                         ? '수락'
                                         : '거절',
-                                    value: currentNoticeForm.isPermit
+                                    value: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit
                                 }
                             }/>
                     </section>
                 )}
             {
-                currentNoticeForm instanceof ProjectNoticeTaskForm
+                currentNoticeForm?.formType === '업무'
                 && (
-                    <section>
+                    <section className='max-w-[150px] mx-auto mt-9 flex flex-col items-stretch'>
+                        <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수 부여</label>
                         <Select
                             items={selectItems}
-                            label='신뢰점수 부여'
+                            label=''
                             setValue={onChangeTaskPointHandler}
                             value={
                                 {
-                                    name: currentNoticeForm.isTaskSuccess === 'true'
-                                        ? '+ 신뢰점수 부여'
-                                        : '- 신뢰점수 부여',
-                                    value: currentNoticeForm.isTaskSuccess
+                                    name: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess === 'true'
+                                        ? '+ 신뢰점수'
+                                        : '- 신뢰점수',
+                                    value: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess
                                 }
                             }/>
                     </section>

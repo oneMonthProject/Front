@@ -61,7 +61,7 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalPro
                 {/*모달 컨텐츠 시작 */}
                 <div
                     ref={ref}
-                    className="relative inline-block overflow-hidden transition-all transform sm:align-middle mobile:w-max-[320px] tablet:max-w-[450px]"
+                    className="relative inline-block overflow-hidden transition-all transform sm:align-middle mobile:w-max-[320px] tablet:max-w-[600px]"
                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <div>
                         <div className="rounded-lg pb-8 bg-white shadow">
