@@ -48,4 +48,4 @@ jobs:
             ${{ runner.os }}-yarn-
       - name: Run build
       - run: yarn build
-      - run: pm2 restart 'trustcrews front restart'
+      - run: pm2 restart 'trustcrews-front'
