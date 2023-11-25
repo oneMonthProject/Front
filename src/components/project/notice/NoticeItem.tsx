@@ -1,6 +1,6 @@
 import React from 'react';
 import {NoticeItemProp} from "@/utils/type";
-import NoticeBadge from "@/components/ui/NoticeBadge";
+import NoticeBadge from "@/components/ui/badge/NoticeBadge";
 import {useRecoilState} from "recoil";
 import {
     ProjectNoticeCrewForm,

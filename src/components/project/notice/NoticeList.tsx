@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import NoticeBadge from "@/components/ui/NoticeBadge";
 import {NoticeItemProp} from "@/utils/type";
 import NoticeItem from "@/components/project/notice/NoticeItem";
 

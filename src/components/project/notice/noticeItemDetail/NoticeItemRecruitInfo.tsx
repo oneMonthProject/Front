@@ -1,6 +1,6 @@
 import React from 'react';
 import TechStackImage from "@/components/ui/TechStackImage";
-import TrustGradeBadge from "@/components/ui/TrustGradeBadge";
+import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import Avatar from "@/components/ui/Avatar";
 import DefaultAvatar from "../../../../../public/images/defaultAvatar.png";
 

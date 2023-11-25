@@ -1,5 +1,5 @@
 import React from 'react';
-import TrustGradeBadge from "@/components/ui/TrustGradeBadge";
+import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 
 function ProjectInfo() {
     return (
