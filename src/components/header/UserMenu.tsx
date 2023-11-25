@@ -23,7 +23,7 @@ class UserMenuItem implements DropDownItem {
 }
 
 const items:DropDownItem[] = [
-    new UserMenuItem('내 프로필','/profile'), new UserMenuItem('로그아웃','/logout')
+    new UserMenuItem('내 프로필','/user/profile'), new UserMenuItem('로그아웃','/logout')
 ]
 
 function UserMenu({nickName, src}: UserMenuProps) {
