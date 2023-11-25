@@ -12,10 +12,8 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalPro
 
     useEffect(() => {
         if (isOpen) {
-            const scrollY = window.scrollY;
-
             document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollY}px`;
+            document.body.style.top = '0px';
             document.body.style.overflowY = 'hidden';
         } else {
             const scrollY = document.body.style.top;
