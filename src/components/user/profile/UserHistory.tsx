@@ -1,80 +1,138 @@
 'use client';
-import React, { useState } from "react";
-import { FaArrowAltCircleRight } from "@react-icons/all-files/fa/FaArrowAltCircleRight";
-import { FaMinusSquare } from "@react-icons/all-files/fa/FaMinusSquare";
-import { FaCheckCircle } from "@react-icons/all-files/fa/FaCheckCircle";
-import { FaExclamationTriangle } from "@react-icons/all-files/fa/FaExclamationTriangle";
-import { FaQuestionCircle } from "@react-icons/all-files/fa/FaQuestionCircle";
+import React from "react";
+import { BiUser } from "@react-icons/all-files/bi/BiUser";
+import { BiUndo } from "@react-icons/all-files/bi/BiUndo";
+import { BiCheck } from "@react-icons/all-files/bi/BiCheck";
+import { BiX } from "@react-icons/all-files/bi/BiX";
 
-class TestUserHistory {
-  status: string;
-  projectName: string;
-  updateDate: string;
+const timeline = [
+  {
+    id: 1,
+    status: "완료",
+    target: '팀 프로젝트 매칭 서비스',
+    href: '#',
+    datetime: '2020-09-20'
+  },
+  {
+    id: 2,
+    status: "강제탈퇴",
+    target: '팀 프로젝트 매칭 서비스',
+    href: '#',
+    datetime: '2020-09-22'
+  },
+  {
+    id: 3,
+    status: "탈퇴",
+    target: '팀 프로젝트 매칭 서비스',
+    href: '#',
+    datetime: '2020-09-28'
+  },
+  {
+    id: 4,
+    status: "완료",
+    target: '팀 프로젝트 매칭 서비스',
+    href: '#',
+    datetime: '2020-09-30'
+  },
+  {
+    id: 5,
+    status: "참여",
+    target: '팀 프로젝트 매칭 서비스',
+    href: '#',
+    datetime: '2020-10-04'
+  },
+]
 
-  constructor(status: string, projectName: string, updateDate: string) {
-    this.status = status;
-    this.projectName = projectName;
-    this.updateDate = updateDate;
-  }
+function classNames(...classes: string[]) {
+  return classes.filter(Boolean).join(' ')
 }
 
-const testHistoryList = [
-  new TestUserHistory("완료", "프로젝트 F", "2023-12-01"),
-  new TestUserHistory("강제탈퇴", "프로젝트 D", "2023-12-01"),
-  new TestUserHistory("탈퇴", "프로젝트 C", "2023-12-01"),
-  new TestUserHistory("완료", "프로젝트 B", "2023-12-01"),
-  new TestUserHistory("참여", "프로젝트 A", "2023-12-01")
-];
-
 function UserHistory() {
-  const [historyList, setHistoryList] = useState<TestUserHistory[]>(testHistoryList);
+  const getIconColorByStatus = (status: string) => {
+    switch (status) {
+      case "참여":
+        return 'bg-blue-500'
+      case "완료":
+        return 'bg-green-500'
+      case "탈퇴":
+        return 'bg-gray-400'
+      case "강제탈퇴":
+        return 'bg-red-400'
+      default:
+        return ''
+    }
+  }
 
   const getIconByStatus = (status: string) => {
-    const iconClassName = 'h-8 w-8 mobile:h-5 mobile:w-5';
+    const iconClassName = 'h-5 w-5 text-white';
 
     switch (status) {
       case "참여":
-        return <FaArrowAltCircleRight className={`${iconClassName} text-blue-500`} />
+        return <BiUser className={iconClassName} aria-hidden="true" />
       case "완료":
-        return <FaCheckCircle className={`${iconClassName} text-green-500`} />
+        return <BiCheck className={iconClassName} aria-hidden="true" />
       case "탈퇴":
-        return <FaMinusSquare className={`${iconClassName} text-red-500`} />
+        return <BiUndo className={iconClassName} aria-hidden="true" />
       case "강제탈퇴":
-        return <FaExclamationTriangle className={`${iconClassName} text-black-500`} />
+        return <BiX className={iconClassName} aria-hidden="true" />
       default:
-        return <FaQuestionCircle className={iconClassName} />
+        return <></>
     }
   }
 
   const getHistoryStatusText = (status: string) => {
     switch (status) {
       case "참여":
-        return " 프로젝트에 참여하였습니다."
+        return "프로젝트에 참여 하였습니다."
       case "완료":
-        return " 프로젝트 완료 하였습니다."
+        return "프로젝트를 완료 하였습니다."
       case "탈퇴":
-        return " 프로젝트를 탈퇴 하셨습니다."
+        return "프로젝트를 탈퇴 하셨습니다."
       case "강제탈퇴":
-        return " 프로젝트에서 강제 탈퇴 당했습니다."
+        return "프로젝트에서 강제탈퇴 당하셨습니다."
       default:
-        return "알 수 없는 상테 입니다."
+        return ""
     }
   }
 
   return (
-    <div className="space-y-4 mobile:space-y-2 w-full h-fit text-center justify-center mt-8 mobile:mt-5 p-5 mobile:p-0">
-      {
-        historyList.length > 0 ? historyList.map(history => (
-          <div key={history.projectName} className="flex text-lg mobile:text-xs">
-            <span className="items-center self-center p-3 mobile:p-1">{getIconByStatus(history.status)}</span>
-            <span className="text-left items-center self-center">
-              <span className="font-bold">{history.projectName}</span>
-              <span className="text-gray-500">{getHistoryStatusText(history.status)}</span>
-            </span>
-            <span className="items-center self-center ml-auto text-gray-400 mobile:hidden">{history.updateDate}</span>
-          </div>
-        )) : <></>
-      }
+    <div className="flow-root">
+      <ul role="list" className="-mb-8">
+        {timeline.map((event, eventIdx) => (
+          <li key={event.id}>
+            <div className="relative pb-8">
+              {eventIdx !== timeline.length - 1 ? (
+                <span className="absolute left-4 top-4 -ml-px h-full w-0.5 bg-gray-200" aria-hidden="true" />
+              ) : null}
+              <div className="relative flex space-x-3">
+                <div>
+                  <span
+                    className={classNames(
+                      getIconColorByStatus(event.status),
+                      'h-8 w-8 rounded-full flex items-center justify-center ring-8 ring-white'
+                    )}
+                  >
+                    {getIconByStatus(event.status)}
+                  </span>
+                </div>
+                <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
+                  <div>
+                    <p className="text-sm text-gray-500">
+                      <a href={event.href} className="font-medium text-gray-900">
+                        {event.target}
+                      </a>
+                      {' '}{getHistoryStatusText(event.status)}
+                    </p>
+                  </div>
+                  <div className="whitespace-nowrap text-right text-sm text-gray-500 mobile:hidden">
+                    <time dateTime={event.datetime}>{new Date(event.datetime).toDateString()}</time>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
     </div>
   )
 }
