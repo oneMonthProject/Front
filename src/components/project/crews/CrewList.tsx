@@ -8,42 +8,42 @@ import PositionBadge from "@/components/ui/badge/PositionBadge";
 
 const people = [
     {
-        userId: 'Leslie Alexander',
+        userId: 'Leslie',
         projectMemberAuth: '매니저',
         position: "프론트엔드",
         imageUrl:
             'https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
     {
-        userId: 'Michael Foster',
+        userId: 'Michael',
         projectMemberAuth: '부매니저',
         position: "프론트엔드",
         imageUrl:
             'https://images.unsplash.com/photo-1519244703995-f4e0f30006d5?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
     {
-        userId: 'Dries Vincent',
+        userId: 'Dries',
         projectMemberAuth: '구성원',
         position: "프론트엔드",
         imageUrl:
             'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
     {
-        userId: 'Lindsay Walton',
+        userId: 'Lindsay',
         projectMemberAuth: '구성원',
         position: "백엔드",
         imageUrl:
             'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
     {
-        userId: 'Courtney Henry',
+        userId: 'Courtney',
         projectMemberAuth: '구성원',
         position: "백엔드",
         imageUrl:
             'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
     },
     {
-        userId: 'Tom Cook',
+        userId: 'Tom',
         projectMemberAuth: '구성원',
         position: "백엔드",
         imageUrl:
@@ -60,7 +60,7 @@ export default function CrewList() {
         <ul role="list" className="divide-y divide-gray-100">
             {people.map((person) => (
                 <li key={person.userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000">
-                    <Link href={`/projectmember/${person.userId}/detail`}
+                    <Link href={`/project/crews/${person.userId}`}
                           className="flex items-center min-w-0 tablet:pl-6 mobile:pl-4 tablet:space-x-6 mobile:space-x-4">
                         <Avatar size='xs' src={person.imageUrl} alt={`${person.userId}의 프로필 이미지`}/>
                         <div className="min-w-0 flex items-center tablet:space-x-6 mobile:space-x-4">
