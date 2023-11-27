@@ -2,7 +2,7 @@
 import Image, {StaticImageData} from "next/image";
 
 interface ImageProps {
-  src: StaticImageData | string | null;
+  src?: StaticImageData | string | null;
   size: string;
   alt: string;
 }
@@ -20,7 +20,7 @@ function makeImageSize(size: string) {
       imageSize = 'h-24 w-24 mobile:h-16 mobile:w-16';
       break;
     case 'lg':
-      imageSize = 'h-40 w-40 mobile:h-32 mobile:w-32';
+      imageSize = 'h-40 w-40 mobile:h-24 mobile:w-24';
       break;
     default:
       imageSize = 'h-32 w-32';
