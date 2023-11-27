@@ -4,10 +4,10 @@ import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
 import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/Button";
-import Input from "@/components/user/form/Input";
-import NicknameField from "@/components/user/form/NickNameField";
-import TextArea from "@/components/user/form/TextArea";
-import FormButton from "@/components/user/form/FormButton";
+import Input from "@/components/ui/form/Input";
+import NicknameField from "@/components/ui/form/NickNameField";
+import TextArea from "@/components/ui/form/TextArea";
+import FormButton from "@/components/ui/form/FormButton";
 import { SelectItem } from "@/utils/type";
 
 const positionList = [

@@ -2,11 +2,11 @@
 import React, { useState } from "react";
 import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
-import Input from "@/components/user/form/Input";
-import PasswordInput from "@/components/user/form/PasswordInput";
-import TextArea from "@/components/user/form/TextArea";
-import FormButton from "@/components/user/form/FormButton";
-import NicknameField from "@/components/user/form/NickNameField";
+import Input from "@/components/ui/form/Input";
+import PasswordInput from "@/components/ui/form/PasswordInput";
+import TextArea from "@/components/ui/form/TextArea";
+import FormButton from "@/components/ui/form/FormButton";
+import NicknameField from "@/components/ui/form/NickNameField";
 import { SelectItem } from "@/utils/type";
 
 const positionList = [

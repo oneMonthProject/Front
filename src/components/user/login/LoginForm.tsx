@@ -1,8 +1,8 @@
 'use client';
 import React, { useState } from "react";
-import Input from "@/components/user/form/Input";
-import PasswordInput from "@/components/user/form/PasswordInput";
-import FormButton from "@/components/user/form/FormButton";
+import Input from "@/components/ui/form/Input";
+import PasswordInput from "@/components/ui/form/PasswordInput";
+import FormButton from "@/components/ui/form/FormButton";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
