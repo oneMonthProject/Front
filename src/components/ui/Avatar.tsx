@@ -1,4 +1,5 @@
 'use client';
+import { makeImageSize } from "@/utils/common";
 import Image from "next/image";
 
 interface ImageProps {
@@ -7,27 +8,6 @@ interface ImageProps {
   alt: string;
 }
 
-function makeImageSize(size: string) {
-  let imageSize;
-  switch (size) {
-    case 'xs':
-      imageSize = 'h-10 w-10';
-      break;
-    case 'sm':
-      imageSize = 'h-16 w-16 mobile:h-10 mobile:w-10';
-      break;
-    case 'md':
-      imageSize = 'h-24 w-24 mobile:h-16 mobile:w-16';
-      break;
-    case 'lg':
-      imageSize = 'h-40 w-40 mobile:h-32 mobile:w-32';
-      break;
-    default:
-      imageSize = 'h-32 w-32';
-  }
-
-  return imageSize;
-}
 
 function Avatar({ src, size, alt }: ImageProps) {
   const imageSize = makeImageSize(size);
