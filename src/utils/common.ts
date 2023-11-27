@@ -95,3 +95,7 @@ export function makeImageSize(size: string) {
 
     return imageSize;
 }
+
+export function classNames(...classes: string[]) {
+    return classes.filter(Boolean).join(' ')
+}
