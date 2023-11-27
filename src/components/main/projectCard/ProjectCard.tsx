@@ -1,5 +1,5 @@
 import React from "react";
-import TrustGradeBadge from "../../ui/TrustGradeBadge";
+import TrustGradeBadge from "../../ui/badge/TrustGradeBadge";
 import Image from "next/image";
 
 const ProjectCard = () => {
