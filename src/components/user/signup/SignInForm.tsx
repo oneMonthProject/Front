@@ -41,7 +41,7 @@ function SignUpForm() {
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [position, setPosition] = useState<SelectItem | null>(null);
   const [techStack, setTechStack] = useState<SelectItem[]>([]);
-  const [selfIntroduction, setSelfInformation] = useState("");
+  const [selfIntroduction, setSelfIntroduction] = useState("");
 
   const signUp = () => {
 
@@ -59,7 +59,7 @@ function SignUpForm() {
       <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
       <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
-        value={selfIntroduction} onChange={(e) => setSelfInformation(e.target.value)} />
+        value={selfIntroduction} onChange={(e) => setSelfIntroduction(e.target.value)} />
       <FormButton onClick={signUp}>가입</FormButton>
     </div>
   )
