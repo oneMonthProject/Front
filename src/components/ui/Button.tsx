@@ -97,7 +97,7 @@ export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   size?: ButtonSize;
   theme?: ButtonTheme;
   children: ReactNode;
-  onClickHandler: () => void;
+  onClickHandler?: () => void;
 }
 
 function Button({
@@ -114,7 +114,9 @@ function Button({
     <button
       {...props}
       className={`rounded-full ${bgColor} ${px} ${py} ${textSize} font-semibold ${textColor} shadow-sm ${ring}`}
-      onClick={onClickHandler}
+      onClick={ () => {
+        if(typeof onClickHandler === 'function') onClickHandler();
+      }}
     >
       {children}
     </button>

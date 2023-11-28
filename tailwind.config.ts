@@ -34,6 +34,7 @@ const config: Config = {
         greyDarkblue:"#242D35",
 
         warn: "#ED5C5C",
+        danger:"#D22E1D",
 
         ground100: "#f8f9fc",
         ground200: "#f5f7fc",
