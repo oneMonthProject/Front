@@ -49,7 +49,7 @@ function ProfileSection() {
                 <ul className="my-3 flex flex-col items-center">
                     <li className="pc:text-2xl tablet:text-[1.3rem] mobile:text-lg font-medium text-greyDarkBlue">{testUserInfo.nickname}</li>
                 </ul>
-                <Button theme='black' size='sm'>프로젝트 탈퇴</Button>
+                <Button theme='black' size='md'>프로젝트 탈퇴</Button>
             </section>
             <section className='mobile:w-full tablet:h-[200px] mobile:h-[180px] flex flex-col flex-wrap justify-between p-6 mobile:p-4 bg-ground100 rounded-lg'>
                 <div className='pc:h-[50px] tablet:mx-8 flex items-center justify-around mobile:space-x-4'>
