@@ -46,7 +46,7 @@ function ProfileSection() {
         <div className="flex mobile:flex-col mobile:space-y-6 mobile:mt-4 px-1 py-4 mx-auto items-center justify-center">
             <section className='mobile:w-full pc:w-[200px] tablet:w-[150px] tablet:mr-10 flex flex-col items-center'>
                 <Avatar size="md" src={testUserInfo.imageSrc} alt="빈 프로필"/>
-                <ul className="mt-1 mb-3 flex flex-col items-center">
+                <ul className="my-3 flex flex-col items-center">
                     <li className="pc:text-2xl tablet:text-[1.3rem] mobile:text-lg font-medium text-greyDarkBlue">{testUserInfo.nickname}</li>
                 </ul>
                 <Button theme='black' size='sm'>프로젝트 탈퇴</Button>

@@ -8,8 +8,8 @@ function ProjectCrewDetailPageLayout({children}: { children: ReactNode }) {
             <section className='w-full px-1'>
                 {children}
             </section>
-            <section className='my-7'>
-                <Link href='/project/crews'><Button size='lg' theme='primary-hollow'>크루 목록</Button></Link>
+            <section className='mt-7'>
+                <Link href='/project/crews'><Button size='xl' theme='primary-hollow'>크루 목록</Button></Link>
             </section>
         </section>
     );
