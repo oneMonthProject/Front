@@ -1,5 +1,5 @@
 'use client';
-import { InputHTMLAttributes, ReactNode, useState } from "react";
+import { InputHTMLAttributes, useState } from "react";
 import { AiOutlineEye } from "@react-icons/all-files/ai/AiOutlineEye";
 import { AiOutlineEyeInvisible } from "@react-icons/all-files/ai/AiOutlineEyeInvisible";
 
@@ -32,8 +32,7 @@ function PasswordInput({ id, label, required = false, ...props }: InputProps) {
       <button className="absolute right-2 bottom-3 text-gray-400" onClick={() => setVisible(!visible)}>
         {getButtonIcon(visible)}
       </button>
-    </div >
-
+    </div>
   );
 }
 

@@ -3,7 +3,7 @@ import React from "react";
 import { useRouter } from 'next/navigation';
 import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/Button";
-import TechStackBadge from '@/components/user/TechStackBadge';
+import TechStackBadge from '@/components/ui/badge/TechStackBadge';
 import UserProjectInfo from "./UserProjectInfo";
 
 const positionList = [
