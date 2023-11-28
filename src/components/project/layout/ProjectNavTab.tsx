@@ -2,7 +2,7 @@
 import React, {MouseEvent} from 'react';
 import Link from "next/link";
 import {useRecoilState, useRecoilValue} from "recoil";
-import {currentProjectNavTabSelector, projectNavTabState} from "@/store/ProjectNavTabStateStore";
+import {currentProjectNavTabSelector, projectNavTabState} from "@/store/project/ProjectNavTabStateStore";
 import {ProjectNavTabItem} from "@/utils/type";
 
 function classNames(...classes: string[]) {

@@ -5,7 +5,7 @@ import {NavTabItem, SelectItem} from "@/utils/type";
 import {
     currentProjectNoticeNavTabSelector,
     projectNoticeNavTabStateStore
-} from "@/store/projectNotice/ProjectNoticeNavTabStateStore";
+} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 import Select from "@/components/ui/Select";
 
 

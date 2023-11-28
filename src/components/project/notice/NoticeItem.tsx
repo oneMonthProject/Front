@@ -6,7 +6,7 @@ import {
     ProjectNoticeCrewForm,
     projectNoticeCurrentFormState, ProjectNoticeRecruitForm,
     ProjectNoticeTaskForm
-} from "@/store/projectNotice/ProjectNoticeStateStore";
+} from "@/store/project/notice/ProjectNoticeStateStore";
 
 // todo - 아이템 클릭시 아이템 타입에 해당하는 모달창 open
 //  1. type에 따른 title 정해서 모달창 먼저 show
