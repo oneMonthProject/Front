@@ -1,13 +1,12 @@
 'use client';
 import { makeImageSize } from "@/utils/common";
-import Image from "next/image";
+import Image, {StaticImageData} from "next/image";
 
 interface ImageProps {
-  src: string | null;
+  src?: StaticImageData | string | null;
   size: string;
   alt: string;
 }
-
 
 function Avatar({ src, size, alt }: ImageProps) {
   const imageSize = makeImageSize(size);

@@ -1,5 +1,5 @@
-import PositionBadge from "@/components/ui/PositionBadge";
-import TrustGradeBadge from "@/components/ui/TrustGradeBadge";
+import PositionBadge from "@/components/ui/badge/PositionBadge";
+import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import React from "react";
 import Image from "next/image";
 

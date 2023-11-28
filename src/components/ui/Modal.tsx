@@ -6,16 +6,14 @@ import Button from "@/components/ui/Button";
 import {ModalProps} from "@/utils/type";
 
 
-function Modal({isOpen, close, title, children}: ModalProps) {
+function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalProps) {
 
     const ref = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         if (isOpen) {
-            const scrollY = window.scrollY;
-
             document.body.style.position = 'fixed';
-            document.body.style.top = `-${scrollY}px`;
+            document.body.style.top = '0px';
             document.body.style.overflowY = 'hidden';
         } else {
             const scrollY = document.body.style.top;
@@ -61,7 +59,7 @@ function Modal({isOpen, close, title, children}: ModalProps) {
                 {/*모달 컨텐츠 시작 */}
                 <div
                     ref={ref}
-                    className="relative inline-block overflow-hidden transition-all transform sm:align-middle mobile:w-max-[320px] tablet:max-w-[450px]"
+                    className="relative inline-block overflow-hidden transition-all transform sm:align-middle mobile:w-max-[320px] tablet:max-w-[600px]"
                     role="dialog" aria-modal="true" aria-labelledby="modal-headline">
                     <div>
                         <div className="rounded-lg pb-8 bg-white shadow">
@@ -86,7 +84,16 @@ function Modal({isOpen, close, title, children}: ModalProps) {
                             {/* Start modal footer */}
                             <div
                                 className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
-                                <Button size='md' onClickHandler={() => close()}>확인</Button>
+                                <Button
+                                    size='md'
+                                    onClickHandler={
+                                        () => {
+                                            if (typeof onClickConfirmHandler === 'function') onClickConfirmHandler();
+                                            else close();
+                                        }}
+                                >
+                                    확인
+                                </Button>
                                 <Button size='md' theme='cancel' onClickHandler={() => close()}>닫기</Button>
                             </div>
                             {/* End modal footer */}
@@ -95,7 +102,6 @@ function Modal({isOpen, close, title, children}: ModalProps) {
                 </div>
                 {/*모달 컨텐츠 끝 */}
             </div>
-            가
         </div>
     );
 }

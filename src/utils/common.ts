@@ -5,9 +5,9 @@ export function makeBadgeSize(size: string) {
     let py;
     switch (size) {
         case 'xs':
-            textSize = 'text-xs';
-            px = 'px-2';
-            py = 'py-1';
+            textSize = 'text-xs mobile:text-[9px]';
+            px = 'px-2 mobile:px-1';
+            py = 'py-0.5 mobile:py-0';
             break;
         case 'sm':
             textSize = 'tablet:text-sm mobile:text-xs';

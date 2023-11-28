@@ -1,8 +1,11 @@
 import React from 'react';
+import CrewList from "@/components/project/crews/CrewList";
 
 function CrewsPage() {
     return (
-        <div>crews</div>
+        <section className='w-full  mx-auto'>
+            <CrewList/>
+        </section>
     );
 }
 

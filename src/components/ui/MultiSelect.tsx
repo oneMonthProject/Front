@@ -26,7 +26,7 @@ export default function MultiSelect({ values, setValues, items = [], label, plac
                 {values.length > 0 ? values.map((value) => value.name).join(', ') : placeholder}
               </span>
               <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <AiFillCaretDown className="h5 w-5 text-gray-400" aria-hidden="true" />
+                <AiFillCaretDown className="w-5 text-gray-400" aria-hidden="true" />
               </span>
             </Listbox.Button>
             <Transition
