@@ -13,12 +13,13 @@ export interface DropDownProps {
 export interface NavTabItem {
     name: string;
     href: string;
-    current?: boolean;
+    current: boolean;
 }
 
 export interface ProjectNavTabItem extends NavTabItem {
     name: string;
     href: string;
+    current: boolean;
 }
 
 export interface BadgeProps {
