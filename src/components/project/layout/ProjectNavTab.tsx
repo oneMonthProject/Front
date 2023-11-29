@@ -16,6 +16,20 @@ export default function ProjectNavTab() {
     const [projectNavTabs, setProjectNavTabs] = useRecoilState(projectNavTabState);
     const currentProjectNavTab = useRecoilValue(currentProjectNavTabSelector);
 
+    useEffect(() => {
+        // 프로젝트 상세 업무탭 초기화
+        if(currentProjectNavTab == null){
+            const updatedProjectNavTabs: ProjectNavTabItem[] = [];
+            [...projectNavTabs].forEach((v) => {
+                updatedProjectNavTabs.push({
+                    ...v,
+                    current: v.name === "업무"
+                });
+            });
+            setProjectNavTabs(updatedProjectNavTabs);
+        }
+    },[currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
+
 
     function onClickHandler({target}: MouseEvent<HTMLAnchorElement>) {
         const updatedProjectNavTabs: ProjectNavTabItem[] = [];

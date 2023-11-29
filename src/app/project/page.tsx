@@ -6,13 +6,8 @@ import {useQueryString} from "@/hooks/useQueryString";
 function ProjectPage() {
     const projectId = useQueryString('projectId');
 
-    useEffect(() => {
-        setProjectState({projectId});
-        setCurrentProjectNavTab(`/project/${projectId}/task`);
-        setIsReady(true);
-    }, []);
-
-    if(isReady) redirect(`/project/${projectId}/task`);
+    // 프로젝트 상세 > 업무 탭으로 redirect
+    redirect(`/project/task?projectId=${projectId}`);
 
     return (
         <div></div>
