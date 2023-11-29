@@ -5,6 +5,7 @@ import {useRecoilState, useRecoilValue} from "recoil";
 import {currentProjectNavTabSelector, projectNavTabState} from "@/store/project/ProjectNavTabStateStore";
 import {ProjectNavTabItem} from "@/utils/type";
 import {useQueryString} from "@/hooks/useQueryString";
+import {usePathname} from "next/navigation";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -12,6 +13,7 @@ function classNames(...classes: string[]) {
 
 
 export default function ProjectNavTab() {
+    const pathname = usePathname();
     const projectId = useQueryString('projectId');
     const [projectNavTabs, setProjectNavTabs] = useRecoilState(projectNavTabState);
     const currentProjectNavTab = useRecoilValue(currentProjectNavTabSelector);
@@ -23,7 +25,7 @@ export default function ProjectNavTab() {
             [...projectNavTabs].forEach((v) => {
                 updatedProjectNavTabs.push({
                     ...v,
-                    current: v.name === "업무"
+                    current: v.href === pathname
                 });
             });
             setProjectNavTabs(updatedProjectNavTabs);
