@@ -60,19 +60,19 @@ export default function CrewList() {
     const projectId = useQueryString('projectId');
     return (
         <ul role="list" className="divide-y divide-gray-100">
-            {people.map((person) => (
-                <li key={person.userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000">
+            {people.map(({userId, position, projectMemberAuth,imageUrl}) => (
+                <li key={userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000">
                     <Link href={{
-                        pathname: `/project/crews/${person.userId}`,
-                        query: {projectId}
+                        pathname: `/project/crews/detail`,
+                        query: {projectId, userId}
                     }}
                           className="flex items-center min-w-0 tablet:pl-6 mobile:pl-4 tablet:space-x-6 mobile:space-x-4">
-                        <Avatar size='xs' src={person.imageUrl} alt={`${person.userId}의 프로필 이미지`}/>
+                        <Avatar size='xs' src={imageUrl} alt={`${userId}의 프로필 이미지`}/>
                         <div className="min-w-0 flex items-center tablet:space-x-6 mobile:space-x-4">
-                            <p className="tablet:text-[1.2rem] mobile:text-sm font-semibold leading-5 text-gray-900">{person.userId}</p>
+                            <p className="tablet:text-[1.2rem] mobile:text-sm font-semibold leading-5 text-gray-900">{userId}</p>
                             <ul className='flex items-center space-x-3'>
-                                <li><PositionBadge text={person.position} size='sm'/></li>
-                                <li><ProjectRoleBadge text={person.projectMemberAuth} size='sm'/></li>
+                                <li><PositionBadge text={position} size='sm'/></li>
+                                <li><ProjectRoleBadge text={projectMemberAuth} size='sm'/></li>
                             </ul>
                         </div>
                     </Link>
