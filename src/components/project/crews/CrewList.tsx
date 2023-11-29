@@ -5,6 +5,7 @@ import Avatar from "@/components/ui/Avatar";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import Link from "next/link";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
+import {useQueryString} from "@/hooks/useQueryString";
 
 const people = [
     {
@@ -56,11 +57,15 @@ const people = [
 //  , position(id, name) : 이것도 id는 필요 x. 불가피하면 같이줘도 되긴함. {position:'프론트엔드'}
 //    필요한 정보 -  포지션 정보, 프로젝트 내 권한, 아이디, 프로필 이미지(: 어떻게 저장할건지, 조회가능한건지?), 마지막 작업(? 미확정)
 export default function CrewList() {
+    const projectId = useQueryString('projectId');
     return (
         <ul role="list" className="divide-y divide-gray-100">
             {people.map((person) => (
                 <li key={person.userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000">
-                    <Link href={`/project/crews/${person.userId}`}
+                    <Link href={{
+                        pathname: `/project/crews/${person.userId}`,
+                        query: {projectId}
+                    }}
                           className="flex items-center min-w-0 tablet:pl-6 mobile:pl-4 tablet:space-x-6 mobile:space-x-4">
                         <Avatar size='xs' src={person.imageUrl} alt={`${person.userId}의 프로필 이미지`}/>
                         <div className="min-w-0 flex items-center tablet:space-x-6 mobile:space-x-4">

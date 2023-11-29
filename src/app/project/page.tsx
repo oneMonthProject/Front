@@ -1,14 +1,10 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {redirect} from "next/navigation";
-import {useSetRecoilState} from "recoil";
-import {projectStateStore} from "@/store/project/ProjectStateStore";
-import {currentProjectNavTab} from "@/store/project/ProjectNavTabStateStore";
+import {useQueryString} from "@/hooks/useQueryString";
 
-function ProjectPage({params: {projectId}}: { params: { projectId: string; } }) {
-    const setProjectState = useSetRecoilState(projectStateStore);
-    const setCurrentProjectNavTab = useSetRecoilState(currentProjectNavTab);
-    const [isReady, setIsReady] = useState(false);
+function ProjectPage() {
+    const projectId = useQueryString('projectId');
 
     useEffect(() => {
         setProjectState({projectId});
