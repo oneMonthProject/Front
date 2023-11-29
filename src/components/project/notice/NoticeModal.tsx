@@ -49,7 +49,7 @@ function NoticeModal() {
 import {
     projectNoticeCurrentFormState,
     projectNoticeModalStateSelector
-} from "@/store/projectNotice/ProjectNoticeStateStore";
+} from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
 
 export default NoticeModal;

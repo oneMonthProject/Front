@@ -6,7 +6,7 @@ import {
     projectNoticeCurrentFormState,
     ProjectNoticeRecruitForm,
     ProjectNoticeTaskForm
-} from "@/store/projectNotice/ProjectNoticeStateStore";
+} from "@/store/project/notice/ProjectNoticeStateStore";
 import {SelectItem} from "@/utils/type";
 import NoticeItemRecruitInfo from "@/components/project/notice/noticeItemDetail/NoticeItemRecruitInfo";
 
