@@ -38,7 +38,7 @@ const testUserInfo = {
   techStack: [techStackList[0], techStackList[1], techStackList[5], techStackList[8], techStackList[9]],
   selfIntroduction: "개발 N년차 웹 프론트엔드 개발자 입니다.",
   projectCount: 3,
-  trustGrade: 1,
+  trustGrade: "1등급",
   trustScore: 1200
 };
 
