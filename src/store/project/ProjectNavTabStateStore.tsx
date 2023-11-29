@@ -17,17 +17,17 @@ class ProjectNavItemImpl implements ProjectNavTabItem {
 export const projectNavTabState = atom<ProjectNavTabItem[]>({
     key: "projectNavTabState",
     default: [
-        new ProjectNavItemImpl(true,'/project/task', '업무'),
+        new ProjectNavItemImpl(false,'/project/task', '업무'),
         new ProjectNavItemImpl(false,'/project/crews', '크루'),
         new ProjectNavItemImpl(false,'/project/notice', '알림'),
         new ProjectNavItemImpl(false,'/project/setting', '프로젝트 설정')
     ]
 });
 
-export const currentProjectNavTabSelector = selector<NavTabItem>({
+export const currentProjectNavTabSelector = selector<NavTabItem | null>({
     key:'currentProjectNavTabSelector',
     get:({get}) => {
         const navTabs = get(projectNavTabState);
-        return navTabs.find(v => v.current)!;
+        return navTabs.find(v => v.current) || null;
     }
 })
