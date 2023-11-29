@@ -9,7 +9,7 @@ function LoginPage() {
       <LoginForm />
       <div className="text-center text-sm mobile:text-xs mt-3">
         이미 회원이신가요?
-        <Link href='/register'>
+        <Link href='/signup'>
           <span className="ml-1 underline text-blue-600">회원가입</span>
         </Link>
       </div>
