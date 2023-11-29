@@ -1,34 +1,33 @@
 import {atom, selector} from "recoil";
 import {NavTabItem, ProjectNavTabItem} from "@/utils/type";
-import {projectStateStore} from "@/store/project/ProjectStateStore";
 
 class ProjectNavItemImpl implements ProjectNavTabItem {
+    current: boolean;
     href: string;
     name: string;
 
-    constructor(href:string, name:string) {
+    constructor(current:boolean, href:string, name:string) {
+        this.current = current;
         this.href = href;
         this.name = name;
     }
 
 }
 
-export const projectNavTabSelector = selector<NavTabItem[]>({
-    key:'projectNavTabSelector',
-    get:({get}) => {
-        const {projectId} = get(projectStateStore);
-
-        return [
-                new ProjectNavItemImpl(`/project/${projectId}/task`, '업무'),
-                new ProjectNavItemImpl(`/project/${projectId}/crews`, '크루'),
-                new ProjectNavItemImpl(`/project/${projectId}/notice`, '알림'),
-                new ProjectNavItemImpl(`/project/${projectId}/setting`, '프로젝트 설정')
-            ];
-    }
+export const projectNavTabState = atom<ProjectNavTabItem[]>({
+    key: "projectNavTabState",
+    default: [
+        new ProjectNavItemImpl(true,'/project/task', '업무'),
+        new ProjectNavItemImpl(false,'/project/crews', '크루'),
+        new ProjectNavItemImpl(false,'/project/notice', '알림'),
+        new ProjectNavItemImpl(false,'/project/setting', '프로젝트 설정')
+    ]
 });
 
-export const currentProjectNavTab = atom<string>({
-    key:'currentProjectNavTab',
-    default:''
+export const currentProjectNavTabSelector = selector<NavTabItem>({
+    key:'currentProjectNavTabSelector',
+    get:({get}) => {
+        const navTabs = get(projectNavTabState);
+        return navTabs.find(v => v.current)!;
+    }
 })
-
