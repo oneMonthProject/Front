@@ -1,9 +1,9 @@
 "use client";
-import Button from "@/components/ui/Button";
 import React, { useState } from "react";
-import Image from "next/image";
 import { useRecoilValue } from "recoil";
+import Button from "@/components/ui/Button";
 import { PostPositionState } from "@/store/PostStateStore";
+import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
 
 const ButtonSection = () => {
   const [open, setOpen] = useState(false);
@@ -21,12 +21,7 @@ const ButtonSection = () => {
           <div className="relative" onClick={() => setOpen(!open)}>
             <div className="px-4 flex justify-between w-[150px] h-[44px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer">
               <div className="text-lg text-grey800 mobile:text-sm">포지션</div>
-              <Image
-                src="/images/bottomarrow.svg"
-                alt="화살표버튼"
-                width={15}
-                height={8}
-              />
+              <BsChevronDown className="w-4 h-4 text-grey800" />
             </div>
             {open && (
               <div className="absolute top-12">
