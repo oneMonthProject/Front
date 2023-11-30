@@ -68,3 +68,10 @@ interface ModalProps {
     onClickConfirmHandler?: () => void;
     children: ReactNode;
 }
+
+export interface MilestoneInfo {
+    milestone_id: string;
+    milestone_content: string;
+    start_date: string;
+    end_date: string;
+}
