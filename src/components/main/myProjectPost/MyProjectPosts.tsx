@@ -3,7 +3,7 @@ import ProjectCard from "../projectCard/ProjectCard";
 
 const MyProjectPosts = () => {
   return (
-    <div className="grid pc:grid-cols-4 tablet:grid-cols-2 mt-10 gap-10 mobile:grid-cols-1 mobile:bg-grey200 mobile:gap-5">
+    <div className="grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-0 mobile:bg-grey200">
       <ProjectCard />
       <ProjectCard />
       <ProjectCard />

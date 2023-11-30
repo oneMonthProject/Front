@@ -77,8 +77,11 @@ export function makeBadgeColor(color: string) {
 export function makeImageSize(size: string) {
     let imageSize;
     switch (size) {
+        case '2xs':
+            imageSize = 'h-6 w-6';
+            break;
         case 'xs':
-            imageSize = 'h-10 w-10';
+            imageSize = 'h-10 w-10 mobile:h-8 mobile:w-8';
             break;
         case 'sm':
             imageSize = 'h-16 w-16 mobile:h-10 mobile:w-10';
