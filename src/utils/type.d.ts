@@ -75,3 +75,24 @@ export interface MilestoneInfo {
     start_date: string;
     end_date: string;
 }
+
+export interface UserInfo {
+    nickname: string;
+    imageSrc: string;
+    // 추가 예정
+}
+
+export interface PostInfo {
+    id: string | number;
+    title: string;
+    projectName: string;
+    projectSubject: string;
+    trustGrade: string;
+    recruitmentCount: number | string;
+    startDate: Date;
+    endDate: Date;
+    positions: SelectItem[];
+    techStacks: SelectItem[];
+    contact: string;
+    userInfo: UserInfo;
+}
