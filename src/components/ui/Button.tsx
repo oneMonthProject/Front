@@ -26,7 +26,7 @@ export function makeButtonSize(size: ButtonSize) {
             py = "mobile:py-1 tablet:py-1";
             break;
         case "md":
-            textSize = "mobile:text-sm tablet:text-md";
+            textSize = "mobile:text-sm tablet:text-base";
             px = "mobile:px-3 tablet:px-3.5";
             py = "mobile:py-1 tablet:py-1.5";
             break;

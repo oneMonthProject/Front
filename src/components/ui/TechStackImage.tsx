@@ -8,9 +8,10 @@ interface TechStackImageProps {
 }
 
 function TechStackImage({ stackName, width, height }: TechStackImageProps) {
+  const fileName = stackName.toLowerCase().replace(".", "");
   return (
     <Image
-      src={`${process.env.NEXT_PUBLIC_URL}/images/tech/${stackName.toLowerCase()}.svg`}
+      src={`${process.env.NEXT_PUBLIC_URL}/images/tech/${fileName}.svg`}
       alt={stackName}
       fill={width && height ? undefined : true}
       width={width ? width : undefined}

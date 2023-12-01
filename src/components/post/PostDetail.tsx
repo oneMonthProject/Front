@@ -6,7 +6,7 @@ import ButtonSection from "./buttonSection/ButtonSection";
 
 const PostDetail = () => {
   return (
-    <div className="p-5 max-w-[900px] m-auto mt-20">
+    <div className="p-5 mobile:p-1 m-auto">
       <TitleSection />
       <InfoSection />
       <BodySection />
