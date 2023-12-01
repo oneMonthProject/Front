@@ -1,8 +1,13 @@
 import React from 'react';
+import MilestoneSection from "@/components/project/task/milestone/MilestoneSection";
+import TaskSection from "@/components/project/task/task/TaskSection";
 
 function TaskPage() {
     return (
-        <div>taskPage</div>
+        <>
+            <MilestoneSection/>
+            <TaskSection/>
+        </>
     );
 }
 

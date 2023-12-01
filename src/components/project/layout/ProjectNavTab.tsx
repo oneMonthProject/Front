@@ -20,17 +20,17 @@ export default function ProjectNavTab() {
 
     useEffect(() => {
         // 프로젝트 상세 업무탭 초기화
-        if(currentProjectNavTab == null){
+        if (currentProjectNavTab == null) {
             const updatedProjectNavTabs: ProjectNavTabItem[] = [];
             [...projectNavTabs].forEach((v) => {
                 updatedProjectNavTabs.push({
                     ...v,
-                    current: v.href === pathname
+                    current: v.href === pathname || (v.href + '/detail') === pathname
                 });
             });
             setProjectNavTabs(updatedProjectNavTabs);
         }
-    },[currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
+    }, [currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
 
 
     function onClickHandler({target}: MouseEvent<HTMLAnchorElement>) {
