@@ -50,7 +50,7 @@
 
     /*  START custom swiper */
     .swiper {
-        @apply pc:max-w-[1200px] tablet:max-w-[720px] h-[200px] -mt-10 !important;
+        @apply pc:max-w-[1200px] tablet:w-full h-[240px] -mt-10 !important;
     }
 
 }
@@ -85,6 +85,10 @@
     display: flex !important;
     align-items: center !important;
     justify-content: space-around;
+}
+
+.swiper-slide > div {
+    overflow:visible;
 }
 
 .swiper-slide:nth-of-type(3n+3) > div {
