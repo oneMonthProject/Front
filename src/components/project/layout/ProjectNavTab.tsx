@@ -30,7 +30,7 @@ export default function ProjectNavTab() {
             });
             setProjectNavTabs(updatedProjectNavTabs);
         }
-    }, [currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
+    }, [pathname, currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
 
 
     function onClickHandler({target}: MouseEvent<HTMLAnchorElement>) {

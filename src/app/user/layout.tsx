@@ -9,10 +9,11 @@ interface UserLayoutProps {
 
 function UserLayout({ children }: UserLayoutProps) {
   const router = useRouter();
+  
   return (
-    <section className='flex-col justify-center mx-auto tablet:pt-[1.5rem] px-[1.5rem] pb-[2rem]'>
-      <section className='w-fit tablet:translate-x-[-50%] mobile:translate-x-[-20%]'>
-        <IoMdArrowRoundBack className='tablet:h-12 tablet:w-12 mobile:h-6 mobile:w-6 text-grey700 ' onClick={() => router.back()} />
+    <section className='flex-col justify-center mx-auto tablet:pt-[1.5rem] px-[5rem] mobile:px-[1.5rem] pb-[2rem]'>
+      <section className='w-fit cursor-pointer'>
+        <IoMdArrowRoundBack className='tablet:h-12 tablet:w-12 mobile:h-6 mobile:w-6 text-grey700' onClick={() => router.back()} />
       </section>
       {children}
     </section>

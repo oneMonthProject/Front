@@ -3,7 +3,7 @@ import {useQueryString} from "@/hooks/useQueryString";
 import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
 import {MilestoneInfo} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
-let milestoneInfo: MilestoneInfo[] = [
+const milestoneInfo: MilestoneInfo[] = [
     {
         milestone_id: '1',
         milestone_content: '프로젝트 기획',
@@ -43,7 +43,7 @@ function Milestones() {
                 slideItems={milestoneInfo.map(v => (
                     {
                         key: v.milestone_id,
-                        components:<MilestoneCard milestoneInfo={v}/>
+                        components: <MilestoneCard milestoneInfo={v} />
                     }
                 ))}
             />
