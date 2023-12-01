@@ -15,7 +15,7 @@ export function makeBadgeSize(size: string) {
             py = 'py-1';
             break;
         case 'md':
-            textSize = 'tablet:text-lg mobile:text-md';
+            textSize = 'tablet:text-lg mobile:text-base';
             px = 'tablet:px-8 mobile:px-4';
             py = 'tablet:py-4 mobile:py-2';
             break;
@@ -25,7 +25,7 @@ export function makeBadgeSize(size: string) {
             py = 'py-4';
             break;
         default:
-            textSize = 'tablet:text-md mobile:text-sm';
+            textSize = 'tablet:text-base mobile:text-sm';
             px = 'px-4';
             py = 'tablet:py-2 mobile:py-1';
     }
@@ -93,7 +93,7 @@ export function makeImageSize(size: string) {
             imageSize = 'h-40 w-40 mobile:h-32 mobile:w-32';
             break;
         default:
-            imageSize = 'h-32 w-32';
+            imageSize = size;
     }
 
     return imageSize;
