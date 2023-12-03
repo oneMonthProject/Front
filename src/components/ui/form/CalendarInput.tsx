@@ -59,7 +59,7 @@ function CalendarInput({ id, label, required = false, date, setDate, ...props }:
         <AiTwotoneCalendar className="h-5 w-5" aria-hidden={true} />
       </button>
       {isOpen && (
-        <div className="absolute right-0 z-50">
+        <div className="absolute z-50">
           <DatePicker selected={date} onChange={handleChange} inline />
         </div>
       )}

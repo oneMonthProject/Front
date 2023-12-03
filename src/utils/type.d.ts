@@ -40,7 +40,7 @@ export interface SelectProps {
 export interface SingleSelectProps extends SelectProps {
     value: SelectItem | null;
     setValue: (value: SelectItem) => void;
-    label: string;
+    label?: string;
     placeholder?: string;
     required?: boolean;
 }
@@ -77,8 +77,10 @@ export interface MilestoneInfo {
 }
 
 export interface UserInfo {
+    id: string | number | null;
     nickname: string;
-    imageSrc: string;
+    imageSrc?: string | null;
+    position?: SelectItem;
     // 추가 예정
 }
 

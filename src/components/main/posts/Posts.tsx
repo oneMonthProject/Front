@@ -45,6 +45,7 @@ const testProjectInfo = [
     techStacks: [techStackList[0], techStackList[1], techStackList[3], techStackList[5]],
     contact: "010-XXXX-XXXX",
     userInfo: {
+      id: 1,
       nickname: "찐개발자",
       imageSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     }
@@ -62,6 +63,7 @@ const testProjectInfo = [
     techStacks: [techStackList[0], techStackList[1], techStackList[3], techStackList[5]],
     contact: "010-XXXX-XXXX",
     userInfo: {
+      id: 2,
       nickname: "찐개발자",
       imageSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
     }
@@ -79,8 +81,8 @@ const testProjectInfo = [
     techStacks: [techStackList[0], techStackList[1], techStackList[3], techStackList[5]],
     contact: "010-XXXX-XXXX",
     userInfo: {
-      nickname: "찐개발자",
-      imageSrc: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+      id: 3,
+      nickname: "찐개발자"
     }
   }
 ]
