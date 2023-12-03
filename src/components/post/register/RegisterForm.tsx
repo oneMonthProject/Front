@@ -100,7 +100,7 @@ function RegisterForm() {
         <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
           <CalendarInput id="startDate" label="시작 날짜" placeholder="날짜를 선택해주세요."
             date={startDate} setDate={setStartDate} />
-          <CalendarInput id="startDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
+          <CalendarInput id="endDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
             date={endDate} setDate={setEndDate} />
           <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
           <Input id="contact" label="연락 방법" placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
