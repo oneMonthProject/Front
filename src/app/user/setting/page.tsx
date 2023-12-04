@@ -3,7 +3,7 @@ import ProfileForm from "@/components/user/profile/ProfileForm";
 
 function UserSettingPage() {
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 mobile:mt-4">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
       <ProfileForm />
     </div>
   )

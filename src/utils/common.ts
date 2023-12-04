@@ -90,7 +90,7 @@ export function makeImageSize(size: string) {
             imageSize = 'h-24 w-24 mobile:h-16 mobile:w-16';
             break;
         case 'lg':
-            imageSize = 'h-40 w-40 mobile:h-32 mobile:w-32';
+            imageSize = 'h-40 w-40 mobile:h-28 mobile:w-28';
             break;
         default:
             imageSize = size;

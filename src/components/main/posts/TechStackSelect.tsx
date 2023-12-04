@@ -52,7 +52,7 @@ const TechStackSelect = () => {
   const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
   const [selectedTechStacks, setSelectedTechStacks] = useRecoilState(selectedTechStackState);
   const [isMobile, setIsMobile] = useState(false);
-  const mobile = useMediaQuery({ maxWidth: 480 });
+  const mobile = useMediaQuery({ maxWidth: 700 });
 
   const filteredTechStacks = techStacks.filter((stack) => {
     if (selectedCategory === "모두보기" || isMobile) {

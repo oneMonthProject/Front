@@ -27,8 +27,8 @@ const PostCard = ({
   }
 }: PostCardProps) => {
   return (
-    <Link href={`/post/${id}`}>
-      <div className="p-3 flex-col w-[280px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2">
+    <div className="p-3 flex-col w-[280px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2">
+      <Link href={`/post/${id}`}>
         <div className="flex">
           <div className="font-bold text-base mr-3">{projectName}</div>
           <TrustGradeBadge size="xs" text={trustGrade} color="red" />
@@ -60,8 +60,8 @@ const PostCard = ({
             <div className="ml-2 text-base text-grey800">20</div>
           </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+    </div>
   );
 };
 
