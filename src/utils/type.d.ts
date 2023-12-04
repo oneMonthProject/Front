@@ -61,12 +61,9 @@ export interface NoticeItemProp {
     position?: string;
 }
 
-interface ModalProps {
+interface ModalState {
     title: string;
     isOpen: boolean;
-    close: () => void;
-    onClickConfirmHandler?: () => void;
-    children: ReactNode;
 }
 
 export interface MilestoneInfo {
