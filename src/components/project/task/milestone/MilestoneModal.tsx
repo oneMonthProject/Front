@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue, useResetRecoilState } from "recoil";
 import Modal from "@/components/ui/Modal";
+import { createPortal } from "react-dom";
+import MilestoneModalContent from './MilestoneModalContent';
+import {currentMilestoneFormState, milestoneModalStateSelector} from "@/store/project/task/MilestoneStateStore";
 
 function MilestoneModal() {
   const { isOpen, title } = useRecoilValue(milestoneModalStateSelector);
@@ -48,11 +51,6 @@ function MilestoneModal() {
 }
 
 
-import {
-  currentMilestoneFormState,
-  milestoneModalStateSelector
-} from "@/store/project/task/ProjectTaskStateStore";
-import { createPortal } from "react-dom";
-import MilestoneModalContent from './MilestoneModalContent';
+
 
 export default MilestoneModal;

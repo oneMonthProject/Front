@@ -1,10 +1,10 @@
 'use client';
 import React, { ChangeEvent } from 'react';
 import { useRecoilState } from "recoil";
-import { currentMilestoneFormState } from '@/store/project/task/ProjectTaskStateStore';
 import Input from '@/components/ui/form/Input';
 import CalendarInput from '@/components/ui/form/CalendarInput';
 import { format } from 'date-fns';
+import {currentMilestoneFormState} from "@/store/project/task/MilestoneStateStore";
 
 function MilestoneModalContent() {
   const [currentForm, setCurrentForm] = useRecoilState(currentMilestoneFormState);
