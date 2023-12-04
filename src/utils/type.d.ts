@@ -61,12 +61,9 @@ export interface NoticeItemProp {
     position?: string;
 }
 
-interface ModalProps {
+interface ModalState {
     title: string;
     isOpen: boolean;
-    close: () => void;
-    onClickConfirmHandler?: () => void;
-    children: ReactNode;
 }
 
 export interface MilestoneInfo {
@@ -74,6 +71,17 @@ export interface MilestoneInfo {
     milestone_content: string;
     start_date: string;
     end_date: string;
+}
+
+export interface TaskItem {
+    workId:string;
+    workContent:string;
+    startDate:string;
+    endDate:string;
+    completeStatus:boolean;
+    expiredStatus:boolean;
+    updateDate:string;
+    assignedUserId:string;
 }
 
 export interface UserInfo {

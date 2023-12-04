@@ -1,12 +1,10 @@
-'use client';
 import React from 'react';
 import CommonPagination from "@/components/ui/CommonPagination";
 
-
-function NoticeListPagination() {
+function TaskPagination() {
     return (
         <CommonPagination/>
     );
 }
 
-export default NoticeListPagination;
+export default TaskPagination;

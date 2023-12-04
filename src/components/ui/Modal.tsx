@@ -1,10 +1,15 @@
 'use client';
 
-import React, {useEffect, useRef} from 'react';
+import React, {ReactNode, useEffect, useRef} from 'react';
 import {RiCloseFill} from "@react-icons/all-files/ri/RiCloseFill";
 import Button from "@/components/ui/Button";
-import {ModalProps} from "@/utils/type";
+import {ModalState} from "@/utils/type";
 
+interface ModalProps extends ModalState {
+    children:ReactNode;
+    close: () => void;
+    onClickConfirmHandler?: () => void;
+}
 
 function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalProps) {
 

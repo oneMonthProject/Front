@@ -1,0 +1,93 @@
+'use client';
+import React, {Fragment} from 'react';
+import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
+import {Menu, Transition} from "@headlessui/react";
+import {classNames} from "@/utils/common";
+import {useRecoilState} from "recoil";
+import {currentMilestoneFormState, MilestoneForm, MilestoneState} from "@/store/project/task/MilestoneStateStore";
+
+interface MilestoneCardMenuProps {
+    milestoneId: string;
+}
+
+function MilestoneCardMenu({milestoneId}: MilestoneCardMenuProps) {
+    const [milestoneState, setMilestoneState] = useRecoilState<null | MilestoneState>(currentMilestoneFormState);
+
+
+    function onEditClickHandler(milestoneId: string) {
+        // todo - 마일스톤 수정 api
+        setMilestoneState(new MilestoneForm('modify',milestoneId,'db 스키마 설계',new Date('2023-12-01'),new Date('2023-12-12'),'찐개발자',new Date('2023-12-01')));
+
+    }
+
+    function onDeleteClickHandler(milestoneId: string) {
+        // todo - 마일스톤 삭제 api
+    }
+
+    const milestoneMenus = [
+        {
+            name: '수정',
+            value: milestoneId,
+            onClickHandler: onEditClickHandler
+        },
+        {
+            name: '삭제',
+            value: milestoneId,
+            onClickHandler: onDeleteClickHandler
+        }
+    ]
+
+    return (
+
+        // <div className="flex-shrink-0 pr-2 overflow-visible">
+        <Menu as="div" className="flex-shrink-0 pr-2 text-center">
+            {/*<Menu as="div" className="relative inline-block text-center">*/}
+                <div>
+                    <Menu.Button
+                        className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none">
+                        <span className="sr-only">마일스톤 메뉴</span>
+                        <IoEllipsisVertical className="h-5 w-5" aria-hidden="true" data-role='milestone-menu'/>
+                    </Menu.Button>
+                </div>
+                <Transition
+                    as={Fragment}
+                    enter="transition ease-out duration-100"
+                    enterFrom="transform opacity-0 scale-95"
+                    enterTo="transform opacity-100 scale-100"
+                    leave="transition ease-in duration-75"
+                    leaveFrom="transform opacity-100 scale-100"
+                    leaveTo="transform opacity-0 scale-95"
+                >
+                    <Menu.Items
+                        className="absolute right-2 z-10 mt-1 tablet:min-w-[60px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="py-1 ">
+                            {
+                                milestoneMenus.map(v =>
+                                    <Menu.Item key={v.name}>
+                                        {({active}) => (
+                                                <a
+
+                                                    href="javascript;"
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        v.onClickHandler!(v.value)
+                                                    }}
+                                                    className={classNames(
+                                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                                        'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
+                                                    )}
+                                                >
+                                                    {v.name}
+                                                </a>
+                                        )}
+                                    </Menu.Item>
+                                )
+                            }
+                        </div>
+                    </Menu.Items>
+                </Transition>
+            </Menu>
+    );
+}
+
+export default MilestoneCardMenu;

@@ -1,10 +1,10 @@
 'use client';
 import React, { Suspense } from 'react';
 import { useRecoilState } from 'recoil';
-import { MilestoneForm, currentMilestoneFormState } from '@/store/project/task/ProjectTaskStateStore';
 import Button from "@/components/ui/Button";
 import { FaPlus } from "@react-icons/all-files/fa/FaPlus";
 import Milestones from "@/components/project/task/milestone/Milestones";
+import {currentMilestoneFormState, MilestoneForm} from "@/store/project/task/MilestoneStateStore";
 
 function MilestoneSection() {
   const [currentForm, setCurrentForm] = useRecoilState(currentMilestoneFormState);
