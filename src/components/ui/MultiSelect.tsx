@@ -3,23 +3,20 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiFillCaretDown } from "@react-icons/all-files/ai/AiFillCaretDown";
 import { AiOutlineCheck } from "@react-icons/all-files/ai/AiOutlineCheck";
-import {MultiSelectProps} from "@/utils/type";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
-
-
+import { MultiSelectProps } from "@/utils/type";
+import { classNames } from '@/utils/common';
 
 export default function MultiSelect({ values, setValues, items = [], label, placeholder = "", required = false }: MultiSelectProps) {
   return (
     <Listbox value={values} onChange={setValues} multiple>
       {({ open }) => (
         <div>
-          <Listbox.Label className="block text-gray-700 mobile:text-sm">
-            {label}
-            {required ? <span className="text-red-500 required-dot ml-1.5 align-middle">*</span> : <></>}
-          </Listbox.Label>
+          {label && (
+            <Listbox.Label className="block text-gray-700 mobile:text-sm">
+              {label}
+              {required ? <span className="text-red-500 required-dot ml-1.5 align-middle">*</span> : <></>}
+            </Listbox.Label>
+          )}
           <div className="relative">
             <Listbox.Button className="mobile:text-sm w-full cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
               <span className={classNames(values.length > 0 ? '' : 'text-greyUnselect', 'block truncate')}>
