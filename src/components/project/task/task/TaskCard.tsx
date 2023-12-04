@@ -10,7 +10,7 @@ interface TaskCardProps {
 }
 function TaskCard({item}:TaskCardProps) {
     return (
-        <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg cursor-pointer">
+        <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg">
             <div className="w-full flex items-center px-4 py-3 mobile:px-6 bg-ground100">
                 <span className='pc:text-[1.3rem] font-semibold text-greyDarkBlue'>{item.workContent}</span>
                 {/*<p className='ml-auto pc:text-sm text-grey800'>업데이트: {item.updateDate}</p>*/}
