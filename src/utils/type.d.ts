@@ -73,6 +73,17 @@ export interface MilestoneInfo {
     end_date: string;
 }
 
+export interface TaskItem {
+    workId:string;
+    workContent:string;
+    startDate:string;
+    endDate:string;
+    completeStatus:boolean;
+    expiredStatus:boolean;
+    updateDate:string;
+    assignedUserId:string;
+}
+
 export interface UserInfo {
     id: string | number | null;
     nickname: string;
