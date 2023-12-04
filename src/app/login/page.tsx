@@ -4,7 +4,7 @@ import LoginForm from '@/components/user/login/LoginForm';
 
 function LoginPage() {
   return (
-    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+    <div className="flex flex-col items-center justify-center min-h-[calc(100vh-100px)]">
       <h1 className='text-3xl mobile:text-2xl font-semibold w-full text-center mb-10'>로그인</h1>
       <LoginForm />
       <div className="text-center text-sm mobile:text-xs mt-3">
