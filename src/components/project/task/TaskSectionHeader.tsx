@@ -3,7 +3,7 @@ import React from 'react';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {currentTaskFormState, TaskForm} from "@/store/project/task/ProjectTaskStateStore";
+import {currentTaskFormState, TaskForm} from "@/store/project/task/TaskStateStore";
 
 export default function TaskSectionHeader() {
     // todo - 마일스톤 아이디로 조회
