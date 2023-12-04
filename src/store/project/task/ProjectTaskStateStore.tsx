@@ -9,7 +9,7 @@ interface TaskState {
     isComplete: boolean;
     startDate: Date | null;
     endDate: Date | null;
-    assignee: UserInfo | null;
+    assignees: UserInfo[];
     updateUser: string;
     updateDate: Date | null;
 }
@@ -21,19 +21,19 @@ export class TaskForm implements TaskState {
     isComplete: boolean;
     startDate: Date | null;
     endDate: Date | null;
-    assignee: UserInfo | null;
+    assignees: UserInfo[];
     updateUser: string;
     updateDate: Date | null;
 
     constructor(type: 'add' | 'modify', id: string | number | null, content: string, isComplete: boolean,
-                startDate: Date | null, endDate: Date | null, assignee: UserInfo | null, updateUser: string, updateDate: Date | null) {
+                startDate: Date | null, endDate: Date | null, assignees: UserInfo[], updateUser: string, updateDate: Date | null) {
         this.type = type;
         this.id = id;
         this.content = content;
         this.isComplete = isComplete;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.assignee = assignee;
+        this.assignees = assignees;
         this.updateUser = updateUser;
         this.updateDate = updateDate;
     }
