@@ -3,12 +3,17 @@ import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiFillCaretDown } from "@react-icons/all-files/ai/AiFillCaretDown";
 import { AiOutlineCheck } from "@react-icons/all-files/ai/AiOutlineCheck";
-import { MultiSelectProps } from "@/utils/type";
+import { MultiSelectProps, SelectItem } from "@/utils/type";
 import { classNames } from '@/utils/common';
 
 export default function MultiSelect({ values, setValues, items = [], label, placeholder = "", required = false }: MultiSelectProps) {
+
+  const compareItems = (a: SelectItem, b: SelectItem) => {
+    return a.value === b.value;
+  }
+
   return (
-    <Listbox value={values} onChange={setValues} multiple>
+    <Listbox value={values} onChange={setValues} by={compareItems} multiple>
       {({ open }) => (
         <div>
           {label && (

@@ -2,17 +2,21 @@
 import { Fragment } from 'react'
 import { Listbox, Transition } from '@headlessui/react'
 import { AiFillCaretDown } from "@react-icons/all-files/ai/AiFillCaretDown";
-import {SingleSelectProps} from "@/utils/type";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
-}
-
-
+import { SelectItem, SingleSelectProps } from "@/utils/type";
+import { classNames } from '@/utils/common';
 
 export default function Select({ value, setValue, items = [], label, placeholder = "", required = false }: SingleSelectProps) {
+
+  const compareItems = (a: SelectItem, b: SelectItem) => {
+    if (a && b) {
+      return a?.value === b?.value;
+    }
+
+    return false;
+  }
+
   return (
-    <Listbox value={value} onChange={setValue}>
+    <Listbox value={value} onChange={setValue} by={compareItems}>
       {({ open }) => (
         <div>
           <Listbox.Label className="block text-gray-700 mobile:text-sm">
