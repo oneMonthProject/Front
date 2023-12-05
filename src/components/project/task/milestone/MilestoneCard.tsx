@@ -21,7 +21,7 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
 
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
-        if((e.target as Node).dataset.role === 'milestone-menu') return;
+        if((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
         setMilestone({activeId: id});
     }
 
