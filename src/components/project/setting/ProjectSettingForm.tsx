@@ -47,7 +47,7 @@ export default function ProjectSetting() {
   }
 
   return (
-    <div className="space-y-6 px-8">
+    <div className="space-y-6 px-8 mobile:px-4">
       <div className="space-y-3">
         <div className="font-semibold text-xl mobile:text-lg py-2 border-b-2">프로젝트 정보 설정</div>
         <div className="flex mobile:block pc:space-x-8 tablet:space-x-8 mobile:space-y-3 px-3 mobile:px-0">
