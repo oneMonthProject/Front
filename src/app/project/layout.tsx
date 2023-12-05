@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react';
+import React, {ReactNode, Suspense} from 'react';
 import BackNav from "@/components/ui/BackNav";
 import ProjectInfo from "@/components/project/layout/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
@@ -10,13 +10,16 @@ interface ProjectLayoutProps {
 
 function ProjectLayout({children}: ProjectLayoutProps) {
     return (
-        <section className='flex-col justify-center mx-auto tablet:mt-[2rem] tablet:pt-[1.5rem] tablet:px-[1.5rem] pb-[5rem]'>
+        <section
+            className='flex-col justify-center mx-auto tablet:mt-[2rem] tablet:pt-[1.5rem] tablet:px-[1.5rem] pb-[5rem]'>
             <section className='w-fit tablet:translate-x-[-50%] mobile:translate-x-[-20%]'>
                 <BackNav to='/'/>
             </section>
-            <ProjectInfo/>
-            <ProjectNavTab/>
-            {children}
+                <ProjectInfo/>
+            <Suspense fallback={<div>로딩중</div>}>
+                <ProjectNavTab/>
+                {children}
+            </Suspense>
         </section>
     );
 }
