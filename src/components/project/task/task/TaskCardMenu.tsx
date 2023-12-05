@@ -5,7 +5,7 @@ import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical"
 import {classNames} from "@/utils/common";
 import Link from "next/link";
 import {useRecoilState} from "recoil";
-import {currentTaskFormState, TaskForm} from "@/store/project/task/ProjectTaskStateStore";
+import {currentTaskFormState, TaskForm} from "@/store/project/task/TaskStateStore";
 
 interface TaskCardMenuProps {
     taskId: string;

@@ -2,11 +2,11 @@
 import React, { ChangeEvent, useState } from 'react';
 import { format } from 'date-fns';
 import { useRecoilState } from "recoil";
-import { currentTaskFormState } from '@/store/project/task/ProjectTaskStateStore';
+import { currentTaskFormState } from '@/store/project/task/TaskStateStore';
 import Input from '@/components/ui/form/Input';
 import Avatar from '@/components/ui/Avatar';
 import CalendarInput from '@/components/ui/form/CalendarInput';
-import MultiSelect from '@/components/ui/MultiSelect';
+import Select from '@/components/ui/Select';
 import PositionBadge from '@/components/ui/badge/PositionBadge';
 import ToggleButton from '@/components/ui/ToggleButton';
 import { SelectItem, UserInfo } from '@/utils/type';
@@ -27,37 +27,39 @@ const testUserInfos = [
   { id: 4, nickname: "찐개발자4", position: positionList[4] },
 ];
 
-const convertToSelectItem = (users: UserInfo[]) => {
-  const items: SelectItem[] = [];
-  if (users.length > 0) {
-    for (const user of users) {
-      items.push({ value: user.id, name: user.nickname });
-    }
+const convertToSelectItem = (user: UserInfo) => {
+  if (user) {
+    return { value: user.id, name: user.nickname };
   }
 
-  return items;
+  return null;
 }
 
-const testUserSelectItems = convertToSelectItem(testUserInfos);
+const convertToUserInfo = (item: SelectItem) => {
+  if (item) {
+    return testUserInfos.find(userInfo => userInfo.id === item.value) as UserInfo;
+  }
+
+  return null;
+}
 
 function TaskModalContent() {
   const [currentForm, setCurrentForm] = useRecoilState(currentTaskFormState);
+  const [assignee, setAssignee] = useState<SelectItem | null>(currentForm?.assignee ? convertToSelectItem(currentForm.assignee) : null);
 
-  const convertToUserInfo = (items: SelectItem[]) => {
-    const users: UserInfo[] = [];
-    if (items.length > 0) {
-      for (const item of items) {
-        const user = testUserInfos.find(userInfo => userInfo.id === item.value);
-        if (user) {
-          users.push(user);
+  const getTestItems = () => {
+    const items: SelectItem[] = [];
+    if (testUserInfos.length > 0) {
+      for (const user of testUserInfos) {
+        const selectItem = convertToSelectItem(user);
+        if (selectItem) {
+          items.push(selectItem);
         }
       }
     }
 
-    return users;
+    return items;
   }
-
-  const [assignees, setAssignees] = useState<SelectItem[]>(convertToSelectItem(currentForm?.assignees ?? []));
 
   const onInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (currentForm) {
@@ -80,10 +82,10 @@ function TaskModalContent() {
     }
   }
 
-  const onSelectChange = (values: SelectItem[]) => {
-    setAssignees(values);
+  const onSelectChange = (value: SelectItem) => {
+    setAssignee(value);
     if (currentForm) {
-      const updatedForm = { ...currentForm, assignees: convertToUserInfo(values) };
+      const updatedForm = { ...currentForm, assignee: convertToUserInfo(value) };
       setCurrentForm(updatedForm);
     }
   }
@@ -118,30 +120,31 @@ function TaskModalContent() {
         <div className='flex'>
           <label htmlFor="content" className="text-gray-700 font-semibold self-center">담당</label>
           <div className='w-[350px] mobile:w-[220px] ml-auto text-left'>
-            <MultiSelect values={assignees} setValues={onSelectChange} items={testUserSelectItems} placeholder="선택해주세요." />
+            <Select value={assignee} setValue={onSelectChange} items={getTestItems()} placeholder="선택해주세요." />
           </div>
         </div>
-        <ul role="list" className="w-[350px] ml-auto divide-y divide-gray-100 mobile:hidden">
-          {
-            currentForm?.assignees && currentForm.assignees.map(assignee => (
-              <li key={assignee.id} className="flex items-center gap-x-6 py-2">
-                <Avatar size='2xs' src={assignee.imageSrc} alt={`${assignee.nickname}의 프로필 이미지`} />
-                <div className="min-w-0 flex items-center tablet:space-x-6 mobile:space-x-4">
-                  <p className="text-sm font-semibold leading-5 text-gray-900">{assignee.nickname}</p>
-                  <div className='flex items-center'>
-                    <PositionBadge text={assignee?.position?.name ?? ""} size='xs' />
+        {
+          currentForm?.assignee && (
+            <div className='flex'>
+              <div className="w-[350px] ml-auto divide-y divide-gray-100">
+                <div className="flex items-center gap-x-6 py-2">
+                  <Avatar size='2xs' src={currentForm.assignee.imageSrc} alt={`${currentForm.assignee.nickname}의 프로필 이미지`} />
+                  <div className="min-w-0 flex items-center tablet:space-x-6 mobile:space-x-4">
+                    <p className="text-sm font-semibold leading-5 text-gray-900">{currentForm.assignee.nickname}</p>
+                    <div className='flex items-center'>
+                      <PositionBadge text={currentForm.assignee?.position?.name ?? ""} size='xs' />
+                    </div>
                   </div>
                 </div>
-              </li>
-            ))
-          }
-        </ul>
+              </div>
+            </div>
+          )
+        }
         {currentForm?.type === 'modify' && (
           <div className='flex'>
             <label className="text-gray-700 font-semibold self-center">업데이트</label>
             <div className='flex w-[350px] mobile:w-[220px] h-[42px] mobile:h-[38px] space-x-3 ml-auto'>
-              <div className='w-full pl-2 text-left self-center'>{currentForm?.updateUser}</div>
-              <div className='self-center'>{currentForm?.updateDate ? format(currentForm.updateDate, "yyyy.MM.dd") : ""}</div>
+              <div className='w-full pl-2 text-left self-center'>{`${currentForm?.updateUser}, ${currentForm?.updateDate ? format(currentForm.updateDate, "yyyy.MM.dd") : ""}`}</div>
             </div>
           </div>
         )}

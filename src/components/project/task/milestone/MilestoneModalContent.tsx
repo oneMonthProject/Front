@@ -45,8 +45,7 @@ function MilestoneModalContent() {
           <div className='flex'>
             <label className="text-gray-700 font-semibold self-center">업데이트</label>
             <div className='flex w-[350px] mobile:w-[220px] h-[42px] mobile:h-[38px] space-x-3 ml-auto'>
-              <div className='w-full pl-2 text-left self-center'>{currentForm?.updateUser}</div>
-              <div className='self-center'>{currentForm?.updateDate ? format(currentForm.updateDate, "yyyy.MM.dd") : ""}</div>
+              <div className='w-full pl-2 text-left self-center'>{`${currentForm?.updateUser}, ${currentForm?.updateDate ? format(currentForm.updateDate, "yyyy.MM.dd") : ""}`}</div>
             </div>
           </div>
         )}

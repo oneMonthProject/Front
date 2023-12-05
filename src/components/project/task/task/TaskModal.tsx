@@ -51,7 +51,7 @@ function TaskModal() {
 import {
   currentTaskFormState,
   taskModalStateSelector
-} from "@/store/project/task/ProjectTaskStateStore";
+} from "@/store/project/task/TaskStateStore";
 import { createPortal } from "react-dom";
 import TaskModalContent from './TaskModalContent';
 

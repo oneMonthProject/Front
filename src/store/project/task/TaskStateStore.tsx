@@ -1,5 +1,5 @@
-import {atom, selector} from "recoil";
-import {ModalState, UserInfo} from "@/utils/type";
+import { atom, selector } from "recoil";
+import { ModalState, UserInfo } from "@/utils/type";
 
 // Task
 interface TaskState {
@@ -9,7 +9,7 @@ interface TaskState {
     isComplete: boolean;
     startDate: Date | null;
     endDate: Date | null;
-    assignees: UserInfo[];
+    assignee: UserInfo | null;
     updateUser: string;
     updateDate: Date | null;
 }
@@ -21,19 +21,19 @@ export class TaskForm implements TaskState {
     isComplete: boolean;
     startDate: Date | null;
     endDate: Date | null;
-    assignees: UserInfo[];
+    assignee: UserInfo | null;
     updateUser: string;
     updateDate: Date | null;
 
     constructor(type: 'add' | 'modify', id: string | number | null, content: string, isComplete: boolean,
-                startDate: Date | null, endDate: Date | null, assignees: UserInfo[], updateUser: string, updateDate: Date | null) {
+        startDate: Date | null, endDate: Date | null, assignee: UserInfo | null, updateUser: string, updateDate: Date | null) {
         this.type = type;
         this.id = id;
         this.content = content;
         this.isComplete = isComplete;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.assignees = assignees;
+        this.assignee = assignee;
         this.updateUser = updateUser;
         this.updateDate = updateDate;
     }
@@ -47,7 +47,7 @@ export const currentTaskFormState = atom<null | TaskState>({
 
 export const taskModalStateSelector = selector<ModalState>({
     key: 'taskModalStateSelector',
-    get: ({get}) => {
+    get: ({ get }) => {
         const state = get(currentTaskFormState);
 
         let title = '';
@@ -64,6 +64,6 @@ export const taskModalStateSelector = selector<ModalState>({
             }
         }
 
-        return {isOpen: state !== null, title: title};
+        return { isOpen: state !== null, title: title };
     }
 })
