@@ -10,8 +10,8 @@ function Providers({children}: { children: ReactNode }) {
     return (
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
-                <ReactQueryDevtools initialIsOpen={false}/>
                 {children}
+                <ReactQueryDevtools/>
             </QueryClientProvider>
         </RecoilRoot>
     );
