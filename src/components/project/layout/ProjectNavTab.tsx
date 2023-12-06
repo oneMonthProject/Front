@@ -19,8 +19,7 @@ export default function ProjectNavTab() {
     const currentProjectNavTab = useRecoilValue(currentProjectNavTabSelector);
 
     useEffect(() => {
-        // 프로젝트 상세 업무탭 초기화
-        if (currentProjectNavTab == null) {
+        if (currentProjectNavTab == null && pathname !== '/project') {
             const updatedProjectNavTabs: ProjectNavTabItem[] = [];
             [...projectNavTabs].forEach((v) => {
                 updatedProjectNavTabs.push({
