@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    webpack : (config) => {
+    compiler: {
+        reactRemoveProperties: true,
+        removeConsole: {
+            exclude: ['error']
+        }
+    },
+    webpack: (config) => {
         config.module.rules.push({
             test: /\.svg$/,
             use: ["@svgr/webpack"]
@@ -8,7 +14,7 @@ const nextConfig = {
 
         return config;
     },
-    images:{
+    images: {
         remotePatterns: [
             {
                 protocol: 'https',
