@@ -1,16 +1,15 @@
-import axios from "axios";
-
 export const login = async (email: string, password: string) => {
   const loginRequest = { id: email, password };
-  const { data: response } = await axios.post(
+  const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND}/api/user/login`,
-    loginRequest,
     {
+      method: "POST",
+      body: JSON.stringify(loginRequest),
       headers: {
         "Content-Type": "application/json",
       },
     }
   );
 
-  return response.data;
+  return response.json();
 };
