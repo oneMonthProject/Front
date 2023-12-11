@@ -4,6 +4,7 @@ import { BiUser } from "@react-icons/all-files/bi/BiUser";
 import { BiUndo } from "@react-icons/all-files/bi/BiUndo";
 import { BiCheck } from "@react-icons/all-files/bi/BiCheck";
 import { BiX } from "@react-icons/all-files/bi/BiX";
+import CommonPagination from "@/components/ui/CommonPagination";
 
 const timeline = [
   {
@@ -96,7 +97,7 @@ function UserHistory() {
   }
 
   return (
-    <div className="flow-root">
+    <div className="flow-root mx-2">
       <ul role="list" className="-mb-8">
         {timeline.map((event, eventIdx) => (
           <li key={event.id}>
@@ -132,6 +133,7 @@ function UserHistory() {
             </div>
           </li>
         ))}
+        <CommonPagination />
       </ul>
     </div>
   )
