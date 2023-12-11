@@ -1,5 +1,5 @@
-import authAxios from "@/utils/authAxios";
 import axios from "axios";
+import authApi from "@/utils/authApi";
 
 export interface updateUserInfo {
   id: bigint;
@@ -35,43 +35,31 @@ export const checkNickname = async (nickname: string) => {
   return response.data;
 };
 
-export const updateUser = async (data: updateUserInfo) => {
-  const { data: response } = await authAxios.put("/api/user", data);
+export const updateUser = async (updateData: updateUserInfo) => {
+  const response = await authApi("/api/user", {
+    method: "PUT",
+    body: JSON.stringify(updateData),
+  });
 
-  return response.data;
+  return response.json();
 };
 
-// export const getUser = async (userId: bigint) => {
-//   const response = await fetch(
-//     `${process.env.NEXT_PUBLIC_BACKEND}/api/user/${userId}`,
-//     {
-//       method: "GET",
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     }
-//   );
-
-//   return response.json();
-// };
-
 export const getUser = async (userId: bigint) => {
-  const { data: response } = await authAxios.get(`/api/user/${userId}`);
+  const response = await authApi(`/api/user/${userId}`, {
+    method: "GET",
+  });
 
-  return response.data;
+  return response.json();
 };
 
 export const updateUserProfileImg = async (image: File) => {
-  const { data: response } = await authAxios.post(
-    "/api/user/me/profile-img",
-    image,
-    {
-      headers: {
-        "Content-Type": "multipart/form-data",
-        Authorization: "",
-      },
-    }
-  );
+  const response = await authApi("/api/user/me/profile-img", {
+    method: "POST",
+    body: image,
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
 
-  return response.data;
+  return response.json();
 };
