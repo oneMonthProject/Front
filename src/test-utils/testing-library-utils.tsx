@@ -1,6 +1,7 @@
 import {render, RenderOptions} from "@testing-library/react";
 import Providers from "@/app/Providers";
 
+
 const renderWithContext = (ui:React.ReactElement, options?:RenderOptions) =>
     render(ui, { wrapper: Providers, ...options });
 
