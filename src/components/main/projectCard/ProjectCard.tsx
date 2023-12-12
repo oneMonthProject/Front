@@ -8,7 +8,7 @@ const ProjectCard = () => {
     <div className="p-3 flex-col w-[280px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2">
       <div className="flex">
         <div className="font-bold text-base mr-3">trustcrews</div>
-        <TrustGradeBadge size="xs" text="1등급" color="red" />
+        <TrustGradeBadge size="xs" text="1등급" />
       </div>
       <div className="flex mt-2">
         <div className="text-xs">2023.12.05 ~ </div>

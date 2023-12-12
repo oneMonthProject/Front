@@ -1,4 +1,5 @@
 import {ReactNode} from "react";
+import {CookieValueTypes} from "cookies-next";
 
 export type DropDownItem = {
     name: string;
@@ -74,14 +75,14 @@ export interface MilestoneInfo {
 }
 
 export interface TaskItem {
-    workId:string;
-    workContent:string;
-    startDate:string;
-    endDate:string;
-    completeStatus:boolean;
-    expiredStatus:boolean;
-    updateDate:string;
-    assignedUserId:string;
+    workId: string;
+    workContent: string;
+    startDate: string;
+    endDate: string;
+    completeStatus: boolean;
+    expiredStatus: boolean;
+    updateDate: string;
+    assignedUserId: string;
 }
 
 export interface UserInfo {
@@ -105,4 +106,36 @@ export interface PostInfo {
     techStacks: SelectItem[];
     contact: string;
     userInfo: UserInfo;
+}
+
+export interface AuthRequestParam {
+    accessToken: CookieValueTypes;
+}
+
+export interface ReqProjectDetailParam extends AuthRequestParam {
+    projectId: string;
+}
+
+export interface ResponseBody<T> {
+    result: string;
+    message: string;
+    data: T
+}
+
+export interface TrustGrade {
+    name: string;
+    score: int;
+}
+
+export interface ProjectInfo {
+    projectId: bigint;
+    name: string;
+    subject: string;
+    trustGrade: TrustGrade;
+    status: string;
+    crewNumber: int;
+    startDate: date;
+    endDate: date;
+    createDate: date;
+    updateDate: date;
 }

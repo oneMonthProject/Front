@@ -44,7 +44,7 @@ function NoticeItemRecruitInfo() {
                 </div>
                 <div className='flex flex-col'>
                     <span  className='mb-2 text-md font-medium text-greyBlue'>신뢰등급</span>
-                    <span className='text-grey900'><TrustGradeBadge size='xs' color='red' text='1등급'/></span>
+                    <span className='text-grey900'><TrustGradeBadge size='xs' text='1등급'/></span>
                 </div>
                 <div className='flex flex-col pl-3 border-l-2 border-grey300'>
                     <span className='mb-2 text-md font-medium text-greyBlue'>신뢰점수</span>

@@ -63,7 +63,7 @@ const InfoSection = () => {
       <div className="flex gap-5 h-10 items-center">
         <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">프로젝트 등급</span>
         <div>
-          <TrustGradeBadge size="xs" text={testItem.trustGrade} color="red" />
+          <TrustGradeBadge size="xs" text={testItem.trustGrade} />
         </div>
       </div>
       <div className="flex gap-5 h-10 items-center">
