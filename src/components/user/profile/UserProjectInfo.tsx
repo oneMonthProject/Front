@@ -17,7 +17,7 @@ function UserProjectInfo({ count, grade, score }: UserProjectInfoProps) {
       </div>
       <div className='space-y-1 text-sm mobile:text-xs'>
         <p className='text-grey500'>신뢰등급</p>
-        <TrustGradeBadge size='xs' color='red' text={grade} />
+        <TrustGradeBadge size='xs' text={grade} />
       </div>
       <div className='space-y-1 border-l-2 pl-2 text-sm mobile:text-xs'>
         <p className='text-grey500 '>신뢰점수</p>

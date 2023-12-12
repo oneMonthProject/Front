@@ -31,7 +31,7 @@ const PostCard = ({
       <Link href={`/post/${id}`}>
         <div className="flex">
           <div className="font-bold text-base mr-3">{projectName}</div>
-          <TrustGradeBadge size="xs" text={trustGrade} color="red" />
+          <TrustGradeBadge size="xs" text={trustGrade} />
         </div>
         <div className="mt-2 text-xs">
           {`${format(startDate, "yyyy.MM.dd")} ~ ${format(endDate, "yyyy.MM.dd")}`}

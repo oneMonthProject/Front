@@ -5,12 +5,30 @@ import {BadgeProps} from "@/utils/type";
 
 
 
-function TrustGradeBadge({ color = '', size = '', text = '' }: BadgeProps) {
+function TrustGradeBadge({ size = '', text = '' }: BadgeProps) {
   // 사이즈
   const { textSize, px, py } = makeBadgeSize(size);
 
+  let badgeColor = "";
+  switch(text){
+      case '1등급':
+          badgeColor = 'red';
+          break;
+      case '2등급':
+          badgeColor = 'yellow';
+          break;
+      case '3등급':
+          badgeColor = 'green';
+          break;
+      case '4등급':
+          badgeColor = 'blue';
+          break;
+      default:
+          throw Error('Unknown trust grade');
+  }
+
   // 색상
-  const { bgColor, textColor, ringColor } = makeBadgeColor(color);
+  const { bgColor, textColor, ringColor } = makeBadgeColor(badgeColor);
 
   return (
     <>
