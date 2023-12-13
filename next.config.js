@@ -1,11 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    compiler: {
-        reactRemoveProperties: true,
-        removeConsole: {
-            exclude: ['error']
-        }
-    },
     webpack: (config) => {
         config.module.rules.push({
             test: /\.svg$/,
