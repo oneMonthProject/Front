@@ -1,13 +1,10 @@
 import {v4} from "uuid";
-import {rest} from "msw";
+import { rest} from "msw";
+import {setCookie} from "cookies-next";
+import {cookies} from "next/headers";
 // todo - accestoken, refresh 토큰 같이 보내기
 //  응답 401로 오면 refresh api 요청 보내고, access token 갱신받고, 갱신받은 access token으로 서버에 재요청 보내기
-// accesstoken은 private 변수에 저장.
 
-// req:
-//  Header:
-// Authorization: “String”,
-// content_type: application/json
 
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -98,8 +95,7 @@ export const handlers = [
     }),
     //
     // // 프로젝트 상세 조회
-    rest.get(`http://43.202.197.30:8080/api/project/id`, (req, res, ctx) => {
-        console.log("vmfhwprxm tkdtp whghl");
+    rest.get(`${baseUrl}/api/project/id`, (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.delay(400),
@@ -116,10 +112,10 @@ export const handlers = [
                     },
                     status: "RECRUITING",
                     crewNumber: 4,
-                    startDate: "2023-11-19T09:53:13.539",
-                    endDate: "2023-11-23T09:53:13.539",
-                    createDate: "2023-11-25T18:24:18.915942",
-                    updateDate: "2023-11-26T00:08:35.511061"
+                    startDate: "2023.11.19",
+                    endDate: "2023.11.23",
+                    createDate: "2023.11.25",
+                    updateDate: "2023.11.26"
                 }
             }),
         )
