@@ -2,17 +2,18 @@ import React, {ReactNode} from 'react';
 import {dehydrate} from "@tanstack/query-core";
 import {HydrationBoundary} from "@tanstack/react-query";
 import {getMyProjectDetail} from "@/service/project";
-import {useQueryString} from "@/hooks/useQueryString";
 import getQueryClient from "@/app/getQueryClient";
-import {CookieValueTypes} from "cookies-next";
+import {cookies} from "next/headers";
+import {getCookie} from "cookies-next";
 
 interface HydratedProjectInfoProps {
+    projectId: string;
     children: ReactNode,
-    accessToken:  CookieValueTypes
+
 }
 
-async function HydratedProjectInfo({accessToken, children}: HydratedProjectInfoProps) {
-    const projectId = useQueryString('projectId');
+async function HydratedProjectInfo({projectId, children}: HydratedProjectInfoProps) {
+    const accessToken = getCookie('accessToken', {cookies});
     const queryClient = getQueryClient();
 
     if (projectId) {

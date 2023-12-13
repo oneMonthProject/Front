@@ -19,20 +19,20 @@ export default function ProjectNavTab() {
     const currentProjectNavTab = useRecoilValue(currentProjectNavTabSelector);
 
     useEffect(() => {
-        if (currentProjectNavTab == null && pathname !== '/project') {
-            const updatedProjectNavTabs: ProjectNavTabItem[] = [];
-            [...projectNavTabs].forEach((v) => {
-                updatedProjectNavTabs.push({
-                    ...v,
-                    current: v.href === pathname || (v.href + '/detail') === pathname
-                });
+        const updatedProjectNavTabs: ProjectNavTabItem[] = [];
+        [...projectNavTabs].forEach((v) => {
+            updatedProjectNavTabs.push({
+                ...v,
+                current: v.name === '업무'
             });
-            setProjectNavTabs(updatedProjectNavTabs);
-        }
-    }, [pathname, currentProjectNavTab, projectNavTabs, setProjectNavTabs]);
+        });
+        setProjectNavTabs(updatedProjectNavTabs);
+    }, []);
 
 
-    function onClickHandler({target}: MouseEvent<HTMLAnchorElement>) {
+    function onClickHandler(e: MouseEvent<HTMLAnchorElement>) {
+        e.preventDefault();
+        const {target} = e;
         const updatedProjectNavTabs: ProjectNavTabItem[] = [];
 
         [...projectNavTabs].forEach((v) => {

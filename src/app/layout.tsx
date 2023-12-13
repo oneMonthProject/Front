@@ -16,6 +16,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+
+    if(process.env.NEXT_PUBLIC_API_MOCKING === 'true'){
+        import('../mocks').then(async ({setupMocks}) => {
+            setupMocks();
+        });
+    }
+
     return (
         <html lang="en">
         <body className="w-full">
