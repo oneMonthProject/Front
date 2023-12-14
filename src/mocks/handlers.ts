@@ -21,14 +21,15 @@ export const handlers = [
     // 로그인
     rest.post(`${baseUrl}/api/user/login`, async (req, res, ctx) => {
         const {id, password} =   req.params;
+        
         return res(
+            ctx.set("Authorization", v4()),
             ctx.status(200),
             ctx.delay(400),
+            ctx.cookie("Refresh", v4()),
             ctx.json( {
                 email: 'test@test,com',
-                nickname: 'tester',
-                accessToken: v4(),
-                refreshToken: v4()
+                nickname: 'tester'
             })
         );
     }),
