@@ -1,4 +1,3 @@
-import axios from "axios";
 import authApi from "@/utils/authApi";
 
 export interface updateUserInfo {
@@ -10,8 +9,8 @@ export interface updateUserInfo {
 }
 
 export const checkEmail = async (email: string) => {
-  const { data: response } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND}/api/user/check-email/${email}`,
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND}/api/public/user/check-email/${email}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -19,27 +18,18 @@ export const checkEmail = async (email: string) => {
     }
   );
 
-  return response.data;
+  return response.json();
 };
 
 export const checkNickname = async (nickname: string) => {
-  const { data: response } = await axios.get(
-    `${process.env.NEXT_PUBLIC_BACKEND}/api/user/check-nickname/${nickname}`,
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_BACKEND}/api/public/user/check-nickname/${nickname}`,
     {
       headers: {
         "Content-Type": "application/json",
       },
     }
   );
-
-  return response.data;
-};
-
-export const updateUser = async (updateData: updateUserInfo) => {
-  const response = await authApi("/api/user", {
-    method: "PUT",
-    body: JSON.stringify(updateData),
-  });
 
   return response.json();
 };
@@ -47,6 +37,16 @@ export const updateUser = async (updateData: updateUserInfo) => {
 export const getUser = async (userId: bigint) => {
   const response = await authApi(`/api/user/${userId}`, {
     method: "GET",
+    // credentials: 'include'
+  });
+
+  return response.json();
+};
+
+export const updateUser = async (updateData: updateUserInfo) => {
+  const response = await authApi("/api/user", {
+    method: "PUT",
+    body: JSON.stringify(updateData),
   });
 
   return response.json();
