@@ -49,10 +49,8 @@ export async function getMyProjectList({accessToken}: AuthRequestParam) {
  * @param projectId
  */
 export async function getMyProjectDetail({accessToken, projectId}: ReqProjectDetailParam) {
-    console.log("getMyProjectDetail, access: ",accessToken);
-    console.log("getMyProjectDetail, projectId: ",projectId);
     try {
-        const res = await fetch(`https://jsonplaceholder.typicode.com/posts/1`, {
+        const res = await fetch(`${baseURL}/api/project/${projectId}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
