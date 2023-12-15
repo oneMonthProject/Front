@@ -85,12 +85,42 @@ export interface TaskItem {
     assignedUserId: string;
 }
 
+interface TrustGradeItem {
+    trustGradeId: string | bigint;
+    trustGradeName: string;
+}
+
+interface PositionItem {
+    positionId: string | bigint;
+    positionName: string;
+}
+
+interface TechStackItem {
+    technologyStackId: string | bigint;
+    technologyStackName: string;
+}
+
 export interface UserInfo {
     id: string | number | null;
     nickname: string;
     imageSrc?: string | null;
     position?: SelectItem;
     // 추가 예정
+}
+
+export interface ProfileInfo {
+    userId: string | number | null;
+    email: string;
+    nickname: string;
+    profileImgSrc?: string | null;
+    trustScore: number;
+    trustGrade: TrustGradeItem;
+    position: PositionItem;
+    techStacks: TechStackItem[];
+    intro?: string;
+    projectHistoryTotalCount: number;
+    createDate: string;
+    updateDate: string;
 }
 
 export interface PostInfo {
