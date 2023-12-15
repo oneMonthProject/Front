@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from "react";
+import { useRouter } from 'next/navigation';
 import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
 import Input from "@/components/ui/form/Input";
@@ -8,6 +9,7 @@ import TextArea from "@/components/ui/form/TextArea";
 import FormButton from "@/components/ui/form/FormButton";
 import NicknameField from "@/components/ui/form/NickNameField";
 import { SelectItem } from "@/utils/type";
+import { SignUpRequest, signUp } from "@/service/signup";
 
 const positionList = [
   { value: 1, name: '프론트엔드' },
@@ -35,6 +37,8 @@ const techStackList = [
 ];
 
 function SignUpForm() {
+  const router = useRouter();
+
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
@@ -43,8 +47,36 @@ function SignUpForm() {
   const [techStack, setTechStack] = useState<SelectItem[]>([]);
   const [selfIntroduction, setSelfIntroduction] = useState("");
 
-  const signUp = () => {
+  const isValid = () => {
+    // 빈칸 및 형식 확인 로직 추가
+    // password 와 passwordConfirmation 같은 지 비교 로직도 추가
+    return true;
+  }
 
+  const getSelectItemValue = (item: SelectItem | null) => {
+    if (item) {
+      return item.value;
+    }
+
+    return item;
+  }
+
+  const userSignUp = () => {
+    if (!isValid()) {
+      return;
+    }
+
+    const positionId = getSelectItemValue(position);
+    const techStackIds = techStack.map(stack => getSelectItemValue(stack));
+
+    const signUpRequest = { email, password, nickname, positionId, techStackIds, intro: selfIntroduction } as SignUpRequest;
+    signUp(signUpRequest).then(response => {
+      if (response) {
+        router.push("/");
+      }
+    }).catch(error => {
+      // error 표시
+    });
   }
 
   return (
@@ -60,7 +92,7 @@ function SignUpForm() {
       <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
         value={selfIntroduction} onChange={(e) => setSelfIntroduction(e.target.value)} />
-      <FormButton onClick={signUp}>가입</FormButton>
+      <FormButton onClick={userSignUp}>가입</FormButton>
     </div>
   )
 }
