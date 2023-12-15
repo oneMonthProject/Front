@@ -31,6 +31,7 @@ const authApi = returnFetch({
           headers: {
             "Content-Type": "application/json",
           },
+          credentials: 'include',
           body: JSON.stringify({ userId: getCookie("user_id") }),
         }
       );

@@ -34,12 +34,11 @@ export const checkNickname = async (nickname: string) => {
   return response.json();
 };
 
-export const getUser = async (userId: bigint) => {
+export const getUserIfo = async (userId: bigint) => {
   const response = await authApi(`/api/user/${userId}`, {
-    method: "GET",
-    // credentials: 'include'
+    method: "GET"
   });
-
+  
   return response.json();
 };
 

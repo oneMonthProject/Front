@@ -19,7 +19,7 @@ export const handlers = [
         }
         ),
     // 로그인
-    rest.post(`${baseUrl}/api/user/login`, async (req, res, ctx) => {
+    rest.post(`${baseUrl}/api/public/user/login`, async (req, res, ctx) => {
         const {id, password} =   req.params;
         
         return res(
@@ -30,6 +30,53 @@ export const handlers = [
             ctx.json( {
                 email: 'test@test,com',
                 nickname: 'tester'
+            })
+        );
+    }),
+    // 내 정보 조회
+    rest.get(`${baseUrl}/api/user/${9007199254740992n}`, async (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.delay(400),
+            ctx.json({
+                data: {
+                    userId: "123",
+                    email: "test@gmail.com",
+                    nickname: "Robert Whistable",
+                    profileImgSrc: null,
+                    trustScore: 1200,
+                    trustGrade: 1,
+                    position: { positionId: 1, positionName: "프론트엔드" },
+                    techStacks: [
+                        { technologyStackId: 1, technologyStackName: "React" },
+                        { technologyStackId: 2, technologyStackName: "TypeScript" },
+                        { technologyStackId: 7, technologyStackName: "Java" },
+                    ],
+                    intro: "개발 N년차 웹 프론트엔드 개발자 입니다.",
+                    projectHistoryTotalCount: 3,
+                    createDate: "",
+                    updateDate: ""
+                },
+                result: "success",
+                message: "조회 완료~!"
+            })
+        );
+    }),
+    // 토큰 재발급
+    rest.get(`${baseUrl}/api/user/token-reissue`, async (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.set("Authorization", v4()),
+            ctx.cookie("Refresh", v4()),
+        );
+    }),
+    // 닉네임 중복체크
+    rest.get(`${baseUrl}/api/public/user/check-nickname/${"test123"}`, async (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.json({
+                result: "success",
+                message: "사용가능한 닉네임입니다."
             })
         );
     }),
