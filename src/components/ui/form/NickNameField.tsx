@@ -1,18 +1,29 @@
 'use client';
+import { checkNickname } from "@/service/user";
 import { InputHTMLAttributes } from "react";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
+  setCheck: (value: boolean) => void;
 }
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-function NicknameField({ disabled = false, required = false, ...props }: InputProps) {
+function NicknameField({ value, disabled = false, required = false, setCheck, ...props }: InputProps) {
 
   const checkDuplicateNickname = () => {
-
+    if (value) {
+      checkNickname(value as string).then(response => {
+        const { message } = response;
+        console.log("message", message);
+        // message Snackbar 표시
+        setCheck(true);
+      });
+    } else {
+      // value 가 비어 있다는 Snackbar 표시
+    }
   }
 
   return (
