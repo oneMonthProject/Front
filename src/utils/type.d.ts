@@ -157,6 +157,16 @@ export interface TrustGrade {
     score: int;
 }
 
+export interface User {
+    userId: string;
+    profileImgSrc: string;
+}
+
+export interface ProjectMember {
+    projectMemberId: bigint;
+    user: User;
+}
+
 export interface ProjectInfo {
     projectId: bigint;
     name: string;
@@ -168,4 +178,8 @@ export interface ProjectInfo {
     endDate: date;
     createDate: date;
     updateDate: date;
+}
+
+export interface ProjectPost extends ProjectInfo {
+    members: ProjectMember[];
 }
