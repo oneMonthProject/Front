@@ -68,5 +68,8 @@
     "jest": "^29.7.0",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }
