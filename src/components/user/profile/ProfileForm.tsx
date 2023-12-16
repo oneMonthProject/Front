@@ -46,6 +46,8 @@ function ProfileForm() {
   const [techStack, setTechStack] = useState<SelectItem[]>([techStackList[0], techStackList[1], techStackList[5], techStackList[8], techStackList[9]]);
   const [selfIntroduction, setSelfIntroduction] = useState("개발 N년차 웹 프론트엔드 개발자 입니다.");
 
+  const [isCheckedNickname, setIsCheckedNickname] = useState(false);
+
   const saveProfile = () => {
 
   }
@@ -88,7 +90,8 @@ function ProfileForm() {
       </div>
       <Input id="email" label="이메일" placeholder="example@trustcrews.com" required disabled
         value={email} onChange={(e) => setEmail(e.target.value)} />
-      <NicknameField value={nickname} onChange={(e) => setNickname(e.target.value)} placeholder="닉네임을 입력해주세요." required />
+      <NicknameField value={nickname} onChange={(e) => setNickname(e.target.value)}
+        placeholder="닉네임을 입력해주세요." setCheck={setIsCheckedNickname} required />
       <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
       <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
