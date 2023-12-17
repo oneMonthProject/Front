@@ -1,4 +1,4 @@
-import { SelectItem } from "./type";
+import { PositionItem, SelectItem, TechStackItem } from "./type";
 
 export function makeBadgeSize(size: string) {
   // 사이즈
@@ -105,10 +105,22 @@ export function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export function getSelectItemValue(item: SelectItem | null) {
+export function getSelectItemValue(item: SelectItem) {
+  return item.value;
+}
+
+export function getPositionSelectItem(item: PositionItem | null) {
   if (item) {
-    return item.value;
+    return { value: item.positionId, name: item.positionName } as SelectItem;
   }
 
   return item;
+}
+
+export function getTechStackSelectItem(items: TechStackItem[]) {
+  if (items.length > 0) {
+    return items.map(item => ({ value: item.technologyStackId, name: item.technologyStackName } as SelectItem));
+  }
+
+  return [];
 }

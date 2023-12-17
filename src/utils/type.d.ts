@@ -90,12 +90,12 @@ interface TrustGradeItem {
     trustGradeName: string;
 }
 
-interface PositionItem {
+export interface PositionItem {
     positionId: string | bigint;
     positionName: string;
 }
 
-interface TechStackItem {
+export interface TechStackItem {
     technologyStackId: string | bigint;
     technologyStackName: string;
 }
@@ -109,7 +109,7 @@ export interface UserInfo {
 }
 
 export interface ProfileInfo {
-    userId: string | number | null;
+    userId: string | number | bigint | null;
     email: string;
     nickname: string;
     profileImgSrc?: string | null;
@@ -120,6 +120,13 @@ export interface ProfileInfo {
     intro?: string;
     projectHistoryTotalCount: number;
     createDate: string;
+    updateDate: string;
+}
+
+export interface UserProjectHistory {
+    userProjectHistoryId: bigint;
+    status: string;
+    projectName: string;
     updateDate: string;
 }
 
