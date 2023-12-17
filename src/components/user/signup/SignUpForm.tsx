@@ -118,18 +118,20 @@ function SignUpForm() {
       return;
     }
 
-    const positionId = getSelectItemValue(position);
-    const techStackIds = techStack.map(stack => getSelectItemValue(stack));
-
-    const signUpRequest = { email, password, nickname, positionId, techStackIds, intro: selfIntroduction } as SignUpRequest;
-    signUp(signUpRequest).then(response => {
-      const { result } = response;
-      if (result === "success") {
-        router.push("/");
-      }
-    }).catch(error => {
-      // error 표시
-    });
+    if (position) {
+      const positionId = getSelectItemValue(position);
+      const techStackIds = techStack.map(stack => getSelectItemValue(stack));
+  
+      const signUpRequest = { email, password, nickname, positionId, techStackIds, intro: selfIntroduction } as SignUpRequest;
+      signUp(signUpRequest).then(response => {
+        const { result } = response;
+        if (result === "success") {
+          router.push("/");
+        }
+      }).catch(error => {
+        // error 표시
+      });
+    }
   }
 
   const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
