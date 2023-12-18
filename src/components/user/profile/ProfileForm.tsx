@@ -1,5 +1,6 @@
 'use client';
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from 'next/navigation';
 import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
 import Avatar from "@/components/ui/Avatar";
@@ -9,6 +10,9 @@ import NicknameField from "@/components/ui/form/NickNameField";
 import TextArea from "@/components/ui/form/TextArea";
 import FormButton from "@/components/ui/form/FormButton";
 import { SelectItem } from "@/utils/type";
+import { getPositionSelectItem, getSelectItemValue, getTechStackSelectItem } from "@/utils/common";
+import { useProfileInfo } from "@/hooks/useProfileInfo";
+import { updateUser, updateUserInfo } from "@/service/user";
 
 const positionList = [
   { value: 1, name: '프론트엔드' },
@@ -36,20 +40,68 @@ const techStackList = [
 ];
 
 function ProfileForm() {
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const router = useRouter();
+  const { data, isLoading, error } = useProfileInfo();
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [email, setEmail] = useState("example@trustcrews.com");
-  const [nickname, setNickname] = useState("Robert Whistable");
-  const [position, setPosition] = useState<SelectItem | null>(positionList[0]);
-  const [techStack, setTechStack] = useState<SelectItem[]>([techStackList[0], techStackList[1], techStackList[5], techStackList[8], techStackList[9]]);
-  const [selfIntroduction, setSelfIntroduction] = useState("개발 N년차 웹 프론트엔드 개발자 입니다.");
+  const [nickname, setNickname] = useState("");
+  const [position, setPosition] = useState<SelectItem | null>(null);
+  const [techStack, setTechStack] = useState<SelectItem[]>([]);
+  const [selfIntroduction, setSelfIntroduction] = useState("");
 
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
 
-  const saveProfile = () => {
+  const isValidNickname = (nickname: string) => {
+    const nicknameRegex: RegExp = /^[a-zA-Z0-9]{6,10}$/;
+    return nicknameRegex.test(nickname);
+  }
 
+  const isValid = () => {
+    // 값이 비어있을 경우
+    if (nickname === "" || !position || techStack.length === 0) {
+      // Snackbar 추가
+      console.log("필수값들을 입력 또는 선택해주세요.");
+
+      return false;
+    }
+
+    // 닉네임 형식이 맞지 않는 경우
+    if (!isValidNickname(nickname)) {
+      // Snackbar 추가
+      console.log("닉네임은 영어 숫자 포함 6~10 자리만 가능합니다.");
+      return false;
+    }
+
+    // 닉네임 중복 확인 하지 않았을 경우
+    if (!isCheckedNickname) {
+      // Snackbar 추가
+      console.log("닉네임 중복확인을 해주세요.");
+      return false;
+    }
+
+    return true;
+  }
+
+  const saveProfile = () => {
+    if (!isValid()) {
+      return;
+    }
+
+    if (position) {
+      const positionId = getSelectItemValue(position);
+      const techStackIds = techStack.map(stack => getSelectItemValue(stack));
+      const updateData = { id: userId, nickname, positionId, techStackIds } as updateUserInfo;
+      updateUser(updateData).then(response => {
+        const { result } = response;
+        if (result === "success") {
+          router.push("/user/profile");
+        }
+      }).catch(error => {
+        // error 표시
+      });
+    }
   }
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -78,6 +130,30 @@ function ProfileForm() {
     }
   }
 
+  const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+    setIsCheckedNickname(false);
+  }
+
+  useEffect(() => {
+    if (data?.data) {
+      const profileData = data.data;
+
+      setImageSrc(profileData?.profileImgSrc || null);
+      setNickname(profileData.nickname);
+      setPosition(getPositionSelectItem(profileData.position));
+      setTechStack(getTechStackSelectItem(profileData.techStacks));
+      setSelfIntroduction(profileData?.intro ?? "");
+    }
+  }, [data]);
+
+  // Loading 시 Skeleton 추가
+  // Error 시 Snackbar 추가
+  if (isLoading) return 'Loading...';
+  if (error) return 'An error has occurred: ' + error.message;
+  
+  const { userId, email } = data!.data;
+
   return (
     <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3">
       <div className="w-full h-fit text-center">
@@ -88,9 +164,8 @@ function ProfileForm() {
         <Button size="md" theme="primary-hollow" onClickHandler={handleFileButtonClick}>{imageSrc === null ? "이미지 변경" : "변경"}</Button>
         <Button size="md" theme="primary" onClickHandler={deleteImage} hidden={imageSrc === null}>삭제</Button>
       </div>
-      <Input id="email" label="이메일" placeholder="example@trustcrews.com" required disabled
-        value={email} onChange={(e) => setEmail(e.target.value)} />
-      <NicknameField value={nickname} onChange={(e) => setNickname(e.target.value)}
+      <Input id="email" label="이메일" required disabled defaultValue={email} />
+      <NicknameField value={nickname} onChange={onChangeNickname}
         placeholder="닉네임을 입력해주세요." setCheck={setIsCheckedNickname} required />
       <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
       <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
