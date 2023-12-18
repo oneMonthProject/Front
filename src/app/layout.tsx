@@ -4,6 +4,7 @@ import Providers from "@/app/Providers";
 import React from "react";
 import Header from "@/components/header/Header";
 import HydratedData from "@/app/HydratedData";
+import Snackbar from "@/components/ui/Snackbar";
 
 export const metadata: Metadata = {
     title: "trustcrews",
@@ -37,6 +38,7 @@ export default function RootLayout({
                 </HydratedData>
             </div>
             <div id="modal" className="absolute top-0 w-full"></div>
+            <Snackbar />
         </Providers>
         </body>
         </html>
