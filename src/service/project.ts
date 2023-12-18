@@ -1,10 +1,10 @@
 import {CookieValueTypes} from "cookies-next";
 import {createHeader} from "@/test-utils/mocking-server-utils";
 import {AuthRequestParam, ProjectInfo, ReqProjectDetailParam, ResponseBody} from "@/utils/type";
+import authApi from "@/utils/authApi";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
-
-
+const isTest = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
 
 export async function request(
     method: 'GET' | 'POST' | 'PATCH',
@@ -12,13 +12,24 @@ export async function request(
     accessToken?:  CookieValueTypes,
     data?: Record<string, unknown>
 ) {
-    console.log("request:::::: ", `${baseURL}${url}`);
+
     try{
-        const response = await fetch(url, {
-            method: method,
-            headers:createHeader(accessToken)
-        });
-        return await response.json();
+        if(isTest){
+            const response = await fetch(url, {
+                method: method,
+                headers:{
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`,
+                }
+            });
+            return await response.json();
+        }else{
+            const response = await authApi(url, {
+                method: method,
+            });
+            return await response.json();
+        }
+
     }catch(error){
         console.log("error: ",error);
     }
@@ -38,7 +49,7 @@ export async function request(
  * @param accessToken
  */
 export async function getMyProjectList({accessToken}: AuthRequestParam) {
-    return await request('GET', '/api/project/me', accessToken);
+    return await request('GET',`${baseURL}/api/project/me`, accessToken);
 }
 
 

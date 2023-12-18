@@ -11,22 +11,25 @@ export const metadata: Metadata = {
         "개발자들간의 책임감 있는 협업을 도와주는 팀프로젝트 매칭 서비스",
 };
 
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
 
-    if(process.env.NEXT_PUBLIC_API_MOCKING === 'true'){
+    const isTestMode = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
+
+    if(isTestMode){
         import('../mocks').then(async ({setupMocks}) => {
-            setupMocks();
+            await setupMocks();
         });
     }
 
     return (
         <html lang="en">
         <body className="w-full">
-        <Providers>
+        <Providers isTestMode={isTestMode}>
             <div className="responsiveContainer">
                 <Header/>
                 <HydratedData>

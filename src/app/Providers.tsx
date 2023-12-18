@@ -4,16 +4,19 @@ import { RecoilRoot } from 'recoil';
 import { QueryClient } from "@tanstack/query-core";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import {setupMocks} from "@/mocks";
+import { setCookie } from 'cookies-next';
 
-function Providers({ children }: { children: ReactNode }) {
+function Providers({ children, isTestMode }: { children: ReactNode, isTestMode:boolean }) {
     const [queryClient] = useState(() => new QueryClient());
 
-    if (process.env.NEXT_PUBLIC_API_MOCKING === 'true'){
+    if(isTestMode){
         import('../mocks').then(async ({setupMocks}) => {
-            setupMocks();
+            await setupMocks();
         });
+
+        setCookie('accessToken','abc-123');
     }
-    
     return (
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
