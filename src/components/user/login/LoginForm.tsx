@@ -5,13 +5,36 @@ import PasswordInput from "@/components/ui/form/PasswordInput";
 import FormButton from "@/components/ui/form/FormButton";
 import { login } from "@/service/login";
 import { setCookie } from "cookies-next";
+import { useRouter } from "next/navigation";
+import { useSetRecoilState } from "recoil";
+import { snackbarState } from "@/store/MainStateStore";
+import { isValidEmail } from "@/utils/common";
+import { isEqual } from "lodash";
 
 function LoginForm() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const setSnackbar = useSetRecoilState(snackbarState);
+
   const isValid = () => {
-    // 빈칸 및 형식 확인 로직 추가
+    if (email === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "이메일을 입력해주세요." });
+      return false;
+    }
+
+    // 이메일 형식 아닐 경우
+    if (!isValidEmail(email)) {
+      setSnackbar({ show: true, type: "ERROR", content: "이메일 형식이 아닙니다." });
+      return false;
+    }
+
+    if (password === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "비밀번호를 입력해주세요." });
+      return false;
+    }
+
     return true;
   }
 
@@ -22,14 +45,18 @@ function LoginForm() {
 
     login(email, password)
       .then((response) => {
-        console.log("response", response);
+        const { data, result, message } = response;
+        
+        if (isEqual(result, "success")) {
+          const { userId } = data;
+          setCookie("user_id", userId);
 
-        // user 정보는 localStorage 에 담는 것도 고려해보기
-        // setCookie("user_id", response.userId);
-        // setCookie("email", response.email);
-        // setCookie("nickname", response.nickname);
-        // Refresh token 은 서버에서 Set-Cookie 로 보내주면 같은 도메인 내의 요청에는 자동으로 들어가진다고 함. 테스트 필요
-      })
+          router.push("/");
+          router.refresh();
+        } else {
+          setSnackbar({ show: true, type: "ERROR", content: message });
+        }
+      });
   }
 
   return (

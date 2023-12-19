@@ -34,11 +34,19 @@ export const checkNickname = async (nickname: string) => {
   return response.json();
 };
 
+export const getSimpleUser = async () => {
+  const response = await authApi("/api/user/simple-me", {
+    method: "GET",
+  });
+
+  return response.json();
+};
+
 export const getUserIfo = async () => {
   const response = await authApi("/api/user/me", {
-    method: "GET"
+    method: "GET",
   });
-  
+
   return response.json();
 };
 
@@ -64,9 +72,12 @@ export const updateUserProfileImg = async (image: File) => {
 };
 
 export const getUserProjectHistory = async (pageNumber: number) => {
-  const response = await authApi(`/api/user/me/project-history?pageNumber=${pageNumber}`, {
-    method: "GET"
-  });
-  
+  const response = await authApi(
+    `/api/user/me/project-history?pageNumber=${pageNumber}`,
+    {
+      method: "GET",
+    }
+  );
+
   return response.json();
 };
