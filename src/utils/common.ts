@@ -187,3 +187,22 @@ export function sortByStartDate<T extends ProjectPost | MilestoneInfo>(dataList:
 
     return sortBy === 'desc' ? sorted.reverse() : sorted;
 }
+
+/**
+ * 마일스톤 / 업무 status badge color 생성
+ * @param text
+ */
+export function getStatusBadgeColor(text:string){
+    switch(text){
+        case '시작전':
+            return {bgColor:'bg-grey900', textColor:'text-grey000'};
+        case '진행중':
+            return {bgColor:'bg-[#FFF9CF]', textColor:'text-[#7B5C03]'};
+        case '완료':
+            return {bgColor:'bg-[#F1F1F1]', textColor: 'text-[#242D35]'};
+        case '만료':
+            return {bgColor:'bg-danger', textColor: 'text-white'};
+        default:
+            throw Error("Unknown Status Type");
+    }
+}
