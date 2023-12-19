@@ -6,7 +6,7 @@ import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
 import {useQuery} from "@tanstack/react-query";
 import {getProjectMilestones as getProjectMilestonesAPI} from "@/service/project";
-import {convertStringToDate} from "@/utils/common";
+import {convertStringToDate, sortByStartDate} from "@/utils/common";
 
 
 function Milestones() {
@@ -23,7 +23,9 @@ function Milestones() {
 
     if (isLoading) return <div>loading...</div>;
 
-    const milestoneInfo = data!.data.map(v => {
+    const sortedMilestoneInfo = sortByStartDate(data!.data, 'asc');
+
+    const milestoneInfo = sortedMilestoneInfo.map(v => {
         return {
             ...v,
             createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
@@ -32,6 +34,8 @@ function Milestones() {
             updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd')
         }
     });
+
+
 
     return milestoneInfo.length > 0
         ? (
