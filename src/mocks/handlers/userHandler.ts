@@ -35,7 +35,7 @@ export const handlers = [
         );
     }),
     // 내 정보 조회
-    rest.get(`${baseUrl}/api/user/${9007199254740992n}`, async (req, res, ctx) => {
+    rest.get(`${baseUrl}/api/user/me`, async (req, res, ctx) => {
         return res(
             ctx.status(200),
             ctx.delay(400),
@@ -43,7 +43,7 @@ export const handlers = [
                 data: {
                     userId: "123",
                     email: "test@gmail.com",
-                    nickname: "Robert Whistable",
+                    nickname: "Robert",
                     profileImgSrc: null,
                     trustScore: 1200,
                     trustGrade: 1,
@@ -58,6 +58,49 @@ export const handlers = [
                     createDate: "",
                     updateDate: ""
                 },
+                result: "success",
+                message: "조회 완료~!"
+            })
+        );
+    }),
+    // 내 프로젝트 이력 조회
+    rest.get(`${baseUrl}/api/user/me/project-history?pageNumber=${0}`, async (req, res, ctx) => {
+        return res(
+            ctx.status(200),
+            ctx.delay(400),
+            ctx.json({
+                data: [
+                    {
+                        userProjectHistoryId: 1794167162383090,
+                        status: "FINISH",
+                        projectName: "A 프로젝트",
+                        updateDate: "2023.10.04"
+                    },
+                    {
+                        userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
+                        status: "FORCED_WITHDRAWAL",
+                        projectName: "B 프로젝트",
+                        updateDate: "2023.09.30"
+                    },
+                    {
+                        userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
+                        status: "WITHDRAWAL",
+                        projectName: "C 프로젝트",
+                        updateDate: "2023.09.28"
+                    },
+                    {
+                        userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
+                        status: "FINISH",
+                        projectName: "D 프로젝트",
+                        updateDate: "2023.09.22"
+                    },
+                    {
+                        userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
+                        status: "PARTICIPATING",
+                        projectName: "E 프로젝트",
+                        updateDate: "2023.09.20"
+                    },
+                ],
                 result: "success",
                 message: "조회 완료~!"
             })
