@@ -8,6 +8,7 @@ import { BiX } from "@react-icons/all-files/bi/BiX";
 import CommonPagination from "@/components/ui/CommonPagination";
 import { useUserProjectHistory } from "@/hooks/useUserProjectHistory";
 import { classNames } from "@/utils/common";
+import { ProjectHistoryStatus } from "@/utils/type";
 
 function UserHistory() {
   // 상의하고 CommonPagination 에 연결
@@ -19,47 +20,47 @@ function UserHistory() {
   if (isLoading) return 'Loading...';
   if (error) return 'An error has occurred: ' + error.message;
   
-  const getIconColorByStatus = (status: string) => {
+  const getIconColorByStatus = (status: ProjectHistoryStatus) => {
     switch (status) {
-      case "참여":
+      case "PARTICIPATING":
         return 'bg-blue-500'
-      case "완료":
+      case "FINISH":
         return 'bg-green-500'
-      case "탈퇴":
+      case "WITHDRAWAL":
         return 'bg-gray-400'
-      case "강제탈퇴":
+      case "FORCED_WITHDRAWAL":
         return 'bg-red-400'
       default:
         return ''
     }
   }
 
-  const getIconByStatus = (status: string) => {
+  const getIconByStatus = (status: ProjectHistoryStatus) => {
     const iconClassName = 'h-5 w-5 text-white';
 
     switch (status) {
-      case "참여":
+      case "PARTICIPATING":
         return <BiUser className={iconClassName} aria-hidden="true" />
-      case "완료":
+      case "FINISH":
         return <BiCheck className={iconClassName} aria-hidden="true" />
-      case "탈퇴":
+      case "WITHDRAWAL":
         return <BiUndo className={iconClassName} aria-hidden="true" />
-      case "강제탈퇴":
+      case "FORCED_WITHDRAWAL":
         return <BiX className={iconClassName} aria-hidden="true" />
       default:
         return <></>
     }
   }
 
-  const getHistoryStatusText = (status: string) => {
+  const getHistoryStatusText = (status: ProjectHistoryStatus) => {
     switch (status) {
-      case "참여":
+      case "PARTICIPATING":
         return "프로젝트에 참여 하였습니다."
-      case "완료":
+      case "FINISH":
         return "프로젝트를 완료 하였습니다."
-      case "탈퇴":
+      case "WITHDRAWAL":
         return "프로젝트를 탈퇴 하셨습니다."
-      case "강제탈퇴":
+      case "FORCED_WITHDRAWAL":
         return "프로젝트에서 강제탈퇴 당하셨습니다."
       default:
         return ""

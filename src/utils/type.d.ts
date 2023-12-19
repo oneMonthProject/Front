@@ -123,9 +123,11 @@ export interface ProfileInfo {
     updateDate: string;
 }
 
+export type ProjectHistoryStatus = "FORCED_WITHDRAWAL" | "WITHDRAWAL" | "PARTICIPATING" | "FINISH";
+
 export interface UserProjectHistory {
     userProjectHistoryId: bigint;
-    status: string;
+    status: ProjectHistoryStatus;
     projectName: string;
     updateDate: string;
 }
@@ -189,4 +191,13 @@ export interface ProjectInfo {
 
 export interface ProjectPost extends ProjectInfo {
     members: ProjectMember[];
+}
+
+export type SnackbarType = "INFO" | "ERROR" | "SUCCESS";
+
+export interface SnackbarState {
+    show: boolean;
+    type: SnackbarType;
+    content: string;
+    duration?: number;
 }

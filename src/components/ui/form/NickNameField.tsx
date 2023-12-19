@@ -1,6 +1,8 @@
 'use client';
-import { checkNickname } from "@/service/user";
 import { InputHTMLAttributes } from "react";
+import { useSetRecoilState } from "recoil";
+import { checkNickname } from "@/service/user";
+import { snackbarState } from "@/store/MainStateStore";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
@@ -12,17 +14,17 @@ function classNames(...classes: string[]) {
 }
 
 function NicknameField({ value, disabled = false, required = false, setCheck, ...props }: InputProps) {
+  const setSnackbar = useSetRecoilState(snackbarState);
 
   const checkDuplicateNickname = () => {
     if (value) {
       checkNickname(value as string).then(response => {
         const { message } = response;
-        console.log("message", message);
-        // message Snackbar 표시
+        setSnackbar({ show: true, type: "SUCCESS", content: message });
         setCheck(true);
       });
     } else {
-      // value 가 비어 있다는 Snackbar 표시
+      setSnackbar({ show: true, type: "ERROR", content: "닉네임을 입력해주세요." });
     }
   }
 

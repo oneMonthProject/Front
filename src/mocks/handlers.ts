@@ -43,7 +43,7 @@ export const handlers = [
                 data: {
                     userId: "123",
                     email: "test@gmail.com",
-                    nickname: "Robert Whistable",
+                    nickname: "Robert",
                     profileImgSrc: null,
                     trustScore: 1200,
                     trustGrade: 1,
@@ -72,31 +72,31 @@ export const handlers = [
                 data: [
                     {
                         userProjectHistoryId: 1794167162383090,
-                        status: "완료",
+                        status: "FINISH",
                         projectName: "A 프로젝트",
                         updateDate: "2023.10.04"
                     },
                     {
                         userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
-                        status: "강제탈퇴",
+                        status: "FORCED_WITHDRAWAL",
                         projectName: "B 프로젝트",
                         updateDate: "2023.09.30"
                     },
                     {
                         userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
-                        status: "탈퇴",
+                        status: "WITHDRAWAL",
                         projectName: "C 프로젝트",
                         updateDate: "2023.09.28"
                     },
                     {
                         userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
-                        status: "완료",
+                        status: "FINISH",
                         projectName: "D 프로젝트",
                         updateDate: "2023.09.22"
                     },
                     {
                         userProjectHistoryId: _.random(0, Number.MAX_SAFE_INTEGER),
-                        status: "참여",
+                        status: "PARTICIPATING",
                         projectName: "E 프로젝트",
                         updateDate: "2023.09.20"
                     },

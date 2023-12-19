@@ -124,3 +124,18 @@ export function getTechStackSelectItem(items: TechStackItem[]) {
 
   return [];
 }
+
+export const isValidEmail = (email: string) => {
+  const emailRegex: RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+}
+
+export const isValidNickname = (nickname: string) => {
+  const nicknameRegex: RegExp = /^[a-zA-Z0-9]{6,10}$/;
+  return nicknameRegex.test(nickname);
+}
+
+export const isValidPassword = (password: string) => {
+  const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z!@#$%^&*(),.?":{}|<>]{6,12}$/;
+  return passwordRegex.test(password);
+}
