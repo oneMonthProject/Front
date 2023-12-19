@@ -1,7 +1,7 @@
 import { setCookie } from "cookies-next";
 
 export const login = async (email: string, password: string) => {
-  const loginRequest = { id: email, password };
+  const loginRequest = { email, password };
 
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND}/api/public/user/login`,
