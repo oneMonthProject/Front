@@ -11,22 +11,25 @@ interface MilestoneCardProps {
 
 function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
+    const setMilestoneModalForm = useSetRecoilState<null | MilestoneState>(milestoneModalFormState);
 
     const {
-        milestone_id: id,
-        milestone_content: content,
-        start_date: start,
-        end_date: end
+        mileStoneId: id,
+        content: content,
+        startDate: start,
+        endDate: end,
+        updateDate: update,
+        createDate: create
     } = milestoneInfo;
 
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
-        if((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
+        if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
         setMilestone({activeId: id});
     }
 
     const activeClass = activeId === id ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeId === id ? 'text-secondary' :'text-gray-900';
+    const textClass = activeId === id ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div

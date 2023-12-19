@@ -467,8 +467,6 @@ export const handlers = [
     }),
     rest.get(`${baseUrl}/api/milestone/project/:projectId`, (req, res, ctx) => {
         const projectId = req.params.projectId;
-        console.log("ccessToken: ",req.headers);
-
         return res(
             ctx.status(200),
             ctx.delay(400),

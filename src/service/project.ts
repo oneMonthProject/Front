@@ -69,10 +69,6 @@ export async function getMyProjectDetail({accessToken, projectId}: ReqProjectDet
             },
         });
 
-        // if (!res.ok) {
-        //     throw new Error(`Request failed with status ${res.status}`);
-        // }
-
         return await res.json();
     } catch (error) {
         console.error('Error in getMyProjectDetail:', error);
@@ -80,6 +76,10 @@ export async function getMyProjectDetail({accessToken, projectId}: ReqProjectDet
     }
 }
 
-export async function initTestCookie(){
-     await request('POST', `/api/testCookie`);
+/**
+ * 프로젝트 마일스톤 목록 조회
+ * @param projectId
+ */
+export async function getProjectMilestones(projectId:string){
+    return await request('GET',`${baseURL}/api/milestone/project/${projectId}`);
 }
