@@ -6,14 +6,17 @@ import { BiUndo } from "@react-icons/all-files/bi/BiUndo";
 import { BiCheck } from "@react-icons/all-files/bi/BiCheck";
 import { BiX } from "@react-icons/all-files/bi/BiX";
 import CommonPagination from "@/components/ui/CommonPagination";
-import { useUserProjectHistory } from "@/hooks/useUserProjectHistory";
+import { getUserProjectHistory as getUserProjectHistoryAPI } from "@/service/user";
 import { classNames } from "@/utils/common";
-import { ProjectHistoryStatus } from "@/utils/type";
+import { ProjectHistoryStatus, ResponseBody, UserProjectHistory } from "@/utils/type";
+import { useQuery } from "@tanstack/react-query";
 
 function UserHistory() {
-  // 상의하고 CommonPagination 에 연결
   const [pageNumber, setPageNumber] = useState(0);
-  const { data, isLoading, error } = useUserProjectHistory(pageNumber);
+  const { data, isLoading, error } = useQuery<ResponseBody<UserProjectHistory[]>, Error>({
+    queryKey: ['profileInfo', pageNumber],
+    queryFn: () => getUserProjectHistoryAPI(pageNumber)
+  });
 
   // Loading 시 Skeleton 추가
   // Error 시 Snackbar 추가
