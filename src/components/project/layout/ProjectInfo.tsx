@@ -1,12 +1,8 @@
 'use client';
 import React from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
-import {useQueryString} from "@/hooks/useQueryString";
-import {getMyProjectDetail} from "@/service/project";
-import {useQuery} from "@tanstack/react-query";
-import {getCookie} from "cookies-next";
 import {useProjectInfo} from "@/hooks/useProjectInfo";
-import {format} from "date-fns";
+import {convertStringToDate} from "@/utils/common";
 
 function ProjectInfo() {
     const {data, isLoading, error} = useProjectInfo();
@@ -15,7 +11,13 @@ function ProjectInfo() {
     if (isLoading) return <div>is Loading</div>;
     if (error) return <div>{error.message}</div>
 
-    const {name, subject, trustGrade, status, startDate, endDate} = data!.data;
+    const projectInfo = data!.data;
+
+    const {name, subject, trustGrade, status, startDate, endDate} = {
+        ...projectInfo,
+        startDate: convertStringToDate(projectInfo.startDate, 'yyyy-MM-dd'),
+        endDate: convertStringToDate(projectInfo.endDate, 'yyyy-MM-dd')
+    };
 
     return (
         <section
@@ -41,7 +43,8 @@ function ProjectInfo() {
                     <div className='w-[5rem] mr-10 text-center text-grey800'>기간</div>
                     <div>{`${startDate} ~ ${endDate}`}</div>
                 </div>
-                <span className='sr-only'>프로젝트 기간 : {`${format(new Date(startDate),'yyyy-MM-dd')} ~ ${format(new Date(endDate), 'yyyy-MM-dd')}`}</span>
+                <span
+                    className='sr-only'>프로젝트 기간 : {`${startDate} ~ ${endDate}`}</span>
             </div>
         </section>
     );
