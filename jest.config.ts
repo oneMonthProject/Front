@@ -17,11 +17,21 @@ const customJestConfig = {
     },
 
     transformIgnorePatterns: [
-        '<rootDir>/node_modules/',
+        // '<rootDir>/node_modules/(?!(swiper|ssr-window))',
+        '<rootDir>/node_modules/(?!(swiper|ssr-window|dom7)/)',
+        "<rootDir>/node_modules/(?![swiper/react/swiper-slide.js])",
+        "<rootDir>/node_modules/(?![swiper/react/swiper.js])",
         "<rootDir>/.next/",
         '^.+\\.module\\.(css|sass|scss)$',
     ],
     moduleNameMapper: {
+        "^swiper/react": "<rootDir>/node_modules/swiper/swiper-react.d.ts",
+        "^swiper/modules": "<rootDir>/node_modules/swiper/types/modules/index.d.ts",
+        "^swiper/css": "<rootDir>/node_modules/swiper/swiper.css",
+        "^swiper/css/navigation": "<rootDir>/node_modules/swiper/modules/navigation.css",
+        "^swiper/css/pagination": "<rootDir>/node_modules/swiper/modules/pagination.css",
+        "^swiper/css/scrollbar": "<rootDir>/node_modules/swiper/modules/scrollbar.css",
+        "\\.(css|less)$": "identity-obj-proxy"
     },
     moduleFileExtensions: [
         // Place tsx and ts to beginning as suggestion from Jest team
