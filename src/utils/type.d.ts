@@ -68,10 +68,15 @@ interface ModalState {
 }
 
 export interface MilestoneInfo {
-    milestone_id: string;
-    milestone_content: string;
-    start_date: string;
-    end_date: string;
+    mileStoneId: bigint;
+    projectId: bigint;
+    content: string;
+    createDate: string;
+    startDate: string;
+    endDate: string;
+    updateDate: string;
+    completeStatus: boolean;
+    expireStatus: boolean;
 }
 
 export interface TaskItem {
