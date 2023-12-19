@@ -143,3 +143,33 @@ export const isValidPassword = (password: string) => {
   const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z!@#$%^&*(),.?":{}|<>]{6,12}$/;
   return passwordRegex.test(password);
 }
+
+export function getRandomBigInt() {
+    // Calculate the range (inclusive)
+    const range = BigInt(Number.MAX_SAFE_INTEGER * 2) - BigInt(Number.MAX_SAFE_INTEGER);
+
+    // Calculate the number of bytes needed to represent the range
+    const byteLength = Math.ceil(Math.log2(Number(range)) / 8);
+
+    // Create a buffer to store random bytes
+    const buffer = new Uint8Array(byteLength);
+
+    // Generate random bytes
+    crypto.getRandomValues(buffer);
+
+    // Convert the buffer to a BigInt
+    let randomBigInt = 0n;
+    for (let i = 0; i < byteLength; i++) {
+        randomBigInt <<= 8n;
+        randomBigInt |= BigInt(buffer[i]);
+    }
+
+    // Adjust the value to fit within the specified range
+    randomBigInt = randomBigInt % range + BigInt(1);
+
+    return randomBigInt;
+}
+
+export function convertStringToDate(date: string, dateForm: 'yyyy-MM-dd') {
+    return format(new Date(date), dateForm);
+}
