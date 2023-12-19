@@ -117,6 +117,10 @@ export function getPositionSelectItem(item: PositionItem | null) {
   return item;
 }
 
+export function JSONReplaceBigInt(data:Record<string,unknown>){
+  return JSON.stringify(data, (k, v) => (typeof v === 'bigint' ? Number(v) : v));
+}
+
 export function getTechStackSelectItem(items: TechStackItem[]) {
   if (items.length > 0) {
     return items.map(item => ({ value: item.technologyStackId, name: item.technologyStackName } as SelectItem));
