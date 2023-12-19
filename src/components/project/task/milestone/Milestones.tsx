@@ -1,49 +1,45 @@
+'use client';
 import React from 'react';
 import {useQueryString} from "@/hooks/useQueryString";
 import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
-import {MilestoneInfo} from "@/utils/type";
+import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
-const milestoneInfo: MilestoneInfo[] = [
-    {
-        milestone_id: '1',
-        milestone_content: '프로젝트 기획',
-        start_date: '2023-12-01',
-        end_date: '2023-12-07'
-    },
-    {
-        milestone_id: '2',
-        milestone_content: '개발환경 세팅',
-        start_date: '2023-12-08',
-        end_date: '2023-12-12'
-    },
-    {
-        milestone_id: '3',
-        milestone_content: '퍼블리싱',
-        start_date: '2023-12-13',
-        end_date: '2023-12-15'
-    },
-    {
-        milestone_id: '4',
-        milestone_content: 'api 연동',
-        start_date: '2023-12-20',
-        end_date: '2023-12-30'
-    }
-];
+import {useQuery} from "@tanstack/react-query";
+import {getProjectMilestones as getProjectMilestonesAPI} from "@/service/project";
+import {convertStringToDate} from "@/utils/common";
 
 
 function Milestones() {
-    // todo - async로 마일스톤 데이터 조회
     const projectId = useQueryString('projectId');
 
-    // milestoneInfo = [];
+    async function getProjectMilestones() {
+        return await getProjectMilestonesAPI(projectId);
+    }
+
+    const {data, isLoading, error} = useQuery<ResponseBody<MilestoneInfo[]>, Error>({
+        queryKey: ['milestoneList'],
+        queryFn: getProjectMilestones
+    });
+
+    if (isLoading) return <div>loading...</div>;
+
+    const milestoneInfo = data!.data.map(v => {
+        return {
+            ...v,
+            createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
+            startDate: convertStringToDate(v.startDate, 'yyyy-MM-dd'),
+            endDate: convertStringToDate(v.endDate, 'yyyy-MM-dd'),
+            updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd')
+        }
+    });
 
     return milestoneInfo.length > 0
         ? (
             <CustomSwiper
                 slideItems={milestoneInfo.map(v => (
                     {
-                        key: v.milestone_id,
-                        components: <MilestoneCard milestoneInfo={v} />
+                        key: v.mileStoneId.toString(),
+                        components: <MilestoneCard milestoneInfo={v}/>
                     }
                 ))}
             />

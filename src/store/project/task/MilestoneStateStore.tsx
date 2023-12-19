@@ -2,13 +2,13 @@ import {atom, selector} from "recoil";
 import {ModalState} from "@/utils/type";
 
 interface MilestoneActiveState {
-    activeId: string;
+    activeId: bigint | null;
 }
 
 export const milestoneActiveStateStore = atom<MilestoneActiveState>({
     key: 'milestoneActiveStateStore',
     default: {
-        activeId: ''
+        activeId: null
     }
 })
 
@@ -17,43 +17,40 @@ export const milestoneActiveStateStore = atom<MilestoneActiveState>({
 
 export interface MilestoneState {
     type: "add" | "modify";
-    id: string | number | null;
+    id: string | bigint | null;
     content: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    updateUser: string;
-    updateDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
+    updateDate: string | null;
 }
 
 export class MilestoneForm implements MilestoneState {
     type: "add" | "modify";
-    id: string | number | null;
+    id: string | bigint | null;
     content: string;
-    startDate: Date | null;
-    endDate: Date | null;
-    updateUser: string;
-    updateDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
+    updateDate: string | null;
 
-    constructor(type: 'add' | 'modify', id: string | number | null, content: string, startDate: Date | null, endDate: Date | null, updateUser: string, updateDate: Date | null) {
+    constructor(type: 'add' | 'modify', id: string | bigint | null, content: string, startDate: string | null, endDate: string | null, updateDate: string | null) {
         this.type = type;
         this.id = id;
         this.content = content;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.updateUser = updateUser;
         this.updateDate = updateDate;
     }
 }
 
-export const currentMilestoneFormState = atom<null | MilestoneState>({
-    key: 'currentMilestoneFormState',
+export const milestoneModalFormState = atom<null | MilestoneState>({
+    key: 'milestoneModalFormState',
     default: null
 });
 
 export const milestoneModalStateSelector = selector<ModalState>({
     key: 'milestoneModalStateSelector',
     get: ({ get }) => {
-        const state = get(currentMilestoneFormState);
+        const state = get(milestoneModalFormState);
 
         let title = '';
         if (state !== null) {

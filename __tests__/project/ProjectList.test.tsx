@@ -1,6 +1,7 @@
-import {mockRouter} from "../src/test-utils/next-router-utils";
-import {renderWithClient} from "../src/test-utils/testing-react-query-utils";
-import MyProjectPosts from "../src/components/main/myProjectPost/MyProjectPosts";
+import {mockRouter} from "@/test-utils/next-router-utils";
+import {renderWithClient} from "@/test-utils/testing-react-query-utils";
+import MyProjectPosts from "@/components/main/myProjectPost/MyProjectPosts";
+import {getRandomBigInt} from "@/utils/common";
 
 jest.mock('next/router', () => mockRouter);
 jest.mock('next/navigation', () => mockRouter);
@@ -16,7 +17,7 @@ describe('Get and render project list test', () => {
 
         it('Project post list render test', async () => {
             const result = renderWithClient(<MyProjectPosts/>);
-            const projectPostCards = await result.findAllByRole('heading', {name: /정보 카드/});
+            const projectPostCards = await result.findAllByRole('article');
             expect(projectPostCards).toHaveLength(8);
 
             const firstProjectPostCard = projectPostCards[0];
@@ -36,6 +37,17 @@ describe('Get and render project list test', () => {
 
         });
 
+
     })
+
+})
+
+
+it('generate random bigint type id',() =>{
+    const arr = new Array(100);
+    for(let i = 0; i<arr.length; i++){
+        const val = getRandomBigInt();
+        console.log("val:: ",val);
+    }
 
 })

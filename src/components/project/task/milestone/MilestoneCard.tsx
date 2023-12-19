@@ -2,8 +2,13 @@
 import React, {MouseEvent} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
-import {useRecoilState} from "recoil";
-import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {
+    milestoneActiveStateStore,
+    MilestoneForm,
+    milestoneModalFormState,
+    MilestoneState
+} from "@/store/project/task/MilestoneStateStore";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
@@ -11,22 +16,43 @@ interface MilestoneCardProps {
 
 function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
+    const setMilestoneModalForm = useSetRecoilState<null | MilestoneState>(milestoneModalFormState);
 
     const {
-        milestone_id: id,
-        milestone_content: content,
-        start_date: start,
-        end_date: end
+        mileStoneId: id,
+        content: content,
+        startDate: start,
+        endDate: end,
+        updateDate: update,
+        createDate: create
     } = milestoneInfo;
 
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
-        if((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
+        if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
         setMilestone({activeId: id});
     }
 
+    function onEditClickHandler() {
+        // todo - 마일스톤 수정 api
+        setMilestoneModalForm(
+            new MilestoneForm(
+                'modify',
+                id,
+                content,
+                start,
+                end,
+                update
+            )
+        );
+    }
+
+    function onDeleteClickHandler() {
+        // todo - 마일스톤 삭제 api
+    }
+
     const activeClass = activeId === id ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeId === id ? 'text-secondary' :'text-gray-900';
+    const textClass = activeId === id ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div
@@ -43,7 +69,11 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
                     <span>{end}</span>
                 </div>
             </div>
-            <MilestoneCardMenu milestoneId={id}/>
+            <MilestoneCardMenu
+                milestoneId={id}
+                onEditClickHandler={onEditClickHandler}
+                onDeleteClickHandler={onDeleteClickHandler}
+            />
         </div>
     );
 }
