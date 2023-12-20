@@ -144,7 +144,7 @@ export const handlers = [
     }
   ),
   // 로그아웃
-  rest.get(`${baseUrl}/api/user/logout`, async (req, res, ctx) => {
+  rest.post(`${baseUrl}/api/user/logout`, async (req, res, ctx) => {
     return res(
       ctx.status(200),
       ctx.json({

@@ -9,19 +9,14 @@ import CommonPagination from "@/components/ui/CommonPagination";
 import { getUserProjectHistory as getUserProjectHistoryAPI } from "@/service/user";
 import { classNames } from "@/utils/common";
 import { ProjectHistoryStatus, ResponseBody, UserProjectHistory } from "@/utils/type";
-import { useQuery } from "@tanstack/react-query";
+import { useSuspenseQuery } from "@tanstack/react-query";
 
 function UserHistory() {
   const [pageNumber, setPageNumber] = useState(0);
-  const { data, isLoading, error } = useQuery<ResponseBody<UserProjectHistory[]>, Error>({
+  const { data } = useSuspenseQuery<ResponseBody<UserProjectHistory[]>, Error>({
     queryKey: ['profileInfo', pageNumber],
     queryFn: () => getUserProjectHistoryAPI(pageNumber)
   });
-
-  // Loading 시 Skeleton 추가
-  // Error 시 Snackbar 추가
-  if (isLoading) return 'Loading...';
-  if (error) return 'An error has occurred: ' + error.message;
   
   const getIconColorByStatus = (status: ProjectHistoryStatus) => {
     switch (status) {
@@ -70,7 +65,7 @@ function UserHistory() {
     }
   }
 
-  const histories = data!.data;
+  const { data: histories } = data;
   return (
     <div className="flow-root mx-2">
       <ul role="list" className="-mb-8">

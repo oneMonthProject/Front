@@ -132,8 +132,6 @@ function SignUpForm() {
         if (result === "success") {
           router.push("/");
         }
-      }).catch(error => {
-        // error 표시
       });
     }
   }

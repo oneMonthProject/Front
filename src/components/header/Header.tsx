@@ -1,14 +1,14 @@
-'use client';
-import React from 'react';
+import React, { Suspense } from 'react';
 import Image from 'next/image';
 import logo from '../../../public/images/logo.png';
 import Link from "next/link";
 import RegisterNav from "@/components/header/RegisterNav";
 import { getCookie } from 'cookies-next';
 import UserMenu from './UserMenu';
+import { cookies } from "next/headers";
 
 function Header() {
-  const userId = getCookie("user_id");
+  const userId = getCookie("user_id", { cookies });
 
   return (
     <header className='my-2'>
@@ -24,7 +24,9 @@ function Header() {
           </li>
           {
             userId ? (
-              <UserMenu />
+              <Suspense fallback={<div>Loading...</div>}>
+                <UserMenu />
+              </Suspense>
             ) : (
               <li className='tablet:mx-5 mobile:mx-2 tablet:text-[20px] mobile:text-[16px] text-black100 font-semibold'>
                 <Link href='/login'>로그인</Link>

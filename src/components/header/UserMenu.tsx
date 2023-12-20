@@ -6,9 +6,8 @@ import { useMediaQuery } from "react-responsive";
 import { DropDownItem } from "@/utils/type";
 import { getSimpleUser as getSimpleUserAPI } from "@/service/user";
 import { ResponseBody } from '@/utils/type';
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import Avatar from '../ui/Avatar';
-import Link from 'next/link';
 import { logout } from '@/service/logout';
 import { isEqual } from 'lodash';
 import { useRouter } from 'next/navigation';
@@ -34,24 +33,11 @@ class UserMenuItem implements DropDownItem {
 
 function UserMenu() {
   const router = useRouter();
-  const { data, isLoading, error } = useQuery<ResponseBody<UserBasicInfo>, Error>({
-    queryKey: ['simpleUserInfo'],
-    queryFn: () => getSimpleUserAPI()
-  });
+  const { data } = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>({ queryKey: ['simpleUserInfo'], queryFn: () => getSimpleUserAPI() });
 
   const isDesktop = useMediaQuery({
     query: '(min-width: 361px)'
   });
-
-  if (isLoading) {
-    return (
-      <li className='tablet:mx-5 mobile:mx-2 tablet:text-[20px] mobile:text-[16px] text-black100 font-semibold'>
-        <Link href='/login'>로그인</Link>
-      </li>
-    );
-  }
-
-  if (error) return 'An error has occurred: ' + error.message;
 
   const userLogout = () => {
     logout().then(response => {
@@ -67,7 +53,7 @@ function UserMenu() {
     new UserMenuItem('내 프로필', '/user/profile'), new UserMenuItem('로그아웃', '/user/logout', () => userLogout())
   ]
 
-  const { nickname, profileImgSrc } = data!.data;
+  const { nickname, profileImgSrc } = data.data;
 
   return (
     <ul className='flex items-center'>
