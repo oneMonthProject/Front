@@ -7,8 +7,8 @@ interface TaskState {
     id: string | number | null;
     content: string;
     isComplete: boolean;
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
     assignee: UserInfo | null;
     updateUser: string;
     updateDate: Date | null;
@@ -19,14 +19,14 @@ export class TaskForm implements TaskState {
     id: string | number | null;
     content: string;
     isComplete: boolean;
-    startDate: Date | null;
-    endDate: Date | null;
+    startDate: string | null;
+    endDate: string | null;
     assignee: UserInfo | null;
     updateUser: string;
     updateDate: Date | null;
 
     constructor(type: 'add' | 'modify', id: string | number | null, content: string, isComplete: boolean,
-        startDate: Date | null, endDate: Date | null, assignee: UserInfo | null, updateUser: string, updateDate: Date | null) {
+        startDate: string | null, endDate: string | null, assignee: UserInfo | null, updateUser: string, updateDate: Date | null) {
         this.type = type;
         this.id = id;
         this.content = content;
