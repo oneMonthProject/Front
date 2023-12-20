@@ -17,6 +17,8 @@ export default function Snackbar() {
         return "bg-red-500 text-white";
       case "SUCCESS":
         return "bg-green-600 text-white";
+      case "INFO":
+        return "bg-blue-500 text-white";
       default:
         return "bg-white text-black";
     }

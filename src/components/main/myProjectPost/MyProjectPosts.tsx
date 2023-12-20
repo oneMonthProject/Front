@@ -9,8 +9,7 @@ import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
 
 async function getMyProjectList() {
-    const accessToken = getCookie('accessToken');
-    return await getMyProjectListApi({accessToken});
+    return await getMyProjectListApi();
 }
 
 function MyProjectPosts() {
