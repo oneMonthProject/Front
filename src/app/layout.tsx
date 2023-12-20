@@ -3,7 +3,6 @@ import "./globals.css";
 import Providers from "@/app/Providers";
 import React from "react";
 import Header from "@/components/header/Header";
-import HydratedData from "@/app/HydratedData";
 import Snackbar from "@/components/ui/Snackbar";
 
 export const metadata: Metadata = {
@@ -14,14 +13,14 @@ export const metadata: Metadata = {
 
 
 export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
+                                       children,
+                                   }: {
+    children: React.ReactNode;
 }) {
 
     const isTestMode = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
 
-    if(isTestMode){
+    if (isTestMode) {
         import('../mocks').then(async ({setupMocks}) => {
             await setupMocks();
         });
@@ -33,12 +32,10 @@ export default function RootLayout({
         <Providers isTestMode={isTestMode}>
             <div className="responsiveContainer">
                 <Header/>
-                <HydratedData>
-                    {children}
-                </HydratedData>
+                {children}
             </div>
             <div id="modal" className="absolute top-0 w-full"></div>
-            <Snackbar />
+            <Snackbar/>
         </Providers>
         </body>
         </html>

@@ -1,3 +1,4 @@
+'use server';
 import returnFetch from "return-fetch";
 import { getCookie, setCookie } from "cookies-next";
 

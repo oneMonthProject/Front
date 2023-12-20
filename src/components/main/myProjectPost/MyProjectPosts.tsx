@@ -1,11 +1,12 @@
 'use client';
-import React, {useEffect} from "react";
+import React from "react";
 import ProjectCard from "../projectCard/ProjectCard";
 import {useQuery} from "@tanstack/react-query";
 import {getMyProjectList as getMyProjectListApi} from "@/service/project";
 import {getCookie} from "cookies-next";
-import {ProjectInfo, ProjectPost, ResponseBody} from "@/utils/type";
+import {ProjectPost, ResponseBody} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
+import {sortByStartDate} from "@/utils/common";
 
 async function getMyProjectList() {
     const accessToken = getCookie('accessToken');
@@ -25,10 +26,7 @@ function MyProjectPosts() {
     const projectPosts = data!.data;
 
     // startDate기준 오름차순 정렬
-    const sortedPosts = projectPosts.sort(function (a, b) {
-        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
-    }).reverse();
-
+    const sortedPosts = sortByStartDate(projectPosts, 'desc');
 
     return (
         <section className='my-10'>

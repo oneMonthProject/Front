@@ -1,4 +1,4 @@
-import {PositionItem, SelectItem, TechStackItem} from "./type";
+import {MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
 import {format} from "date-fns";
 
 export function makeBadgeSize(size: string) {
@@ -173,4 +173,36 @@ export function getRandomBigInt() {
 
 export function convertStringToDate(date: string, dateForm: 'yyyy-MM-dd') {
     return format(new Date(date), dateForm);
+}
+
+/**
+ * startDate 기준 데이터 배열 정렬
+ * @param dataList
+ * @param sortBy desc : 내림차순(늦은날짜 -> 빠른날짜), asc : 오름차순(빠른날짜 -> 늦은날짜)
+ */
+export function sortByStartDate<T extends ProjectPost | MilestoneInfo>(dataList: T[], sortBy: 'asc' | 'desc'): T[] {
+    const sorted = dataList.sort(function (a, b) {
+        return new Date(a.startDate).getTime() - new Date(b.startDate).getTime();
+    });
+
+    return sortBy === 'desc' ? sorted.reverse() : sorted;
+}
+
+/**
+ * 마일스톤 / 업무 status badge color 생성
+ * @param text
+ */
+export function getStatusBadgeColor(text:string){
+    switch(text){
+        case '시작전':
+            return {bgColor:'bg-grey900', textColor:'text-grey000'};
+        case '진행중':
+            return {bgColor:'bg-[#FFF9CF]', textColor:'text-[#7B5C03]'};
+        case '완료':
+            return {bgColor:'bg-[#F1F1F1]', textColor: 'text-[#242D35]'};
+        case '만료':
+            return {bgColor:'bg-danger', textColor: 'text-white'};
+        default:
+            throw Error("Unknown Status Type");
+    }
 }

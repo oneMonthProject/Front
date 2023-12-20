@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {Suspense} from 'react';
 import {currentProjectNavTabSelector} from "@/store/project/ProjectNavTabStateStore";
 import {useRecoilValue} from "recoil";
 
@@ -15,7 +15,7 @@ interface ProjectNavTabContentsProps {
 function ProjectNavTabContents({slots: {task, crews, notice, setting}}: ProjectNavTabContentsProps) {
     const currentNavTab = useRecoilValue(currentProjectNavTabSelector);
 
-    let contents: unknown;
+    let contents: React.ReactNode;
     if (currentNavTab == null) contents = task;
     else switch (currentNavTab!.name) {
         case '업무':
