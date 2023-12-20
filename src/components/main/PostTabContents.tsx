@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {Suspense} from 'react';
 import MyProjectPosts from "@/components/main/myProjectPost/MyProjectPosts";
 import Posts from "@/components/main/posts/Posts";
 import {useRecoilValue} from "recoil";
@@ -9,7 +9,14 @@ function PostTabContents() {
     const isMyProjectPostsTab = useRecoilValue(activeTabState);
     return (
         <>
-            {isMyProjectPostsTab ? <MyProjectPosts/> : <Posts/>}
+            {isMyProjectPostsTab
+               ? (
+                    <Suspense fallback={<div>loading...</div>}>
+                        <MyProjectPosts/>
+                    </Suspense>
+                )
+                : <Posts/>
+            }
         </>
     );
 }

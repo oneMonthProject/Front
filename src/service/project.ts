@@ -1,6 +1,5 @@
 import {CookieValueTypes} from "cookies-next";
-import {createHeader} from "@/test-utils/mocking-server-utils";
-import {AuthRequestParam, ProjectInfo, ReqProjectDetailParam, ResponseBody} from "@/utils/type";
+import {ReqProjectDetailParam} from "@/utils/type";
 import authApi from "@/utils/authApi";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
@@ -34,22 +33,15 @@ export async function request(
         console.log("error: ",error);
     }
 
-
-    // if(!response.ok){
-    //     throw new Error(`Request failed with status ${response.status}`);
-    // }
-
-
 }
 
 
 
 /**
  * 프로젝트 목록 조회
- * @param accessToken
  */
-export async function getMyProjectList({accessToken}: AuthRequestParam) {
-    return await request('GET',`${baseURL}/api/project/me`, accessToken);
+export async function getMyProjectList() {
+    return await request('GET',`${baseURL}/api/project/me`);
 }
 
 
@@ -82,4 +74,13 @@ export async function getMyProjectDetail({accessToken, projectId}: ReqProjectDet
  */
 export async function getProjectMilestones(projectId:string){
     return await request('GET',`${baseURL}/api/milestone/project/${projectId}`);
+}
+
+/**
+ * 프로젝트 크루 목록 조회
+ * @param accessToken
+ * @param projectId
+ */
+export async function getProjectCrewList({accessToken, projectId}:{accessToken:CookieValueTypes, projectId:string}){
+    return await request('GET', `${baseURL}/api/projectmember/project/${projectId}`, accessToken);
 }
