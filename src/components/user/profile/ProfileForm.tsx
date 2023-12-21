@@ -41,13 +41,15 @@ const techStackList = [
 ];
 
 function ProfileForm() {
-  const { data, isLoading, error } = useProfileInfo();
+  const { data } = useProfileInfo();
 
-  const [imageSrc, setImageSrc] = useState<string | null>(null);
-  const [nickname, setNickname] = useState("");
-  const [position, setPosition] = useState<SelectItem | null>(null);
-  const [techStack, setTechStack] = useState<SelectItem[]>([]);
-  const [selfIntroduction, setSelfIntroduction] = useState("");
+  const { data: profileData } = data;
+
+  const [imageSrc, setImageSrc] = useState<string | null>(profileData?.profileImgSrc || null);
+  const [nickname, setNickname] = useState(profileData.nickname);
+  const [position, setPosition] = useState<SelectItem | null>(getPositionSelectItem(profileData.position));
+  const [techStack, setTechStack] = useState<SelectItem[]>(getTechStackSelectItem(profileData.techStacks));
+  const [selfIntroduction, setSelfIntroduction] = useState(profileData?.intro ?? "");
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
@@ -93,14 +95,12 @@ function ProfileForm() {
     if (position) {
       const positionId = getSelectItemValue(position);
       const techStackIds = techStack.map(stack => getSelectItemValue(stack));
-      const updateData = { id: userId, nickname, positionId, techStackIds } as updateUserInfo;
+      const updateData = { id: profileData.userId, nickname, positionId, techStackIds } as updateUserInfo;
       updateUser(updateData).then(response => {
         const { result } = response;
         if (result === "success") {
           setSnackbar({ show: true, type: "SUCCESS", content: "저장 완료하였습니다." });
         }
-      }).catch(error => {
-        // error 표시
       });
     }
   }
@@ -136,25 +136,6 @@ function ProfileForm() {
     setIsCheckedNickname(false);
   }
 
-  useEffect(() => {
-    if (data?.data) {
-      const profileData = data.data;
-
-      setImageSrc(profileData?.profileImgSrc || null);
-      setNickname(profileData.nickname);
-      setPosition(getPositionSelectItem(profileData.position));
-      setTechStack(getTechStackSelectItem(profileData.techStacks));
-      setSelfIntroduction(profileData?.intro ?? "");
-    }
-  }, [data]);
-
-  // Loading 시 Skeleton 추가
-  // Error 시 Snackbar 추가
-  if (isLoading) return 'Loading...';
-  if (error) return 'An error has occurred: ' + error.message;
-
-  const { userId, email } = data!.data;
-
   return (
     <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3">
       <div className="w-full h-fit text-center">
@@ -165,7 +146,7 @@ function ProfileForm() {
         <Button size="md" theme="primary-hollow" onClickHandler={handleFileButtonClick}>{imageSrc === null ? "이미지 변경" : "변경"}</Button>
         <Button size="md" theme="primary" onClickHandler={deleteImage} hidden={imageSrc === null}>삭제</Button>
       </div>
-      <Input id="email" label="이메일" required disabled defaultValue={email} />
+      <Input id="email" label="이메일" required disabled defaultValue={profileData.email} />
       <NicknameField value={nickname} onChange={onChangeNickname}
         placeholder="영문, 숫자 포함 6자 이상" setCheck={setIsCheckedNickname} required />
       <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />

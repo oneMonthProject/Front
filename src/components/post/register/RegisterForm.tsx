@@ -64,8 +64,8 @@ function RegisterForm() {
   const [projectSubject, setProjectSubject] = useState("");
   const [trustGrade, setTrustGrade] = useState<SelectItem | null>(null);
   const [recruitmentCount, setRecruitmentCount] = useState<SelectItem>(recruitmentCountList[0]);
-  const [startDate, setStartDate] = useState<Date | null>(null);
-  const [endDate, setEndDate] = useState<Date | null>(null);
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
   const [position, setPosition] = useState<SelectItem | null>(null);
   const [techStack, setTechStack] = useState<SelectItem[]>([]);
   const [projectInfo, setProjectInfo] = useState("");
@@ -78,9 +78,9 @@ function RegisterForm() {
   const registerPost = () => {
 
   }
-
+  
   return (
-    <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-4 mobile:my-3">
+    <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-8 mobile:my-6">
       <div className="w-full mobile:w-[300px] mx-auto">
         <div className="flex items-center border-b-2 border-grey600 py-2 mobile:py-0">
           <input type="text" placeholder="제목을 입력해주세요." aria-label="title" value={title} onChange={e => setTitle(e.target.value)}

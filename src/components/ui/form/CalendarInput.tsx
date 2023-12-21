@@ -8,8 +8,8 @@ import 'react-datepicker/dist/react-datepicker.css';
 export interface CalenderProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
-  date: Date | null;
-  setDate: (value: Date) => void;
+  date: string | null;
+  setDate: (value: string) => void;
 }
 
 function CalendarInput({ id, label, required = false, date, setDate, ...props }: CalenderProps) {
@@ -19,7 +19,7 @@ function CalendarInput({ id, label, required = false, date, setDate, ...props }:
   const handleChange = (date: Date | null) => {
     if (date) {
       setIsOpen(false);
-      setDate(date);
+      setDate(format(date, "yyyy-MM-dd"));
     }
   };
 
@@ -52,7 +52,7 @@ function CalendarInput({ id, label, required = false, date, setDate, ...props }:
           </label>
         ) : <></>
       }
-      <input id={id} type="text" value={date ? format(date, "yyyy-MM-dd") : ""} readOnly
+      <input id={id} type="text" value={date ?? ""} readOnly
         className="mobile:text-sm block rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 pr-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
         {...props} />
       <button className="absolute right-2 bottom-3 text-gray-400" onClick={handleClick}>
@@ -60,7 +60,7 @@ function CalendarInput({ id, label, required = false, date, setDate, ...props }:
       </button>
       {isOpen && (
         <div className="absolute z-50">
-          <DatePicker selected={date} onChange={handleChange} inline />
+          <DatePicker selected={date ? new Date(date) : null} onChange={handleChange} inline />
         </div>
       )}
     </div>

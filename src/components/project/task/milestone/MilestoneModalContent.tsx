@@ -16,7 +16,7 @@ function MilestoneModalContent() {
         }
     }
 
-    const onDateChange = (date: Date, target: 'startDate' | 'endDate') => {
+    const onDateChange = (date: string, target: 'startDate' | 'endDate') => {
         if (currentForm) {
             const updatedForm = {...currentForm, [target]: date};
             setCurrentForm(updatedForm);
@@ -38,13 +38,13 @@ function MilestoneModalContent() {
                     <div className='flex w-[350px] mobile:w-[220px] ml-auto'>
                         <CalendarInput
                             placeholder="선택"
-                            date={new Date(currentForm?.startDate as string) || null}
+                            date={currentForm?.startDate || null}
                             setDate={(date) => onDateChange(date, "startDate")}
                         />
                         <div className="text-gray-700 w-[20px] text-center self-center">~</div>
                         <CalendarInput
                             placeholder="선택"
-                            date={new Date(currentForm?.endDate as string) || null}
+                            date={currentForm?.endDate || null}
                             setDate={(date) => onDateChange(date, "endDate")}
                         />
                     </div>

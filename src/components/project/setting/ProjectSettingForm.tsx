@@ -19,16 +19,16 @@ const testProjectInfo = {
   projectName: "trustcrews",
   projectSubject: "팀 프로젝트 매칭 서비스 개발",
   trustGrade: gradeList[0],
-  startDate: new Date("2023-12-05"),
-  endDate: new Date("2024-01-01")
+  startDate: "2023-12-05",
+  endDate: "2024-01-01"
 }
 
 export default function ProjectSetting() {
   const [projectName, setProjectName] = useState(testProjectInfo.projectName);
   const [projectSubject, setProjectSubject] = useState(testProjectInfo.projectSubject);
   const [trustGrade, setTrustGrade] = useState<SelectItem | null>(testProjectInfo.trustGrade);
-  const [startDate, setStartDate] = useState<Date | null>(testProjectInfo.startDate);
-  const [endDate, setEndDate] = useState<Date | null>(testProjectInfo.endDate);
+  const [startDate, setStartDate] = useState<string | null>(testProjectInfo.startDate);
+  const [endDate, setEndDate] = useState<string | null>(testProjectInfo.endDate);
 
   const initProjectInfo = () => {
     setProjectName(testProjectInfo.projectName);

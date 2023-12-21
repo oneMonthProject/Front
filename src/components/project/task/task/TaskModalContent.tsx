@@ -75,7 +75,7 @@ function TaskModalContent() {
     }
   }
 
-  const onDateChange = (date: Date, target: 'startDate' | 'endDate') => {
+  const onDateChange = (date: string, target: 'startDate' | 'endDate') => {
     if (currentForm) {
       const updatedForm = { ...currentForm, [target]: date };
       setCurrentForm(updatedForm);

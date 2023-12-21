@@ -1,15 +1,18 @@
-'use server';
+"use server";
 import returnFetch from "return-fetch";
 import { getCookie, setCookie } from "cookies-next";
+import { cookies } from "next/headers";
+
+const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
 const authApi = returnFetch({
-  baseUrl: process.env.NEXT_PUBLIC_BACKEND,
+  baseUrl: baseURL,
   headers: {
     "Content-Type": "application/json",
   },
   interceptors: {
     request: async (requestArgs) => {
-      const accessToken = getCookie("Access");
+      const accessToken = getCookie("Access", { cookies });
       // 실제 서버와 연결했을 때 Set-Cookie 로 넘긴 cookie 가 자동으로 넘겨지는지 확인하기
       if (requestArgs[1] && accessToken) {
         requestArgs[1].headers = {
@@ -25,22 +28,19 @@ const authApi = returnFetch({
         return response;
       }
 
-      const tokenResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND}/api/user/token-reissue`,
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: 'include',
-          body: JSON.stringify({ userId: getCookie("user_id") }),
-        }
-      );
+      const tokenResponse = await fetch(`${baseURL}/api/user/token-reissue`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify({ userId: getCookie("user_id", { cookies }) }),
+      });
 
       const { status, headers } = tokenResponse;
 
       if (status === 200) {
-        setCookie("Access", headers.get("Authorization"));
+        setCookie("Access", headers.get("Authorization"), { cookies });
       } else {
         throw Error("failed to refresh cookie");
       }

@@ -9,14 +9,9 @@ import { useProfileInfo } from "@/hooks/useProfileInfo";
 
 function ProfileCard() {
   const router = useRouter();
-  const { data, isLoading, error } = useProfileInfo();
+  const { data } = useProfileInfo();
 
-  // Loading 시 Skeleton 추가
-  // Error 시 Snackbar 추가
-  if (isLoading) return 'Loading...';
-  if (error) return 'An error has occurred: ' + error.message;
-
-  const { nickname, profileImgSrc, trustScore, trustGrade, position, techStacks, intro, projectHistoryTotalCount } = data!.data;
+  const { nickname, profileImgSrc, trustScore, trustGrade, position, techStacks, intro, projectHistoryTotalCount } = data.data;
 
   return (
     <div className="space-y-2 mobile:space-y-1 w-full h-fit text-center my-6 mobile:my-4">
@@ -28,9 +23,9 @@ function ProfileCard() {
       </div>
       <div>
         {
-          techStacks.length > 0 ? techStacks.map((stack) =>
+          techStacks.length > 0 && techStacks.map((stack) =>
             <TechStackBadge key={stack.technologyStackId} text={stack.technologyStackName} size='xs' className="mx-0.5 w-[70px] mobile:w-[50px] justify-center" />
-          ) : <></>
+          )
         }
       </div>
       <UserProjectInfo count={projectHistoryTotalCount} grade={`${trustGrade}등급`} score={trustScore} />
