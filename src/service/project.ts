@@ -1,5 +1,4 @@
 import {CookieValueTypes} from "cookies-next";
-import {ReqProjectDetailParam} from "@/utils/type";
 import authApi from "@/utils/authApi";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
@@ -48,24 +47,10 @@ export async function getMyProjectList() {
 
 /**
  * 프로젝트 상세 조회
- * @param accessToken
  * @param projectId
  */
-export async function getMyProjectDetail({accessToken, projectId}: ReqProjectDetailParam) {
-    try {
-        const res = await fetch(`${baseURL}/api/project/${projectId}`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`,
-            },
-        });
-
-        return await res.json();
-    } catch (error) {
-        console.error('Error in getMyProjectDetail:', error);
-        throw error; // Re-throw the error to be handled by the calling code
-    }
+export async function getMyProjectDetail(projectId:string) {
+    return await request('GET', `${baseURL}/api/project/${projectId}`)
 }
 
 /**
@@ -81,6 +66,6 @@ export async function getProjectMilestones(projectId:string){
  * @param accessToken
  * @param projectId
  */
-export async function getProjectCrewList({accessToken, projectId}:{accessToken:CookieValueTypes, projectId:string}){
-    return await request('GET', `${baseURL}/api/projectmember/project/${projectId}`, accessToken);
+export async function getProjectCrewList({projectId}:{projectId:string}){
+    return await request('GET', `${baseURL}/api/projectmember/project/${projectId}`);
 }
