@@ -1,26 +1,19 @@
 'use client';
 import React from "react";
 import ProjectCard from "../projectCard/ProjectCard";
-import {useQuery} from "@tanstack/react-query";
-import {getMyProjectList as getMyProjectListApi} from "@/service/project";
+import {useQuery, useSuspenseQuery} from "@tanstack/react-query";
+import {getMyProjectList, getMyProjectList as getMyProjectListApi} from "@/service/project";
 import {getCookie} from "cookies-next";
 import {ProjectPost, ResponseBody} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
 
-async function getMyProjectList() {
-    return await getMyProjectListApi();
-}
 
 function MyProjectPosts() {
-
-    const {data, isLoading, error} = useQuery<ResponseBody<ProjectPost[]>, Error>({
-        queryKey: ['projectList'],
+    const {data} = useSuspenseQuery<ResponseBody<ProjectPost[]>, Error>({
+        queryKey: ['myProjectList'],
         queryFn: getMyProjectList
     });
-
-    if (isLoading) return <div>loading..</div>;
-    if (error) return <div>error</div>;
 
     const projectPosts = data!.data;
 
