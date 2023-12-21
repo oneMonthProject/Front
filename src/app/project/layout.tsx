@@ -1,10 +1,5 @@
-import React, {ReactNode, Suspense} from 'react';
+import React from 'react';
 import BackNav from "@/components/ui/BackNav";
-import ProjectInfo from "@/components/project/layout/ProjectInfo";
-import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
-import HydratedProjectInfo from "@/components/project/hydrations/HydratedProjectInfo";
-import {getCookie} from "cookies-next";
-import {cookies} from "next/headers";
 import ProjectNavTabContents from "@/components/project/layout/ProjectNavTabContents";
 
 // Todo - 홈 버튼, 상단 프로젝트 정보, 업무/크루정보/알림/투표 nav탭 // 후에 projectid 받아서 렌더링해야함.

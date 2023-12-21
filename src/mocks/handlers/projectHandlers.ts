@@ -29,7 +29,7 @@ export const handlers = [
                         },
                         members: [
                             {
-                                projectMemberId:6379114668723193n,
+                                projectMemberId: 6379114668723193n,
                                 user: {
                                     userId: 8671245028823303n,
                                     profileImgSrc: null
@@ -81,7 +81,7 @@ export const handlers = [
                                 }
                             },
                             {
-                                projectMemberId:6031686272149273n,
+                                projectMemberId: 6031686272149273n,
                                 user: {
                                     userId: 5952697087499100n,
                                     profileImgSrc: null
@@ -140,7 +140,7 @@ export const handlers = [
                                 }
                             },
                             {
-                                projectMemberId:5271670004164158n,
+                                projectMemberId: 5271670004164158n,
                                 user: {
                                     userId: 1964085471797101n,
                                     profileImgSrc: null
@@ -185,7 +185,7 @@ export const handlers = [
                         },
                         members: [
                             {
-                                projectMemberId:7757138493914215n,
+                                projectMemberId: 7757138493914215n,
                                 user: {
                                     userId: 1644076980148020n,
                                     profileImgSrc: null
@@ -244,7 +244,7 @@ export const handlers = [
                                 }
                             },
                             {
-                                projectMemberId:3478219415774788n,
+                                projectMemberId: 3478219415774788n,
                                 user: {
                                     userId: 2,
                                     profileImgSrc: null
@@ -303,7 +303,7 @@ export const handlers = [
                                 }
                             },
                             {
-                                projectMemberId:5889584731248499n,
+                                projectMemberId: 5889584731248499n,
                                 user: {
                                     userId: 1887175809512106n,
                                     profileImgSrc: null
@@ -473,17 +473,17 @@ export const handlers = [
             ctx.body(JSONReplaceBigInt({
                 result: "success",
                 message: "success",
-                data:[
+                data: [
                     {
                         mileStoneId: 9007199254740991n,
                         projectId: projectId,
                         content: '마일스톤 내용 1',
                         startDate: '2023.11.18',
-                        endDate:'2023.11.30',
+                        endDate: '2023.11.30',
                         expireStatus: false,
                         completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate:'2023.11.10'
+                        updateDate: '2023.11.10'
 
                     },
                     {
@@ -491,11 +491,11 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 2',
                         startDate: '2023.11.25',
-                        endDate:'2023.11.30',
+                        endDate: '2023.11.30',
                         expireStatus: false,
                         completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate:'2023.11.10'
+                        updateDate: '2023.11.10'
 
                     },
                     {
@@ -503,11 +503,11 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 3',
                         startDate: '2023.11.20',
-                        endDate:'2023.11.30',
+                        endDate: '2023.11.30',
                         expireStatus: false,
                         completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate:'2023.11.10'
+                        updateDate: '2023.11.10'
 
                     },
                     {
@@ -515,11 +515,11 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 4',
                         startDate: '2023.12.01',
-                        endDate:'2023.12.30',
-                        expireStatus:false,
+                        endDate: '2023.12.30',
+                        expireStatus: false,
                         completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate:'2023.11.10'
+                        updateDate: '2023.11.10'
 
                     },
                     {
@@ -527,14 +527,189 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 5',
                         startDate: '2023.12.18',
-                        endDate:'2023.12.30',
+                        endDate: '2023.12.30',
                         expireStatus: false,
                         completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate:'2023.11.10'
+                        updateDate: '2023.11.10'
 
                     },
                 ]
+            }))
+        )
+    }),
+    rest.get(`${baseUrl}/api/projectmember/project/:projectId`, (req, res, ctx) => {
+        const projectid = req.params.projectId;
+        return res(
+            ctx.delay(400),
+            ctx.status(200),
+            ctx.body(JSONReplaceBigInt({
+                result: "success",
+                message: "success",
+                data:{
+                    projectMembers: [
+                        {
+                            projectMemberId: 1108696616844722n,
+                            user: {
+                                userId: 3997864236230543n,
+                                email: "testMng@naver.com",
+                                nickname: "testMng",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 2250480098569726n,
+                                projectMemberAuthName: "매니저",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 8940892384496279n,
+                                name: "프론트엔드"
+                            },
+                            lastWorkDate: "2023.11.29",
+                        },
+                        {
+                            projectMemberId: 375735316194929n,
+                            user: {
+                                userId: 3218660456435490n,
+                                email: "testSubMng@naver.com",
+                                nickname: "testSubMng",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 3027558438708031n,
+                                projectMemberAuthName: "부매니저",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 6312625120458062n,
+                                name: "백엔드"
+                            },
+                            lastWorkDate: "2023.11.25",
+                        },
+                        {
+                            projectMemberId: 3518059751425604n,
+                            user: {
+                                userId: 454916253199480n,
+                                email: "testBack@naver.com",
+                                nickname: "testBack",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 7143406171440098n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 8170206782643707n,
+                                name: "백엔드"
+                            },
+                            lastWorkDate: "2023.11.25",
+                        },
+                        {
+                            projectMemberId: 7019798472512025n,
+                            user: {
+                                userId: 1697494653215620n,
+                                email: "testdesigner@naver.com",
+                                nickname: "testDesigner",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 4880195611044783n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 5829431028024876n,
+                                name: "디자이너"
+                            },
+                            lastWorkDate: "2023.12.01",
+                        },
+                        {
+                            projectMemberId: 6236182418588446n,
+                            user: {
+                                userId: 8812751134782901n,
+                                email: "testFront1@naver.com",
+                                nickname: "testFront1",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 8679044579342919n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 7721875672670009n,
+                                name: "프론트엔드"
+                            },
+                            lastWorkDate: "2023.11.11",
+                        },
+                        {
+                            projectMemberId: 1321353313262357n,
+                            user: {
+                                userId: 2405133761163298n,
+                                email: "testFront2@naver.com",
+                                nickname: "testFront2",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 1315749288173680n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 3070100992292214n,
+                                name: "프론트엔드"
+                            },
+                            lastWorkDate: "2023.11.11",
+                        },
+                        {
+                            projectMemberId: 757050957238690n,
+                            user: {
+                                userId: 8497214608422409n,
+                                email: "testFront3@naver.com",
+                                nickname: "testFront3",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 7031889676528004n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 2257909142335102n,
+                                name: "프론트엔드"
+                            },
+                            lastWorkDate: "2023.11.11",
+                        },
+                        {
+                            projectMemberId: 2348090972584338n,
+                            user: {
+                                userId: 244147990805590n,
+                                email: "testBack2@naver.com",
+                                nickname: "testBack2",
+                                profileImgSrc: null
+                            },
+                            projectMemberAuth: {
+                                projectMemberAuthId: 4667270139738136n,
+                                projectMemberAuthName: "구성원",
+                                milestone_change_YN: true,
+                                work_change_YN: false
+                            },
+                            position: {
+                                positionId: 2450505711080114n,
+                                name: "백엔드"
+                            },
+                            lastWorkDate: "2023.11.25",
+                        },
+                    ]
+                }
             }))
         )
     })
