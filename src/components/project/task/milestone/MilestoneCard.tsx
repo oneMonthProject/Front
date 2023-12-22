@@ -9,6 +9,7 @@ import {
     MilestoneModalForm,
     MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
+import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
@@ -54,13 +55,14 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
     // todo - 마일스톤 상태 뱃지 추가
     return (
         <div
-            className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
+            className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] py-4 items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
             onClick={onClickContentHandler}
         >
-            <div className="flex-1 truncate px-4 py-2 text-sm">
-                <span className={`pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
-                    {content}
-                </span>
+            <div className="flex-1 truncate px-4 text-sm">
+                <div className={`mb-2 flex items-center space-x-2 pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
+                    <span>{content}</span>
+                    <MilestoneStatusBadge text={progressStatus} size='sm'/>
+                </div>
                 <div
                     className="flex flex-wrap items-center justify-between space-x-1 pc:text-lg tablet:text-md text-gray-500">
                     <span>{startDate} &#126;</span>
