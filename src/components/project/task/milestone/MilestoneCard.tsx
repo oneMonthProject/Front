@@ -1,48 +1,51 @@
 'use client';
-import React, {MouseEvent} from 'react';
+import React, {MouseEvent, useEffect} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,
-    MilestoneForm,
     milestoneModalFormState,
-    MilestoneState
+    MilestoneModalForm,
+    MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
+import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
+    isInitActive: boolean;
 }
 
-function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, isInitActive}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
-    const setMilestoneModalForm = useSetRecoilState<null | MilestoneState>(milestoneModalFormState);
+    const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
     const {
-        mileStoneId: id,
-        content: content,
-        startDate: start,
-        endDate: end,
-        updateDate: update,
-        createDate: create
+        mileStoneId,
+        content,
+        startDate,
+        endDate,
+        updateDate,
+        createDate,
+        progressStatus
     } = milestoneInfo;
 
+    // active 상태 초기화
+    useEffect(() => {
+        isInitActive && setMilestone({activeId: mileStoneId});
+    }, [isInitActive]);
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setMilestone({activeId: id});
+        setMilestone({activeId: mileStoneId});
     }
 
     function onEditClickHandler() {
         // todo - 마일스톤 수정 api
         setMilestoneModalForm(
-            new MilestoneForm(
+            new MilestoneModalForm(
                 'modify',
-                id,
-                content,
-                start,
-                end,
-                update
+                milestoneInfo
             )
         );
     }
@@ -51,27 +54,28 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
         // todo - 마일스톤 삭제 api
     }
 
-    const activeClass = activeId === id ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeId === id ? 'text-secondary' : 'text-gray-900';
+    const activeClass = activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
     // todo - 마일스톤 상태 뱃지 추가
     return (
         <div
-            className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
+            className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] py-4 items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
             onClick={onClickContentHandler}
         >
-            <div className="flex-1 truncate px-4 py-2 text-sm">
-                <span className={`pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
-                    {content}
-                </span>
+            <div className="flex-1 truncate px-4 text-sm">
+                <div className={`mb-2 flex items-center space-x-2 pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
+                    <span>{content}</span>
+                    <MilestoneStatusBadge text={progressStatus} size='sm'/>
+                </div>
                 <div
                     className="flex flex-wrap items-center justify-between space-x-1 pc:text-lg tablet:text-md text-gray-500">
-                    <span>{start} &#126;</span>
-                    <span>{end}</span>
+                    <span>{startDate} &#126;</span>
+                    <span>{endDate}</span>
                 </div>
             </div>
             <MilestoneCardMenu
-                milestoneId={id}
+                milestoneId={mileStoneId}
                 onEditClickHandler={onEditClickHandler}
                 onDeleteClickHandler={onDeleteClickHandler}
             />

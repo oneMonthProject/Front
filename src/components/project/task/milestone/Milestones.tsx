@@ -30,15 +30,19 @@ function Milestones() {
         }
     });
 
+    // '진행중'인 마일스톤 중 startDate가 가장 빠른 마일스톤 or 진행중인 마일스톤이 없으면 날짜가 가장 빠른 마일스톤
+    const activeMilestone = milestoneInfo.find(v => v.progressStatus === '진행중') || milestoneInfo[0];
+
     return milestoneInfo.length > 0
         ? (
             <CustomSwiper
-                slideItems={milestoneInfo.map(v => (
-                    {
-                        key: v.mileStoneId.toString(),
-                        components: <MilestoneCard milestoneInfo={v}/>
-                    }
-                ))}
+                slideItems={
+                    milestoneInfo.map(v => (
+                        {
+                            key: v.mileStoneId.toString(),
+                            components: <MilestoneCard milestoneInfo={v} isInitActive={v.mileStoneId === activeMilestone.mileStoneId}/>
+                        }
+                    ))}
             />
         )
         : (

@@ -1,5 +1,6 @@
 import {MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
 import {format} from "date-fns";
+import _ from "lodash";
 
 export function makeBadgeSize(size: string) {
     // 사이즈
@@ -192,17 +193,31 @@ export function sortByStartDate<T extends ProjectPost | MilestoneInfo>(dataList:
  * 마일스톤 / 업무 status badge color 생성
  * @param text
  */
-export function getStatusBadgeColor(text:string){
-    switch(text){
+export function getStatusBadgeColor(text: string) {
+    switch (text) {
         case '시작전':
-            return {bgColor:'bg-grey900', textColor:'text-grey000'};
+            return {bgColor: 'bg-grey900', textColor: 'text-grey000'};
         case '진행중':
-            return {bgColor:'bg-[#FFF9CF]', textColor:'text-[#7B5C03]'};
+            return {bgColor: 'bg-[#FFF9CF]', textColor: 'text-[#7B5C03]'};
         case '완료':
-            return {bgColor:'bg-[#F1F1F1]', textColor: 'text-[#242D35]'};
+            return {bgColor: 'bg-[#F1F1F1]', textColor: 'text-[#242D35]'};
         case '만료':
-            return {bgColor:'bg-danger', textColor: 'text-white'};
+            return {bgColor: 'bg-danger', textColor: 'text-white'};
         default:
             throw Error("Unknown Status Type");
     }
+}
+
+/**
+ * 오늘 날짜 yyyy-MM-dd 형식 string으로 반환
+ */
+export function getTodayString() {
+    const today = new Date();
+    const strArr = [
+        today.getFullYear().toString(),
+        _.padStart(today.getMonth().toString(), 2, '0'),
+        _.padStart(today.getDate().toString(), 2, '0')
+    ];
+
+    return strArr.join('-');
 }

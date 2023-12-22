@@ -28,7 +28,7 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
     return (
 
         // <div className="flex-shrink-0 pr-2 overflow-visible">
-        <Menu as="div" className="flex-shrink-0 pr-2 text-center">
+        <Menu as="div" className="self-start flex-shrink-0 pr-2 text-center">
             {/*<Menu as="div" className="relative inline-block text-center">*/}
             <div>
                 <Menu.Button

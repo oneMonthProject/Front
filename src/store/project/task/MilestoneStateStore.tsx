@@ -1,5 +1,7 @@
 import {atom, selector} from "recoil";
-import {ModalState} from "@/utils/type";
+import {MilestoneInfo, ModalState} from "@/utils/type";
+import {convertStringToDate} from "@/utils/common";
+
 
 interface MilestoneActiveState {
     activeId: bigint | null;
@@ -13,43 +15,56 @@ export const milestoneActiveStateStore = atom<MilestoneActiveState>({
 })
 
 
-
-
-export interface MilestoneState {
+export interface MilestoneModalFormState extends MilestoneInfo {
     type: "add" | "modify";
-    id: string | bigint | null;
-    content: string;
-    startDate: string | null;
-    endDate: string | null;
-    updateDate: string | null;
 }
 
-export class MilestoneForm implements MilestoneState {
+export class MilestoneModalForm implements MilestoneModalFormState {
     type: "add" | "modify";
-    id: string | bigint | null;
+    mileStoneId: bigint;
     content: string;
-    startDate: string | null;
-    endDate: string | null;
-    updateDate: string | null;
+    createDate: string;
+    startDate: string;
+    endDate: string;
+    updateDate: string;
+    progressStatus: string;
+    projectId: bigint;
 
-    constructor(type: 'add' | 'modify', id: string | bigint | null, content: string, startDate: string | null, endDate: string | null, updateDate: string | null) {
+    constructor(type: 'add' | 'modify', milestoneInfo: MilestoneInfo) {
+        const {
+            mileStoneId
+            , content
+            , createDate
+            , startDate
+            , endDate
+            , updateDate
+            , progressStatus
+            , projectId
+        } = milestoneInfo;
+
         this.type = type;
-        this.id = id;
+        this.mileStoneId = mileStoneId;
         this.content = content;
+        this.createDate = createDate;
         this.startDate = startDate;
         this.endDate = endDate;
         this.updateDate = updateDate;
+        this.progressStatus = progressStatus;
+        this.projectId = projectId;
+
     }
+
+
 }
 
-export const milestoneModalFormState = atom<null | MilestoneState>({
+export const milestoneModalFormState = atom<null | MilestoneModalFormState>({
     key: 'milestoneModalFormState',
     default: null
 });
 
 export const milestoneModalStateSelector = selector<ModalState>({
     key: 'milestoneModalStateSelector',
-    get: ({ get }) => {
+    get: ({get}) => {
         const state = get(milestoneModalFormState);
 
         let title = '';
@@ -66,6 +81,6 @@ export const milestoneModalStateSelector = selector<ModalState>({
             }
         }
 
-        return { isOpen: state !== null, title: title };
+        return {isOpen: state !== null, title: title};
     }
 })

@@ -75,8 +75,7 @@ export interface MilestoneInfo {
     startDate: string;
     endDate: string;
     updateDate: string;
-    completeStatus: boolean;
-    expireStatus: boolean;
+    progressStatus: string;
 }
 
 export interface TaskItem {
