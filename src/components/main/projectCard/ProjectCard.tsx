@@ -58,7 +58,7 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
                             <li key={v.projectMemberId}>
                                 <Avatar
                                     size='xs'
-                                    alt={v.user.userId}
+                                    alt={v.user.nickname}
                                     src={v.user.profileImgSrc}
                                 />
                             </li>
