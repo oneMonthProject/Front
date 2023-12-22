@@ -4,14 +4,29 @@ import {useSetRecoilState} from 'recoil';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import Milestones from "@/components/project/task/milestone/Milestones";
-import {MilestoneForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
+import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
+import {MilestoneInfo} from "@/utils/type";
+import {getTodayString} from "@/utils/common";
 
 
 function MilestoneSection() {
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
     const onClickHandler = () => {
-        setMilestoneModalForm(new MilestoneForm("add", null, "", null, null, ""));
+        const today = getTodayString();
+
+        const addMilestoneForm:MilestoneInfo = {
+            content: "",
+            createDate: today,
+            endDate: "",
+            mileStoneId: 0n,
+            progressStatus: "",
+            projectId: 0n,
+            startDate: today,
+            updateDate: today
+        }
+
+        setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
     }
 
     return (

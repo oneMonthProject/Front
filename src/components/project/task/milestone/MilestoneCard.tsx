@@ -5,9 +5,9 @@ import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCard
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,
-    MilestoneForm,
     milestoneModalFormState,
-    MilestoneState
+    MilestoneModalForm,
+    MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
 
 interface MilestoneCardProps {
@@ -16,33 +16,30 @@ interface MilestoneCardProps {
 
 function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
-    const setMilestoneModalForm = useSetRecoilState<null | MilestoneState>(milestoneModalFormState);
+    const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
     const {
-        mileStoneId: id,
-        content: content,
-        startDate: start,
-        endDate: end,
-        updateDate: update,
-        createDate: create
+        mileStoneId,
+        content,
+        startDate,
+        endDate,
+        updateDate,
+        createDate,
+        progressStatus
     } = milestoneInfo;
 
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setMilestone({activeId: id});
+        setMilestone({activeId: mileStoneId});
     }
 
     function onEditClickHandler() {
         // todo - 마일스톤 수정 api
         setMilestoneModalForm(
-            new MilestoneForm(
+            new MilestoneModalForm(
                 'modify',
-                id,
-                content,
-                start,
-                end,
-                update
+                milestoneInfo
             )
         );
     }
@@ -51,8 +48,8 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
         // todo - 마일스톤 삭제 api
     }
 
-    const activeClass = activeId === id ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeId === id ? 'text-secondary' : 'text-gray-900';
+    const activeClass = activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
     // todo - 마일스톤 상태 뱃지 추가
     return (
@@ -66,12 +63,12 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
                 </span>
                 <div
                     className="flex flex-wrap items-center justify-between space-x-1 pc:text-lg tablet:text-md text-gray-500">
-                    <span>{start} &#126;</span>
-                    <span>{end}</span>
+                    <span>{startDate} &#126;</span>
+                    <span>{endDate}</span>
                 </div>
             </div>
             <MilestoneCardMenu
-                milestoneId={id}
+                milestoneId={mileStoneId}
                 onEditClickHandler={onEditClickHandler}
                 onDeleteClickHandler={onDeleteClickHandler}
             />
