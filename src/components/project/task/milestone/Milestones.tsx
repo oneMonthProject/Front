@@ -37,10 +37,15 @@ function Milestones() {
         ? (
             <CustomSwiper
                 slideItems={
-                    milestoneInfo.map(v => (
+                    milestoneInfo.map((v, index) => (
                         {
                             key: v.mileStoneId.toString(),
-                            components: <MilestoneCard milestoneInfo={v} isInitActive={v.mileStoneId === activeMilestone.mileStoneId}/>
+                            components:
+                                <MilestoneCard
+                                    milestoneInfo={v}
+                                    isInitActive={v.mileStoneId === activeMilestone.mileStoneId}
+                                    slideIndex={index}
+                                />
                         }
                     ))}
             />

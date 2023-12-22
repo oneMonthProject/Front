@@ -14,9 +14,10 @@ import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
     isInitActive: boolean;
+    slideIndex: number;
 }
 
-function MilestoneCard({milestoneInfo, isInitActive}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
@@ -32,12 +33,12 @@ function MilestoneCard({milestoneInfo, isInitActive}: MilestoneCardProps) {
 
     // active 상태 초기화
     useEffect(() => {
-        isInitActive && setMilestone({activeId: mileStoneId});
+        if(isInitActive && activeId === null) setMilestone({activeId: mileStoneId, slideIndex});
     }, [isInitActive]);
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setMilestone({activeId: mileStoneId});
+        setMilestone({activeId: mileStoneId, slideIndex});
     }
 
     function onEditClickHandler() {
