@@ -1,5 +1,5 @@
 'use client';
-import React, {MouseEvent} from 'react';
+import React, {MouseEvent, useEffect} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
 import {useRecoilState, useSetRecoilState} from "recoil";
@@ -13,9 +13,10 @@ import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
+    isInitActive: boolean;
 }
 
-function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, isInitActive}: MilestoneCardProps) {
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
@@ -29,6 +30,10 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
         progressStatus
     } = milestoneInfo;
 
+    // active 상태 초기화
+    useEffect(() => {
+        isInitActive && setMilestone({activeId: mileStoneId});
+    }, [isInitActive]);
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
