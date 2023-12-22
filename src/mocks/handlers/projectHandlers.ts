@@ -479,11 +479,10 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 1',
                         startDate: '2023.11.18',
-                        endDate: '2023.11.30',
-                        expireStatus: false,
-                        completeStatus: false,
+                        endDate: '2023.11.20',
                         createDate: '2023.11.10',
-                        updateDate: '2023.11.10'
+                        updateDate: '2023.11.10',
+                        progressStatus: '완료',
 
                     },
                     {
@@ -492,10 +491,9 @@ export const handlers = [
                         content: '마일스톤 내용 2',
                         startDate: '2023.11.25',
                         endDate: '2023.11.30',
-                        expireStatus: false,
-                        completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate: '2023.11.10'
+                        updateDate: '2023.11.10',
+                        progressStatus: '진행중',
 
                     },
                     {
@@ -503,23 +501,21 @@ export const handlers = [
                         projectId: projectId,
                         content: '마일스톤 내용 3',
                         startDate: '2023.11.20',
-                        endDate: '2023.11.30',
-                        expireStatus: false,
-                        completeStatus: false,
+                        endDate: '2023.11.28',
                         createDate: '2023.11.10',
-                        updateDate: '2023.11.10'
+                        updateDate: '2023.11.10',
+                        progressStatus: '만료',
 
                     },
                     {
                         mileStoneId: 9007199254740996n,
                         projectId: projectId,
                         content: '마일스톤 내용 4',
-                        startDate: '2023.12.01',
+                        startDate: '2023.11.20',
                         endDate: '2023.12.30',
-                        expireStatus: false,
-                        completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate: '2023.11.10'
+                        updateDate: '2023.11.10',
+                        progressStatus: '진행중',
 
                     },
                     {
@@ -528,10 +524,9 @@ export const handlers = [
                         content: '마일스톤 내용 5',
                         startDate: '2023.12.18',
                         endDate: '2023.12.30',
-                        expireStatus: false,
-                        completeStatus: false,
                         createDate: '2023.11.10',
-                        updateDate: '2023.11.10'
+                        updateDate: '2023.11.10',
+                        progressStatus: '시작전'
 
                     },
                 ]
@@ -712,6 +707,45 @@ export const handlers = [
                 }
             }))
         )
+    }),
+    rest.get(`${baseUrl}/api/projectmember/:projectMemberId`,(req,res,ctx)=>{
+      const projectMemberId = req.params.projectMemberId;
+        return res(
+            ctx.delay(400),
+            ctx.status(200),
+            ctx.body(JSONReplaceBigInt({
+                result: "success",
+                message: "success",
+                data: {
+                    projectMemberId: projectMemberId,
+                    projectId: 2340770828875055n,
+                    projectCount: 2,
+                    user: {
+                        "userId": 7469233260597475n,
+                        "email": 'test@test.com',
+                        "nickname": 'test22',
+                        "profileImgSrc": null,
+                        "position": {
+                            "positionId": 4805161936955970n,
+                            "name": '프론트 엔드'
+                        },
+                        "trustGrade": {
+                            "name": '3등급',
+                            "score":3000
+                        },
+                        "trustScore": 0,
+                "role": 'USER',
+                        "createDate": '2023-11-12',
+                        "updateDate": '2023-11-12'
+                    },
+                    "projectMemberAuthId": 2340160735689475n,
+                    "position": {
+                        "positionId": 8203571318086190n,
+                        "name": '프론트엔드'
+                    },
+                    "status":  'PARTICIPATING'
+                }
+            }))
+        )
     })
-
 ]
