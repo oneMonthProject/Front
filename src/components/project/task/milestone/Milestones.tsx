@@ -4,24 +4,19 @@ import {useQueryString} from "@/hooks/useQueryString";
 import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
 import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
-import {useQuery} from "@tanstack/react-query";
-import {getProjectMilestones as getProjectMilestonesAPI} from "@/service/project";
+import {useSuspenseQuery} from "@tanstack/react-query";
+import {getProjectMilestones} from "@/service/project";
 import {convertStringToDate, sortByStartDate} from "@/utils/common";
 
 
 function Milestones() {
     const projectId = useQueryString('projectId');
 
-    async function getProjectMilestones() {
-        return await getProjectMilestonesAPI(projectId);
-    }
 
-    const {data, isLoading, error} = useQuery<ResponseBody<MilestoneInfo[]>, Error>({
+    const {data} = useSuspenseQuery<ResponseBody<MilestoneInfo[]>, Error>({
         queryKey: ['milestoneList'],
-        queryFn: getProjectMilestones
+        queryFn: () => getProjectMilestones(projectId)
     });
-
-    if (isLoading) return <div>loading...</div>;
 
     const sortedMilestoneInfo = sortByStartDate(data!.data, 'asc');
 
@@ -34,8 +29,6 @@ function Milestones() {
             updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd')
         }
     });
-
-
 
     return milestoneInfo.length > 0
         ? (

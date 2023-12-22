@@ -22,9 +22,10 @@ function MilestoneSection() {
           마일스톤 추가
         </span>
             </Button>
-            <Suspense>
+            <Suspense fallback={<div>loading...</div>}>
                 <Milestones/>
             </Suspense>
+
         </section>
     );
 }

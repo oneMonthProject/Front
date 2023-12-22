@@ -5,13 +5,7 @@ import {useProjectInfo} from "@/hooks/useProjectInfo";
 import {convertStringToDate} from "@/utils/common";
 
 function ProjectInfo() {
-    const {data, isLoading, error} = useProjectInfo();
-
-    // todo - loading, error 메세지 / 알림 추가
-    if (isLoading) return <div>is Loading</div>;
-    if (error) return <div>{error.message}</div>
-
-    const projectInfo = data!.data;
+    const projectInfo = useProjectInfo();
 
     const {name, subject, trustGrade, status, startDate, endDate} = {
         ...projectInfo,

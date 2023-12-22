@@ -1,23 +1,15 @@
 import React, {Suspense} from 'react';
-import {redirect, usePathname} from "next/navigation";
-import {useQueryString} from "@/hooks/useQueryString";
-import HydratedProjectInfo from "@/components/project/hydrations/HydratedProjectInfo";
 import ProjectInfo from "@/components/project/layout/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
 
-function ProjectPage(
-    {
-        searchParams,
-    }: {
-        searchParams: { [key: string]: string | string[] | undefined }
-    }) {
+function ProjectPage() {
 
     return (
         <>
-            <HydratedProjectInfo projectId={searchParams.projectId as string}>
+            <Suspense fallback={<div>loading..</div>}>
                 <ProjectInfo/>
-            </HydratedProjectInfo>
-            <Suspense fallback={<div>로딩중</div>}>
+            </Suspense>
+            <Suspense fallback={<div>loading..</div>}>
                 <ProjectNavTab/>
             </Suspense>
         </>

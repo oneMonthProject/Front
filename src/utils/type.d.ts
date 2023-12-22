@@ -156,10 +156,6 @@ export interface AuthRequestParam {
     accessToken: CookieValueTypes;
 }
 
-export interface ReqProjectDetailParam extends AuthRequestParam {
-    projectId: string;
-}
-
 export interface ResponseBody<T> {
     result: string;
     message: string;
@@ -172,13 +168,31 @@ export interface TrustGrade {
 }
 
 export interface User {
-    userId: string;
+    userId: bigint;
+    email: string;
+    nickname: string;
     profileImgSrc: string;
 }
 
 export interface ProjectMember {
     projectMemberId: bigint;
     user: User;
+    projectMemberAuth: ProjectMemberAuth;
+    position: Position;
+    lastWorkDate: string;
+
+}
+
+export interface ProjectMemberAuth {
+    projectMemberAuthId: bigint;
+    projectMemberAuthName: string;
+    milestone_change_YN: boolean;
+    work_change_YN: boolean;
+}
+
+export interface Position {
+    positionId: bigint;
+    name: string;
 }
 
 export interface ProjectInfo {

@@ -54,6 +54,7 @@ function MilestoneCard({milestoneInfo}: MilestoneCardProps) {
     const activeClass = activeId === id ? 'ring-2 ring-primary' : 'shadow-md';
     const textClass = activeId === id ? 'text-secondary' : 'text-gray-900';
 
+    // todo - 마일스톤 상태 뱃지 추가
     return (
         <div
             className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
