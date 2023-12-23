@@ -135,12 +135,12 @@ export interface UserProjectHistory {
     updateDate: string;
 }
 
-export interface BoardPosition {
+interface PostPosition {
     boardPositionId: bigint;
     position: PositionItem;
 }
 
-export interface BasicUserInfo {
+interface PostUserInfo {
     email: string;
     nickname: string;
     profileImgSrc: string | null;
@@ -150,11 +150,11 @@ export interface BasicUserInfo {
 export interface PostInfo {
     boardId: bigint;
     boardTitle: string;
-    boardPositions: BoardPosition[];
-    project: ProjectInfo;
+    boardPositions: PostPosition[];
+    project: PostProjectInfo;
     positions: PositionItem[];
     boardPageView: number;
-    user: BasicUserInfo;
+    user: PostUserInfo;
     createDate: string;
     updateDate: string;
 }
@@ -225,6 +225,11 @@ export interface Project {
 }
 
 export interface ProjectInfo extends Project {
+    status: string;
+    crewNumber: int;
+}
+
+export interface PostProjectInfo extends Project {
     technologyStacks: TechStackItem[];
 }
 
