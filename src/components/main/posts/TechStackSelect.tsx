@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
-import { useRecoilState, useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 import TechStackImage from "@/components/ui/TechStackImage";
 import { selectedTechStackState } from "@/store/MainStateStore";
 
