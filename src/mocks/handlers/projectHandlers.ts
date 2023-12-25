@@ -460,7 +460,11 @@ export const handlers = [
                     startDate: "2023.11.19",
                     endDate: "2023.11.23",
                     createDate: "2023.11.25",
-                    updateDate: "2023.11.26"
+                    updateDate: "2023.11.26",
+                    authMap: {
+                        milestoneAuth: false,
+                        workAuth: true
+                    }
                 }
             }),
         )
@@ -541,7 +545,7 @@ export const handlers = [
             ctx.body(JSONReplaceBigInt({
                 result: "success",
                 message: "success",
-                data:{
+                data: {
                     projectMembers: [
                         {
                             projectMemberId: 1108696616844722n,
@@ -708,8 +712,8 @@ export const handlers = [
             }))
         )
     }),
-    rest.get(`${baseUrl}/api/projectmember/:projectMemberId`,(req,res,ctx)=>{
-      const projectMemberId = req.params.projectMemberId;
+    rest.get(`${baseUrl}/api/projectmember/:projectMemberId`, (req, res, ctx) => {
+        const projectMemberId = req.params.projectMemberId;
         return res(
             ctx.delay(400),
             ctx.status(200),
@@ -731,10 +735,10 @@ export const handlers = [
                         },
                         "trustGrade": {
                             "name": '3등급',
-                            "score":3000
+                            "score": 3000
                         },
                         "trustScore": 0,
-                "role": 'USER',
+                        "role": 'USER',
                         "createDate": '2023-11-12',
                         "updateDate": '2023-11-12'
                     },
@@ -743,7 +747,7 @@ export const handlers = [
                         "positionId": 8203571318086190n,
                         "name": '프론트엔드'
                     },
-                    "status":  'PARTICIPATING'
+                    "status": 'PARTICIPATING'
                 }
             }))
         )
