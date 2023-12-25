@@ -37,5 +37,5 @@ export const getPostList = async (params: SearchParams) => {
     }
   );
 
-  return response.json();
+  return await response.json();
 };
