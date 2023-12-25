@@ -100,8 +100,8 @@ export interface PositionItem {
 }
 
 export interface TechStackItem {
-    technologyStackId: string | bigint;
-    technologyStackName: string;
+    techStackId: string | bigint;
+    techStackName: string;
 }
 
 export interface UserInfo {
@@ -109,7 +109,6 @@ export interface UserInfo {
     nickname: string;
     imageSrc?: string | null;
     position?: SelectItem;
-    // 추가 예정
 }
 
 export interface ProfileInfo {
@@ -136,19 +135,28 @@ export interface UserProjectHistory {
     updateDate: string;
 }
 
+interface PostPosition {
+    boardPositionId: bigint;
+    position: PositionItem;
+}
+
+interface PostUserInfo {
+    email: string;
+    nickname: string;
+    profileImgSrc: string | null;
+    trustGrade: TrustGrade;
+}
+
 export interface PostInfo {
-    id: string | number;
-    title: string;
-    projectName: string;
-    projectSubject: string;
-    trustGrade: string;
-    recruitmentCount: number | string;
-    startDate: Date;
-    endDate: Date;
-    positions: SelectItem[];
-    techStacks: SelectItem[];
-    contact: string;
-    userInfo: UserInfo;
+    boardId: bigint;
+    boardTitle: string;
+    boardPositions: PostPosition[];
+    project: PostProjectInfo;
+    positions: PositionItem[];
+    boardPageView: number;
+    user: PostUserInfo;
+    createDate: string;
+    updateDate: string;
 }
 
 export interface AuthRequestParam {
@@ -159,6 +167,17 @@ export interface ResponseBody<T> {
     result: string;
     message: string;
     data: T
+}
+
+interface Paged<T> {
+    content: T,
+    totalPages: number;
+}
+
+export interface PageResponseBody<T> {
+    result: string;
+    message: string;
+    data: Paged<T>
 }
 
 export interface TrustGrade {
@@ -194,20 +213,29 @@ export interface Position {
     name: string;
 }
 
-export interface ProjectInfo {
+export interface Project {
     projectId: bigint;
     name: string;
     subject: string;
     trustGrade: TrustGrade;
-    status: string;
-    crewNumber: int;
     startDate: date;
     endDate: date;
     createDate: date;
     updateDate: date;
 }
 
-export interface ProjectPost extends ProjectInfo {
+export interface ProjectInfo extends Project {
+    status: string;
+    crewNumber: int;
+}
+
+export interface PostProjectInfo extends Project {
+    technologyStacks: TechStackItem[];
+}
+
+export interface ProjectPost extends Project {
+    status: string;
+    crewNumber: int;
     members: ProjectMember[];
 }
 

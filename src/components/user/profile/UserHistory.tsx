@@ -17,6 +17,8 @@ function UserHistory() {
     queryKey: ['profileInfo', pageNumber],
     queryFn: () => getUserProjectHistoryAPI(pageNumber)
   });
+
+  const { data: histories } = data;
   
   const getIconColorByStatus = (status: ProjectHistoryStatus) => {
     switch (status) {
@@ -65,7 +67,6 @@ function UserHistory() {
     }
   }
 
-  const { data: histories } = data;
   return (
     <div className="flow-root mx-2">
       <ul role="list" className="-mb-8">

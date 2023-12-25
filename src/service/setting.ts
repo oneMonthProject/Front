@@ -1,11 +1,11 @@
+const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
-const baseurl = 'https://jsonplaceholder.typicode.com';
 export async function getPositionList() {
-    const data = await fetch(`${baseurl}/todos`);
+    const data = await fetch(`${baseURL}/api/position-list/public`);
     return data.json();
 }
 
 export async function getTechList(){
-    const data = await fetch(`${baseurl}/posts`);
+    const data = await fetch(`${baseURL}/api/technology-stack-list/public`);
     return data.json();
 }

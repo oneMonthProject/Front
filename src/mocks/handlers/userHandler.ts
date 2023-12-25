@@ -59,9 +59,9 @@ export const handlers = [
             trustGrade: 1,
             position: { positionId: 1, positionName: "프론트엔드" },
             techStacks: [
-              { technologyStackId: 1, technologyStackName: "React" },
-              { technologyStackId: 2, technologyStackName: "TypeScript" },
-              { technologyStackId: 7, technologyStackName: "Java" },
+              { techStackId: 1, techStackName: "React" },
+              { techStackId: 2, techStackName: "TypeScript" },
+              { techStackId: 7, techStackName: "Java" },
             ],
             intro: "개발 N년차 웹 프론트엔드 개발자 입니다.",
             projectHistoryTotalCount: 3,
@@ -76,7 +76,7 @@ export const handlers = [
   }),
   // 내 프로젝트 이력 조회
   rest.get(
-    `${baseUrl}/api/user/me/project-history?pageNumber=:pageNumber`,
+    `${baseUrl}/api/user/me/project-history`,
     async (req, res, ctx) => {
       return res(
         ctx.status(200),

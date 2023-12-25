@@ -1,4 +1,6 @@
 import {handlers as projectHandler} from './projectHandlers';
 import {handlers as userHandler } from './userHandler';
+import {handlers as postHandlers } from './postHandlers';
+import {handlers as commonHandlers } from './commonHandlers';
 
-export const handlers = [...projectHandler, ...userHandler];
+export const handlers = [...projectHandler, ...userHandler, ...postHandlers, ...commonHandlers];

@@ -31,7 +31,7 @@ function RegisterNav() {
   }, [setDesktop, isWide]);
 
   return (
-    <div onClick={goRegister}>
+    <div className='cursor-pointer' onClick={goRegister}>
       {
         desktop ? '새 글쓰기' : <IoCreateOutline className='h-6 w-6' />
       }

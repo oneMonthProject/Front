@@ -33,7 +33,7 @@ export default function Snackbar() {
     } else {
       resetSnackbar();
     }
-  }, [state]);
+  }, [state, resetSnackbar]);
 
   return (
     <div

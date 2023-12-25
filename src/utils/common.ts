@@ -125,7 +125,7 @@ export function JSONReplaceBigInt(data: Record<string, unknown>) {
 
 export function getTechStackSelectItem(items: TechStackItem[]) {
     if (items.length > 0) {
-        return items.map(item => ({value: item.technologyStackId, name: item.technologyStackName} as SelectItem));
+        return items.map(item => ({value: item.techStackId, name: item.techStackName} as SelectItem));
     }
 
     return [];

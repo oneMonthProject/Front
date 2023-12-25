@@ -2,14 +2,20 @@
 import React, { useState } from "react";
 import Button from "@/components/ui/Button";
 import PositionDropdown from "@/components/main/posts/PositionDropdown";
-import { DropDownItem } from "@/utils/type";
+import { PositionItem } from "@/utils/type";
 
 const positions = [
-  { value: "frontend", name: "프론트엔드" },
-  { value: "backend", name: "백엔드" }
+  {
+    positionId: 9007199254740991n,
+    positionName: "프론트엔드",
+  },
+  {
+    positionId: 1234599254740991n,
+    positionName: "백엔드",
+  }
 ];
 const ButtonSection = () => {
-  const [position, setPosition] = useState<DropDownItem | null>(null);
+  const [position, setPosition] = useState<PositionItem | null>(null);
   const isOwner = false;
 
   const join = () => {
