@@ -4,14 +4,10 @@ import { getUserIfo as getProfileInfoAPI } from "@/service/user";
 import { ProfileInfo, ResponseBody } from "@/utils/type";
 
 export function useProfileInfo() {
-  async function getProfileInfo() {
-    return await getProfileInfoAPI();
-  }
-
-  const res = useSuspenseQuery<ResponseBody<ProfileInfo>, Error>({
+  const { data } = useSuspenseQuery<ResponseBody<ProfileInfo>, Error>({
     queryKey: ['profileInfo'],
-    queryFn: getProfileInfo
+    queryFn: getProfileInfoAPI
   });
 
-  return res;
+  return data.data;
 }
