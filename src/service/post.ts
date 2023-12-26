@@ -34,6 +34,23 @@ export const getPostList = async (params: SearchParams) => {
     `${baseUrl}/api/board/search/public?${queryParams}`,
     {
       method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  return await response.json();
+};
+
+export const getPostDetail = async (postId: string) => {
+  const response = await fetch(
+    `${baseUrl}/api/board/${postId}/public`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
     }
   );
 

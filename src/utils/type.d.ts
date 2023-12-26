@@ -147,11 +147,11 @@ interface PostUserInfo {
     trustGrade: TrustGrade;
 }
 
-export interface PostInfo {
+export interface PostCardInfo {
     boardId: bigint;
     boardTitle: string;
     boardPositions: PostPosition[];
-    project: PostProjectInfo;
+    project: ProjectInfo;
     positions: PositionItem[];
     boardPageView: number;
     user: PostUserInfo;
@@ -182,7 +182,8 @@ export interface PageResponseBody<T> {
 
 export interface TrustGrade {
     name: string;
-    score: int;
+    minimumScore: int;
+    maximumScore: int;
 }
 
 export interface User {
@@ -222,6 +223,8 @@ export interface Project {
     endDate: date;
     createDate: date;
     updateDate: date;
+    status: string;
+    crewNumber: int;
     authMap: {
         milestoneAuth: boolean;
         workAuth: boolean;
@@ -229,18 +232,40 @@ export interface Project {
 }
 
 export interface ProjectInfo extends Project {
-    status: string;
-    crewNumber: int;
-}
-
-export interface PostProjectInfo extends Project {
     technologyStacks: TechStackItem[];
 }
 
 export interface ProjectPost extends Project {
-    status: string;
-    crewNumber: int;
     members: ProjectMember[];
+}
+
+interface PostDetailUserInfo {
+    userId: bigint;
+    nickName: string;
+    userProfileImgSrc: string;
+}
+
+interface PostDetailPosition {
+    boardPositionId: bigint;
+    position: Position;
+}
+
+interface PostInfo {
+    boardId: bigint;
+    title: string;
+    content: string;
+    pageView: number;
+    completeStatus: boolean;
+    user: PostDetailUserInfo;
+    contact: string;
+    createDate: string;
+    updateDate: string;
+    boardPositions: PostDetailPosition[];
+}
+
+export interface PostDetailInfo {
+    board: PostInfo,
+    project: ProjectInfo
 }
 
 export type SnackbarType = "INFO" | "ERROR" | "SUCCESS";

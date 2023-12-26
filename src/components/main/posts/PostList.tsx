@@ -6,7 +6,7 @@ import { useRecoilValue } from "recoil";
 import { postSearchValue, selectedPositionState, selectedTechStackState } from "@/store/MainStateStore";
 import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { PageResponseBody, PostInfo } from "@/utils/type";
+import { PageResponseBody, PostCardInfo } from "@/utils/type";
 import { getPostList } from "@/service/post";
 
 const PostList = () => {
@@ -15,7 +15,7 @@ const PostList = () => {
   const searchValue = useRecoilValue(postSearchValue);
   const [pageNumber, setPageNumber] = useState(0);
 
-  const { data } = useSuspenseQuery<PageResponseBody<PostInfo[]>, Error>({
+  const { data } = useSuspenseQuery<PageResponseBody<PostCardInfo[]>, Error>({
     // key 에 나머지 항목도 추가하기
     queryKey: ['postInfo', selectedPosition, searchValue, pageNumber],
     queryFn: () => getPostList({ technologyIds: [], position: selectedPosition, keyWord: searchValue, page: pageNumber })
