@@ -229,7 +229,7 @@ export function getTodayString() {
     const today = new Date();
     const strArr = [
         today.getFullYear().toString(),
-        _.padStart(today.getMonth().toString(), 2, '0'),
+        _.padStart((today.getMonth() + 1).toString(), 2, '0'),
         _.padStart(today.getDate().toString(), 2, '0')
     ];
 
