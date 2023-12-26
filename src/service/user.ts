@@ -21,7 +21,7 @@ const request = async (url: string, props: RequestInit) => {
 
 export const checkEmail = async (email: string) => {
   const response = await fetch(
-    `${baseURL}/api/public/user/check-email/${email}`,
+    `${baseURL}/api/user/check-email/${email}/public`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -34,7 +34,7 @@ export const checkEmail = async (email: string) => {
 
 export const checkNickname = async (nickname: string) => {
   const response = await fetch(
-    `${baseURL}/api/public/user/check-nickname/${nickname}`,
+    `${baseURL}/api/user/check-nickname/${nickname}/public`,
     {
       headers: {
         "Content-Type": "application/json",

@@ -28,7 +28,7 @@ function ProfileCard() {
           )
         }
       </div>
-      <UserProjectInfo count={projectHistoryTotalCount} grade={`${trustGrade}등급`} score={trustScore} />
+      <UserProjectInfo count={projectHistoryTotalCount} grade={trustGrade.trustGradeName} score={trustScore} />
       <div className="pt-3 mobile:pt-2">
         <Button size="md" theme="primary-hollow" onClickHandler={() => router.push("/user/setting")}>프로필 수정</Button>
       </div>
