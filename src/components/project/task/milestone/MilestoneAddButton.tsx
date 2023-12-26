@@ -5,12 +5,12 @@ import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
 import {MilestoneInfo} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {useRecoilValue, useSetRecoilState} from "recoil";
-import {projectUserAuthStateStore} from "@/store/project/crews/ProjectUserAuthStateStore";
+import {useSetRecoilState} from "recoil";
+import {useProjectInfo} from "@/hooks/useProjectInfo";
 
 function MilestoneAddButton() {
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
-    const authInfo = useRecoilValue(projectUserAuthStateStore);
+    const {authMap} = useProjectInfo();
 
     const onClickHandler = () => {
         const today = getTodayString();
@@ -18,11 +18,11 @@ function MilestoneAddButton() {
         const addMilestoneForm: MilestoneInfo = {
             content: "",
             createDate: today,
-            endDate: "",
             mileStoneId: 0n,
             progressStatus: "",
             projectId: 0n,
-            startDate: today,
+            startDate: '',
+            endDate: '',
             updateDate: today
         }
 
@@ -30,7 +30,7 @@ function MilestoneAddButton() {
     }
 
     return (
-        authInfo?.milestoneAuth ?
+        authMap?.milestoneAuth ?
             <Button size='md' className='mb-4' onClickHandler={onClickHandler} aria-label='마일스톤 추가'>
                 <span className='flex items-center'>
                   <FaPlus className='tablet:w-3 tablet:h-3 mr-2'/>

@@ -3,8 +3,7 @@ import React, {Fragment} from 'react';
 import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
 import {Menu, Transition} from "@headlessui/react";
 import {classNames} from "@/utils/common";
-import {useRecoilValue} from "recoil";
-import {projectUserAuthStateStore} from "@/store/project/crews/ProjectUserAuthStateStore";
+import {useProjectInfo} from "@/hooks/useProjectInfo";
 
 interface MilestoneCardMenuProps {
     milestoneId: bigint;
@@ -13,7 +12,7 @@ interface MilestoneCardMenuProps {
 }
 
 function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandler}: MilestoneCardMenuProps) {
-    const authInfo = useRecoilValue(projectUserAuthStateStore);
+    const {authMap} = useProjectInfo();
 
     const milestoneMenus = [
         {
@@ -29,7 +28,7 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
     ]
 
     return (
-        authInfo?.milestoneAuth ?
+        authMap?.milestoneAuth ?
             // <div className="flex-shrink-0 pr-2 overflow-visible">
             (
                 <Menu as="div" className="self-start flex-shrink-0 pr-2 text-center">

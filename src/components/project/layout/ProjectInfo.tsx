@@ -2,17 +2,9 @@
 import React from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import {useProjectInfo} from "@/hooks/useProjectInfo";
-import {convertStringToDate} from "@/utils/common";
 
 function ProjectInfo() {
-    const projectInfo = useProjectInfo();
-
-    const {name, subject, trustGrade, status, startDate, endDate} = {
-        ...projectInfo,
-        startDate: convertStringToDate(projectInfo.startDate, 'yyyy-MM-dd'),
-        endDate: convertStringToDate(projectInfo.endDate, 'yyyy-MM-dd')
-    };
-
+    const {name, subject, trustGrade, startDate, endDate} = useProjectInfo();
     return (
         <section
             className='w-full tablet:mt-[40px] mobile:mt-[10px] tablet:flex mobile:flex-col items-center justify-start'>
