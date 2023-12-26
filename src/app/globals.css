@@ -46,8 +46,8 @@
         @apply z-10 bg-primary text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary;
 
     }
-    /* END custom pagination  */
 
+    /* END custom pagination  */
     /*  START custom swiper */
     .swiper {
         @apply pc:max-w-[1200px] tablet:w-full h-[240px] -mt-10 !important;
@@ -56,6 +56,9 @@
 }
 
 
+:root {
+    --swiper-navigation-sides-offset: -10px;
+}
 
 
 .swiper-button-prev {
@@ -78,7 +81,7 @@
 }
 
 .swiper-pagination {
-    bottom:0px !important;
+    bottom: 0px !important;
 }
 
 .swiper-slide {
@@ -88,15 +91,7 @@
 }
 
 .swiper-slide > div {
-    overflow:visible;
-}
-
-.swiper-slide:nth-of-type(3n+3) > div {
-    margin-right:auto !important;
-}
-
-.swiper-slide:first-of-type > div, .swiper-slide:nth-of-type(4n) > div {
-    margin-left:auto !important;
+    overflow: visible;
 }
 
 .swiper-slide img {

@@ -3,14 +3,19 @@ import {MilestoneInfo, ModalState} from "@/utils/type";
 import {convertStringToDate} from "@/utils/common";
 
 
+
+
+
 interface MilestoneActiveState {
     activeId: bigint | null;
+    slideIndex: number;
 }
 
 export const milestoneActiveStateStore = atom<MilestoneActiveState>({
     key: 'milestoneActiveStateStore',
     default: {
-        activeId: null
+        activeId: null,
+        slideIndex: 0
     }
 })
 

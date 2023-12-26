@@ -222,6 +222,10 @@ export interface Project {
     endDate: date;
     createDate: date;
     updateDate: date;
+    authMap: {
+        milestoneAuth: boolean;
+        workAuth: boolean;
+    }
 }
 
 export interface ProjectInfo extends Project {

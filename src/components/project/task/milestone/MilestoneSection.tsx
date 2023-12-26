@@ -1,46 +1,16 @@
-'use client';
 import {Suspense} from 'react';
-import {useSetRecoilState} from 'recoil';
-import Button from "@/components/ui/Button";
-import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import Milestones from "@/components/project/task/milestone/Milestones";
-import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {MilestoneInfo} from "@/utils/type";
-import {getTodayString} from "@/utils/common";
+import MilestoneAddButton from "@/components/project/task/milestone/MilestoneAddButton";
 
 
 function MilestoneSection() {
-    const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
-
-    const onClickHandler = () => {
-        const today = getTodayString();
-
-        const addMilestoneForm:MilestoneInfo = {
-            content: "",
-            createDate: today,
-            endDate: "",
-            mileStoneId: 0n,
-            progressStatus: "",
-            projectId: 0n,
-            startDate: today,
-            updateDate: today
-        }
-
-        setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
-    }
 
     return (
         <section className='w-full flex flex-col items-start'>
-            <Button size='md' className='mb-4' onClickHandler={onClickHandler} aria-label='마일스톤 추가'>
-        <span className='flex items-center'>
-          <FaPlus className='tablet:w-3 tablet:h-3 mr-2'/>
-          마일스톤 추가
-        </span>
-            </Button>
+            <MilestoneAddButton/>
             <Suspense fallback={<div>loading...</div>}>
                 <Milestones/>
             </Suspense>
-
         </section>
     );
 }

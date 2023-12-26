@@ -1,11 +1,14 @@
+'use client';
 import {Swiper, SwiperSlide} from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
-import {ReactNode, useRef} from "react";
+import {ReactNode, useEffect, useRef} from "react";
 import SwiperCore from 'swiper';
 import {Grid, Navigation, Pagination} from 'swiper/modules';
+import {useRecoilState, useRecoilValue} from "recoil";
+import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
 
 interface SlideItem {
     key: string;
@@ -18,17 +21,23 @@ interface CustomSwiperProps {
 }
 
 function CustomSwiper({slideItems}: CustomSwiperProps) {
+    const {slideIndex} = useRecoilValue(milestoneActiveStateStore);
+
     SwiperCore.use([Navigation, Pagination, Grid]);
     const swiperRef = useRef<SwiperCore>();
+
+    useEffect(() => {
+        swiperRef.current?.slideToLoop(slideIndex);
+    },[slideIndex]);
+
     return (
         <div className='w-full flex bg-white overflow-hidden z-0'>
-            {/*<div className='bg-white grow-1'></div>*/}
             <Swiper
                 className='swiper'
                 slidesPerView={3}
-                slidesPerGroup={3}
+                slidesPerGroup={1}
+                loopAddBlankSlides={true}
                 loop={true}
-                // spaceBetween={10}
                 modules={[Navigation, Pagination, Grid]}
                 navigation={true}
                 pagination={{
@@ -39,12 +48,11 @@ function CustomSwiper({slideItems}: CustomSwiperProps) {
             >
                 {
                     slideItems.map(
-                        ({key, components}) =>
-                            <SwiperSlide key={key}>{components}</SwiperSlide>
+                        ({key, components}, index) =>
+                            <SwiperSlide key={key} >{components}</SwiperSlide>
                     )
                 }
             </Swiper>
-            {/*<div className='border border-red bg-white w-[50px] h-[50px]'></div>*/}
         </div>
     );
 }
