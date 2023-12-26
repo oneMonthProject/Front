@@ -2,7 +2,7 @@
 import React from "react";
 import ProjectCard from "../projectCard/ProjectCard";
 import {useQuery, useSuspenseQuery} from "@tanstack/react-query";
-import {getMyProjectList, getMyProjectList as getMyProjectListApi} from "@/service/project";
+import {getMyProjectList, getMyProjectList as getMyProjectListApi} from "@/service/project/project";
 import {getCookie} from "cookies-next";
 import {ProjectPost, ResponseBody} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";

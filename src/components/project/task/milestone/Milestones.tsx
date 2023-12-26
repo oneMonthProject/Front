@@ -5,7 +5,7 @@ import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
 import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
 import {useSuspenseQuery} from "@tanstack/react-query";
-import {getProjectMilestones} from "@/service/project";
+import {getProjectMilestones} from "@/service/project/milestone";
 import {convertStringToDate, sortByStartDate} from "@/utils/common";
 
 

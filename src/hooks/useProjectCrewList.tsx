@@ -1,7 +1,7 @@
 'use client';
 import {useQueryString} from "@/hooks/useQueryString";
 import {useSuspenseQuery} from "@tanstack/react-query";
-import {getProjectCrewList} from "@/service/project";
+import {getProjectCrewList} from "@/service/project/project";
 
 export default function useProjectCrewList(){
     const projectId = useQueryString('projectId');
