@@ -462,79 +462,11 @@ export const handlers = [
                     createDate: "2023.11.25",
                     updateDate: "2023.11.26",
                     authMap: {
-                        milestoneAuth: false,
+                        milestoneAuth: true,
                         workAuth: true
                     }
                 }
             }),
-        )
-    }),
-    rest.get(`${baseUrl}/api/milestone/project/:projectId`, (req, res, ctx) => {
-        const projectId = req.params.projectId;
-        return res(
-            ctx.status(200),
-            ctx.delay(400),
-            ctx.body(JSONReplaceBigInt({
-                result: "success",
-                message: "success",
-                data: [
-                    {
-                        mileStoneId: 9007199254740991n,
-                        projectId: projectId,
-                        content: '마일스톤 내용 1',
-                        startDate: '2023.11.18',
-                        endDate: '2023.11.20',
-                        createDate: '2023.11.10',
-                        updateDate: '2023.11.10',
-                        progressStatus: '완료',
-
-                    },
-                    {
-                        mileStoneId: 9007199254740992n,
-                        projectId: projectId,
-                        content: '마일스톤 내용 2',
-                        startDate: '2023.11.25',
-                        endDate: '2023.11.30',
-                        createDate: '2023.11.10',
-                        updateDate: '2023.11.10',
-                        progressStatus: '진행중',
-
-                    },
-                    {
-                        mileStoneId: 9007199254740994n,
-                        projectId: projectId,
-                        content: '마일스톤 내용 3',
-                        startDate: '2023.11.20',
-                        endDate: '2023.11.28',
-                        createDate: '2023.11.10',
-                        updateDate: '2023.11.10',
-                        progressStatus: '만료',
-
-                    },
-                    {
-                        mileStoneId: 9007199254740996n,
-                        projectId: projectId,
-                        content: '마일스톤 내용 4',
-                        startDate: '2023.11.20',
-                        endDate: '2023.12.30',
-                        createDate: '2023.11.10',
-                        updateDate: '2023.11.10',
-                        progressStatus: '진행중',
-
-                    },
-                    {
-                        mileStoneId: 9007199254740998n,
-                        projectId: projectId,
-                        content: '마일스톤 내용 5',
-                        startDate: '2023.12.18',
-                        endDate: '2023.12.30',
-                        createDate: '2023.11.10',
-                        updateDate: '2023.11.10',
-                        progressStatus: '시작전'
-
-                    },
-                ]
-            }))
         )
     }),
     rest.get(`${baseUrl}/api/projectmember/project/:projectId`, (req, res, ctx) => {

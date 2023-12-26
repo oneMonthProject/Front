@@ -1,4 +1,4 @@
-import {handlers as projectHandler} from './projectHandlers';
+import {handlers as projectHandler} from './project/index';
 import {handlers as userHandler } from './userHandler';
 import {handlers as postHandlers } from './postHandlers';
 import {handlers as commonHandlers } from './commonHandlers';
