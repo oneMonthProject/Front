@@ -3,7 +3,6 @@ import React, {ChangeEvent} from 'react';
 import {useRecoilState} from "recoil";
 import Input from '@/components/ui/form/Input';
 import CalendarInput from '@/components/ui/form/CalendarInput';
-import {format} from 'date-fns';
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
 
 function MilestoneModalContent() {
@@ -35,7 +34,7 @@ function MilestoneModalContent() {
                 </div>
                 <div className='flex'>
                     <label className="text-gray-700 font-semibold self-center">기간</label>
-                    <div className='flex w-[350px] mobile:w-[220px] ml-auto'>
+                    <div className='w-[350px] mobile:w-[220px] ml-auto flex space-x-1'>
                         <CalendarInput
                             placeholder="선택"
                             date={currentForm?.startDate || null}
