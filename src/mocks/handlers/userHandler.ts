@@ -56,7 +56,10 @@ export const handlers = [
             nickname: "Robert",
             profileImgSrc: null,
             trustScore: 1200,
-            trustGrade: 1,
+            trustGrade: {
+              trustGradeId: 482919925474099n,
+              trustGradeName: "3등급",
+            },
             position: { positionId: 9007199254740991n, positionName: "프론트엔드" },
             techStacks: [
               { techStackId: 2839199254740991n, techStackName: "React" },
@@ -132,7 +135,7 @@ export const handlers = [
   }),
   // 닉네임 중복체크
   rest.get(
-    `${baseUrl}/api/public/user/check-nickname/:nickname`,
+    `${baseUrl}/api/user/check-nickname/:nickname/public`,
     async (req, res, ctx) => {
       return res(
         ctx.status(200),
