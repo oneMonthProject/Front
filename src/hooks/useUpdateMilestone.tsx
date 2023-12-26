@@ -2,7 +2,7 @@ import {useRecoilValue, useResetRecoilState} from "recoil";
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
 import {useMutation} from "@tanstack/react-query";
 import {updateMilestone as updateMilestoneAPI} from "@/service/project/milestone";
-import {useQueryClient} from "@tanstack/react-query/build/modern";
+import {useQueryClient} from "@tanstack/react-query";
 
 export default function useUpdateMilestone(){
     const resetCurrentForm = useResetRecoilState(milestoneModalFormState);
