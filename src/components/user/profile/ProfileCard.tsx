@@ -9,9 +9,9 @@ import { useProfileInfo } from "@/hooks/useProfileInfo";
 
 function ProfileCard() {
   const router = useRouter();
-  const { data } = useProfileInfo();
+  const profileData = useProfileInfo();
 
-  const { nickname, profileImgSrc, trustScore, trustGrade, position, techStacks, intro, projectHistoryTotalCount } = data.data;
+  const { nickname, profileImgSrc, trustScore, trustGrade, position, techStacks, intro, projectHistoryTotalCount } = profileData;
 
   return (
     <div className="space-y-2 mobile:space-y-1 w-full h-fit text-center my-6 mobile:my-4">

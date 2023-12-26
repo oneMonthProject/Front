@@ -108,27 +108,41 @@ export function classNames(...classes: string[]) {
 }
 
 export function getSelectItemValue(item: SelectItem) {
-    return item.value;
+  return item.value;
 }
 
 export function getPositionSelectItem(item: PositionItem | null) {
-    if (item) {
-        return {value: item.positionId, name: item.positionName} as SelectItem;
-    }
+  if (item) {
+    return { value: item.positionId, name: item.positionName } as SelectItem;
+  }
 
-    return item;
+  return item;
+}
+
+export function getPositionSelectItems(items: PositionItem[]) {
+  if (items.length > 0) {
+    return items.map(
+      (item) =>
+        ({ value: item.positionId, name: item.positionName } as SelectItem)
+    );
+  }
+
+  return [];
+}
+
+export function getTechStackSelectItems(items: TechStackItem[]) {
+  if (items.length > 0) {
+    return items.map(
+      (item) =>
+        ({ value: item.techStackId, name: item.techStackName } as SelectItem)
+    );
+  }
+
+  return [];
 }
 
 export function JSONReplaceBigInt(data: Record<string, unknown>) {
     return JSON.stringify(data, (k, v) => (typeof v === 'bigint' ? Number(v) : v));
-}
-
-export function getTechStackSelectItem(items: TechStackItem[]) {
-    if (items.length > 0) {
-        return items.map(item => ({value: item.techStackId, name: item.techStackName} as SelectItem));
-    }
-
-    return [];
 }
 
 export const isValidEmail = (email: string) => {

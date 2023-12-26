@@ -9,23 +9,6 @@ import TechStackDropdown from "./TechStackDropdown";
 import PostList from "./PostList";
 import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
 
-const techStackList = [
-  { value: 1, name: 'React' },
-  { value: 2, name: 'TypeScript' },
-  { value: 3, name: 'JavaScript' },
-  { value: 4, name: 'Vue' },
-  { value: 5, name: 'Nextjs' },
-  { value: 6, name: 'Node.js' },
-  { value: 7, name: 'Java' },
-  { value: 8, name: 'Spring' },
-  { value: 9, name: 'Kotlin' },
-  { value: 10, name: 'Nestjs' },
-  { value: 11, name: 'Swift' },
-  { value: 12, name: 'Flutter' },
-  { value: 13, name: 'Figma' },
-];
-
-
 const Posts = () => {
   const selectedPosition = useRecoilValue(selectedPositionState);
   const setSelectedPosition = useSetRecoilState(selectedPositionState);

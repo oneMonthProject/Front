@@ -8,7 +8,11 @@ import Input from "@/components/ui/form/Input";
 import TextArea from "@/components/ui/form/TextArea";
 import CalendarInput from "@/components/ui/form/CalendarInput";
 import { SelectItem } from "@/utils/type";
+import { usePositionList } from "@/hooks/usePositionList";
+import { useTechStackList } from "@/hooks/useTechStackList";
+import { getPositionSelectItems, getTechStackSelectItems } from "@/utils/common";
 
+// 게시글 저장 시 신뢰등급 id 가 필요하므로 신뢰등급 리스트를 가져와야 함
 const gradeList = [
   { value: 1, name: '1등급' },
   { value: 2, name: '2등급' },
@@ -31,33 +35,11 @@ const recruitmentCountList = [
   { value: 10, name: '10명' },
 ];
 
-const positionList = [
-  { value: 1, name: '프론트엔드' },
-  { value: 2, name: '백엔드' },
-  { value: 3, name: '디자이너' },
-  { value: 4, name: 'IOS' },
-  { value: 5, name: '안드로이드' },
-  { value: 6, name: '데브옵스' }
-];
-
-const techStackList = [
-  { value: 1, name: 'React' },
-  { value: 2, name: 'TypeScript' },
-  { value: 3, name: 'JavaScript' },
-  { value: 4, name: 'Vue' },
-  { value: 5, name: 'Nextjs' },
-  { value: 6, name: 'Node.js' },
-  { value: 7, name: 'Java' },
-  { value: 8, name: 'Spring' },
-  { value: 9, name: 'Kotlin' },
-  { value: 10, name: 'Nestjs' },
-  { value: 11, name: 'Swift' },
-  { value: 12, name: 'Flutter' },
-  { value: 13, name: 'Figma' },
-];
-
 function RegisterForm() {
   const router = useRouter();
+
+  const positions = usePositionList();
+  const techStacks = useTechStackList();
 
   const [title, setTitle] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -95,14 +77,14 @@ function RegisterForm() {
             value={projectSubject} onChange={(e) => setProjectSubject(e.target.value)} />
           <Select value={trustGrade} setValue={setTrustGrade} items={gradeList} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />
           <Select value={recruitmentCount} setValue={setRecruitmentCount} items={recruitmentCountList} label="모집 인원" placeholder="모집 인원을 선택해주세요." />
-          <Select value={position} setValue={setPosition} items={positionList} label="모집 분야" placeholder="모집 분야를 선택해주세요." />
+          <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="모집 분야" placeholder="모집 분야를 선택해주세요." />
         </div>
         <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
           <CalendarInput id="startDate" label="시작 날짜" placeholder="날짜를 선택해주세요."
             date={startDate} setDate={setStartDate} />
           <CalendarInput id="endDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
             date={endDate} setDate={setEndDate} />
-          <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
+          <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
           <Input id="contact" label="연락 방법" placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
             value={contact} onChange={(e) => setContact(e.target.value)} />
         </div>

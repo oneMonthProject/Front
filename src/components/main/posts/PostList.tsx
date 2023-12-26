@@ -2,7 +2,7 @@
 
 import CommonPagination from "@/components/ui/CommonPagination"
 import PostCard from "../postCard/PostCard"
-import { useRecoilValue, useSetRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { postSearchValue, selectedPositionState, selectedTechStackState } from "@/store/MainStateStore";
 import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
