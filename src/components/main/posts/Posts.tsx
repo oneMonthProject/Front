@@ -1,6 +1,6 @@
 'use client';
 
-import React, { Suspense, } from "react";
+import React, { Suspense } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { selectedPositionState } from "@/store/MainStateStore";
 import Search from "./Search";
