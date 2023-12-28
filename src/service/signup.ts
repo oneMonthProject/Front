@@ -11,7 +11,7 @@ export interface SignUpRequest {
 
 export const signUp = async (signUpRequest: SignUpRequest) => {
   const { data: response } = await axios.post(
-    `${process.env.NEXT_PUBLIC_BACKEND}/api/public/user`,
+    `${process.env.NEXT_PUBLIC_BACKEND}/api/user/public`,
     signUpRequest,
     {
       headers: {
