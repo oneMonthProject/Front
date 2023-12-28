@@ -4,6 +4,8 @@ import {useRecoilState} from "recoil";
 import Input from '@/components/ui/form/Input';
 import CalendarInput from '@/components/ui/form/CalendarInput';
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
+import MilestoneStatusSelector from "@/components/project/task/milestone/MilestoneStatusSelector";
+
 
 function MilestoneModalContent() {
     const [currentForm, setCurrentForm] = useRecoilState(milestoneModalFormState);
@@ -48,12 +50,22 @@ function MilestoneModalContent() {
                         />
                     </div>
                 </div>
+                {
+                    currentForm?.type === 'modify' && (
+                        <div className='max-w-[360px] flex '>
+                            <label className="text-gray-700 font-semibold self-center">진행상태</label>
+                            <div className='min-w-[280px] h-[42px] mobile:h-[38px] ml-auto flex justify-start'>
+                                <MilestoneStatusSelector/>
+                            </div>
+                        </div>
+                    )
+                }
                 {currentForm?.type === 'modify' && (
-                    <div className='flex'>
+                    <div className='max-w-[360px] flex'>
                         <label className="text-gray-700 font-semibold self-center">업데이트</label>
-                        <div className='flex w-[350px] mobile:w-[220px] h-[42px] mobile:h-[38px] space-x-3 ml-auto'>
+                        <div className='min-w-[280px] h-[42px] mobile:h-[38px] flex space-x-3 ml-auto'>
                             <div
-                                className='w-full pl-2 text-left self-center'>{`${currentForm?.updateDate ? currentForm.updateDate : ""}`}</div>
+                                className=' pl-2 text-left self-center'>{`${currentForm?.updateDate ? currentForm.updateDate : ""}`}</div>
                         </div>
                     </div>
                 )}
