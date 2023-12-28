@@ -1,10 +1,40 @@
 import {atom, selector} from "recoil";
 import {MilestoneInfo, ModalState} from "@/utils/type";
-import {convertStringToDate} from "@/utils/common";
+
+export type MilestoneStatusName = '시작전' | '진행중' | '완료' | '만료';
+export type MilestoneStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
+
+export interface MilestoneStatusItem {
+    name: MilestoneStatusName;
+    value: MilestoneStatusCode;
+}
+
+export const milestoneStatusItems: MilestoneStatusItem[] = [
+    {
+        name: '시작전',
+        value: 'PS001'
+    },
+    {
+        name: '진행중',
+        value: 'PS002'
+    },
+    {
+        name: '완료',
+        value: 'PS003'
+    },
+    {
+        name: '만료',
+        value: 'PS004'
+    },
+];
 
 
-
-
+export function getMilestoneStatusCode(name: MilestoneStatusName | '') {
+    if(name === '') return '';
+    const milestoneStatusItem = milestoneStatusItems.find(v => v.name === name);
+    if (!milestoneStatusItem) throw new Error('Unknown Milestone Status');
+    return milestoneStatusItem.value;
+}
 
 interface MilestoneActiveState {
     activeId: bigint | null;
@@ -22,6 +52,7 @@ export const milestoneActiveStateStore = atom<MilestoneActiveState>({
 
 export interface MilestoneModalFormState extends MilestoneInfo {
     type: "add" | "modify";
+    progressStatusCode: MilestoneStatusCode | '';
 }
 
 export class MilestoneModalForm implements MilestoneModalFormState {
@@ -32,7 +63,8 @@ export class MilestoneModalForm implements MilestoneModalFormState {
     startDate: string;
     endDate: string;
     updateDate: string;
-    progressStatus: string;
+    progressStatus: MilestoneStatusName | '';
+    progressStatusCode: MilestoneStatusCode | '';
     projectId: bigint;
 
     constructor(type: 'add' | 'modify', milestoneInfo: MilestoneInfo) {
@@ -55,9 +87,12 @@ export class MilestoneModalForm implements MilestoneModalFormState {
         this.endDate = endDate;
         this.updateDate = updateDate;
         this.progressStatus = progressStatus;
+        this.progressStatusCode = getMilestoneStatusCode(progressStatus);
         this.projectId = projectId;
 
     }
+
+
 
 
 }

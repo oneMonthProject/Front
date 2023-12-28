@@ -1,5 +1,6 @@
 import {ReactNode} from "react";
 import {CookieValueTypes} from "cookies-next";
+import {MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
 
 export type DropDownItem = {
     name: string;
@@ -75,7 +76,7 @@ export interface MilestoneInfo {
     startDate: string;
     endDate: string;
     updateDate: string;
-    progressStatus: string;
+    progressStatus: MilestoneStatusName | '';
 }
 
 export interface TaskItem {

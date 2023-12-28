@@ -10,6 +10,10 @@ import {
     MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
 import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
+import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
+import {useMutation} from "@tanstack/react-query";
+import {useQueryClient} from "@tanstack/react-query";
+import {snackbarState} from "@/store/MainStateStore";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
@@ -18,6 +22,7 @@ interface MilestoneCardProps {
 }
 
 function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardProps) {
+    const [snackbar, setSnackBar] = useRecoilState(snackbarState);
     const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
@@ -31,9 +36,28 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
         progressStatus
     } = milestoneInfo;
 
+    const queryClient = useQueryClient();
+
+    const {mutate: deleteMilestone, isPending: isDeleting} = useMutation({
+        mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
+        onSuccess: (res) => {
+            if (res.status !== 200) {
+                if (res.status === 500) {
+                    setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
+                }
+            } else {
+                setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
+                queryClient.invalidateQueries({queryKey: ['milestoneList']})
+            }
+        },
+        onError: (error) => {
+            setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
+        }
+    })
+
     // active 상태 초기화
     useEffect(() => {
-        if(isInitActive && activeId === null) setMilestone({activeId: mileStoneId, slideIndex});
+        if (isInitActive && activeId === null) setMilestone({activeId: mileStoneId, slideIndex});
     }, [isInitActive]);
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
@@ -42,7 +66,6 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
     }
 
     function onEditClickHandler() {
-        // todo - 마일스톤 수정 api
         setMilestoneModalForm(
             new MilestoneModalForm(
                 'modify',
@@ -51,21 +74,21 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
         );
     }
 
-    function onDeleteClickHandler() {
-        // todo - 마일스톤 삭제 api
+    async function onDeleteClickHandler() {
+        await deleteMilestone(mileStoneId);
     }
 
     const activeClass = activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
     const textClass = activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
-    // todo - 마일스톤 상태 뱃지 추가
     return (
         <div
             className={`relative flex pc:max-w-[300px] tablet:max-w-[180px] py-4 items-center justify-between truncate rounded-md border border-gray-200 bg-white overflow-visible ${activeClass} cursor-pointer`}
             onClick={onClickContentHandler}
         >
             <div className="flex-1 truncate px-4 text-sm">
-                <div className={`mb-2 flex items-center space-x-2 pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
+                <div
+                    className={`mb-2 flex items-center space-x-2 pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
                     <span>{content}</span>
                     <MilestoneStatusBadge text={progressStatus} size='sm'/>
                 </div>
