@@ -3,8 +3,8 @@ import authApi from "@/utils/authApi";
 import {setupMocks} from "@/mocks";
 import {JSONReplaceBigInt} from "@/utils/common";
 
+const publicURL = process.env.NEXT_PUBLIC_URL;
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
-const IS_BROWSER = typeof window !== 'undefined';
 const isTest = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
 
 
@@ -79,4 +79,16 @@ export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: 
     const reqData = {content, startDate, endDate, progressStatusCode};
 
     return await request('PATCH', `/api/milestone/${mileStoneId}`, JSON.stringify(reqData));
+}
+
+/**
+ * 마일스톤 삭제
+ * @param milestoneId
+ */
+export function deleteMilestone(milestoneId: bigint) {
+     return fetch(`${publicURL}/api/project/milestone`, {
+        method: 'DELETE',
+        headers: {'Content-Type': 'application/json'},
+        body: JSONReplaceBigInt({milestoneId})
+    });
 }
