@@ -3,6 +3,7 @@ import { InputHTMLAttributes } from "react";
 import { useSetRecoilState } from "recoil";
 import { checkNickname } from "@/service/user";
 import { snackbarState } from "@/store/MainStateStore";
+import { isEqual } from "lodash";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
@@ -13,16 +14,26 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-function NicknameField({ value, disabled = false, required = false, setCheck, ...props }: InputProps) {
+function NicknameField({ value, defaultValue, disabled = false, required = false, setCheck, ...props }: InputProps) {
   const setSnackbar = useSetRecoilState(snackbarState);
 
   const checkDuplicateNickname = () => {
     if (value) {
-      checkNickname(value as string).then(response => {
-        const { message } = response;
-        setSnackbar({ show: true, type: "SUCCESS", content: message });
-        setCheck(true);
-      });
+      if (isEqual(value, defaultValue)) {
+        setSnackbar({ show: true, type: "INFO", content: "현재 사용자의 닉네임 입니다." });
+      } else {
+        checkNickname(value as string)
+          .then(response => {
+            const { message, result } = response;
+            if (isEqual(result, "success")) {
+              setSnackbar({ show: true, type: "SUCCESS", content: message });
+              setCheck(true);
+            } else {
+              setSnackbar({ show: true, type: "ERROR", content: message });
+              setCheck(false);
+            }
+          });
+      }
     } else {
       setSnackbar({ show: true, type: "ERROR", content: "닉네임을 입력해주세요." });
     }
