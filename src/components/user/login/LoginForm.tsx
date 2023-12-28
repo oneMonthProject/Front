@@ -45,10 +45,9 @@ function LoginForm() {
 
     login(email, password)
       .then((response) => {
-        const { data, result, message } = response;
+        const { data: userId, result, message } = response;
         
         if (isEqual(result, "success")) {
-          const { userId } = data;
           setCookie("user_id", userId);
 
           router.push("/");
