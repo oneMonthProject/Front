@@ -1,12 +1,16 @@
 'use client';
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { activeTabState } from "@/store/MainStateStore";
-import { getCookie } from "cookies-next";
+import { hasCookie } from "cookies-next";
 
 const PostTabMenu = () => {
-  const userId = getCookie("user_id");
   const [isMyProjectPostsTab, setIsMyProjectPostsTab] = useRecoilState(activeTabState);
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <div className="flex border-b">
@@ -20,7 +24,7 @@ const PostTabMenu = () => {
         게시글
       </div>
       {
-        userId && (
+        mounted && hasCookie("user_id") ? (
           <div
             className={`p-5 font-bold text-2xl cursor-pointer mobile:text-xl ${isMyProjectPostsTab
               ? "border-b-2 border-black100 text-black100"
@@ -30,7 +34,7 @@ const PostTabMenu = () => {
           >
             내 프로젝트
           </div>
-        )
+        ) : null
       }
     </div>
   );
