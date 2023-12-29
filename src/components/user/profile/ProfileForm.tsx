@@ -16,11 +16,30 @@ import { useSetRecoilState } from "recoil";
 import { snackbarState } from "@/store/MainStateStore";
 import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { isEqual } from "lodash";
 
 function ProfileForm() {
+  const queryClient = useQueryClient();
+
   const profileData = useProfileInfo();
   const positions = usePositionList();
   const techStacks = useTechStackList();
+  const { mutate } = useMutation({
+    mutationFn: (updateData: updateUserInfo) => updateUser(updateData),
+    onSuccess: (data) => {
+      const { message, result } = data;
+      if (isEqual(result, "success")) {
+        setSnackbar({ show: true, type: "SUCCESS", content: message });
+        queryClient.invalidateQueries({ queryKey: ['profileInfo'] })
+      } else {
+        setSnackbar({ show: true, type: "ERROR", content: message });
+      }
+    },
+    onError: (err) => {
+      console.log("err", err);
+    }
+  });
 
   const [imageSrc, setImageSrc] = useState<string | null>(profileData?.profileImgSrc || null);
   const [nickname, setNickname] = useState(profileData.nickname);
@@ -30,7 +49,7 @@ function ProfileForm() {
 
   const fileRef = useRef<HTMLInputElement>(null);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [isCheckedNickname, setIsCheckedNickname] = useState(false);
+  const [isCheckedNickname, setIsCheckedNickname] = useState(true);
   const setSnackbar = useSetRecoilState(snackbarState);
 
   const isValid = () => {
@@ -72,13 +91,8 @@ function ProfileForm() {
     if (position) {
       const positionId = getSelectItemValue(position);
       const techStackIds = techStack.map(stack => getSelectItemValue(stack));
-      const updateData = { id: profileData.userId, nickname, positionId, techStackIds } as updateUserInfo;
-      updateUser(updateData).then(response => {
-        const { result } = response;
-        if (result === "success") {
-          setSnackbar({ show: true, type: "SUCCESS", content: "저장 완료하였습니다." });
-        }
-      });
+      const updateData = { id: profileData.userId, nickname, positionId, techStackIds, intro: selfIntroduction } as updateUserInfo;
+      mutate(updateData);
     }
   }
 
@@ -110,8 +124,14 @@ function ProfileForm() {
   }
 
   const onChangeNickname = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNickname(e.target.value);
-    setIsCheckedNickname(false);
+    const newName = e.target.value;
+
+    setNickname(newName);
+    if (isEqual(newName, profileData.nickname)) {
+      setIsCheckedNickname(true);
+    } else {
+      setIsCheckedNickname(false);
+    }
   }
 
   return (
@@ -125,7 +145,7 @@ function ProfileForm() {
         <Button size="md" theme="primary" onClickHandler={deleteImage} hidden={imageSrc === null}>삭제</Button>
       </div>
       <Input id="email" label="이메일" required disabled defaultValue={profileData.email} />
-      <NicknameField value={nickname} onChange={onChangeNickname}
+      <NicknameField value={nickname} defaultValue={profileData.nickname} onChange={onChangeNickname}
         placeholder="영문, 숫자 포함 6자 이상" setCheck={setIsCheckedNickname} required />
       <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="직무" placeholder="직무를 선택해주세요." required />
       <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />

@@ -6,7 +6,7 @@ import { BiUndo } from "@react-icons/all-files/bi/BiUndo";
 import { BiCheck } from "@react-icons/all-files/bi/BiCheck";
 import { BiX } from "@react-icons/all-files/bi/BiX";
 import CommonPagination from "@/components/ui/CommonPagination";
-import { getUserProjectHistory as getUserProjectHistoryAPI } from "@/service/user";
+import { getUserProjectHistory } from "@/service/user";
 import { classNames } from "@/utils/common";
 import { ProjectHistoryStatus, ResponseBody, UserProjectHistory } from "@/utils/type";
 import { useSuspenseQuery } from "@tanstack/react-query";
@@ -15,7 +15,7 @@ function UserHistory() {
   const [pageNumber, setPageNumber] = useState(0);
   const { data } = useSuspenseQuery<ResponseBody<UserProjectHistory[]>, Error>({
     queryKey: ['profileInfo', pageNumber],
-    queryFn: () => getUserProjectHistoryAPI(pageNumber)
+    queryFn: () => getUserProjectHistory(pageNumber)
   });
 
   const { data: histories } = data;

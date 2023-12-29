@@ -4,13 +4,14 @@ import DropDownWithIcon from "@/components/ui/DropDownWithIcon";
 import { FaChevronDown } from "@react-icons/all-files/fa/FaChevronDown";
 import { useMediaQuery } from "react-responsive";
 import { DropDownItem } from "@/utils/type";
-import { getSimpleUser as getSimpleUserAPI } from "@/service/user";
 import { ResponseBody } from '@/utils/type';
-import { useSuspenseQuery } from '@tanstack/react-query';
-import Avatar from '../ui/Avatar';
+import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
+import Avatar from '@/components/ui/Avatar';
 import { logout } from '@/service/logout';
-import { isEqual } from 'lodash';
+import { getSimpleUser } from '@/service/user';
 import { useRouter } from 'next/navigation';
+import { useSetRecoilState } from 'recoil';
+import { activeTabState } from '@/store/MainStateStore';
 
 interface UserBasicInfo {
   nickname: string;
@@ -33,26 +34,21 @@ class UserMenuItem implements DropDownItem {
 
 function UserMenu() {
   const router = useRouter();
-  const { data } = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>({ queryKey: ['simpleUserInfo'], queryFn: () => getSimpleUserAPI() });
-
-  const isDesktop = useMediaQuery({
-    query: '(min-width: 361px)'
+  const setProjectTab = useSetRecoilState(activeTabState);
+  const { data } = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>({ queryKey: ['simpleUserInfo'], queryFn: getSimpleUser });
+  const { mutate } = useMutation({
+    mutationFn: logout,
+    onSuccess: () => {
+      setProjectTab(false);
+      router.push("/");
+      router.refresh();
+    }
   });
 
-  const userLogout = () => {
-    logout().then(response => {
-      const { result } = response;
-      if (isEqual(result, "success")) {
-        router.push("/");
-        router.refresh();
-      }
-    })
-  }
-
+  const isDesktop = useMediaQuery({ query: '(min-width: 361px)' });
   const items: DropDownItem[] = [
-    new UserMenuItem('내 프로필', '/user/profile'), new UserMenuItem('로그아웃', '/user/logout', () => userLogout())
+    new UserMenuItem('내 프로필', '/user/profile'), new UserMenuItem('로그아웃', '/user/logout', () => mutate())
   ]
-
   const { nickname, profileImgSrc } = data.data;
 
   return (

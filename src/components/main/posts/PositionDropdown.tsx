@@ -49,7 +49,7 @@ const PositionDropdown = ({ items, value, direction = "down", setValue }: Positi
   }, []);
 
   return (
-    <div ref={dropdownRef} className="relative self-center" onClick={() => setOpenDropdown(!openDropdown)}>
+    <div ref={dropdownRef} className="relative z-10 self-center" onClick={() => setOpenDropdown(!openDropdown)}>
       <div className="px-4 flex justify-between w-[150px] h-[40px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer">
         <div className="text-lg text-grey800 mobile:text-sm">
           {value ? value.positionName : "포지션"}

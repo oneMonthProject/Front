@@ -1,9 +1,8 @@
 'use client';
 import React from "react";
 import ProjectCard from "../projectCard/ProjectCard";
-import {useQuery, useSuspenseQuery} from "@tanstack/react-query";
-import {getMyProjectList, getMyProjectList as getMyProjectListApi} from "@/service/project/project";
-import {getCookie} from "cookies-next";
+import {useSuspenseQuery} from "@tanstack/react-query";
+import {getMyProjectList} from "@/service/project/project";
 import {ProjectPost, ResponseBody} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
