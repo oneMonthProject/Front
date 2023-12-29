@@ -1,47 +1,5 @@
 import {MilestoneInfo} from "@/utils/type";
-import authApi from "@/utils/authApi";
-import {setupMocks} from "@/mocks";
-import {JSONReplaceBigInt} from "@/utils/common";
-
-const publicURL = process.env.NEXT_PUBLIC_URL;
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
-const isTest = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
-
-
-export async function request(
-    method: 'GET' | 'POST' | 'PATCH',
-    url: string,
-    data?: BodyInit
-) {
-
-    try {
-        const requestObj: RequestInit =
-            isTest ? {
-                method: method,
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            } : {method: method};
-
-        if (method !== 'GET') requestObj.body = data;
-
-        if (isTest) {
-            await setupMocks();
-            const response = await fetch(`${baseURL}${url}`, {
-                ...requestObj
-            });
-            return await response.json();
-
-        } else {
-            const response = await authApi(url, requestObj);
-            return await response.json();
-        }
-
-    } catch (error) {
-        console.log("error: ", error);
-    }
-
-}
+import {request} from "@/service/project/request";
 
 /**
  * 프로젝트 마일스톤 목록 조회
@@ -67,7 +25,7 @@ export async function createMilestone<T extends MilestoneInfo>(
     const {content, startDate, endDate} = milestoneInfo;
     const reqData = {content, startDate, endDate};
 
-    return await request('POST', `/api/milestone/project/${projectId}`, JSONReplaceBigInt(reqData));
+    return await request('POST', `/api/project/milestone`, reqData);
 }
 
 /**
@@ -76,19 +34,15 @@ export async function createMilestone<T extends MilestoneInfo>(
  */
 export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: { milestoneInfo: T }) {
     const {content, startDate, endDate, progressStatus: progressStatusCode, mileStoneId} = milestoneInfo;
-    const reqData = {content, startDate, endDate, progressStatusCode};
+    const reqData = {content, startDate, endDate, progressStatusCode, mileStoneId};
 
-    return await request('PATCH', `/api/milestone/${mileStoneId}`, JSON.stringify(reqData));
+    return await request('PATCH', `/api/milestone`, reqData);
 }
 
 /**
  * 마일스톤 삭제
  * @param milestoneId
  */
-export function deleteMilestone(milestoneId: bigint) {
-     return fetch(`${publicURL}/api/project/milestone`, {
-        method: 'DELETE',
-        headers: {'Content-Type': 'application/json'},
-        body: JSONReplaceBigInt({milestoneId})
-    });
+export async function deleteMilestone(milestoneId: bigint) {
+    return await request('DELETE', `/api/milestone`, {milestoneId});
 }
