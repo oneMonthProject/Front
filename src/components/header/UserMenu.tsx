@@ -10,7 +10,7 @@ import Avatar from '@/components/ui/Avatar';
 import { logout } from '@/service/logout';
 import { getSimpleUser } from '@/service/user';
 import { useRouter } from 'next/navigation';
-import { useSetRecoilState } from 'recoil';
+import { useResetRecoilState } from 'recoil';
 import { activeTabState } from '@/store/MainStateStore';
 
 interface UserBasicInfo {
@@ -34,12 +34,12 @@ class UserMenuItem implements DropDownItem {
 
 function UserMenu() {
   const router = useRouter();
-  const setProjectTab = useSetRecoilState(activeTabState);
+  const resetActiveTab = useResetRecoilState(activeTabState);
   const { data } = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>({ queryKey: ['simpleUserInfo'], queryFn: getSimpleUser });
   const { mutate } = useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      setProjectTab(false);
+      resetActiveTab();
       router.push("/");
       router.refresh();
     }
