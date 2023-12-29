@@ -21,7 +21,8 @@ interface CustomSwiperProps {
 }
 
 function CustomSwiper({slideItems}: CustomSwiperProps) {
-    const {slideIndex} = useRecoilValue(milestoneActiveStateStore);
+    const activeMilestone = useRecoilValue(milestoneActiveStateStore);
+    const slideIndex = activeMilestone?.slideIndex || 0;
 
     SwiperCore.use([Navigation, Pagination, Grid]);
     const swiperRef = useRef<SwiperCore>();

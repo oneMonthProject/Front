@@ -7,7 +7,7 @@ import {
     milestoneActiveStateStore,
     milestoneModalFormState,
     MilestoneModalForm,
-    MilestoneModalFormState
+    MilestoneModalFormState, MilestoneStatusName
 } from "@/store/project/task/MilestoneStateStore";
 import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
@@ -22,10 +22,6 @@ interface MilestoneCardProps {
 }
 
 function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardProps) {
-    const [snackbar, setSnackBar] = useRecoilState(snackbarState);
-    const [{activeId}, setMilestone] = useRecoilState(milestoneActiveStateStore);
-    const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
-
     const {
         mileStoneId,
         content,
@@ -36,8 +32,26 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
         progressStatus
     } = milestoneInfo;
 
-    const queryClient = useQueryClient();
+    const [snackbar, setSnackBar] = useRecoilState(snackbarState);
+    const [activeMilestone, setActiveMilestone] = useRecoilState(milestoneActiveStateStore);
+    const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
+    // active 상태 초기화
+    useEffect(() => {
+        if (isInitActive && activeMilestone === null) {
+            setActiveMilestone({
+                activeId: mileStoneId,
+                content,
+                startDate,
+                endDate,
+                progressStatus: progressStatus as MilestoneStatusName,
+                slideIndex
+            });
+        }
+    }, [isInitActive]);
+
+
+    const queryClient = useQueryClient();
     const {mutate: deleteMilestone, isPending: isDeleting} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
         onSuccess: (res) => {
@@ -55,14 +69,17 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
         }
     })
 
-    // active 상태 초기화
-    useEffect(() => {
-        if (isInitActive && activeId === null) setMilestone({activeId: mileStoneId, slideIndex});
-    }, [isInitActive]);
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setMilestone({activeId: mileStoneId, slideIndex});
+        setActiveMilestone({
+            activeId: mileStoneId,
+            content,
+            startDate,
+            endDate,
+            progressStatus: progressStatus as MilestoneStatusName,
+            slideIndex
+        });
     }
 
     function onEditClickHandler() {
@@ -78,8 +95,9 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
         await deleteMilestone(mileStoneId);
     }
 
-    const activeClass = activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
+
+    const activeClass = activeMilestone?.activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeMilestone?.activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div

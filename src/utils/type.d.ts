@@ -79,15 +79,20 @@ export interface MilestoneInfo {
     progressStatus: MilestoneStatusName | '';
 }
 
+export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';
+export type TaskStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
+
+
 export interface TaskItem {
-    workId: string;
-    workContent: string;
+    workId: bigint;
+    projectId: bigint;
+    milestoneId: bigint;
+    assignedUserId: bigint;
+    lastModifiedMember: bigint;
+    content: string;
     startDate: string;
     endDate: string;
-    completeStatus: boolean;
-    expiredStatus: boolean;
-    updateDate: string;
-    assignedUserId: string;
+    progressStatus: TaskStatusName | '';
 }
 
 interface TrustGradeItem {

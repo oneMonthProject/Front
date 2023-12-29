@@ -38,15 +38,16 @@ export function getMilestoneStatusCode(name: MilestoneStatusName | '') {
 
 interface MilestoneActiveState {
     activeId: bigint | null;
+    content: string;
+    startDate:string;
+    endDate:string;
+    progressStatus: MilestoneStatusName;
     slideIndex: number;
 }
 
-export const milestoneActiveStateStore = atom<MilestoneActiveState>({
+export const milestoneActiveStateStore = atom<MilestoneActiveState | null>({
     key: 'milestoneActiveStateStore',
-    default: {
-        activeId: null,
-        slideIndex: 0
-    }
+    default: null
 })
 
 
