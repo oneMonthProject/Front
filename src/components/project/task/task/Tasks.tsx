@@ -1,78 +1,32 @@
+'use client';
 import React from 'react';
 import TaskCard from "@/components/project/task/task/TaskCard";
 import TaskPagination from "@/components/project/task/task/TaskPagination";
+import {useSuspenseQuery} from "@tanstack/react-query";
+import {getTaskList} from "@/service/project/task";
+import {useQueryString} from "@/hooks/useQueryString";
+import {ResponseBody, TaskItem} from "@/utils/type";
+
+interface TasksProps {
+    milestoneId: bigint | string;
+}
+
+function Tasks({milestoneId}: TasksProps) {
+    const projectId = useQueryString('projectId');
+    const res = useSuspenseQuery<ResponseBody<TaskItem[]>, Error>({
+        queryKey: ['taskList'],
+        queryFn: () => getTaskList({milestoneId, projectId})
+    });
 
 
-const items = [
-    {
-        workId: '1',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: false,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    },
-    {
-        workId: '2',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: true,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    },
-    {
-        workId: '3',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: false,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    },
-    {
-        workId: '4',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: false,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    },
-    {
-        workId: '5',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: false,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    },
-    {
-        workId: '6',
-        workContent: 'db 스키마 설계',
-        startDate: '2023-12-11',
-        endDate: '2023-12-17',
-        completeStatus: false,
-        expiredStatus: false,
-        updateDate: '2023-12-01',
-        assignedUserId: 'tester01'
-    }
-];
+    const taskList = res.data.data;
 
-function Tasks() {
     return (
         <div className='w-full mt-4 flex flex-col items-center'>
             {
-                items.length > 0 ?
+                taskList.length > 0 ?
                     <ul className='w-full grid grid-cols-3 grid-rows-2 place-items-center gap-4 '>
-                        {items.map(v =>
+                        {taskList.map(v =>
                             (
                                 <li key={v.workId}>
                                     <TaskCard item={v}/>
