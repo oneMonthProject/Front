@@ -7,22 +7,19 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/form/Input";
 import TextArea from "@/components/ui/form/TextArea";
 import CalendarInput from "@/components/ui/form/CalendarInput";
-import { SelectItem } from "@/utils/type";
+import { ResponseBody, SelectItem, TrustGradeItem } from "@/utils/type";
 import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
-import { getPositionSelectItems, getTechStackSelectItems } from "@/utils/common";
-
-// 게시글 저장 시 신뢰등급 id 가 필요하므로 신뢰등급 리스트를 가져와야 함
-const gradeList = [
-  { value: 1, name: '1등급' },
-  { value: 2, name: '2등급' },
-  { value: 3, name: '3등급' },
-  { value: 4, name: '4등급' },
-  { value: 5, name: '5등급' }
-];
+import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems } from "@/utils/common";
+import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { getTrustGradeList } from "@/service/setting";
+import { CreatePostInfo, createPost } from "@/service/post";
+import { isEqual } from "lodash";
+import { useSetRecoilState } from "recoil";
+import { snackbarState } from "@/store/MainStateStore";
 
 const recruitmentCountList = [
-  { value: 0, name: '인원 미정' },
+  { value: -1, name: '인원 미정' },
   { value: 1, name: '1명' },
   { value: 2, name: '2명' },
   { value: 3, name: '3명' },
@@ -37,9 +34,33 @@ const recruitmentCountList = [
 
 function RegisterForm() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const setSnackbar = useSetRecoilState(snackbarState);
 
-  const positions = usePositionList();
-  const techStacks = useTechStackList();
+  const positionList = usePositionList();
+  const techStackList = useTechStackList();
+  const { data } = useSuspenseQuery<ResponseBody<TrustGradeItem[]>, Error>({
+    queryKey: ['trustGradeList'],
+    queryFn: () => getTrustGradeList()
+  });
+  const { data: trustGradeList } = data;
+  const { mutate } = useMutation({
+    mutationFn: (createData: CreatePostInfo) => createPost(createData),
+    onSuccess: (data) => {
+      const { message, result } = data;
+      if (isEqual(result, "success")) {
+        setSnackbar({ show: true, type: "SUCCESS", content: message });
+        queryClient.invalidateQueries({ queryKey: ['postInfo'] });
+
+        goHome();
+      } else {
+        setSnackbar({ show: true, type: "ERROR", content: message });
+      }
+    },
+    onError: (err) => {
+      console.log("err", err);
+    }
+  });
 
   const [title, setTitle] = useState("");
   const [projectName, setProjectName] = useState("");
@@ -48,19 +69,101 @@ function RegisterForm() {
   const [recruitmentCount, setRecruitmentCount] = useState<SelectItem>(recruitmentCountList[0]);
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
-  const [position, setPosition] = useState<SelectItem | null>(null);
-  const [techStack, setTechStack] = useState<SelectItem[]>([]);
-  const [projectInfo, setProjectInfo] = useState("");
+  const [positions, setPositions] = useState<SelectItem[]>([]);
+  const [techStacks, setTechStacks] = useState<SelectItem[]>([]);
   const [contact, setContact] = useState("");
+  const [projectInfo, setProjectInfo] = useState("");
+
+  const getTrustGradeSelectItems = (items: TrustGradeItem[]) => {
+    if (items.length > 0) {
+      return items.map(
+        (item) =>
+          ({ value: item.trustGradeId, name: item.trustGradeName } as SelectItem)
+      );
+    }
+
+    return [];
+  }
+
+  const isValid = () => {
+    if (title === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "제목을 입력해주세요." });
+      return false;
+    }
+
+    if (projectName === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "프로젝트 이름을 입력해주세요." });
+      return false;
+    }
+
+    if (projectSubject === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "프로젝트 주제을 입력해주세요." });
+      return false;
+    }
+
+    if (!trustGrade) {
+      setSnackbar({ show: true, type: "ERROR", content: "프로젝트 신뢰등급을 선택해주세요." });
+      return false;
+    }
+
+    if (!recruitmentCount) {
+      setSnackbar({ show: true, type: "ERROR", content: "모집 인원을 선택해주세요." });
+      return false;
+    }
+
+    if (positions.length === 0) {
+      setSnackbar({ show: true, type: "ERROR", content: "모집 분야을 선택해주세요." });
+      return false;
+    }
+
+    if (!startDate) {
+      setSnackbar({ show: true, type: "ERROR", content: "시작 날짜를 선택해주세요." });
+      return false;
+    }
+
+    if (!endDate) {
+      setSnackbar({ show: true, type: "ERROR", content: "종료 날짜를 선택해주세요." });
+      return false;
+    }
+
+    if (techStacks.length === 0) {
+      setSnackbar({ show: true, type: "ERROR", content: "관심 스택을 선택해주세요." });
+      return false;
+    }
+
+    if (contact === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "연락 방법을 입력해주세요." });
+      return false;
+    }
+
+    if (projectInfo === "") {
+      setSnackbar({ show: true, type: "ERROR", content: "프로젝트 소개를 입력해주세요." });
+      return false;
+    }
+
+    return true;
+  }
+
 
   const goHome = () => {
     router.push("/");
   }
 
   const registerPost = () => {
+    if (!isValid()) {
+      return;
+    }
 
+    const positionIds = positions.map(position => getSelectItemValue(position));
+    const trustGradeId = trustGrade?.value;
+    const crewNumber = recruitmentCount.value;
+    const technologyIds = techStacks.map(techStack => getSelectItemValue(techStack));
+    const board = { title, content: projectInfo, contact, positionIds };
+    const project = { name: projectName, subject: projectSubject, crewNumber, trustGradeId, startDate, endDate, technologyIds };
+    const createData = { board, project } as CreatePostInfo;
+    mutate(createData);
   }
-  
+
   return (
     <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-8 mobile:my-6">
       <div className="w-full mobile:w-[300px] mx-auto">
@@ -75,16 +178,16 @@ function RegisterForm() {
             value={projectName} onChange={(e) => setProjectName(e.target.value)} />
           <Input id="projectSubject" label="프로젝트 주제" placeholder="주제를 입력해주세요."
             value={projectSubject} onChange={(e) => setProjectSubject(e.target.value)} />
-          <Select value={trustGrade} setValue={setTrustGrade} items={gradeList} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />
+          <Select value={trustGrade} setValue={setTrustGrade} items={getTrustGradeSelectItems(trustGradeList)} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />
           <Select value={recruitmentCount} setValue={setRecruitmentCount} items={recruitmentCountList} label="모집 인원" placeholder="모집 인원을 선택해주세요." />
-          <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="모집 분야" placeholder="모집 분야를 선택해주세요." />
+          <MultiSelect values={positions} setValues={setPositions} items={getPositionSelectItems(positionList)} label="모집 분야" placeholder="모집 분야를 선택해주세요." />
         </div>
         <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
           <CalendarInput id="startDate" label="시작 날짜" placeholder="날짜를 선택해주세요."
             date={startDate} setDate={setStartDate} />
           <CalendarInput id="endDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
             date={endDate} setDate={setEndDate} />
-          <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
+          <MultiSelect values={techStacks} setValues={setTechStacks} items={getTechStackSelectItems(techStackList)} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
           <Input id="contact" label="연락 방법" placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
             value={contact} onChange={(e) => setContact(e.target.value)} />
         </div>

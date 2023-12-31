@@ -143,7 +143,7 @@ export interface UserProjectHistory {
 
 interface PostPosition {
     boardPositionId: bigint;
-    position: PositionItem;
+    position: Position;
 }
 
 interface PostUserInfo {
@@ -239,6 +239,8 @@ export interface Project {
 
 export interface ProjectInfo extends Project {
     technologyStacks: TechStackItem[];
+    trustGradeId: bigint[];
+    technologyIds: bigint[];
 }
 
 export interface ProjectPost extends Project {

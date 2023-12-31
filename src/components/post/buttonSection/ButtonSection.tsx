@@ -1,26 +1,21 @@
 "use client";
+
 import React, { useState } from "react";
 import Button from "@/components/ui/Button";
 import PositionDropdown from "@/components/main/posts/PositionDropdown";
 import { PositionItem, PostInfo } from "@/utils/type";
 import { getCookie } from "cookies-next";
 import { isEqual } from "lodash";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { postModalState } from "@/store/post/PostStateStore";
+import { snackbarState } from "@/store/MainStateStore";
 
-const positions = [
-  {
-    positionId: 9007199254740991n,
-    positionName: "프론트엔드",
-  },
-  {
-    positionId: 1234599254740991n,
-    positionName: "백엔드",
-  }
-];
 const ButtonSection = ({ boardInfo }: { boardInfo: PostInfo }) => {
-  const [modalState, setModalState] = useRecoilState(postModalState);
+  const setModalState = useSetRecoilState(postModalState);
+  const setSnackbar = useSetRecoilState(snackbarState);
+
   const [position, setPosition] = useState<PositionItem | null>(null);
+
   const { boardPositions, completeStatus, user } = boardInfo;
   const currentUserId = getCookie("user_id");
   const isOwner = isEqual(currentUserId?.toString(), user.userId.toString());
@@ -43,7 +38,15 @@ const ButtonSection = ({ boardInfo }: { boardInfo: PostInfo }) => {
   }
 
   const join = () => {
-
+    if (position) {
+      if (currentUserId) {
+        // 해당 포지션으로 지원하는 기능이 추가되어야 함
+      } else {
+        setSnackbar({ show: true, type: "INFO", content: "로그인 후 이용 가능합니다." });
+      }
+    } else {
+      setSnackbar({ show: true, type: "ERROR", content: "지원할 포지션을 선택해주세요." });
+    }
   }
 
   return (
@@ -59,7 +62,6 @@ const ButtonSection = ({ boardInfo }: { boardInfo: PostInfo }) => {
           <Button type="button" size="lg" onClickHandler={join}>참여하기</Button>
         </div>
       )}
-
     </div>
   );
 };
