@@ -20,40 +20,20 @@ const request = async (url: string, props: RequestInit) => {
   }
 };
 
-export const checkEmail = async (email: string) => {
-  const response = await fetch(
-    `${baseURL}/api/user/check-email/${email}/public`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  return response.json();
-};
-
 export const checkNickname = async (nickname: string) => {
   const response = await fetch(
     `${baseURL}/api/user/check-nickname/${nickname}/public`
   );
-
   return response.json();
 };
 
 export const getSimpleUser = async () => {
-  const response = await fetch(`${publicURL}/api/user/simple`, {
-    method: "GET",
-  });
-
+  const response = await fetch(`${publicURL}/api/user/simple`);
   return response.json();
 };
 
 export const getUserIfo = async () => {
-  const response = await fetch(`${publicURL}/api/user`, {
-    method: "GET",
-  });
-
+  const response = await fetch(`${publicURL}/api/user`);
   return response.json();
 };
 
@@ -82,9 +62,8 @@ export const updateUserProfileImg = async (image: File) => {
 };
 
 export const getUserProjectHistory = async (pageNumber: number) => {
-  const response = await fetch(`${publicURL}/api/user/history?pageNumber=${pageNumber}`, {
-    method: "GET",
-  });
-
+  const response = await fetch(
+    `${publicURL}/api/user/history?pageNumber=${pageNumber}`
+  );
   return response.json();
 };

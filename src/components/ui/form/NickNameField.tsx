@@ -4,6 +4,7 @@ import { useSetRecoilState } from "recoil";
 import { checkNickname } from "@/service/user";
 import { snackbarState } from "@/store/MainStateStore";
 import { isEqual } from "lodash";
+import { isValidNickname } from "@/utils/common";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
@@ -19,6 +20,11 @@ function NicknameField({ value, defaultValue, disabled = false, required = false
 
   const checkDuplicateNickname = () => {
     if (value) {
+      if (!isValidNickname(value as string)) {
+        setSnackbar({ show: true, type: "ERROR", content: "닉네임은 영어 숫자 포함 6~10 자리만 가능합니다." });
+        return;
+      }
+
       if (isEqual(value, defaultValue)) {
         setSnackbar({ show: true, type: "INFO", content: "현재 사용자의 닉네임 입니다." });
       } else {

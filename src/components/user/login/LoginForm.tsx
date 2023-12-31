@@ -52,18 +52,26 @@ function LoginForm() {
 
           router.push("/");
           router.refresh();
+          
+          setSnackbar({ show: true, type: "INFO", content: message });
         } else {
           setSnackbar({ show: true, type: "ERROR", content: message });
         }
       });
   }
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      userLogin();
+    }
+  };
+
   return (
     <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-4">
       <Input id="email" label="이메일" placeholder="example@trustcrews.com" required
-        value={email} onChange={(e) => setEmail(e.target.value)} />
+        value={email} onChange={(e) => setEmail(e.target.value)} onKeyUp={handleKeyDown} />
       <PasswordInput id="password" label="비밀번호" placeholder="영문, 숫자 포함 6자 이상" required
-        value={password} onChange={(e) => setPassword(e.target.value)} />
+        value={password} onChange={(e) => setPassword(e.target.value)} onKeyUp={handleKeyDown} />
       <br />
       <FormButton onClick={userLogin}>로그인</FormButton>
     </div>

@@ -10,8 +10,9 @@ import Avatar from '@/components/ui/Avatar';
 import { logout } from '@/service/logout';
 import { getSimpleUser } from '@/service/user';
 import { useRouter } from 'next/navigation';
-import { useResetRecoilState } from 'recoil';
-import { activeTabState } from '@/store/MainStateStore';
+import { useResetRecoilState, useSetRecoilState } from 'recoil';
+import { activeTabState, snackbarState } from '@/store/MainStateStore';
+import { isEqual } from 'lodash';
 
 interface UserBasicInfo {
   nickname: string;
@@ -35,13 +36,26 @@ class UserMenuItem implements DropDownItem {
 function UserMenu() {
   const router = useRouter();
   const resetActiveTab = useResetRecoilState(activeTabState);
+  const setSnackbar = useSetRecoilState(snackbarState);
+
   const { data } = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>({ queryKey: ['simpleUserInfo'], queryFn: getSimpleUser });
   const { mutate } = useMutation({
     mutationFn: logout,
-    onSuccess: () => {
-      resetActiveTab();
-      router.push("/");
-      router.refresh();
+    onSuccess: (data) => {
+      const { message, result } = data;
+      if (isEqual(result, "success")) {
+        resetActiveTab();
+
+        router.push("/");
+        router.refresh();
+
+        setSnackbar({ show: true, type: "INFO", content: message });
+      } else {
+        setSnackbar({ show: true, type: "ERROR", content: message });
+      }
+    },
+    onError: (err) => {
+      console.log("err", err);
     }
   });
 
