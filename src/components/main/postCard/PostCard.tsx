@@ -26,8 +26,8 @@ const PostCard = ({ postInfo }: { postInfo: PostCardInfo }) => {
         <div className="text-xl font-bold mt-2">{boardTitle}</div>
         <div className="flex gap-1 mt-2">
           {boardPositions.length > 0 && boardPositions.map((boardPosition) => {
-            const { positionId, positionName } = boardPosition.position;
-            return <PositionBadge key={positionId.toString()} size="xs" text={positionName} />
+            const { positionId, name } = boardPosition.position;
+            return <PositionBadge key={positionId.toString()} size="xs" text={name} />
           })}
         </div>
         <div className="flex gap-1 border-b-2 pb-4 mt-4">

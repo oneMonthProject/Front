@@ -1,6 +1,7 @@
 import { PositionItem } from "@/utils/type";
 import { isEqual } from "lodash";
 
+const publicURL = process.env.NEXT_PUBLIC_URL;
 const baseUrl = process.env.NEXT_PUBLIC_BACKEND;
 
 export interface SearchParams {
@@ -8,6 +9,27 @@ export interface SearchParams {
   position: PositionItem | null;
   keyWord: string;
   page: number;
+}
+
+interface Post {
+  title: string;
+  content: string;
+  contact: string;
+  positionIds: bigint[];
+}
+
+interface Project {
+  name: string;
+  subject: string;
+  trustGradeId: bigint;
+  crewNumber: number;
+  startDate: string;
+  endDate: string;
+  technologyIds: bigint[];
+}
+export interface CreatePostInfo {
+  board: Post;
+  project: Project;
 }
 
 const createQueryParams = (params: SearchParams) => {
@@ -56,3 +78,15 @@ export const getPostDetail = async (postId: string) => {
 
   return await response.json();
 };
+
+export const createPost = async (createData: CreatePostInfo) => {
+  const response = await fetch(`${publicURL}/api/post`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(createData),
+  });
+
+  return response.json();
+}

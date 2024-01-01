@@ -31,7 +31,8 @@ function ProfileForm() {
       const { message, result } = data;
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });
-        queryClient.invalidateQueries({ queryKey: ['profileInfo'] })
+        queryClient.invalidateQueries({ queryKey: ['profileInfo'] });
+        queryClient.invalidateQueries({ queryKey: ['simpleUserInfo'] });
       } else {
         setSnackbar({ show: true, type: "ERROR", content: message });
       }
