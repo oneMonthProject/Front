@@ -87,8 +87,8 @@ export interface TaskItem {
     workId: bigint;
     projectId: bigint;
     milestoneId: bigint;
-    assignedUserId: bigint;
-    lastModifiedMember: bigint;
+    assignedUserNickname: string;
+    lastModifiedMemberNickname: string;
     content: string;
     startDate: string;
     endDate: string;
