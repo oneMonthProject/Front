@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, {useState} from "react";
 import ProjectCard from "../projectCard/ProjectCard";
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {getMyProjectList} from "@/service/project/project";
@@ -9,10 +9,16 @@ import {sortByStartDate} from "@/utils/common";
 
 
 function MyProjectPosts() {
+    const [pageNumber, setPageNumber] = useState(1);
+
     const {data} = useSuspenseQuery<ResponseBody<ProjectPost[]>, Error>({
-        queryKey: ['myProjectList'],
-        queryFn: getMyProjectList
+        queryKey: ['myProjectList', pageNumber],
+        queryFn: () => getMyProjectList(pageNumber, 8)
     });
+
+    function onChangePageHandler(pageNumber: number) {
+        setPageNumber(pageNumber);
+    }
 
     const projectPosts = data!.data;
 
@@ -34,7 +40,13 @@ function MyProjectPosts() {
                                     ))
                                 }
                             </ul>
-                            <CommonPagination/>
+                            <CommonPagination
+                                activePage={pageNumber}
+                                itemsCountPerPage={8}
+                                totalItemsCount={projectPosts.length}
+                                pageRangeDisplayed={5}
+                                onChangePageHandler={onChangePageHandler}
+                            />
                         </>
                     )
                     : (
