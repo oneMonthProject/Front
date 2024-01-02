@@ -7,7 +7,8 @@ import {
     milestoneActiveStateStore,
     milestoneModalFormState,
     MilestoneModalForm,
-    MilestoneModalFormState, MilestoneStatusName
+    MilestoneModalFormState,
+    MilestoneStatusName
 } from "@/store/project/task/MilestoneStateStore";
 import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
@@ -23,6 +24,7 @@ interface MilestoneCardProps {
 
 function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardProps) {
     const {
+        projectId,
         mileStoneId,
         content,
         startDate,
@@ -40,6 +42,7 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
     useEffect(() => {
         if (isInitActive && activeMilestone === null) {
             setActiveMilestone({
+                projectId,
                 activeId: mileStoneId,
                 content,
                 startDate,
@@ -73,6 +76,7 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
         setActiveMilestone({
+            projectId,
             activeId: mileStoneId,
             content,
             startDate,

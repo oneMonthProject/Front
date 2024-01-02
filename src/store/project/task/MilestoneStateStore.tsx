@@ -37,6 +37,7 @@ export function getMilestoneStatusCode(name: MilestoneStatusName | '') {
 }
 
 interface MilestoneActiveState {
+    projectId: bigint;
     activeId: bigint | null;
     content: string;
     startDate:string;
