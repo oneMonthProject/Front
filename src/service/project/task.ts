@@ -3,12 +3,19 @@ import {request} from "@/service/project/request";
 export async function getTaskList(
     {
         milestoneId,
-        projectId
+        projectId,
+        pageIndex,
+        itemCount
     }: {
         milestoneId: bigint | string,
-        projectId: bigint | string
+        projectId: bigint | string,
+        pageIndex: number,
+        itemCount: number
     }) {
-    const res = await request('GET', '/api/project/task', {milestoneId, projectId});
+    const res = await request(
+        'GET',
+        `/api/project/task?milestoneId=${milestoneId}&projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
+    );
     return res.json();
 }
 

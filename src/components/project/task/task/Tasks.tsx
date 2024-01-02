@@ -1,25 +1,41 @@
 'use client';
-import React from 'react';
+import React, {useState} from 'react';
 import TaskCard from "@/components/project/task/task/TaskCard";
-import TaskPagination from "@/components/project/task/task/TaskPagination";
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {getTaskList} from "@/service/project/task";
 import {useQueryString} from "@/hooks/useQueryString";
-import {ResponseBody, TaskItem} from "@/utils/type";
+import {PageResponseBody, TaskItem} from "@/utils/type";
+import CommonPagination from "@/components/ui/CommonPagination";
 
 interface TasksProps {
     milestoneId: bigint | string;
 }
 
+const ITEMS_PER_PAGE = 8;
+
 function Tasks({milestoneId}: TasksProps) {
     const projectId = useQueryString('projectId');
-    const res = useSuspenseQuery<ResponseBody<TaskItem[]>, Error>({
+    const [pageNumber, setPageNumber] = useState(0);
+
+    const res = useSuspenseQuery<PageResponseBody<TaskItem[]>, Error>({
         queryKey: ['taskList'],
-        queryFn: () => getTaskList({milestoneId, projectId})
+        queryFn: () => getTaskList({
+            milestoneId,
+            projectId,
+            pageIndex:pageNumber,
+            itemCount:ITEMS_PER_PAGE
+        })
     });
 
 
-    const taskList = res.data.data;
+    function onChangePageHandler(pageNumber: number) {
+        setPageNumber(pageNumber);
+    }
+
+    const taskList = res.data.data.content;
+    const totalCount = res.data.data.totalPages;
+
+    console.log('taskList: ', taskList);
 
     return (
         <div className='w-full mt-4 flex flex-col items-center'>
@@ -39,7 +55,13 @@ function Tasks({milestoneId}: TasksProps) {
                     </div>
 
             }
-            <TaskPagination/>
+            <CommonPagination
+                activePage={pageNumber}
+                totalItemsCount={totalCount}
+                pageRangeDisplayed={5}
+                itemsCountPerPage={ITEMS_PER_PAGE}
+                onChangePageHandler={onChangePageHandler}
+            />
         </div>
     );
 }
