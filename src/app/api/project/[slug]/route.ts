@@ -18,7 +18,7 @@ export async function GET(
         const {searchParams} = new URL(req.url);
         const pageIndex = searchParams.get('pageIndex');
         const itemCount = searchParams.get('itemCount');
-        res = await authApi(`${baseURL}/api/project/me?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method});
+        res = await authApi(`${baseURL}/api/project/me/participating?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method});
     } else if (params.slug === 'detail') {
         const {searchParams} = new URL(req.url);
         const projectId = searchParams.get('projectId');
