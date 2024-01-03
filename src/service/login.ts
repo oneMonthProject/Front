@@ -19,7 +19,6 @@ export const login = async (email: string, password: string) => {
 
   if (response.ok) {
     const { headers } = response;
-    console.log("Access", headers.get("Authorization"));
     setCookie("Access", headers.get("Authorization"));
   }
 

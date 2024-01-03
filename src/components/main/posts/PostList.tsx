@@ -18,7 +18,7 @@ const PostList = () => {
   const { data } = useSuspenseQuery<PageResponseBody<PostCardInfo[]>, Error>({
     // key 에 나머지 항목도 추가하기
     queryKey: ['postInfo', selectedPosition, searchValue, pageNumber],
-    queryFn: () => getPostList({ technologyIds: [], position: selectedPosition, keyWord: searchValue, page: pageNumber })
+    queryFn: () => getPostList({ technologyIds: [], position: selectedPosition, keyword: searchValue, page: pageNumber })
   });
 
   const { content: infos, totalPages } = data.data;
