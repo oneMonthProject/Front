@@ -1,29 +1,19 @@
 'use client';
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment} from 'react';
 import {Menu, Transition} from "@headlessui/react";
 import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
 import {classNames} from "@/utils/common";
-import Link from "next/link";
-import {useRecoilState} from "recoil";
-import {currentTaskFormState, TaskForm} from "@/store/project/task/TaskStateStore";
 
 interface TaskCardMenuProps {
-    taskId: string;
+    onEditClickHandler: () => void;
+    onDeleteClickHandler: () => void;
+    taskId: bigint;
 }
 
-function TaskCardMenu({taskId}:TaskCardMenuProps) {
-    const [taskState, setTaskState] = useRecoilState(currentTaskFormState);
+function TaskCardMenu({taskId, onEditClickHandler, onDeleteClickHandler}: TaskCardMenuProps) {
 
-    function onEditClickHandler(taskId: string) {
-        // todo - 업무 수정 api
-        setTaskState(new TaskForm('modify',taskId, 'db 스키마 설계',false, null, null, null, 'tester',null));
-    }
 
-    function onDeleteClickHandler(taskId: string) {
-        // todo - 업무 삭제 api
-    }
-
-    const milestoneMenus = [
+    const taskMenus = [
         {
             name: '수정',
             value: taskId,
@@ -37,10 +27,7 @@ function TaskCardMenu({taskId}:TaskCardMenuProps) {
     ]
 
     return (
-
-        // <div className="flex-shrink-0 pr-2 overflow-visible">
         <Menu as="div" className="relative flex-shrink-0 text-center">
-            {/*<Menu as="div" className="relative inline-block text-center">*/}
             <div>
                 <Menu.Button
                     className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent text-gray-500 hover:text-gray-600 focus:outline-none">
@@ -61,16 +48,14 @@ function TaskCardMenu({taskId}:TaskCardMenuProps) {
                     className="absolute right-2 z-10 mt-1 tablet:min-w-[60px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1 ">
                         {
-                            milestoneMenus.map(v =>
+                            taskMenus.map(v =>
                                 <Menu.Item key={v.name}>
                                     {({active}) => (
-                                        v.onClickHandler ?
                                             <a
-
                                                 href="javascript;"
                                                 onClick={(e) => {
                                                     e.preventDefault();
-                                                    v.onClickHandler!(v.value);
+                                                    v.onClickHandler!();
                                                 }}
                                                 className={classNames(
                                                     active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
@@ -79,15 +64,6 @@ function TaskCardMenu({taskId}:TaskCardMenuProps) {
                                             >
                                                 {v.name}
                                             </a>
-                                            : <Link
-                                                href={v.value}
-                                                className={classNames(
-                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                    'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
-                                                )}
-                                            >
-                                                {v.name}
-                                            </Link>
                                     )}
                                 </Menu.Item>
                             )

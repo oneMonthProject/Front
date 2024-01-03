@@ -1,13 +1,16 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { useRecoilValue, useResetRecoilState } from "recoil";
+import React, {useEffect, useState} from 'react';
+import {useRecoilValue, useResetRecoilState} from "recoil";
 import Modal from "@/components/ui/Modal";
+import {taskModalFormState, taskModalStateSelector} from "@/store/project/task/TaskStateStore";
+import {createPortal} from "react-dom";
+import TaskModalContent from './TaskModalContent';
 
 function TaskModal() {
   const { isOpen, title } = useRecoilValue(taskModalStateSelector);
   const [portalElement, setPortalElement] = useState<Element | null>(null);
-  const resetCurrentForm = useResetRecoilState(currentTaskFormState);
-  const currentForm = useRecoilValue(currentTaskFormState);
+  const resetCurrentForm = useResetRecoilState(taskModalFormState);
+  const currentForm = useRecoilValue(taskModalFormState);
 
   const upsertTask = () => {
     console.log("currentForm", currentForm);
@@ -47,12 +50,5 @@ function TaskModal() {
   );
 }
 
-
-import {
-  currentTaskFormState,
-  taskModalStateSelector
-} from "@/store/project/task/TaskStateStore";
-import { createPortal } from "react-dom";
-import TaskModalContent from './TaskModalContent';
 
 export default TaskModal;

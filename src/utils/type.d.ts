@@ -54,15 +54,6 @@ export interface MultiSelectProps extends SingleSelectProps {
     setValue?: (value: SelectItem) => void;
 }
 
-export interface NoticeItemProp {
-    alertId: string;
-    createUserId: string;
-    content: string;
-    type: string;
-    createDate: string;
-    position?: string;
-}
-
 interface ModalState {
     title: string;
     isOpen: boolean;
@@ -82,12 +73,16 @@ export interface MilestoneInfo {
 export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';
 export type TaskStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
 
+export type AssignedUser = {
+    projectMemberId: bigint;
+    nickname:string;
+}
 
 export interface TaskItem {
     workId: bigint;
     projectId: bigint;
     milestoneId: bigint;
-    assignedUserNickname: string;
+    assignedUser: AssignedUser | null;
     lastModifiedMemberNickname: string;
     content: string;
     startDate: string;
@@ -199,12 +194,31 @@ export interface User {
     profileImgSrc: string;
 }
 
+export interface ProjectUser extends User {
+    position: Position;
+    trustGrade: TrustGrade;
+    trustScore: number;
+    role: string;
+    createDate: string;
+    updateDate: string;
+}
+
+export interface ProjectMemberProfile  {
+    projectMemberId: bigint;
+    projectId: bigint;
+    user: ProjectUser;
+    projectMemberAuth: ProjectMemberAuth;
+}
+
 export interface ProjectMember {
     projectMemberId: bigint;
     user: User;
     projectMemberAuth: ProjectMemberAuth;
     position: Position;
     lastWorkDate: string;
+}
+
+export interface ProjectMemberDetail {
 
 }
 
@@ -283,4 +297,31 @@ export interface SnackbarState {
     type: SnackbarType;
     content: string;
     duration?: number;
+}
+
+/**
+ * ADD - 크루 추가됨
+ * WITHDRAWL - 크루 탈퇴
+ * FORCEWITHDRAWL - 크루 강제 탈퇴
+ */
+export type CrewNoticeType = 'ADD' | 'WITHDRAWL' | 'FORCEWITHDRAWL';
+
+/**
+ * RECRUIT - 모집
+ * WORK - 업무
+ * CrewNoticeType - 크루(크루추가/탈퇴/강제탈퇴)
+ */
+export type NoticeType = 'RECRUIT' | 'WORK' | CrewNoticeType;
+export interface Notice {
+    alertId:bigint;
+    projectId:bigint;
+    checkUserId:bigint;
+    sendUserId:bigint;
+    workId: bigint | null;
+    milestoneId:bigint | null;
+    position:Position | null;
+    content:string;
+    type: NoticeType;
+    createDate: string;
+    updateDate: string;
 }
