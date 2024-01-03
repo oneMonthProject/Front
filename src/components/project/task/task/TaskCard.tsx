@@ -4,9 +4,12 @@ import {TaskItem} from "@/utils/type";
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
 import Avatar from "@/components/ui/Avatar";
 import TaskCardMenu from "@/components/project/task/task/TaskCardMenu";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
 import TaskModal from "@/components/project/task/task/TaskModal";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {deleteTask as deleteTaskAPI} from "@/service/project/task";
+import {snackbarState} from "@/store/MainStateStore";
 
 
 interface TaskCardProps {
@@ -15,14 +18,25 @@ interface TaskCardProps {
 
 function TaskCard({item}: TaskCardProps) {
     const [taskModalForm, setTaskModalForm] = useRecoilState(taskModalFormState);
+    const setSnackbar = useSetRecoilState(snackbarState);
 
-    function onEditClickHandler() {
-        setTaskModalForm(new TaskModalForm('modify', item));
-    }
+    const queryClient = useQueryClient();
 
-    function onDeleteClickHandler() {
-        // todo - 업무 삭제 api
-    }
+    const {mutate: deleteTask, isPending: isDeleting} = useMutation({
+        mutationFn: (workId: bigint) => deleteTaskAPI(workId),
+        onSuccess: (res) => {
+            if (res.status === 200) {
+                setSnackbar({show: true, type: 'SUCCESS', content: '업무를 삭제했습니다'});
+                queryClient.invalidateQueries({queryKey: ['taskList']});
+            } else {
+                setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
+            }
+        },
+        onError:(error) => {
+            console.log("error: ",error);
+            setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
+        }
+    })
 
 
     return (
@@ -33,8 +47,8 @@ function TaskCard({item}: TaskCardProps) {
                 <div className='ml-auto self-border border-black'>
                     <TaskCardMenu
                         taskId={item.workId}
-                        onEditClickHandler={onEditClickHandler}
-                        onDeleteClickHandler={onDeleteClickHandler}
+                        onEditClickHandler={() => setTaskModalForm(new TaskModalForm('modify', item))}
+                        onDeleteClickHandler={() => deleteTask(item.workId)}
                     />
                 </div>
             </div>
