@@ -1,11 +1,9 @@
 import React, {Suspense} from 'react';
 import ProfileSection from "@/components/project/crews/detail/ProfileSection";
-import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
+import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
 
-// todo - params.userId 로 크루 상세정보 조회
-// todo - profile fallback
-function Page() {
+function CrewDetailPage() {
     return (
         <section className='pc:max-w-[1200px] tablet:max-w-[700px] mx-auto -mt-14 px-1'>
             <section className='tablet:py-3 border-b-2 border-gray-200'>
@@ -26,4 +24,4 @@ function Page() {
     );
 }
 
-export default Page;
+export default CrewDetailPage;
