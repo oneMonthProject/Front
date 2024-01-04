@@ -327,6 +327,21 @@ export interface Notice {
 }
 
 /**
- * CREW_STATUS enum의 키값 union 타입
+ * CREW_STATUS enum의 키값 타입
  */
 export type CrewStatusKeys = keyof typeof CREW_STATUS;
+
+/**
+ * 프로젝트 크루 업무 이력
+ */
+export interface CrewTaskHistory {
+    workId: bigint;
+    workContent: string;
+    startDate: string;
+    endDate: string;
+    progressStatus: CrewStatusKeys;
+    point: number | null;
+    point_type: WorkPointType | null;
+}
+
+export type WorkPointType = 'plus' | 'minus';
