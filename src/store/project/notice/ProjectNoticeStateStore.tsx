@@ -1,114 +1,177 @@
 import {atom, selector} from "recoil";
+import {Notice, NoticeType, Position} from "@/utils/type";
 
 
-interface ProjectNoticeFormState {
-    formType: '업무' | '모집' | '크루'
-    createUserId: string;
-    alertId: string;
+/**
+ * 크루 알림 form 상태
+ */
+export interface ProjectNoticeCrewFormState extends Notice {
+    type: NoticeType;
+    alertId: bigint;
+    checkUserId: bigint;
+    sendUserId: bigint;
+    milestoneId: bigint | null;
+    projectId: bigint;
+    workId: bigint | null;
+    createDate: string;
+    updateDate: string;
     content: string;
-    onConfirmHandler?: () => void;
+    position: Position | null;
 }
 
-export class ProjectNoticeForm implements ProjectNoticeFormState {
-    formType: "업무" | "모집" | "크루";
-    alertId: string;
+export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
+    alertId: bigint;
+    checkUserId: bigint;
     content: string;
-    createUserId: string;
+    createDate: string;
+    milestoneId: bigint | null;
+    position: Position | null;
+    projectId: bigint;
+    sendUserId: bigint;
+    type: NoticeType;
+    updateDate: string;
+    workId: bigint | null;
 
-    onConfirmHandler(): void {
-    }
+    constructor(notice:Notice) {
+        const {
+            type,
+            alertId,
+            checkUserId,
+            sendUserId,
+            milestoneId,
+            projectId,
+            workId,
+            createDate,
+            updateDate,
+            content,
+            position
+        } = notice;
 
-    constructor(formType: "업무" | "모집" | "크루", alertId: string, createUserId: string, content: string) {
+        this.type = type;
         this.alertId = alertId;
+        this.checkUserId = checkUserId;
+        this.sendUserId = sendUserId;
+        this.milestoneId = milestoneId;
+        this.projectId = projectId;
+        this.workId = workId;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
         this.content = content;
-        this.createUserId = createUserId;
-        this.formType = formType;
-    }
-
-}
-
-/**
- * 크루 알림 form 객체
- */
-export class ProjectNoticeCrewForm implements ProjectNoticeFormState {
-    formType: '업무' | '모집' | '크루';
-    alertId: string;
-    createUserId: string;
-    onConfirmHandler: () => void;
-
-    constructor(formType: '업무' | '모집' | '크루', alertId: string, createUserId: string, content: string) {
-        this.formType = formType;
-        this.alertId = alertId;
-        this.createUserId = createUserId;
-        this.content = content;
-        this.onConfirmHandler = () => {
-            console.log("크루 this.formtype: ", this.formType);
-            console.log("크루 this.alertID: ", this.alertId);
-        }
-    }
-
-    content: string;
-}
-
-/**
- * 업무 알림 form 객체
- */
-interface ProjectNoticeTaskFormState extends ProjectNoticeFormState {
-    isTaskSuccess?: string;
-    taskId?: string;
-}
-
-export class ProjectNoticeTaskForm extends ProjectNoticeForm {
-    isTaskSuccess: string;
-    taskId: string;
-    onConfirmHandler: () => void;
-
-    constructor(formType: '업무' | '모집' | '크루', alertId: string, createUserId: string, content: string) {
-        super(formType, alertId, createUserId, content);
-        this.isTaskSuccess = 'true';
-        this.taskId = '';
-        this.onConfirmHandler = () => {
-            console.log("업무 this.formtype: ", this.formType);
-            console.log("업무 this.alertID: ", this.alertId);
-        }
-    }
-
-
-}
-
-/**
- * 모집 알림 form 객체
- */
-interface ProjectNoticeRecruitFormState extends ProjectNoticeFormState {
-    position: string;
-    projectId: string;
-    isPermit: string;
-}
-
-export class ProjectNoticeRecruitForm extends ProjectNoticeForm {
-    isPermit: string;
-    position: string;
-    projectId: string;
-    onConfirmHandler: () => void;
-
-    constructor(formType: '업무' | '모집' | '크루', alertId: string, createUserId: string, position: string, content: string) {
-        super(formType, alertId, createUserId, content);
-        this.isPermit = 'true';
         this.position = position;
-        this.projectId = '';
-        this.onConfirmHandler = () => {
-            console.log("모집 this.formtype: ", this.formType);
-            console.log("모집 this.alertID: ", this.alertId);
-        }
     }
 
+
+}
+
+/**
+ * 업무 알림 form 상태
+ */
+interface ProjectNoticeTaskFormState extends Notice {
+    isTaskSuccess?: boolean;
+}
+
+export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
+    alertId: bigint;
+    checkUserId: bigint;
+    content: string;
+    createDate: string;
+    isTaskSuccess: boolean;
+    milestoneId: bigint | null;
+    position: Position | null;
+    projectId: bigint;
+    sendUserId: bigint;
+    type: NoticeType;
+    updateDate: string;
+    workId: bigint | null;
+
+    constructor(isTaskSuccess:boolean, notice:Notice) {
+        this.isTaskSuccess = isTaskSuccess;
+        const {
+            type,
+            alertId,
+            checkUserId,
+            sendUserId,
+            milestoneId,
+            projectId,
+            workId,
+            createDate,
+            updateDate,
+            content,
+            position
+        } = notice;
+
+        this.type = type;
+        this.alertId = alertId;
+        this.checkUserId = checkUserId;
+        this.sendUserId = sendUserId;
+        this.milestoneId = milestoneId;
+        this.projectId = projectId;
+        this.workId = workId;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.content = content;
+        this.position = position;
+    }
+
+
+}
+
+/**
+ * 모집 알림 form 상태
+ */
+interface ProjectNoticeRecruitFormState extends Notice {
+    isPermit: boolean;
+}
+
+export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
+    alertId: bigint;
+    checkUserId: bigint;
+    content: string;
+    createDate: string;
+    isPermit: boolean;
+    milestoneId: bigint | null;
+    position: Position | null;
+    projectId: bigint;
+    sendUserId: bigint;
+    type: NoticeType;
+    updateDate: string;
+    workId: bigint | null;
+
+    constructor(isPermit:boolean, notice:Notice) {
+        this.isPermit = isPermit;
+        const {
+            type,
+            alertId,
+            checkUserId,
+            sendUserId,
+            milestoneId,
+            projectId,
+            workId,
+            createDate,
+            updateDate,
+            content,
+            position
+        } = notice;
+
+        this.type = type;
+        this.alertId = alertId;
+        this.checkUserId = checkUserId;
+        this.sendUserId = sendUserId;
+        this.milestoneId = milestoneId;
+        this.projectId = projectId;
+        this.workId = workId;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.content = content;
+        this.position = position;
+    }
 
 }
 
 /**
  * 현재 알림 form 상태 관리
  */
-export const projectNoticeCurrentFormState = atom<null | ProjectNoticeFormState | ProjectNoticeTaskFormState | ProjectNoticeRecruitFormState>({
+export const projectNoticeCurrentFormState = atom<null | ProjectNoticeCrewFormState | ProjectNoticeTaskFormState | ProjectNoticeRecruitFormState>({
     key: 'projectNoticeCurrentFormState',
     default: null
 });
@@ -128,15 +191,17 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
         const currentFormState = get(projectNoticeCurrentFormState);
         let title = '';
 
-        if(currentFormState !== null){
-            switch (currentFormState?.formType) {
-                case '업무' :
+        if (currentFormState !== null) {
+            switch (currentFormState?.type) {
+                case 'WORK' :
                     title = '업무 알림';
                     break;
-                case '모집':
+                case 'RECRUIT':
                     title = '모집 알림';
                     break;
-                case '크루':
+                case 'ADD':
+                case 'WITHDRAWL':
+                case 'FORCEWITHDRAWL':
                     title = '크루 알림';
                     break;
                 default:

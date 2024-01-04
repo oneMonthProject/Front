@@ -43,12 +43,12 @@ function NoticeItemDetail() {
                 </div>
             </section>
             {
-                currentNoticeForm?.formType === '모집'
+                currentNoticeForm?.type === 'RECRUIT'
                 && <NoticeItemRecruitInfo/>
             }
 
             {
-                currentNoticeForm?.formType === '모집'
+                currentNoticeForm?.type === 'RECRUIT'
                 && (
                     <section className='max-w-[150px] mx-auto my-7 flex flex-col items-stretch'>
                         <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>프로젝트 합류</label>
@@ -58,16 +58,16 @@ function NoticeItemDetail() {
                             setValue={onChangeJoinPermitHandler}
                             value={
                                 {
-                                    name: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit === 'true'
+                                    name: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit
                                         ? '수락'
                                         : '거절',
-                                    value: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit
+                                    value: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit.toString()
                                 }
                             }/>
                     </section>
                 )}
             {
-                currentNoticeForm?.formType === '업무'
+                currentNoticeForm?.type === 'WORK'
                 && (
                     <section className='max-w-[150px] mx-auto mt-9 flex flex-col items-stretch'>
                         <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수 부여</label>
@@ -77,10 +77,10 @@ function NoticeItemDetail() {
                             setValue={onChangeTaskPointHandler}
                             value={
                                 {
-                                    name: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess === 'true'
+                                    name: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess
                                         ? '+ 신뢰점수'
                                         : '- 신뢰점수',
-                                    value: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess
+                                    value: (currentNoticeForm as ProjectNoticeTaskForm).isTaskSuccess.toString()
                                 }
                             }/>
                     </section>
