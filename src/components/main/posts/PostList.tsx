@@ -30,7 +30,7 @@ const PostList = () => {
           <PostCard key={info.boardId.toString()} postInfo={info} />
         ))}
       </div>
-      <CommonPagination />
+      {/*<CommonPagination />*/}
     </>
   )
 }

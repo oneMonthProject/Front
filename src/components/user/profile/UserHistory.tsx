@@ -104,7 +104,7 @@ function UserHistory() {
             </div>
           </li>
         ))}
-        <CommonPagination />
+        {/*<CommonPagination />*/}
       </ul>
     </div>
   )
