@@ -4,7 +4,7 @@ import {NextRequest, NextResponse} from "next/server";
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
 /**
- * 프로젝트 목록/상세 조회
+ * 내 프로젝트 목록/상세 조회
  * @constructor
  */
 export async function GET(
@@ -15,7 +15,10 @@ export async function GET(
 
     let res: Response;
     if (params.slug === 'list') {
-        res = await authApi(`${baseURL}/api/project/me`, {method});
+        const {searchParams} = new URL(req.url);
+        const pageIndex = searchParams.get('pageIndex');
+        const itemCount = searchParams.get('itemCount');
+        res = await authApi(`${baseURL}/api/project/me/participating?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method});
     } else if (params.slug === 'detail') {
         const {searchParams} = new URL(req.url);
         const projectId = searchParams.get('projectId');
