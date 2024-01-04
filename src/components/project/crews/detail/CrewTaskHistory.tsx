@@ -1,7 +1,6 @@
 import React from 'react';
 import {FaMinus} from "@react-icons/all-files/fa/FaMinus";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
-import CrewTaskHistoryPagination from "@/components/project/crews/detail/CrewTaskHistoryPagination";
 
 const taskTimeLine = [
     {taskId: '1', updateDate: '2023-12-12', contents: 'API 문서 작성', point: '15', pointType: 'plus'},
@@ -69,7 +68,6 @@ function CrewTaskHistory() {
                     ))}
                 </ul>
             </div>
-            <CrewTaskHistoryPagination/>
         </>
     );
 }
