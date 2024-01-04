@@ -8,18 +8,18 @@ import { BiX } from "@react-icons/all-files/bi/BiX";
 import CommonPagination from "@/components/ui/CommonPagination";
 import { getUserProjectHistory } from "@/service/user";
 import { classNames } from "@/utils/common";
-import { ProjectHistoryStatus, ResponseBody, UserProjectHistory } from "@/utils/type";
+import { PageResponseBody, ProjectHistoryStatus, UserProjectHistory } from "@/utils/type";
 import { useSuspenseQuery } from "@tanstack/react-query";
 
 function UserHistory() {
   const [pageNumber, setPageNumber] = useState(0);
-  const { data } = useSuspenseQuery<ResponseBody<UserProjectHistory[]>, Error>({
+  const { data } = useSuspenseQuery<PageResponseBody<UserProjectHistory[]>, Error>({
     queryKey: ['profileInfo', pageNumber],
     queryFn: () => getUserProjectHistory(pageNumber)
   });
 
-  const { data: histories } = data;
-  
+  const { content: histories, totalPages } = data.data;
+
   const getIconColorByStatus = (status: ProjectHistoryStatus) => {
     switch (status) {
       case "PARTICIPATING":
@@ -104,7 +104,7 @@ function UserHistory() {
             </div>
           </li>
         ))}
-        {/*<CommonPagination />*/}
+        <CommonPagination activePage={pageNumber + 1} itemsCountPerPage={5} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={setPageNumber} />
       </ul>
     </div>
   )
