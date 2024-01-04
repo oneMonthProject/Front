@@ -23,6 +23,11 @@ function NoticeModal() {
         }
     }, [isOpen]);
 
+    function onConfirmHandler(){
+        // 업무 - 신뢰도 부여하거나, 깎거나
+        // 모집 - 거절하거나 수락
+    // 크루 - 단순 확인 : checkYN만 바꿈
+    }
 
     return (
         <>
@@ -33,7 +38,7 @@ function NoticeModal() {
                             isOpen={isOpen}
                             close={() => resetCurrentNoticeForm()}
                             title={title}
-                            onClickConfirmHandler={currentNoticeForm?.onConfirmHandler}
+                            onClickConfirmHandler={onConfirmHandler}
                         >
                             {currentNoticeForm !== null && <NoticeItemDetail/>}
                         </Modal>
@@ -51,5 +56,6 @@ import {
     projectNoticeModalStateSelector
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
+import {NoticeType} from "@/utils/type";
 
 export default NoticeModal;
