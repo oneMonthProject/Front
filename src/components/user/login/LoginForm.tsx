@@ -50,7 +50,7 @@ function LoginForm() {
         if (isEqual(result, "success")) {
           setCookie("user_id", userId);
 
-          router.push("/");
+          router.back();
           router.refresh();
           
           setSnackbar({ show: true, type: "INFO", content: message });

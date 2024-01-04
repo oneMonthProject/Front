@@ -1,5 +1,4 @@
-import axios from "axios";
-
+const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 export interface SignUpRequest {
   email: string;
   password: string;
@@ -10,15 +9,13 @@ export interface SignUpRequest {
 }
 
 export const signUp = async (signUpRequest: SignUpRequest) => {
-  const { data: response } = await axios.post(
-    `${process.env.NEXT_PUBLIC_BACKEND}/api/user/public`,
-    signUpRequest,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${baseURL}/api/user/public`, {
+    method: "POST",
+    body: JSON.stringify(signUpRequest),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
 
-  return response.data;
+  return response.json();
 };
