@@ -1,6 +1,6 @@
-import {ReactNode} from "react";
 import {CookieValueTypes} from "cookies-next";
 import {MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
+import {CREW_STATUS} from "@/utils/constant";
 
 export type DropDownItem = {
     name: string;
@@ -75,7 +75,7 @@ export type TaskStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
 
 export type AssignedUser = {
     projectMemberId: bigint;
-    nickname:string;
+    nickname: string;
 }
 
 export interface TaskItem {
@@ -183,8 +183,8 @@ export interface PageResponseBody<T> {
 
 export interface TrustGrade {
     name: string;
-    minimumScore: int;
-    maximumScore: int;
+    minimumScore: number;
+    maximumScore: number;
 }
 
 export interface User {
@@ -203,11 +203,14 @@ export interface ProjectUser extends User {
     updateDate: string;
 }
 
-export interface ProjectMemberProfile  {
+export interface ProjectMemberProfile {
     projectMemberId: bigint;
     projectId: bigint;
+    projectCount: number;
     user: ProjectUser;
     projectMemberAuth: ProjectMemberAuth;
+    position: Position;
+    status: CrewStatusKeys;
 }
 
 export interface ProjectMember {
@@ -216,10 +219,6 @@ export interface ProjectMember {
     projectMemberAuth: ProjectMemberAuth;
     position: Position;
     lastWorkDate: string;
-}
-
-export interface ProjectMemberDetail {
-
 }
 
 export interface ProjectMemberAuth {
@@ -312,16 +311,22 @@ export type CrewNoticeType = 'ADD' | 'WITHDRAWL' | 'FORCEWITHDRAWL';
  * CrewNoticeType - 크루(크루추가/탈퇴/강제탈퇴)
  */
 export type NoticeType = 'RECRUIT' | 'WORK' | CrewNoticeType;
+
 export interface Notice {
-    alertId:bigint;
-    projectId:bigint;
-    checkUserId:bigint;
-    sendUserId:bigint;
+    alertId: bigint;
+    projectId: bigint;
+    checkUserId: bigint;
+    sendUserId: bigint;
     workId: bigint | null;
-    milestoneId:bigint | null;
-    position:Position | null;
-    content:string;
+    milestoneId: bigint | null;
+    position: Position | null;
+    content: string;
     type: NoticeType;
     createDate: string;
     updateDate: string;
 }
+
+/**
+ * CREW_STATUS enum의 키값 union 타입
+ */
+export type CrewStatusKeys = keyof typeof CREW_STATUS;
