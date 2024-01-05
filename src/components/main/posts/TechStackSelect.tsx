@@ -4,63 +4,33 @@ import { useMediaQuery } from "react-responsive";
 import { useRecoilState } from "recoil";
 import TechStackImage from "@/components/ui/TechStackImage";
 import { selectedTechStackState } from "@/store/MainStateStore";
+import { TechStackCategory, TechStackWithCategory } from "@/utils/type";
 
-const categories = [
-  "프론트엔드",
-  "백엔드",
-  "IOS",
-  "안드로이드",
-  "기타",
-  "모두보기",
-];
+interface TechStackSelectProps {
+  categories: TechStackCategory[];
+  items: TechStackWithCategory[];
+}
 
-const techStacks = [
-  { name: "Java", category: ["백엔드"] },
-  { name: "JavaScript", category: ["프론트엔드"] },
-  { name: "React", category: ["프론트엔드"] },
-  { name: "Spring", category: ["백엔드"] },
-  { name: "TypeScript", category: ["프론트엔드"] },
-  { name: "Figma", category: ["기타"] },
-  { name: "Vue", category: ["프론트엔드"] },
-  { name: "Svelte", category: ["프론트엔드"] },
-  { name: "Nextjs", category: ["프론트엔드"] },
-  { name: "Kotlin", category: "안드로이드" },
-  { name: "Nodejs", category: ["백엔드"] },
-  { name: "Nestjs", category: ["백엔드"] },
-  { name: "Express", category: ["백엔드"] },
-  { name: "Mysql", category: ["백엔드"] },
-  { name: "Mongodb", category: ["백엔드"] },
-  { name: "Python", category: ["백엔드"] },
-  { name: "Django", category: ["백엔드"] },
-  { name: "Php", category: ["백엔드"] },
-  { name: "Graphql", category: ["백엔드"] },
-  { name: "Firebase", category: ["백엔드"] },
-  { name: "ReactNative", category: ["IOS", "안드로이드"] },
-  { name: "Unity", category: ["IOS", "안드로이드", "기타"] },
-  { name: "Flutter", category: ["IOS", "안드로이드"] },
-  { name: "Swift", category: ["IOS"] },
-  { name: "Aws", category: ["기타"] },
-  { name: "Kubernetes", category: ["기타"] },
-  { name: "Docker", category: ["기타"] },
-  { name: "Git", category: ["기타"] },
-  { name: "Zeplin", category: ["기타"] },
-  { name: "Jest", category: ["기타"] },
-  { name: "C", category: ["기타"] },
-];
-
-const TechStackSelect = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>(categories[0]);
+const TechStackSelect = ({ categories, items }: TechStackSelectProps) => {
+  const [selectedCategory, setSelectedCategory] = useState<TechStackCategory>(categories[0]);
   const [selectedTechStacks, setSelectedTechStacks] = useRecoilState(selectedTechStackState);
   const [isMobile, setIsMobile] = useState(false);
   const mobile = useMediaQuery({ maxWidth: 700 });
 
-  const filteredTechStacks = techStacks.filter((stack) => {
-    if (selectedCategory === "모두보기" || isMobile) {
+  const getCategories = () => {
+    const all = { techStackCategoryId: BigInt(0), techStackCategoryName: "모두보기" };
+    return [...categories, all];
+  }
+
+  const filteredTechStacks = items.filter((stack) => {
+    const categoryName = selectedCategory.techStackCategoryName;
+    if (categoryName === "모두보기" || isMobile) {
       return true;
     }
 
-    if (Array.isArray(stack.category)) {
-      return stack.category.includes(selectedCategory);
+    const { categories } = stack;
+    if (Array.isArray(categories)) {
+      return categories.includes(categoryName);
     }
 
     return false;
@@ -70,23 +40,23 @@ const TechStackSelect = () => {
     event.stopPropagation();
   };
 
-  const handleSkillClick = (skill: string) => {
-    setSelectedCategory(skill);
+  const handleCategory = (category: TechStackCategory) => {
+    setSelectedCategory(category);
   };
 
-  const handleTechStackClick = (stackName: string) => {
+  const handleTechStackClick = (stack: TechStackWithCategory) => {
     setSelectedTechStacks((prevSelected) => {
-      if (prevSelected.includes(stackName)) {
-        return prevSelected.filter((name) => name !== stackName);
+      if (prevSelected.includes(stack)) {
+        return prevSelected.filter((prevStack) => prevStack !== stack);
       } else {
-        return [...prevSelected, stackName];
+        return [...prevSelected, stack];
       }
     });
   };
 
-  const handleTechStackRemove = (stackName: string) => {
+  const handleTechStackRemove = (stack: TechStackWithCategory) => {
     setSelectedTechStacks((prevSelected) =>
-      prevSelected.filter((name) => name !== stackName)
+      prevSelected.filter((prevStack) => prevStack !== stack)
     );
   };
 
@@ -102,52 +72,55 @@ const TechStackSelect = () => {
     <div className="absolute top-12" onClick={handleInnerClick}>
       <div className="py-3 px-5 flex flex-col w-[700px] mobile:w-[340px] border-2 rounded-3xl bg-white">
         <ul className="flex text-xl font-bold gap-6 border-b-2 mobile:hidden">
-          {categories.map((category) => {
-            const isActive = category === selectedCategory;
+          {getCategories().map((category) => {
+            const { techStackCategoryId: id, techStackCategoryName: name } = category;
+            const isActive = name === selectedCategory.techStackCategoryName;
             return (
               <li
-                key={category}
-                onClick={() => handleSkillClick(category)}
+                key={id.toString()}
+                onClick={() => handleCategory(category)}
                 className={`cursor-pointer ${isActive ? "text-black100 border-b-2 border-black100 pb-4" : "text-grey800"}`}
               >
-                {category}
+                {name}
               </li>
             );
           })}
         </ul>
         <ul className="flex mt-4 gap-2 flex-wrap">
           {filteredTechStacks.map((stack) => {
-            const isActive = selectedTechStacks.length === 0 || selectedTechStacks.includes(stack.name);
+            const { techStackId, techStackName } = stack;
+            const isActive = selectedTechStacks.length === 0 || selectedTechStacks.includes(stack);
             return (
               <li
-                key={stack.name}
-                onClick={() => handleTechStackClick(stack.name)}
+                key={techStackId.toString()}
+                onClick={() => handleTechStackClick(stack)}
                 className={`flex gap-2 items-center justify-center border-[1px] rounded-3xl py-1 px-2 border-grey400 cursor-pointer ${isActive ? "opacity-1" : "opacity-30"
                   }`}
               >
                 <div className="mobile:hidden">
-                  <TechStackImage stackName={stack.name} width={30} height={30} />
+                  <TechStackImage stackName={techStackName} width={30} height={30} />
                 </div>
-                <span className="text-base">{stack.name}</span>
+                <span className="text-base">{techStackName}</span>
               </li>
             );
           })}
         </ul>
         <ul className="flex mt-6 flex-wrap gap-y-1 mobile:hidden">
-          {techStacks.map((stack) => {
-            const isActive = selectedTechStacks.includes(stack.name);
+          {items.map((stack) => {
+            const { techStackId, techStackName } = stack;
+            const isActive = selectedTechStacks.includes(stack);
             return (
               <li
-                key={stack.name}
+                key={techStackId.toString()}
                 className={`flex gap-2 items-center justify-center py-1 px-2 cursor-pointer ${isActive ? "" : "hidden"}`}
-                onClick={() => handleTechStackRemove(stack.name)}
+                onClick={() => handleTechStackRemove(stack)}
               >
                 {stack && (
-                  <div className="flex gap-1 bg-grey300 rounded-xl py-1 px-2 font-bold">
-                    <span className="text-xs self-center">{stack.name}</span>
+                  <div className="flex gap-1 bg-grey300 rounded-xl py-1 px-2">
+                    <span className="text-xs self-center">{techStackName}</span>
                     <Image
                       src={`${process.env.NEXT_PUBLIC_URL}/images/delete.svg`}
-                      alt={stack.name}
+                      alt={techStackName}
                       width={18}
                       height={18}
                     />
