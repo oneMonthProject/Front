@@ -104,7 +104,7 @@ function UserHistory() {
             </div>
           </li>
         ))}
-        <CommonPagination activePage={pageNumber + 1} itemsCountPerPage={5} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={setPageNumber} />
+        <CommonPagination activePage={pageNumber + 1} itemsCountPerPage={5} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={(page) => setPageNumber(page - 1)} />
       </ul>
     </div>
   )
