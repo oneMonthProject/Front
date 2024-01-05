@@ -108,37 +108,37 @@ export function classNames(...classes: string[]) {
 }
 
 export function getSelectItemValue(item: SelectItem) {
-  return item.value;
+    return item.value;
 }
 
 export function getPositionSelectItem(item: PositionItem | null) {
-  if (item) {
-    return { value: item.positionId, name: item.positionName } as SelectItem;
-  }
+    if (item) {
+        return {value: item.positionId, name: item.positionName} as SelectItem;
+    }
 
-  return item;
+    return item;
 }
 
 export function getPositionSelectItems(items: PositionItem[]) {
-  if (items.length > 0) {
-    return items.map(
-      (item) =>
-        ({ value: item.positionId, name: item.positionName } as SelectItem)
-    );
-  }
+    if (items.length > 0) {
+        return items.map(
+            (item) =>
+                ({value: item.positionId, name: item.positionName} as SelectItem)
+        );
+    }
 
-  return [];
+    return [];
 }
 
 export function getTechStackSelectItems(items: TechStackItem[]) {
-  if (items.length > 0) {
-    return items.map(
-      (item) =>
-        ({ value: item.techStackId, name: item.techStackName } as SelectItem)
-    );
-  }
+    if (items.length > 0) {
+        return items.map(
+            (item) =>
+                ({value: item.techStackId, name: item.techStackName} as SelectItem)
+        );
+    }
 
-  return [];
+    return [];
 }
 
 export function JSONReplaceBigInt(data: Record<string, unknown>) {
@@ -204,7 +204,7 @@ export function sortByStartDate<T extends ProjectPost | MilestoneInfo>(dataList:
 }
 
 /**
- * 마일스톤 / 업무 status badge color 생성
+ * 마일스톤 / 업무 / 크루 status badge color 생성
  * @param text
  */
 export function getStatusBadgeColor(text: string) {
@@ -216,6 +216,10 @@ export function getStatusBadgeColor(text: string) {
         case '완료':
             return {bgColor: 'bg-[#F1F1F1]', textColor: 'text-[#242D35]'};
         case '만료':
+            return {bgColor: 'bg-danger', textColor: 'text-white'};
+        case '참여중':
+            return {bgColor: 'bg-primary', textColor: 'text-white'};
+        case '탈퇴 진행중':
             return {bgColor: 'bg-danger', textColor: 'text-white'};
         default:
             throw Error("Unknown Status Type");
