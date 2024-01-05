@@ -12,11 +12,11 @@ import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
 import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems } from "@/utils/common";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { getTrustGradeList } from "@/service/setting";
 import { CreatePostInfo, createPost } from "@/service/post";
 import { isEqual } from "lodash";
 import { useSetRecoilState } from "recoil";
 import { snackbarState } from "@/store/MainStateStore";
+import { getTrustGradeListByUser } from "@/service/user";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -40,8 +40,8 @@ function RegisterForm() {
   const positionList = usePositionList();
   const techStackList = useTechStackList();
   const { data } = useSuspenseQuery<ResponseBody<TrustGradeItem[]>, Error>({
-    queryKey: ['trustGradeList'],
-    queryFn: () => getTrustGradeList()
+    queryKey: ['trustGradeListByUser'],
+    queryFn: () => getTrustGradeListByUser()
   });
   const { data: trustGradeList } = data;
   const { mutate } = useMutation({
@@ -51,6 +51,7 @@ function RegisterForm() {
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });
         queryClient.invalidateQueries({ queryKey: ['postInfo'] });
+        queryClient.invalidateQueries({ queryKey: ['myProjectList'] });
 
         goHome();
       } else {
