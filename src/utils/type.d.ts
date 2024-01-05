@@ -12,13 +12,13 @@ export interface DropDownProps {
     items: DropDownItems[];
 }
 
-export interface NavTabItem {
-    name: string;
-    href: string;
+export interface NoticeNavTabItem {
+    type: NoticeTypeKey | 'ALL';
+    type_kor: NoticeTypeValue | '전체';
     current: boolean;
 }
 
-export interface ProjectNavTabItem extends NavTabItem {
+export interface ProjectNavTabItem {
     name: string;
     href: string;
     current: boolean;

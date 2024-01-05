@@ -1,5 +1,5 @@
 import {atom, selector} from "recoil";
-import {NavTabItem, ProjectNavTabItem} from "@/utils/type";
+import {ProjectNavTabItem} from "@/utils/type";
 
 class ProjectNavItemImpl implements ProjectNavTabItem {
     current: boolean;
@@ -24,7 +24,7 @@ export const projectNavTabState = atom<ProjectNavTabItem[]>({
     ]
 });
 
-export const currentProjectNavTabSelector = selector<NavTabItem | null>({
+export const currentProjectNavTabSelector = selector<ProjectNavTabItem | null>({
     key:'currentProjectNavTabSelector',
     get:({get}) => {
         const navTabs = get(projectNavTabState);
