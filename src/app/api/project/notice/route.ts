@@ -8,11 +8,16 @@ const baseURL = process.env.NEXT_PUBLIC_BACKEND;
  * @param req
  * @constructor
  */
-export async function GET(req:NextRequest){
+export async function GET(req: NextRequest) {
     const {searchParams} = new URL(req.url);
     const projectId = searchParams.get('projectId');
+    const pageIndex = searchParams.get('pageIndex');
+    const itemCount = searchParams.get('itemCount');
 
-    const res = await authApi(`${baseURL}/api/project/${projectId}`, {method:'GET'});
+    const res = await authApi(
+        `${baseURL}/api/project/${projectId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
+        {method: 'GET'}
+    );
     const data = await res.json();
 
     return NextResponse.json(data);
