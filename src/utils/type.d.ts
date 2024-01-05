@@ -100,9 +100,18 @@ export interface PositionItem {
     positionName: string;
 }
 
+export interface TechStackCategory {
+    techStackCategoryId: bigint;
+    techStackCategoryName: string;
+}
+
 export interface TechStackItem {
-    techStackId: string | bigint;
+    techStackId: bigint;
     techStackName: string;
+}
+
+export interface TechStackWithCategory extends TechStackItem {
+    categories: string[];
 }
 
 export interface UserInfo {

@@ -49,7 +49,7 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
       </div>
       <div className="flex gap-5 h-10 items-center">
         <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">모집 인원</span>
-        <span>{`${crewNumber}명`}</span>
+        <span>{crewNumber > 0 ? `${crewNumber}명` : "인원미정"}</span>
       </div>
       <div className="flex gap-5 h-10 items-center">
         <span className="text-grey800 whitespace-nowrap w-[110px] mobile:w-[80px] text-center">연락 방법</span>
