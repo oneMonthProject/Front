@@ -10,37 +10,16 @@ import FormButton from "@/components/ui/form/FormButton";
 import NicknameField from "@/components/ui/form/NickNameField";
 import { SelectItem } from "@/utils/type";
 import { SignUpRequest, signUp } from "@/service/signup";
-import { getSelectItemValue, isValidEmail, isValidNickname, isValidPassword } from "@/utils/common";
+import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems, isValidEmail, isValidNickname, isValidPassword } from "@/utils/common";
 import { useSetRecoilState } from "recoil";
 import { snackbarState } from "@/store/MainStateStore";
-
-const positionList = [
-  { value: 1, name: '프론트엔드' },
-  { value: 2, name: '백엔드' },
-  { value: 3, name: '디자이너' },
-  { value: 4, name: 'IOS' },
-  { value: 5, name: '안드로이드' },
-  { value: 6, name: '데브옵스' }
-];
-
-const techStackList = [
-  { value: 1, name: 'React' },
-  { value: 2, name: 'TypeScript' },
-  { value: 3, name: 'JavaScript' },
-  { value: 4, name: 'Vue' },
-  { value: 5, name: 'Nextjs' },
-  { value: 6, name: 'Node.js' },
-  { value: 7, name: 'Java' },
-  { value: 8, name: 'Spring' },
-  { value: 9, name: 'Kotlin' },
-  { value: 10, name: 'Nestjs' },
-  { value: 11, name: 'Swift' },
-  { value: 12, name: 'Flutter' },
-  { value: 13, name: 'Figma' },
-];
+import { usePositionList } from "@/hooks/usePositionList";
+import { useTechStackList } from "@/hooks/useTechStackList";
 
 function SignUpForm() {
   const router = useRouter();
+  const positions = usePositionList();
+  const techStacks = useTechStackList();
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
@@ -128,9 +107,11 @@ function SignUpForm() {
 
       const signUpRequest = { email, password, nickname, positionId, techStackIds, intro: selfIntroduction } as SignUpRequest;
       signUp(signUpRequest).then(response => {
-        const { result } = response;
+        const { result, message } = response;
         if (result === "success") {
           router.push("/");
+
+          setSnackbar({ show: true, type: "INFO", content: message });
         }
       });
     }
@@ -151,8 +132,8 @@ function SignUpForm() {
         value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
       <NicknameField placeholder="영문, 숫자 포함 6~10자" setCheck={setIsCheckedNickname} required
         value={nickname} onChange={onChangeNickname} />
-      <Select value={position} setValue={setPosition} items={positionList} label="직무" placeholder="직무를 선택해주세요." required />
-      <MultiSelect values={techStack} setValues={setTechStack} items={techStackList} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
+      <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="직무" placeholder="직무를 선택해주세요." required />
+      <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
         value={selfIntroduction} onChange={(e) => setSelfIntroduction(e.target.value)} />
       <FormButton onClick={userSignUp}>가입</FormButton>

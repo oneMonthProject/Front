@@ -67,3 +67,8 @@ export const getUserProjectHistory = async (pageNumber: number) => {
   );
   return response.json();
 };
+
+export const getTrustGradeListByUser = async () => {
+  const response = await fetch(`${publicURL}/api/user/trust-grade`);
+  return response.json();
+};
