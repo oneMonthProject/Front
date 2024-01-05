@@ -1,6 +1,6 @@
 import {CookieValueTypes} from "cookies-next";
 import {MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS} from "@/utils/constant";
+import {CREW_STATUS, NOTICE_TYPE} from "@/utils/constant";
 
 export type DropDownItem = {
     name: string;
@@ -298,19 +298,9 @@ export interface SnackbarState {
     duration?: number;
 }
 
-/**
- * ADD - 크루 추가됨
- * WITHDRAWL - 크루 탈퇴
- * FORCEWITHDRAWL - 크루 강제 탈퇴
- */
-export type CrewNoticeType = 'ADD' | 'WITHDRAWL' | 'FORCEWITHDRAWL';
+export type NoticeTypeKey = keyof typeof NOTICE_TYPE;
 
-/**
- * RECRUIT - 모집
- * WORK - 업무
- * CrewNoticeType - 크루(크루추가/탈퇴/강제탈퇴)
- */
-export type NoticeType = 'RECRUIT' | 'WORK' | CrewNoticeType;
+export type NoticeTypeValue = typeof NOTICE_TYPE[NoticeTypeKey];
 
 export interface Notice {
     alertId: bigint;
@@ -321,7 +311,7 @@ export interface Notice {
     milestoneId: bigint | null;
     position: Position | null;
     content: string;
-    type: NoticeType;
+    type: NoticeTypeKey;
     createDate: string;
     updateDate: string;
 }
