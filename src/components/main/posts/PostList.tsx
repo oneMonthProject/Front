@@ -16,9 +16,8 @@ const PostList = () => {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data } = useSuspenseQuery<PageResponseBody<PostCardInfo[]>, Error>({
-    // key 에 나머지 항목도 추가하기
-    queryKey: ['postInfo', selectedPosition, searchValue, pageNumber],
-    queryFn: () => getPostList({ technologyIds: [], position: selectedPosition, keyword: searchValue, page: pageNumber })
+    queryKey: ['postInfo', selectedTechStacks, selectedPosition, searchValue, pageNumber],
+    queryFn: () => getPostList({ techStacks: selectedTechStacks, position: selectedPosition, keyword: searchValue, page: pageNumber })
   });
 
   const { content: infos, totalPages } = data.data;
@@ -30,7 +29,7 @@ const PostList = () => {
           <PostCard key={info.boardId.toString()} postInfo={info} />
         ))}
       </div>
-      {/*<CommonPagination />*/}
+      <CommonPagination activePage={pageNumber - 1} itemsCountPerPage={8} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={(page) => setPageNumber(page - 1)} />
     </>
   )
 }

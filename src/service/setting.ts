@@ -1,17 +1,23 @@
 const publicURL = process.env.NEXT_PUBLIC_URL;
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
 export async function getPositionList() {
-  const data = await fetch(`${baseURL}/api/position-list/public`);
-  return await data.json();
+  const response = await fetch(`${publicURL}/api/setting/position`);
+  return await response.json();
 }
 
 export async function getTechStackList() {
-  const data = await fetch(`${baseURL}/api/technology-stack-list/public`);
-  return await data.json();
+  const response = await fetch(`${publicURL}/api/setting/tech-stack`);
+  return await response.json();
 }
 
-export const getTrustGradeList = async () => {
-  const response = await fetch(`${publicURL}/api/setting/trustGrade`);
-  return response.json();
-};
+export async function getTechStackCategoryList() {
+  const response = await fetch(`${publicURL}/api/setting/tech-stack-category`);
+  return await response.json();
+}
+
+export async function getTechStackListWithCategory() {
+  const response = await fetch(
+    `${publicURL}/api/setting/tech-stack-with-category`
+  );
+  return await response.json();
+}
