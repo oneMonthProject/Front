@@ -1,30 +1,32 @@
 import {atom, selector} from "recoil";
-import {NavTabItem} from "@/utils/type";
+import {NoticeNavTabItem, NoticeTypeKey, NoticeTypeValue} from "@/utils/type";
+import {NOTICE_TYPE} from "@/utils/constant";
 
 
-class ProjectNoticeNavTabItem implements NavTabItem {
+class ProjectNoticeNavTabItem implements NoticeNavTabItem {
     current: boolean;
-    href: string;
-    name: string;
+    type: NoticeTypeKey | 'ALL';
+    type_kor: NoticeTypeValue | '전체';
 
-    constructor(current: boolean, href: string, name: string) {
+
+    constructor(current: boolean, type :NoticeTypeKey | 'ALL') {
         this.current = current;
-        this.href = href;
-        this.name = name;
+        this.type = type;
+        this.type_kor = type === 'ALL' ? '전체' : NOTICE_TYPE[type];
     }
 }
 
-export const projectNoticeNavTabStateStore = atom<NavTabItem[]>({
+export const projectNoticeNavTabStateStore = atom<NoticeNavTabItem[]>({
     key: 'projectNoticeNavTabState',
     default: [
-        new ProjectNoticeNavTabItem(true, '/project/notice','전체'),
-        new ProjectNoticeNavTabItem(false, '/project/notice/recruit','모집'),
-        new ProjectNoticeNavTabItem(false, '/project/notice/task','업무'),
-        new ProjectNoticeNavTabItem(false, '/project/notice/crew','크루')
+        new ProjectNoticeNavTabItem(true,'ALL'),
+        new ProjectNoticeNavTabItem(false, 'RECRUIT'),
+        new ProjectNoticeNavTabItem(false, 'WORK'),
+        new ProjectNoticeNavTabItem(false, 'CREW')
     ]
 });
 
-export const currentProjectNoticeNavTabSelector = selector<NavTabItem>({
+export const currentProjectNoticeNavTabSelector = selector<NoticeNavTabItem>({
     key:'currentProjectNoticeNavTabSelector',
     get:({get}) => {
         const navTabs = get(projectNoticeNavTabStateStore);

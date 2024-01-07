@@ -1,12 +1,12 @@
 import {atom, selector} from "recoil";
-import {Notice, NoticeType, Position} from "@/utils/type";
+import {Notice, NoticeTypeKey, Position} from "@/utils/type";
 
 
 /**
  * 크루 알림 form 상태
  */
 export interface ProjectNoticeCrewFormState extends Notice {
-    type: NoticeType;
+    type: NoticeTypeKey;
     alertId: bigint;
     checkUserId: bigint;
     sendUserId: bigint;
@@ -28,7 +28,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
     position: Position | null;
     projectId: bigint;
     sendUserId: bigint;
-    type: NoticeType;
+    type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
 
@@ -80,7 +80,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
     position: Position | null;
     projectId: bigint;
     sendUserId: bigint;
-    type: NoticeType;
+    type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
 
@@ -133,7 +133,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
     position: Position | null;
     projectId: bigint;
     sendUserId: bigint;
-    type: NoticeType;
+    type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
 

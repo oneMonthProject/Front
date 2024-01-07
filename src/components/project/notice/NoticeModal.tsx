@@ -3,6 +3,11 @@ import React, {useEffect, useState} from 'react';
 import Modal from "@/components/ui/Modal";
 import NoticeItemDetail from "@/components/project/notice/noticeItemDetail/NoticeItemDetail";
 import {useRecoilValue, useResetRecoilState} from "recoil";
+import {
+    projectNoticeCurrentFormState,
+    projectNoticeModalStateSelector
+} from "@/store/project/notice/ProjectNoticeStateStore";
+import {createPortal} from "react-dom";
 
 function NoticeModal() {
     const {isOpen, title} = useRecoilValue(projectNoticeModalStateSelector);
@@ -50,12 +55,5 @@ function NoticeModal() {
     );
 }
 
-
-import {
-    projectNoticeCurrentFormState,
-    projectNoticeModalStateSelector
-} from "@/store/project/notice/ProjectNoticeStateStore";
-import {createPortal} from "react-dom";
-import {NoticeType} from "@/utils/type";
 
 export default NoticeModal;

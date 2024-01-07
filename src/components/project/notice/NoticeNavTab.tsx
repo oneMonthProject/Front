@@ -1,7 +1,7 @@
 'use client';
 import {useRecoilState, useRecoilValue} from "recoil";
-import React, {MouseEvent, useState} from "react";
-import {NavTabItem, SelectItem} from "@/utils/type";
+import React, {MouseEvent} from "react";
+import {NoticeNavTabItem, SelectItem} from "@/utils/type";
 import {
     currentProjectNoticeNavTabSelector,
     projectNoticeNavTabStateStore
@@ -16,16 +16,36 @@ function classNames(...classes: string[]) {
 
 export default function NoticeNavTab() {
     const [noticeNavTabs, setNoticeNavTabs] = useRecoilState(projectNoticeNavTabStateStore);
-    const [noticeNavSelect, setNoticeNavSelect] = useState<SelectItem | null>({name:'전체',value:'전체'});
     const currentNoticeNavTab = useRecoilValue(currentProjectNoticeNavTabSelector);
 
+    /**
+     * 태블릿/pc nav tab handler
+     * @param target
+     */
     function onClickHandler({target}: MouseEvent<HTMLElement>) {
-        const updatedNavTabs: NavTabItem[] = [];
+        const updatedNavTabs: NoticeNavTabItem[] = [];
 
         [...noticeNavTabs].forEach((v) => {
             updatedNavTabs.push({
                 ...v,
-                current: v.href === (target as HTMLElement).dataset.pathname
+                current: v.type_kor === (target as HTMLElement).textContent
+            });
+        });
+
+        setNoticeNavTabs(updatedNavTabs);
+    }
+
+    /**
+     * 모바일 nav select handler
+     * @param item
+     */
+    function onChangeSelectHandler(item: SelectItem) {
+        const updatedNavTabs: NoticeNavTabItem[] = [];
+
+        [...noticeNavTabs].forEach((v) => {
+            updatedNavTabs.push({
+                ...v,
+                current: v.type_kor === item.name
             });
         });
 
@@ -37,33 +57,38 @@ export default function NoticeNavTab() {
              aria-label="Sidebar">
             <ul role="list"
                 className="mobile:hidden tablet:-mx-2 tablet:space-y-1">
-                {noticeNavTabs.map((item) => (
-                        <li key={item.name}>
-                            <div
-                                key={item.name}
-                                className={classNames(
-                                    item.href === currentNoticeNavTab.href ? 'bg-gray-50 text-primary' : 'text-gray-700 hover:text-primary hover:bg-gray-50',
-                                    'group flex items-center rounded-md p-5 pl-3 text-xl text-center leading-6 font-medium cursor-pointer'
-                                )}
-                                data-pathname={item.href}
-                                onClick={onClickHandler}>
-                                {item.name}
-                            </div>
-                        </li>
-                    )
-                )}
+                {
+                    noticeNavTabs.map((item) => (
+                            <li key={item.type}>
+                                <div
+                                    className={classNames(
+                                        item.type_kor === currentNoticeNavTab.type_kor ? 'bg-gray-50 text-primary' : 'text-gray-700 hover:text-primary hover:bg-gray-50',
+                                        'group flex items-center rounded-md p-5 pl-3 text-xl text-center leading-6 font-medium cursor-pointer'
+                                    )}
+                                    onClick={onClickHandler}>
+                                    {item.type_kor}
+                                </div>
+                            </li>
+                        )
+                    )}
             </ul>
             <div className='mobile:block hidden'>
                 <Select
                     items={
                         noticeNavTabs.map(
                             v => {
-                                return {name: v.name, value: v.name}
+                                return {
+                                    name: v.type_kor,
+                                    value: v.type
+                                }
                             }
                         )}
                     label=''
-                    setValue={setNoticeNavSelect}
-                    value={noticeNavSelect}
+                    setValue={onChangeSelectHandler}
+                    value={{
+                        name: currentNoticeNavTab.type_kor,
+                        value: currentNoticeNavTab.type
+                    }}
                 />
             </div>
         </nav>
