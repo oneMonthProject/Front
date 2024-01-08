@@ -6,11 +6,9 @@ import Avatar from "@/components/ui/Avatar";
 import TaskCardMenu from "@/components/project/task/task/TaskCardMenu";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
-import TaskModal from "@/components/project/task/task/TaskModal";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteTask as deleteTaskAPI} from "@/service/project/task";
-import {snackbarState} from "@/store/MainStateStore";
-
+import {snackbarState} from '@/store/CommonStateStore';
 
 interface TaskCardProps {
     item: TaskItem;

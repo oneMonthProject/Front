@@ -3,11 +3,11 @@
 import CommonPagination from "@/components/ui/CommonPagination"
 import PostCard from "../postCard/PostCard"
 import { useRecoilValue } from "recoil";
-import { postSearchValue, selectedPositionState, selectedTechStackState } from "@/store/MainStateStore";
 import { useState } from "react";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { PageResponseBody, PostCardInfo } from "@/utils/type";
-import { getPostList } from "@/service/post";
+import { getPostList } from "@/service/post/post";
+import { postSearchValue, selectedPositionState, selectedTechStackState } from "@/store/post/PostStateStore";
 
 const PostList = () => {
   const selectedTechStacks = useRecoilValue(selectedTechStackState);
@@ -16,7 +16,7 @@ const PostList = () => {
   const [pageNumber, setPageNumber] = useState(0);
 
   const { data } = useSuspenseQuery<PageResponseBody<PostCardInfo[]>, Error>({
-    queryKey: ['postInfo', selectedTechStacks, selectedPosition, searchValue, pageNumber],
+    queryKey: ['postList', selectedTechStacks, selectedPosition, searchValue, pageNumber],
     queryFn: () => getPostList({ techStacks: selectedTechStacks, position: selectedPosition, keyword: searchValue, page: pageNumber })
   });
 
@@ -29,7 +29,7 @@ const PostList = () => {
           <PostCard key={info.boardId.toString()} postInfo={info} />
         ))}
       </div>
-      <CommonPagination activePage={pageNumber - 1} itemsCountPerPage={8} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={(page) => setPageNumber(page - 1)} />
+      <CommonPagination activePage={pageNumber + 1} itemsCountPerPage={8} totalItemsCount={totalPages} pageRangeDisplayed={5} onChangePageHandler={(page) => setPageNumber(page - 1)} />
     </>
   )
 }

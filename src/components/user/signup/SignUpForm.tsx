@@ -9,12 +9,12 @@ import TextArea from "@/components/ui/form/TextArea";
 import FormButton from "@/components/ui/form/FormButton";
 import NicknameField from "@/components/ui/form/NickNameField";
 import { SelectItem } from "@/utils/type";
-import { SignUpRequest, signUp } from "@/service/signup";
+import { SignUpRequest, signUp } from "@/service/user/signup";
 import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems, isValidEmail, isValidNickname, isValidPassword } from "@/utils/common";
 import { useSetRecoilState } from "recoil";
-import { snackbarState } from "@/store/MainStateStore";
 import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
+import { snackbarState } from "@/store/CommonStateStore";
 
 function SignUpForm() {
   const router = useRouter();

@@ -6,7 +6,7 @@ import { IoCreateOutline } from "@react-icons/all-files/io5/IoCreateOutline";
 import { getCookie } from 'cookies-next';
 import { useRouter } from 'next/navigation';
 import { useSetRecoilState } from 'recoil';
-import { snackbarState } from '@/store/MainStateStore';
+import { snackbarState } from '@/store/CommonStateStore';
 
 function RegisterNav() {
   const router = useRouter();

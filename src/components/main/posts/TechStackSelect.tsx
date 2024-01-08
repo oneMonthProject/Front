@@ -3,8 +3,8 @@ import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import { useRecoilState } from "recoil";
 import TechStackImage from "@/components/ui/TechStackImage";
-import { selectedTechStackState } from "@/store/MainStateStore";
 import { TechStackCategory, TechStackWithCategory } from "@/utils/type";
+import { selectedTechStackState } from "@/store/post/PostStateStore";
 
 interface TechStackSelectProps {
   categories: TechStackCategory[];
