@@ -1,4 +1,5 @@
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
+const publicURL = process.env.NEXT_PUBLIC_URL;
+
 export interface SignUpRequest {
   email: string;
   password: string;
@@ -9,7 +10,7 @@ export interface SignUpRequest {
 }
 
 export const signUp = async (signUpRequest: SignUpRequest) => {
-  const response = await fetch(`${baseURL}/api/user/public`, {
+  const response = await fetch(`${publicURL}/api/user/signup`, {
     method: "POST",
     body: JSON.stringify(signUpRequest),
     headers: {

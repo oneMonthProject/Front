@@ -2,12 +2,12 @@
 
 import React, { Suspense } from "react";
 import { useRecoilValue, useSetRecoilState } from "recoil";
-import { selectedPositionState } from "@/store/MainStateStore";
 import Search from "./Search";
 import PositionDropdown from "./PositionDropdown";
 import TechStackDropdown from "./TechStackDropdown";
 import PostList from "./PostList";
 import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
+import { selectedPositionState } from "@/store/post/PostStateStore";
 
 const Posts = () => {
   const selectedPosition = useRecoilValue(selectedPositionState);

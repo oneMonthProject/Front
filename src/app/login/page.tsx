@@ -8,7 +8,7 @@ function LoginPage() {
       <h1 className='text-3xl mobile:text-2xl font-semibold w-full text-center mb-10'>로그인</h1>
       <LoginForm />
       <div className="text-center text-sm mobile:text-xs mt-3">
-        이미 회원이신가요?
+        회원이 아니신가요?
         <Link href='/signup'>
           <span className="ml-1 underline text-blue-600">회원가입</span>
         </Link>

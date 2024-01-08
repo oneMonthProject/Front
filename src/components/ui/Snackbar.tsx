@@ -3,9 +3,9 @@ import { Fragment, useEffect } from 'react'
 import { Transition } from '@headlessui/react'
 import { RiCloseFill } from "@react-icons/all-files/ri/RiCloseFill";
 import { useRecoilValue, useResetRecoilState } from 'recoil';
-import { snackbarState } from '@/store/MainStateStore';
 import { classNames } from '@/utils/common';
 import { SnackbarType } from '@/utils/type';
+import { snackbarState } from '@/store/CommonStateStore';
 
 export default function Snackbar() {
   const state = useRecoilValue(snackbarState);

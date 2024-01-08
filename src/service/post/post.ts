@@ -2,7 +2,6 @@ import { PositionItem, TechStackWithCategory } from "@/utils/type";
 import { isEqual } from "lodash";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
-const baseUrl = process.env.NEXT_PUBLIC_BACKEND;
 
 export interface SearchParams {
   techStacks: TechStackWithCategory[];
@@ -35,7 +34,7 @@ export interface CreatePostInfo {
 const createQueryParams = (params: SearchParams) => {
   const { techStacks, position, keyword, page } = params;
   const queryParams = new URLSearchParams();
-  
+
   techStacks.forEach((stack) =>
     queryParams.append("technologyIds", stack.techStackId.toString())
   );
@@ -52,28 +51,13 @@ const createQueryParams = (params: SearchParams) => {
 
 export const getPostList = async (params: SearchParams) => {
   const queryParams = createQueryParams(params);
-
-  const response = await fetch(
-    `${baseUrl}/api/board/search/public?${queryParams}`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${publicURL}/api/post/search?${queryParams}`);
 
   return await response.json();
 };
 
-export const getPostDetail = async (postId: string) => {
-  const response = await fetch(`${baseUrl}/api/board/${postId}/public`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
+export const getPost = async (postId: string) => {
+  const response = await fetch(`${publicURL}/api/post?postId=${postId}`);
   return await response.json();
 };
 

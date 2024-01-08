@@ -11,13 +11,13 @@ import FormButton from "@/components/ui/form/FormButton";
 import { SelectItem } from "@/utils/type";
 import { getPositionSelectItem, getPositionSelectItems, getSelectItemValue, getTechStackSelectItems, isValidNickname } from "@/utils/common";
 import { useProfileInfo } from "@/hooks/useProfileInfo";
-import { updateUser, updateUserInfo } from "@/service/user";
+import { updateUser, updateUserInfo, updateUserProfileImg } from "@/service/user/user";
 import { useSetRecoilState } from "recoil";
-import { snackbarState } from "@/store/MainStateStore";
 import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { isEqual } from "lodash";
+import { snackbarState } from "@/store/CommonStateStore";
 
 function ProfileForm() {
   const queryClient = useQueryClient();
@@ -106,6 +106,11 @@ function ProfileForm() {
 
       setSelectedImage(file);
       setImageSrc(URL.createObjectURL(file));
+
+      updateUserProfileImg(file).then(res => {
+        console.log("res", res);
+        
+      })
     }
   };
 

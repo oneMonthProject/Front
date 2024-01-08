@@ -12,11 +12,11 @@ import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
 import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems } from "@/utils/common";
 import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { CreatePostInfo, createPost } from "@/service/post";
+import { CreatePostInfo, createPost } from "@/service/post/post";
 import { isEqual } from "lodash";
 import { useSetRecoilState } from "recoil";
-import { snackbarState } from "@/store/MainStateStore";
-import { getTrustGradeListByUser } from "@/service/user";
+import { getTrustGradeListByUser } from "@/service/user/user";
+import { snackbarState } from "@/store/CommonStateStore";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -50,7 +50,7 @@ function RegisterForm() {
       const { message, result } = data;
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });
-        queryClient.invalidateQueries({ queryKey: ['postInfo'] });
+        queryClient.invalidateQueries({ queryKey: ['postList'] });
         queryClient.invalidateQueries({ queryKey: ['myProjectList'] });
 
         goHome();

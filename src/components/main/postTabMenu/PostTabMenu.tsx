@@ -1,8 +1,8 @@
 'use client';
 import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
-import { activeTabState } from "@/store/MainStateStore";
 import { hasCookie } from "cookies-next";
+import { activeTabState } from "@/store/post/PostStateStore";
 
 const PostTabMenu = () => {
   const [isMyProjectPostsTab, setIsMyProjectPostsTab] = useRecoilState(activeTabState);

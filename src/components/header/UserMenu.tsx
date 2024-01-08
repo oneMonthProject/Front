@@ -7,12 +7,13 @@ import { DropDownItem } from "@/utils/type";
 import { ResponseBody } from '@/utils/type';
 import { useMutation, useSuspenseQuery } from '@tanstack/react-query';
 import Avatar from '@/components/ui/Avatar';
-import { logout } from '@/service/logout';
-import { getSimpleUser } from '@/service/user';
+import { logout } from '@/service/user/logout';
+import { getSimpleUser } from '@/service/user/user';
 import { useRouter } from 'next/navigation';
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
-import { activeTabState, snackbarState } from '@/store/MainStateStore';
 import { isEqual } from 'lodash';
+import { activeTabState } from '@/store/post/PostStateStore';
+import { snackbarState } from '@/store/CommonStateStore';
 
 interface UserBasicInfo {
   nickname: string;

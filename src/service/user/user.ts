@@ -1,5 +1,7 @@
 import authApi from "@/utils/authApi";
 
+const publicURL = process.env.NEXT_PUBLIC_URL;
+
 export interface updateUserInfo {
   id: bigint;
   nickname: string;
@@ -8,21 +10,9 @@ export interface updateUserInfo {
   intro: string;
 }
 
-const publicURL = process.env.NEXT_PUBLIC_URL;
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
-const isTest = process.env.NEXT_PUBLIC_API_MOCKING === "true";
-
-const request = async (url: string, props: RequestInit) => {
-  if (isTest) {
-    return await fetch(`${baseURL}${url}`, props);
-  } else {
-    return await authApi(url, props);
-  }
-};
-
 export const checkNickname = async (nickname: string) => {
   const response = await fetch(
-    `${baseURL}/api/user/check-nickname/${nickname}/public`
+    `${publicURL}/api/user/nickname?nickname=${nickname}`
   );
   return response.json();
 };
@@ -49,10 +39,13 @@ export const updateUser = async (updateData: updateUserInfo) => {
   return response.json();
 };
 
-export const updateUserProfileImg = async (image: File) => {
-  const response = await request("/api/user/me/profile-img", {
+export const updateUserProfileImg = async (file: File) => {
+  const formData = new FormData();
+  formData.append("file", file);
+
+  const response = await authApi("/api/user/me/profile-img", {
     method: "POST",
-    body: image,
+    body: file,
     headers: {
       "Content-Type": "multipart/form-data",
     },

@@ -1,11 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
-import { selectedTechStackState } from "@/store/MainStateStore";
 import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
 import TechStackSelect from "./TechStackSelect";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ResponseBody, TechStackCategory, TechStackWithCategory } from "@/utils/type";
 import { getTechStackCategoryList, getTechStackListWithCategory } from "@/service/setting";
+import { selectedTechStackState } from "@/store/post/PostStateStore";
 
 const TechStackDropdown = () => {
   const selectedTechStacks = useRecoilValue(selectedTechStackState);

@@ -3,7 +3,7 @@ import React, {Suspense} from 'react';
 import MyProjectPosts from "@/components/main/myProjectPost/MyProjectPosts";
 import Posts from "@/components/main/posts/Posts";
 import {useRecoilValue} from "recoil";
-import {activeTabState} from "@/store/MainStateStore";
+import { activeTabState } from '@/store/post/PostStateStore';
 
 function PostTabContents() {
     const isMyProjectPostsTab = useRecoilValue(activeTabState);

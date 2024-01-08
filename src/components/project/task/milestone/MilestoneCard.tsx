@@ -14,7 +14,7 @@ import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
 import {useMutation} from "@tanstack/react-query";
 import {useQueryClient} from "@tanstack/react-query";
-import {snackbarState} from "@/store/MainStateStore";
+import {snackbarState} from '@/store/CommonStateStore';
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;

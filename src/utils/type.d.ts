@@ -59,6 +59,11 @@ interface ModalState {
     isOpen: boolean;
 }
 
+export interface ConfirmModalState extends ModalState {
+    content: string | React.JSX.Element;
+    onClickConfirmHandler: () => void;
+}
+
 export interface MilestoneInfo {
     mileStoneId: bigint;
     projectId: bigint;
@@ -96,7 +101,7 @@ interface TrustGradeItem {
 }
 
 export interface PositionItem {
-    positionId: string | bigint;
+    positionId: bigint;
     positionName: string;
 }
 

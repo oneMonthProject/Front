@@ -7,8 +7,7 @@ import {createPortal} from "react-dom";
 import TaskModalContent from './TaskModalContent';
 import {upsertTask as upsertTaskApi} from "@/service/project/task";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {snackbarState} from "@/store/MainStateStore";
-
+import {snackbarState} from '@/store/CommonStateStore';
 
 function TaskModal() {
   const setSnackbar = useSetRecoilState(snackbarState);
