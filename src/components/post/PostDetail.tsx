@@ -7,14 +7,14 @@ import ButtonSection from "./buttonSection/ButtonSection";
 import {useQueryString} from "@/hooks/useQueryString";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ResponseBody, PostDetailInfo } from "@/utils/type";
-import { getPostDetail } from "@/service/post";
+import { getPost } from "@/service/post/post";
 
 const PostDetail = () => {
   const postId = useQueryString('postId');
   
   const { data } = useSuspenseQuery<ResponseBody<PostDetailInfo>, Error>({
-    queryKey: ['postDetail', postId],
-    queryFn: () => getPostDetail(postId)
+    queryKey: ['postInfo', postId],
+    queryFn: () => getPost(postId)
   });
 
   const { board, project } = data.data;
@@ -24,7 +24,7 @@ const PostDetail = () => {
       <TitleSection boardInfo={board} />
       <InfoSection projectInfo={project} contact={board.contact} boardPositions={board.boardPositions} />
       <BodySection content={board.content} />
-      <ButtonSection boardInfo={board} />
+      <ButtonSection projectId={project.projectId} boardInfo={board} />
     </div>
   );
 };

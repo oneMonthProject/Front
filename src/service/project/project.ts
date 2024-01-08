@@ -18,4 +18,10 @@ export async function getMyProjectDetail(projectId: string | bigint) {
     return await request('GET', `/api/project/detail?projectId=${projectId}`)
 }
 
-
+/**
+ * 프로젝트 참여 요청
+ * @param projectId
+ */
+export async function requestParticipateProject(projectId: bigint, positionId: bigint) {
+    return await request('POST', `/api/project/participate?projectId=${projectId}`, { positionId });
+}
