@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import PostDetail from "@/components/post/PostDetail";
-import PostModal from "@/components/post/PostModal";
+import ConfirmModal from "@/components/ui/ConfirmModal";
 
 const PostDetailPage = () => {
   return (
@@ -8,7 +8,7 @@ const PostDetailPage = () => {
       <Suspense fallback={<div>Loading...</div>}>
         <PostDetail />
       </Suspense>
-      <PostModal />
+      <ConfirmModal />
     </>
   );
 };

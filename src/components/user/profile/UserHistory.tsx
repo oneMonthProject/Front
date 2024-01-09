@@ -6,7 +6,7 @@ import { BiUndo } from "@react-icons/all-files/bi/BiUndo";
 import { BiCheck } from "@react-icons/all-files/bi/BiCheck";
 import { BiX } from "@react-icons/all-files/bi/BiX";
 import CommonPagination from "@/components/ui/CommonPagination";
-import { getUserProjectHistory } from "@/service/user";
+import { getUserProjectHistory } from "@/service/user/user";
 import { classNames } from "@/utils/common";
 import { PageResponseBody, ProjectHistoryStatus, UserProjectHistory } from "@/utils/type";
 import { useSuspenseQuery } from "@tanstack/react-query";

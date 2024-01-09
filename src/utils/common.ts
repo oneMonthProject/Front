@@ -1,6 +1,6 @@
 import {MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
 import {format} from "date-fns";
-import _ from "lodash";
+import _, { camelCase } from "lodash";
 
 export function makeBadgeSize(size: string) {
     // 사이즈
@@ -238,4 +238,24 @@ export function getTodayString() {
     ];
 
     return strArr.join('-');
+}
+
+export function getRefreshToken(setCookieHeader: string) {
+    let refreshTokenValue = "";
+    let cookieOptions = {};
+    setCookieHeader.split(";").map((item) => {
+        const cookieItem = item.trim().split("=");
+        if (cookieItem.includes("Refresh")) {
+            refreshTokenValue = cookieItem[1];
+        } else {
+            const optionName = camelCase(cookieItem[0]);
+            const optionValue = cookieItem[1] ?? true;
+            cookieOptions = {
+            ...cookieOptions,
+            [optionName]: optionValue,
+            };
+        }
+    });
+
+    return { token: refreshTokenValue, options: cookieOptions };
 }

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import authApi from "@/utils/authApi";
+import publicApi from "@/utils/publicApi";
 
 export async function GET(
   req: NextRequest,
@@ -17,6 +18,9 @@ export async function GET(
     );
   } else if (params.slug === "trust-grade") {
     res = await authApi("/api/trust-grade/me");
+  } else if (params.slug === "nickname") {
+    const nickname = searchParams.get("nickname");
+    res = await publicApi(`/api/user/check-nickname/${nickname}/public`);
   } else {
     throw Error("Unknown Api Route");
   }

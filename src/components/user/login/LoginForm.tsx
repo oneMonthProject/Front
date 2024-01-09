@@ -3,13 +3,13 @@ import React, { useState } from "react";
 import Input from "@/components/ui/form/Input";
 import PasswordInput from "@/components/ui/form/PasswordInput";
 import FormButton from "@/components/ui/form/FormButton";
-import { login } from "@/service/login";
+import { login } from "@/service/user/login";
 import { setCookie } from "cookies-next";
 import { useRouter } from "next/navigation";
 import { useSetRecoilState } from "recoil";
-import { snackbarState } from "@/store/MainStateStore";
 import { isValidEmail } from "@/utils/common";
 import { isEqual } from "lodash";
+import { snackbarState } from "@/store/CommonStateStore";
 
 function LoginForm() {
   const router = useRouter();

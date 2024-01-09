@@ -1,10 +1,10 @@
 'use client';
 import { InputHTMLAttributes } from "react";
 import { useSetRecoilState } from "recoil";
-import { checkNickname } from "@/service/user";
-import { snackbarState } from "@/store/MainStateStore";
+import { checkNickname } from "@/service/user/user";
 import { isEqual } from "lodash";
 import { isValidNickname } from "@/utils/common";
+import { snackbarState } from "@/store/CommonStateStore";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
