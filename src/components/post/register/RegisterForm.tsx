@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from "react";
+import React, { Suspense, useState } from "react";
 import { useRouter } from 'next/navigation';
 import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
@@ -7,16 +7,16 @@ import Button from "@/components/ui/Button";
 import Input from "@/components/ui/form/Input";
 import TextArea from "@/components/ui/form/TextArea";
 import CalendarInput from "@/components/ui/form/CalendarInput";
-import { ResponseBody, SelectItem, TrustGradeItem } from "@/utils/type";
-import { usePositionList } from "@/hooks/usePositionList";
-import { useTechStackList } from "@/hooks/useTechStackList";
-import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems } from "@/utils/common";
-import { useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
+import { SelectItem } from "@/utils/type";
+import { getSelectItemValue } from "@/utils/common";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { CreatePostInfo, createPost } from "@/service/post/post";
 import { isEqual } from "lodash";
 import { useSetRecoilState } from "recoil";
-import { getTrustGradeListByUser } from "@/service/user/user";
 import { snackbarState } from "@/store/CommonStateStore";
+import TrustGradeSelect from "./TrustGradeSelect";
+import TechStackSelect from "./TechStackSelect";
+import MultiPositionSelect from "./MultiPositionSelect";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -37,13 +37,6 @@ function RegisterForm() {
   const queryClient = useQueryClient();
   const setSnackbar = useSetRecoilState(snackbarState);
 
-  const positionList = usePositionList();
-  const techStackList = useTechStackList();
-  const { data } = useSuspenseQuery<ResponseBody<TrustGradeItem[]>, Error>({
-    queryKey: ['trustGradeListByUser'],
-    queryFn: () => getTrustGradeListByUser()
-  });
-  const { data: trustGradeList } = data;
   const { mutate } = useMutation({
     mutationFn: (createData: CreatePostInfo) => createPost(createData),
     onSuccess: (data) => {
@@ -74,17 +67,6 @@ function RegisterForm() {
   const [techStacks, setTechStacks] = useState<SelectItem[]>([]);
   const [contact, setContact] = useState("");
   const [projectInfo, setProjectInfo] = useState("");
-
-  const getTrustGradeSelectItems = (items: TrustGradeItem[]) => {
-    if (items.length > 0) {
-      return items.map(
-        (item) =>
-          ({ value: item.trustGradeId, name: item.trustGradeName } as SelectItem)
-      );
-    }
-
-    return [];
-  }
 
   const isValid = () => {
     if (title === "") {
@@ -179,16 +161,22 @@ function RegisterForm() {
             value={projectName} onChange={(e) => setProjectName(e.target.value)} />
           <Input id="projectSubject" label="프로젝트 주제" placeholder="주제를 입력해주세요."
             value={projectSubject} onChange={(e) => setProjectSubject(e.target.value)} />
-          <Select value={trustGrade} setValue={setTrustGrade} items={getTrustGradeSelectItems(trustGradeList)} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />
+          <Suspense fallback={<Select value={null} setValue={() => null} items={[]} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />}>
+            <TrustGradeSelect trustGrade={trustGrade} setTrustGrade={setTrustGrade} />
+          </Suspense>
           <Select value={recruitmentCount} setValue={setRecruitmentCount} items={recruitmentCountList} label="모집 인원" placeholder="모집 인원을 선택해주세요." />
-          <MultiSelect values={positions} setValues={setPositions} items={getPositionSelectItems(positionList)} label="모집 분야" placeholder="모집 분야를 선택해주세요." />
+          <Suspense fallback={<Select value={null} setValue={() => null} items={[]} label="모집 분야" placeholder="모집 분야를 선택해주세요." />}>
+            <MultiPositionSelect positions={positions} setPositions={setPositions} />
+          </Suspense>
         </div>
         <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
           <CalendarInput id="startDate" label="시작 날짜" placeholder="날짜를 선택해주세요."
             date={startDate} setDate={setStartDate} />
           <CalendarInput id="endDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
             date={endDate} setDate={setEndDate} />
-          <MultiSelect values={techStacks} setValues={setTechStacks} items={getTechStackSelectItems(techStackList)} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
+          <Suspense fallback={<MultiSelect values={[]} setValues={() => null} items={[]} label="사용 스택" placeholder="사용 스택을 선택해주세요." />}>
+            <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} />
+          </Suspense>
           <Input id="contact" label="연락 방법" placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
             value={contact} onChange={(e) => setContact(e.target.value)} />
         </div>
