@@ -20,10 +20,10 @@ const PostCard = ({ postInfo }: { postInfo: PostCardInfo }) => {
         <div className="mt-2 text-xs">
           {`${project.startDate} ~ ${project.endDate}`}
         </div>
-        <div className="text-sm mt-2 font-bold text-grey800">
+        <div className="text-sm mt-2 font-bold text-grey800 truncate">
           {`주제 | ${project.subject}`}
         </div>
-        <div className="text-xl font-bold mt-2">{boardTitle}</div>
+        <div className="text-xl font-bold mt-2 truncate">{boardTitle}</div>
         <div className="flex gap-1 mt-2">
           {boardPositions.length > 0 && boardPositions.map((boardPosition) => {
             const { positionId, name } = boardPosition.position;

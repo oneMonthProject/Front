@@ -6,12 +6,12 @@ import TechStackImage from "@/components/ui/TechStackImage";
 import { TechStackCategory, TechStackWithCategory } from "@/utils/type";
 import { selectedTechStackState } from "@/store/post/PostStateStore";
 
-interface TechStackSelectProps {
+interface TechStackDropdownListProps {
   categories: TechStackCategory[];
   items: TechStackWithCategory[];
 }
 
-const TechStackSelect = ({ categories, items }: TechStackSelectProps) => {
+const TechStackDropdownList = ({ categories, items }: TechStackDropdownListProps) => {
   const [selectedCategory, setSelectedCategory] = useState<TechStackCategory>(categories[0]);
   const [selectedTechStacks, setSelectedTechStacks] = useRecoilState(selectedTechStackState);
   const [isMobile, setIsMobile] = useState(false);
@@ -149,4 +149,4 @@ const TechStackSelect = ({ categories, items }: TechStackSelectProps) => {
   )
 }
 
-export default TechStackSelect;
+export default TechStackDropdownList;
