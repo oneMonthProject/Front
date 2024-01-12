@@ -14,31 +14,31 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
   const { name: projectName, subject, trustGrade, startDate, endDate, crewNumber, technologyStacks } = projectInfo;
 
   return (
-    <div className="py-10 mobile:py-4 px-2 grid gap-x-1 grid-cols-2 text-xl font-bold gap-y-6 auto-rows-auto mobile:text-sm mobile:grid-cols-1 mobile:gap-y-0">
-      <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">프로젝트 이름</span>
-        <span>{projectName}</span>
+    <div className="py-10 mobile:py-4 px-2 grid gap-x-1 grid-cols-2 text-xl gap-y-6 auto-rows-auto mobile:text-sm mobile:grid-cols-1 mobile:gap-y-0">
+      <div className="flex gap-5 h-10 items-center break-words">
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">프로젝트 이름</div>
+        <div className="w-[calc(100%-130px)] line-clamp-2">{projectName}</div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">시작 예정</span>
-        <span>{startDate}</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">시작 예정</div>
+        <div className="w-[calc(100%-110px)]">{startDate}</div>
+      </div>
+      <div className="flex gap-5 h-10 items-center break-words">
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">프로젝트 주제</div>
+        <div className="w-[calc(100%-130px)] line-clamp-2">{subject}</div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 whitespace-nowrap w-[110px] mobile:w-[80px] text-center">프로젝트 주제</span>
-        <span>{subject}</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">종료 예정</div>
+        <div>{endDate}</div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">종료 예정</span>
-        <span>{endDate}</span>
-      </div>
-      <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">프로젝트 등급</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">프로젝트 등급</div>
         <div>
           <TrustGradeBadge size="xs" text={trustGrade.name} />
         </div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 whitespace-nowrap w-[110px] mobile:w-[80px] text-center">사용 스택</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">사용 스택</div>
         <div className="flex gap-1 items-center">
           {technologyStacks.map(stack => (
             <div key={stack.techStackId.toString()} className="w-8 h-8 mobile:w-6 mobile:h-6">
@@ -48,15 +48,15 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
         </div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">모집 인원</span>
-        <span>{crewNumber > 0 ? `${crewNumber}명` : "인원미정"}</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">모집 인원</div>
+        <div>{crewNumber > 0 ? `${crewNumber}명` : "인원미정"}</div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 whitespace-nowrap w-[110px] mobile:w-[80px] text-center">연락 방법</span>
-        <span>{contact}</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">연락 방법</div>
+        <div className="w-[calc(100%-130px)] line-clamp-1">{contact}</div>
       </div>
       <div className="flex gap-5 h-10 items-center">
-        <span className="text-grey800 w-[110px] mobile:w-[80px] text-center">모집 분야</span>
+        <div className="text-grey800 w-[110px] mobile:w-[80px] text-center whitespace-nowrap font-bold">모집 분야</div>
         <div className="flex gap-1 items-center">
           {boardPositions.length > 0 && boardPositions.map(boardPosition => {
             const { positionId, name } = boardPosition.position;

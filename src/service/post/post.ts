@@ -72,3 +72,14 @@ export const createPost = async (createData: CreatePostInfo) => {
 
   return response.json();
 };
+
+export const changeRecruitmentStatus = async (boardId: bigint) => {
+  const response = await fetch(
+    `${publicURL}/api/post/recruitment-status?boardId=${boardId}`,
+    {
+      method: "PATCH",
+    }
+  );
+
+  return response.json();
+};
