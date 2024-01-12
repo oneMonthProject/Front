@@ -4,8 +4,10 @@ import logo from '../../../public/images/logo.png';
 import Link from "next/link";
 import RegisterNav from "@/components/header/RegisterNav";
 import { getCookie } from 'cookies-next';
-import UserMenu from './UserMenu';
 import { cookies } from "next/headers";
+import UserMenu from './UserMenu';
+import AvatarSkeleton from '../ui/skeleton/AvatarSkeleton';
+import Skeleton from '../ui/skeleton/Skeleton';
 
 function Header() {
   const userId = getCookie("user_id", { cookies });
@@ -24,7 +26,12 @@ function Header() {
           </li>
           {
             userId ? (
-              <Suspense fallback={<div>Loading...</div>}>
+              <Suspense fallback={(
+                <div className='flex space-x-1'>
+                  <AvatarSkeleton size="2xs" className='mobile:hidden' />
+                  <Skeleton sizeClassName="w-[110px] h-[24px] mobile:w-[60px]" />
+                </div>
+              )}>
                 <UserMenu />
               </Suspense>
             ) : (

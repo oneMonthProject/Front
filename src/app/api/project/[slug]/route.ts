@@ -38,7 +38,7 @@ export async function POST(
     const method = req.method;
     
     let res: Response;
-    if (params.slug === 'participate') {
+    if (params.slug === 'participation') {
         const { searchParams } = new URL(req.url);
         const projectId = searchParams.get("projectId");
         const requestData = await req.json();

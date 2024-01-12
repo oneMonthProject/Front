@@ -9,7 +9,7 @@ import { isEqual } from "lodash";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { confirmModalState, snackbarState } from "@/store/CommonStateStore";
 import { useMutation } from "@tanstack/react-query";
-import { requestParticipateProject } from "@/service/project/project";
+import { requestParticipationProject } from "@/service/project/project";
 
 const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo: PostInfo }) => {
   const setModalState = useSetRecoilState(confirmModalState);
@@ -24,7 +24,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   const [position, setPosition] = useState<PositionItem | null>(null);
 
   const { mutate } = useMutation({
-    mutationFn: (positionId: bigint) => requestParticipateProject(projectId, positionId),
+    mutationFn: (positionId: bigint) => requestParticipationProject(projectId, positionId),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
@@ -54,7 +54,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
     // api 구현되면 연결
   }
 
-  const requestParticipate = () => {
+  const requestParticipation = () => {
     if (position) {
       mutate(position?.positionId);
     }
@@ -71,7 +71,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
     const title = "확인";
     const content = <span><span className='font-bold'>{position?.positionName}</span> 포지션으로 참여요청 하시겠습니까?</span>;
 
-    setModalState({ isOpen: true, title, content, onClickConfirmHandler: requestParticipate });
+    setModalState({ isOpen: true, title, content, onClickConfirmHandler: requestParticipation });
   }
 
   const handleClick = () => {

@@ -60,7 +60,7 @@ function UserMenu() {
     }
   });
 
-  const isDesktop = useMediaQuery({ query: '(min-width: 361px)' });
+  const isDesktop = useMediaQuery({ query: '(min-width: 376px)' });
   const items: DropDownItem[] = [
     new UserMenuItem('내 프로필', '/user/profile'), new UserMenuItem('로그아웃', '/user/logout', () => mutate())
   ]
