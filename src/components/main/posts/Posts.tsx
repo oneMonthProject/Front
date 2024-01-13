@@ -8,6 +8,7 @@ import TechStackDropdown from "./TechStackDropdown";
 import PostList from "./PostList";
 import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
 import { selectedPositionState } from "@/store/post/PostStateStore";
+import PostListSkeleton from "../PostListSkeleton";
 
 const Posts = () => {
   const selectedPosition = useRecoilValue(selectedPositionState);
@@ -29,7 +30,7 @@ const Posts = () => {
           </Suspense>
           <Suspense fallback={(
             <div className="px-4 flex justify-between w-[150px] h-[40px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer">
-              <div className="text-lg text-grey800 mobile:text-sm">
+              <div className="text-base text-grey800 mobile:text-sm">
                 {"포지션"}
               </div>
               <BsChevronDown className="w-4 h-4 text-grey800" />
@@ -40,7 +41,7 @@ const Posts = () => {
         </div>
         <Search />
       </div>
-      <Suspense fallback={<div>Loading...</div>}>
+      <Suspense fallback={<PostListSkeleton itemCount={8} />}>
         <PostList />
       </Suspense>
     </div>

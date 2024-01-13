@@ -14,16 +14,16 @@ const PostCard = ({ postInfo }: { postInfo: PostCardInfo }) => {
     <div className="p-3 flex-col w-[280px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2">
       <Link href={`/post?postId=${boardId}`}>
         <div className="flex">
-          <div className="font-bold text-base mr-3">{project.name}</div>
+          <div className="text-base mr-3 max-w-[180px] truncate">{project.name}</div>
           <TrustGradeBadge size="xs" text={project.trustGrade.name} />
         </div>
         <div className="mt-2 text-xs">
           {`${project.startDate} ~ ${project.endDate}`}
         </div>
-        <div className="text-sm mt-2 font-bold text-grey800">
+        <div className="text-sm mt-2 font-bold text-grey800 truncate">
           {`주제 | ${project.subject}`}
         </div>
-        <div className="text-xl font-bold mt-2">{boardTitle}</div>
+        <div className="text-xl font-bold mt-2 truncate">{boardTitle}</div>
         <div className="flex gap-1 mt-2">
           {boardPositions.length > 0 && boardPositions.map((boardPosition) => {
             const { positionId, name } = boardPosition.position;

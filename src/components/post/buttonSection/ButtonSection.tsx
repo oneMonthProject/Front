@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "@/components/ui/Button";
 import PositionDropdown from "@/components/main/posts/PositionDropdown";
 import { PositionItem, PostInfo } from "@/utils/type";
@@ -8,28 +8,48 @@ import { getCookie } from "cookies-next";
 import { isEqual } from "lodash";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { confirmModalState, snackbarState } from "@/store/CommonStateStore";
-import { useMutation } from "@tanstack/react-query";
-import { requestParticipationProject } from "@/service/project/project";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { requestParticipationProject as requestParticipationProjectAPI } from "@/service/project/project";
+import { changeRecruitmentStatus as changeRecruitmentStatusAPI } from "@/service/post/post";
 
 const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo: PostInfo }) => {
+  const queryClient = useQueryClient();
+
   const setModalState = useSetRecoilState(confirmModalState);
   const resetModalState = useResetRecoilState(confirmModalState);
   const setSnackbar = useSetRecoilState(snackbarState);
+  const [mounted, setMounted] = useState<boolean>(false);
 
-  const { boardPositions, completeStatus, user } = boardInfo;
+  const { boardId, boardPositions, completeStatus, user } = boardInfo;
   const currentUserId = getCookie("user_id");
   const isOwner = isEqual(currentUserId?.toString(), user.userId.toString());
   const isComplete = isEqual(completeStatus, true);
 
   const [position, setPosition] = useState<PositionItem | null>(null);
 
-  const { mutate } = useMutation({
-    mutationFn: (positionId: bigint) => requestParticipationProject(projectId, positionId),
+  const { mutate: requestParticipationProject } = useMutation({
+    mutationFn: (positionId: bigint) => requestParticipationProjectAPI(projectId, positionId),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });
         resetModalState();
+      } else {
+        setSnackbar({ show: true, type: "ERROR", content: message });
+      }
+    },
+    onError: (err) => {
+      console.log("err", err);
+    }
+  });
+
+  const { mutate: changeRecruitmentStatus } = useMutation({
+    mutationFn: () => changeRecruitmentStatusAPI(boardId),
+    onSuccess: (data) => {
+      const { message, result } = data;
+      if (isEqual(result, "success")) {
+        setSnackbar({ show: true, type: "SUCCESS", content: message });
+        queryClient.invalidateQueries({ queryKey: ['postInfo', boardId] });
       } else {
         setSnackbar({ show: true, type: "ERROR", content: message });
       }
@@ -51,12 +71,12 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   }
 
   const changeStatus = () => {
-    // api 구현되면 연결
+    changeRecruitmentStatus();
   }
 
   const requestParticipation = () => {
     if (position) {
-      mutate(position?.positionId);
+      requestParticipationProject(position?.positionId);
     }
   }
 
@@ -86,19 +106,27 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
     }
   }
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="flex-col mb-5">
-      {isOwner ? (
-        <div className="flex justify-center mt-5 space-x-2">
-          <Button type="button" size="lg" theme={isComplete ? "primary-hollow" : "disabled"} disabled={!isComplete} onClickHandler={openStatusModal}>모집중</Button>
-          <Button type="button" size="lg" theme={isComplete ? "disabled" : "primary-hollow"} disabled={isComplete} onClickHandler={openStatusModal}>모집완료</Button>
-        </div>
-      ) : (
-        <div className="flex justify-center gap-5 mt-5">
-          <PositionDropdown items={getPositionSelectItems()} value={position} setValue={setPosition} direction="up" />
-          <Button type="button" size="lg" onClickHandler={handleClick}>참여하기</Button>
-        </div>
-      )}
+      {
+        mounted ? (
+          isOwner ? (
+            <div className="flex justify-center mt-5 space-x-2">
+              <Button type="button" size="lg" theme={isComplete ? "primary-hollow" : "disabled"} disabled={!isComplete} onClickHandler={openStatusModal}>모집중</Button>
+              <Button type="button" size="lg" theme={isComplete ? "disabled" : "primary-hollow"} disabled={isComplete} onClickHandler={openStatusModal}>모집완료</Button>
+            </div>
+          ) : (
+            <div className="flex justify-center gap-5 mt-5">
+              <PositionDropdown items={getPositionSelectItems()} value={position} setValue={setPosition} direction="up" />
+              <Button type="button" size="lg" onClickHandler={handleClick}>참여하기</Button>
+            </div>
+          )
+        ) : null
+      }
     </div>
   );
 };

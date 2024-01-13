@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { BsChevronDown } from "@react-icons/all-files/bs/BsChevronDown";
-import TechStackSelect from "./TechStackSelect";
+import TechStackDropdownList from "./TechStackDropdownList";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { ResponseBody, TechStackCategory, TechStackWithCategory } from "@/utils/type";
 import { getTechStackCategoryList, getTechStackListWithCategory } from "@/service/setting";
@@ -56,7 +56,7 @@ const TechStackDropdown = () => {
         </div>
         <BsChevronDown className="w-4 h-4 text-grey800" />
       </div>
-      {openDropdown && <TechStackSelect categories={categoryResponse.data} items={techStackResponse.data} />}
+      {openDropdown && <TechStackDropdownList categories={categoryResponse.data} items={techStackResponse.data} />}
     </div>
   );
 };
