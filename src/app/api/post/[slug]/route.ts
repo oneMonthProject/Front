@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import publicApi from "@/utils/publicApi";
+import authApi from "@/utils/authApi";
 
 export async function GET(
   req: NextRequest,
@@ -25,7 +26,7 @@ export async function PATCH(
   if (params.slug === "recruitment-status") {
     const { searchParams } = new URL(req.url);
     const boardId = searchParams.get("boardId");
-    res = await publicApi(`/api/board/${boardId}/recruitment-status`, {
+    res = await authApi(`/api/board/${boardId}/recruitment-status`, {
       method: req.method,
     });
   } else {
