@@ -56,7 +56,7 @@ export const getPostList = async (params: SearchParams) => {
   return await response.json();
 };
 
-export const getPost = async (postId: string) => {
+export const getPost = async (postId: bigint) => {
   const response = await fetch(`${publicURL}/api/post?postId=${postId}`);
   return await response.json();
 };

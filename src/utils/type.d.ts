@@ -290,7 +290,7 @@ interface PostInfo {
     title: string;
     content: string;
     pageView: number;
-    completeStatus: boolean;
+    recruitmentStatus: boolean;
     user: PostDetailUserInfo;
     contact: string;
     createDate: string;

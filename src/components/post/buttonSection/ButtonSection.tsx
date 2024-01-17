@@ -20,10 +20,10 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   const setSnackbar = useSetRecoilState(snackbarState);
   const [mounted, setMounted] = useState<boolean>(false);
 
-  const { boardId, boardPositions, completeStatus, user } = boardInfo;
+  const { boardId: postId, boardPositions, recruitmentStatus, user } = boardInfo;
   const currentUserId = getCookie("user_id");
   const isOwner = isEqual(currentUserId?.toString(), user.userId.toString());
-  const isComplete = isEqual(completeStatus, true);
+  const isComplete = isEqual(recruitmentStatus, true);
 
   const [position, setPosition] = useState<PositionItem | null>(null);
 
@@ -44,12 +44,14 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   });
 
   const { mutate: changeRecruitmentStatus } = useMutation({
-    mutationFn: () => changeRecruitmentStatusAPI(boardId),
+    mutationFn: () => changeRecruitmentStatusAPI(postId),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });
-        queryClient.invalidateQueries({ queryKey: ['postInfo', boardId] });
+        resetModalState();
+
+        queryClient.invalidateQueries({ queryKey: ['postInfo', postId.toString()] });
       } else {
         setSnackbar({ show: true, type: "ERROR", content: message });
       }
@@ -82,7 +84,8 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
 
   const openStatusModal = () => {
     const title = "게시글 상태 변경";
-    const content = <span>해당 게시글을 <span className='font-bold'>{completeStatus ? "모집중" : "모집완료"}</span> 상태로 변경하시겠습니까?</span>;
+    const status = isComplete ? "모집중" : "모집완료";
+    const content = <span>해당 게시글을 <span className='font-bold'>{status}</span> 상태로 변경하시겠습니까?</span>;
 
     setModalState({ isOpen: true, title, content, onClickConfirmHandler: changeStatus });
   }
