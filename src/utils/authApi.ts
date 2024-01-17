@@ -12,9 +12,14 @@ const authApi = returnFetch({
       const accessToken = cookieStore.get("Access");
 
       if (requestArgs[1] && accessToken) {
+        const headers = new Headers(requestArgs[1].headers);
+        const contentType = headers.get("Content-Type");
+        if (!contentType) {
+          headers.set("Content-Type", "application/json");
+        }
+
         requestArgs[1].headers = {
-          "Content-Type": "application/json",
-          ...requestArgs[1]?.headers,
+          ...headers,
           Authorization: `Bearer ${accessToken.value}`,
         };
       }
