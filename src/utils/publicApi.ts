@@ -7,9 +7,14 @@ const publicApi = returnFetch({
   interceptors: {
     request: async (requestArgs) => {
       if (requestArgs[1]) {
+        const headers = new Headers(requestArgs[1].headers);
+        const contentType = headers.get("Content-Type");
+        if (!contentType) {
+          headers.set("Content-Type", "application/json");
+        }
+
         requestArgs[1].headers = {
-          "Content-Type": "application/json",
-          ...requestArgs[1]?.headers,
+          ...headers,
         };
       }
 

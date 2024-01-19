@@ -5,19 +5,21 @@ export async function GET() {
   const res = await authApi("/api/user/me", {
     method: "GET",
   });
-  const data = await res.json();
 
+  const data = await res.json();
   return NextResponse.json(data);
 }
 
 export async function PUT(req: NextRequest) {
-  const updateData = await req.json();
-  
-  const res = await authApi("/api/user", {
-    method: "PUT",
-    body: JSON.stringify(updateData)
-  });
-  const data = await res.json();
+  const formData = await req.formData();
+  const requestHeaders = new Headers(req.headers);
 
+  const res = await authApi(`/api/user`, {
+    method: "PUT",
+    headers: requestHeaders,
+    body: formData,
+  });
+
+  const data = await res.json();
   return NextResponse.json(data);
 }

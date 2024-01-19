@@ -25,8 +25,20 @@ function ProfileForm() {
   const profileData = useProfileInfo();
   const positions = usePositionList();
   const techStacks = useTechStackList();
+
+  const [imageSrc, setImageSrc] = useState<string | null>(profileData?.profileImgSrc || null);
+  const [nickname, setNickname] = useState(profileData.nickname);
+  const [position, setPosition] = useState<SelectItem | null>(getPositionSelectItem(profileData.position));
+  const [techStack, setTechStack] = useState<SelectItem[]>(getTechStackSelectItems(profileData.techStacks));
+  const [selfIntroduction, setSelfIntroduction] = useState(profileData?.intro ?? "");
+
+  const fileRef = useRef<HTMLInputElement>(null);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [isCheckedNickname, setIsCheckedNickname] = useState(true);
+  const setSnackbar = useSetRecoilState(snackbarState);
+
   const { mutate } = useMutation({
-    mutationFn: (updateData: updateUserInfo) => updateUser(updateData),
+    mutationFn: (updateData: updateUserInfo) => updateUser(updateData, selectedImage),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
@@ -41,17 +53,6 @@ function ProfileForm() {
       console.log("err", err);
     }
   });
-
-  const [imageSrc, setImageSrc] = useState<string | null>(profileData?.profileImgSrc || null);
-  const [nickname, setNickname] = useState(profileData.nickname);
-  const [position, setPosition] = useState<SelectItem | null>(getPositionSelectItem(profileData.position));
-  const [techStack, setTechStack] = useState<SelectItem[]>(getTechStackSelectItems(profileData.techStacks));
-  const [selfIntroduction, setSelfIntroduction] = useState(profileData?.intro ?? "");
-
-  const fileRef = useRef<HTMLInputElement>(null);
-  const [selectedImage, setSelectedImage] = useState<File | null>(null);
-  const [isCheckedNickname, setIsCheckedNickname] = useState(true);
-  const setSnackbar = useSetRecoilState(snackbarState);
 
   const isValid = () => {
     if (nickname === "") {
@@ -89,15 +90,15 @@ function ProfileForm() {
       return;
     }
 
+    // 기존 프로필 이미지를 삭제할 때의 로직 추가하기
     if (position) {
       const positionId = getSelectItemValue(position);
       const techStackIds = techStack.map(stack => getSelectItemValue(stack));
-      const updateData = { id: profileData.userId, nickname, positionId, techStackIds, intro: selfIntroduction } as updateUserInfo;
+      const updateData = { nickname, positionId, techStackIds, intro: selfIntroduction } as updateUserInfo;
       mutate(updateData);
     }
   }
 
-  // 변경과 동시에 저장 or 저장 버튼 시 기존 이미지와 다르면 저장 로직
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = event.target.files;
 
@@ -106,11 +107,6 @@ function ProfileForm() {
 
       setSelectedImage(file);
       setImageSrc(URL.createObjectURL(file));
-
-      updateUserProfileImg(file).then(res => {
-        console.log("res", res);
-        
-      })
     }
   };
 

@@ -3,7 +3,6 @@ import authApi from "@/utils/authApi";
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
 export interface updateUserInfo {
-  id: bigint;
   nickname: string;
   positionId: bigint;
   techStackIds: bigint[];
@@ -27,22 +26,30 @@ export const getUserIfo = async () => {
   return response.json();
 };
 
-export const updateUser = async (updateData: updateUserInfo) => {
+export const updateUser = async (
+  updateData: updateUserInfo,
+  file: File | null
+) => {
+  const formData = new FormData();
+  formData.append(
+    "updateRequest",
+    new Blob([JSON.stringify(updateData)], {
+      type: "application/json",
+    })
+  );
+
+  if (file) {
+    formData.append("file", file);
+  }
+
   const response = await fetch(`${publicURL}/api/user`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updateData),
+    body: formData,
   });
-
   return response.json();
 };
 
 export const updateUserProfileImg = async (file: File) => {
-  const formData = new FormData();
-  formData.append("file", file);
-
   const response = await authApi("/api/user/me/profile-img", {
     method: "POST",
     body: file,
