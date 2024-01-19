@@ -11,7 +11,7 @@ import FormButton from "@/components/ui/form/FormButton";
 import { SelectItem } from "@/utils/type";
 import { getPositionSelectItem, getPositionSelectItems, getSelectItemValue, getTechStackSelectItems, isValidNickname } from "@/utils/common";
 import { useProfileInfo } from "@/hooks/useProfileInfo";
-import { updateUser, updateUserInfo, updateUserProfileImg } from "@/service/user/user";
+import { deleteProfileImage as deleteProfileImageAPI, updateUser as updateUserAPI, updateUserInfo } from "@/service/user/user";
 import { useSetRecoilState } from "recoil";
 import { usePositionList } from "@/hooks/usePositionList";
 import { useTechStackList } from "@/hooks/useTechStackList";
@@ -37,8 +37,8 @@ function ProfileForm() {
   const [isCheckedNickname, setIsCheckedNickname] = useState(true);
   const setSnackbar = useSetRecoilState(snackbarState);
 
-  const { mutate } = useMutation({
-    mutationFn: (updateData: updateUserInfo) => updateUser(updateData, selectedImage),
+  const { mutate: updateUser } = useMutation({
+    mutationFn: (updateData: updateUserInfo) => updateUserAPI(updateData, selectedImage),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
@@ -51,6 +51,15 @@ function ProfileForm() {
     },
     onError: (err) => {
       console.log("err", err);
+    }
+  });
+  const { mutate: deleteProfileImage } = useMutation({
+    mutationFn: deleteProfileImageAPI,
+    onSuccess: (data) => {
+      const { result } = data;
+      if (isEqual(result, "success")) {
+        updateUserInfo();
+      }
     }
   });
 
@@ -85,17 +94,26 @@ function ProfileForm() {
     return true;
   }
 
+  const updateUserInfo = () => {
+    if (position) {
+      const positionId = getSelectItemValue(position);
+      const techStackIds = techStack.map(stack => getSelectItemValue(stack));
+      const updateData = { nickname, positionId, techStackIds, intro: selfIntroduction } as updateUserInfo;
+
+      updateUser(updateData);
+    }
+  }
+
   const saveProfile = () => {
     if (!isValid()) {
       return;
     }
 
-    // 기존 프로필 이미지를 삭제할 때의 로직 추가하기
-    if (position) {
-      const positionId = getSelectItemValue(position);
-      const techStackIds = techStack.map(stack => getSelectItemValue(stack));
-      const updateData = { nickname, positionId, techStackIds, intro: selfIntroduction } as updateUserInfo;
-      mutate(updateData);
+    if (profileData?.profileImgSrc !== null && imageSrc === null) {
+      // 기존 프로필 이미지 삭제 시, s3 에서 삭제 후 사용자 정보 업데이트
+      deleteProfileImage();
+    } else {
+      updateUserInfo();
     }
   }
 

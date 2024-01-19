@@ -1,5 +1,3 @@
-import authApi from "@/utils/authApi";
-
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
 export interface updateUserInfo {
@@ -49,18 +47,6 @@ export const updateUser = async (
   return response.json();
 };
 
-export const updateUserProfileImg = async (file: File) => {
-  const response = await authApi("/api/user/me/profile-img", {
-    method: "POST",
-    body: file,
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-
-  return response.json();
-};
-
 export const getUserProjectHistory = async (pageNumber: number) => {
   const response = await fetch(
     `${publicURL}/api/user/history?pageNumber=${pageNumber}`
@@ -70,5 +56,10 @@ export const getUserProjectHistory = async (pageNumber: number) => {
 
 export const getTrustGradeListByUser = async () => {
   const response = await fetch(`${publicURL}/api/user/trust-grade`);
+  return response.json();
+};
+
+export const deleteProfileImage = async () => {
+  const response = await fetch(`${publicURL}/api/user/profile-img`, { method: "DELETE" });
   return response.json();
 };

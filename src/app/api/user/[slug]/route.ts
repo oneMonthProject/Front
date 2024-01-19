@@ -28,3 +28,18 @@ export async function GET(
   const data = await res.json();
   return NextResponse.json(data);
 }
+
+export async function DELETE(
+  _: NextRequest,
+  { params }: { params: { slug: string } }
+) {
+  let res: Response;
+  if (params.slug === "profile-img") {
+    res = await authApi("/api/user/me/profile-img", { method: "DELETE" });
+  } else {
+    throw Error("Unknown Api Route");
+  }
+
+  const data = await res.json();
+  return NextResponse.json(data);
+}
