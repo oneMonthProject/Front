@@ -12,7 +12,7 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'projectmatch-user-img.s3.ap-northeast-2.amazonaws.com'
+                hostname: 'projectmatch-user-image.s3.ap-northeast-2.amazonaws.com'
             }
         ]
     }
