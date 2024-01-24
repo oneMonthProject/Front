@@ -19,7 +19,7 @@ const authApi = returnFetch({
         }
 
         requestArgs[1].headers = {
-          ...headers,
+          "Content-Type": headers.get('Content-Type')!,
           Authorization: `Bearer ${accessToken.value}`,
         };
       }
@@ -27,12 +27,9 @@ const authApi = returnFetch({
       return requestArgs;
     },
     response: async (response, requestArgs) => {
-      console.log("response.status", response.status);
       if (response.status !== 401) {
         return response;
       }
-
-      console.log("not authorized, trying to get refresh cookie..");
 
       const cookieStore = cookies();
       const userId = cookieStore.get("user_id");
