@@ -14,12 +14,12 @@ const authApi = returnFetch({
       if (requestArgs[1] && accessToken) {
         const headers = new Headers(requestArgs[1].headers);
         const contentType = headers.get("Content-Type");
-        if (!contentType) {
-          headers.set("Content-Type", "application/json");
-        }
+        const args = contentType
+          ? { ...headers }
+          : { "Content-Type": "application/json" };
 
         requestArgs[1].headers = {
-          ...headers,
+          ...args,
           Authorization: `Bearer ${accessToken.value}`,
         };
       }
@@ -58,6 +58,8 @@ const authApi = returnFetch({
 
             cookieStore.set("Access", accessToken);
             cookieStore.set("Refresh", token, options);
+
+            console.log("complete the reissue of cookies..!");
           }
         } else {
           throw Error("failed to refresh cookie");
@@ -65,8 +67,6 @@ const authApi = returnFetch({
       } else {
         throw Error("failed to get cookies");
       }
-
-      console.log("complete the reissue of cookies..!");
 
       return await authApi(...requestArgs);
     },
