@@ -69,7 +69,7 @@ function UserHistory() {
   const { content: histories, totalPages } = data.data;
 
   return (
-    <>
+    <div className='p-3 mobile:p-0 mobile:pt-3 space-y-5'>
       <div className='flex items-center tablet:text-2xl mobile:text-lg font-semibold text-greyDarkBlue my-8 mobile:my-4'>
         <GrScorecard className='tablet:text-[1.5rem]' />
         <h3 className='ml-2'>사용자 프로젝트 이력</h3>
@@ -121,7 +121,7 @@ function UserHistory() {
           </div>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

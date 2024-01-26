@@ -1,7 +1,6 @@
 'use client';
-import React, { Suspense, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import MultiSelect from "@/components/ui/MultiSelect";
 import Select from "@/components/ui/Select";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/form/Input";
@@ -17,6 +16,7 @@ import { snackbarState } from "@/store/CommonStateStore";
 import TrustGradeSelect from "./TrustGradeSelect";
 import TechStackSelect from "./TechStackSelect";
 import MultiPositionSelect from "./MultiPositionSelect";
+import SelectSkeleton from "./SelectSkeleton";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -36,6 +36,7 @@ function RegisterForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const setSnackbar = useSetRecoilState(snackbarState);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const { mutate } = useMutation({
     mutationFn: (createData: CreatePostInfo) => createPost(createData),
@@ -147,6 +148,10 @@ function RegisterForm() {
     mutate(createData);
   }
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-8 mobile:my-6">
       <div className="w-full mobile:w-[300px] mx-auto">
@@ -161,22 +166,34 @@ function RegisterForm() {
             value={projectName} onChange={(e) => setProjectName(e.target.value)} />
           <Input id="projectSubject" label="프로젝트 주제" placeholder="주제를 입력해주세요."
             value={projectSubject} onChange={(e) => setProjectSubject(e.target.value)} />
-          <Suspense fallback={<Select value={null} setValue={() => null} items={[]} label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />}>
-            <TrustGradeSelect trustGrade={trustGrade} setTrustGrade={setTrustGrade} />
-          </Suspense>
+          {
+            mounted ? (
+              <Suspense fallback={<SelectSkeleton label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />}>
+                <TrustGradeSelect trustGrade={trustGrade} setTrustGrade={setTrustGrade} />
+              </Suspense>
+            ) : <SelectSkeleton label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요." />
+          }
           <Select value={recruitmentCount} setValue={setRecruitmentCount} items={recruitmentCountList} label="모집 인원" placeholder="모집 인원을 선택해주세요." />
-          <Suspense fallback={<Select value={null} setValue={() => null} items={[]} label="모집 분야" placeholder="모집 분야를 선택해주세요." />}>
-            <MultiPositionSelect positions={positions} setPositions={setPositions} />
-          </Suspense>
+          {
+            mounted ? (
+              <Suspense fallback={<SelectSkeleton label="모집 분야" placeholder="모집 분야를 선택해주세요." />}>
+                <MultiPositionSelect positions={positions} setPositions={setPositions} />
+              </Suspense>
+            ) : <SelectSkeleton label="모집 분야" placeholder="모집 분야를 선택해주세요." />
+          }
         </div>
         <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
           <CalendarInput id="startDate" label="시작 날짜" placeholder="날짜를 선택해주세요."
             date={startDate} setDate={setStartDate} />
           <CalendarInput id="endDate" label="종료 날짜" placeholder="날짜를 선택해주세요."
             date={endDate} setDate={setEndDate} />
-          <Suspense fallback={<MultiSelect values={[]} setValues={() => null} items={[]} label="사용 스택" placeholder="사용 스택을 선택해주세요." />}>
-            <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} />
-          </Suspense>
+          {
+            mounted ? (
+              <Suspense fallback={<SelectSkeleton label="사용 스택" placeholder="사용 스택을 선택해주세요." />}>
+                <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} />
+              </Suspense>
+            ) : <SelectSkeleton label="사용 스택" placeholder="사용 스택을 선택해주세요." />
+          }
           <Input id="contact" label="연락 방법" placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
             value={contact} onChange={(e) => setContact(e.target.value)} />
         </div>
