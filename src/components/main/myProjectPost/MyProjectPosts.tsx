@@ -3,15 +3,15 @@ import React, {useState} from "react";
 import ProjectCard from "../projectCard/ProjectCard";
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {getMyProjectList} from "@/service/project/project";
-import {ProjectPost, ResponseBody} from "@/utils/type";
+import {PageResponseBody, ProjectPost} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
 
 
 function MyProjectPosts() {
-    const [pageNumber, setPageNumber] = useState(1);
+    const [pageNumber, setPageNumber] = useState(0);
 
-    const {data} = useSuspenseQuery<ResponseBody<ProjectPost[]>, Error>({
+    const {data} = useSuspenseQuery<PageResponseBody<ProjectPost[]>, Error>({
         queryKey: ['myProjectList', pageNumber],
         queryFn: () => getMyProjectList(pageNumber, 8)
     });
@@ -20,7 +20,7 @@ function MyProjectPosts() {
         setPageNumber(pageNumber);
     }
 
-    const projectPosts = data!.data;
+    const projectPosts = data!.data.content;
 
     return (
         <section className='my-10'>
