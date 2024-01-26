@@ -1,23 +1,33 @@
-import React, { Suspense } from 'react';
+'use client';
+import React, { Suspense, useEffect, useState } from 'react';
 import ProfileCard from '@/components/user/profile/ProfileCard';
 import UserHistory from '@/components/user/profile/UserHistory';
 import ProfileCardSkeleton from '@/components/user/profile/ProfileCardSkeleton';
 import UserHistorySkeleton from '@/components/user/profile/UserHistorySkeleton';
 
 function ProfilePage() {
+  const [mounted, setMounted] = useState<boolean>(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
-    <div>
-      <div className='rounded-lg border-2 border-gray-200 bg-white mt-3 mobile:mt-2 px-2'>
+    mounted ? (
+      <>
         <Suspense fallback={<ProfileCardSkeleton />}>
           <ProfileCard />
-        </Suspense>
-      </div>
-      <div className='p-3 mobile:p-0 mobile:pt-3 space-y-5'>
+        </Suspense >
         <Suspense fallback={<UserHistorySkeleton />}>
           <UserHistory />
         </Suspense>
-      </div>
-    </div>
+      </ >
+    ) : (
+      <>
+        <ProfileCardSkeleton />
+        <UserHistorySkeleton />
+      </ >
+    )
   );
 }
 
