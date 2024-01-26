@@ -1,4 +1,5 @@
 'use client';
+
 import React from 'react';
 import {useQueryString} from "@/hooks/useQueryString";
 import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
@@ -12,15 +13,21 @@ import {convertStringToDate, sortByStartDate} from "@/utils/common";
 function Milestones() {
     const projectId = useQueryString('projectId');
 
-
     const {data} = useSuspenseQuery<ResponseBody<MilestoneInfo[]>, Error>({
         queryKey: ['milestoneList'],
         queryFn: () => getProjectMilestones(projectId)
     });
 
-    const sortedMilestoneInfo = sortByStartDate(data!.data, 'asc');
+    const milestoneList = data!.data;
 
-    const milestoneInfo = sortedMilestoneInfo.map(v => {
+    if (milestoneList.length < 1)
+        return (
+            <div className='w-full h-[12rem] flex items-center justify-center bg-ground200 rounded-lg'>
+                <span className='tablet:text-3xl text-grey800 font-semibold'>마일스톤을 추가해 주세요</span>
+            </div>
+        );
+
+    const milestoneInfo = sortByStartDate(milestoneList, 'asc').map(v => {
         return {
             ...v,
             createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
@@ -32,29 +39,23 @@ function Milestones() {
 
     // '진행중'인 마일스톤 중 startDate가 가장 빠른 마일스톤 or 진행중인 마일스톤이 없으면 날짜가 가장 빠른 마일스톤
     const activeMilestone = milestoneInfo.find(v => v.progressStatus === '진행중') || milestoneInfo[0];
+    return (
+        <CustomSwiper
+            slideItems={
+                milestoneInfo.map((v, index) => (
+                    {
+                        key: v.mileStoneId.toString(),
+                        components:
+                            <MilestoneCard
+                                milestoneInfo={v}
+                                isInitActive={v.mileStoneId === activeMilestone.mileStoneId}
+                                slideIndex={index}
+                            />
+                    }
+                ))}
+        />
+    )
 
-    return milestoneInfo.length > 0
-        ? (
-            <CustomSwiper
-                slideItems={
-                    milestoneInfo.map((v, index) => (
-                        {
-                            key: v.mileStoneId.toString(),
-                            components:
-                                <MilestoneCard
-                                    milestoneInfo={v}
-                                    isInitActive={v.mileStoneId === activeMilestone.mileStoneId}
-                                    slideIndex={index}
-                                />
-                        }
-                    ))}
-            />
-        )
-        : (
-            <div className='w-full h-[12rem] flex items-center justify-center bg-ground200 rounded-lg'>
-                <span className='tablet:text-3xl text-grey800 font-semibold'>마일스톤을 추가해 주세요</span>
-            </div>
-        );
 }
 
 export default Milestones;

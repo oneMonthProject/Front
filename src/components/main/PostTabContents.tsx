@@ -4,6 +4,7 @@ import MyProjectPosts from "@/components/main/myProjectPost/MyProjectPosts";
 import Posts from "@/components/main/posts/Posts";
 import {useRecoilValue} from "recoil";
 import { activeTabState } from '@/store/post/PostStateStore';
+import PostListSkeleton from "@/components/main/PostListSkeleton";
 
 function PostTabContents() {
     const isMyProjectPostsTab = useRecoilValue(activeTabState);
@@ -11,7 +12,7 @@ function PostTabContents() {
         <>
             {isMyProjectPostsTab
                ? (
-                    <Suspense fallback={<div>loading...</div>}>
+                    <Suspense fallback={<PostListSkeleton itemCount={8}/>}>
                         <MyProjectPosts/>
                     </Suspense>
                 )

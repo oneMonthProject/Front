@@ -64,13 +64,10 @@ export const getPost = async (postId: bigint) => {
 export const createPost = async (createData: CreatePostInfo) => {
   const response = await fetch(`${publicURL}/api/post`, {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
     body: JSON.stringify(createData),
   });
 
-  return response.json();
+  return await response.json();
 };
 
 export const changeRecruitmentStatus = async (boardId: bigint) => {

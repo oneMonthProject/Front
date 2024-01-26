@@ -6,7 +6,7 @@ import {request} from "@/service/project/request";
  * @param projectId
  */
 export async function getProjectMilestones(projectId: string) {
-    return await request('GET', `/api/milestone/project/${projectId}`);
+    return await request('GET', `/api/project/milestone?projectId=${projectId}`);
 }
 
 /**
@@ -23,7 +23,7 @@ export async function createMilestone<T extends MilestoneInfo>(
     }) {
 
     const {content, startDate, endDate} = milestoneInfo;
-    const reqData = {content, startDate, endDate};
+    const reqData = {projectId, content, startDate, endDate};
 
     return await request('POST', `/api/project/milestone`, reqData);
 }
@@ -36,7 +36,7 @@ export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: 
     const {content, startDate, endDate, progressStatus: progressStatusCode, mileStoneId} = milestoneInfo;
     const reqData = {content, startDate, endDate, progressStatusCode, mileStoneId};
 
-    return await request('PATCH', `/api/milestone`, reqData);
+    return await request('PATCH', `/api/project/milestone`, reqData);
 }
 
 /**
@@ -44,5 +44,5 @@ export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: 
  * @param milestoneId
  */
 export async function deleteMilestone(milestoneId: bigint) {
-    return await request('DELETE', `/api/milestone`, {milestoneId});
+    return await request('DELETE', `/api/project/milestone`, {milestoneId});
 }

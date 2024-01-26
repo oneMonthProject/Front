@@ -22,11 +22,10 @@ export async function getTaskList(
         pageIndex: number,
         itemCount: number
     }) {
-    const res = await request(
+    return await request(
         'GET',
         `/api/project/task?milestoneId=${milestoneId}&projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );
-    return res.json();
 }
 
 /**
@@ -44,8 +43,7 @@ export async function upsertTask(task: TaskModalForm) {
         throw Error('Unknown TaskModalForm Type');
     }
 
-    const res = await request(method, '/api/project/task', {task});
-    return res.json();
+    return await request(method, '/api/project/task', {task});
 }
 
 
@@ -54,6 +52,5 @@ export async function upsertTask(task: TaskModalForm) {
  * @param workId
  */
 export async function deleteTask(workId: bigint) {
-    const res = await request('DELETE', '/api/project/task', {workId});
-    return res.json();
+    return await request('DELETE', '/api/project/task', {workId});
 }
