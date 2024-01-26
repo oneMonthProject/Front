@@ -20,7 +20,8 @@ export async function GET(req: NextRequest) {
         `${baseURL}/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
-    const data = res.json();
+    const data = await res.json();
+
     return NextResponse.json(data);
 }
 
