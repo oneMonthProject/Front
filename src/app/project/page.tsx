@@ -1,15 +1,26 @@
-import React, {Suspense} from 'react';
+'use client';
+
+import React, {Suspense, useEffect, useState} from 'react';
 import ProjectInfo from "@/components/project/layout/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
+import {ProjectInfoSkeleton, ProjectNavTabSkeleton} from "@/components/ui/skeleton/project";
 
 function ProjectPage() {
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    },[])
 
     return (
         <>
-            <Suspense fallback={<div>loading..</div>}>
-                <ProjectInfo/>
-            </Suspense>
-            <Suspense fallback={<div>loading..</div>}>
+            {
+                mounted &&
+                <Suspense fallback={<ProjectInfoSkeleton/>}>
+                    <ProjectInfo/>
+                </Suspense>
+            }
+            <Suspense fallback={<ProjectNavTabSkeleton/>}>
                 <ProjectNavTab/>
             </Suspense>
         </>
