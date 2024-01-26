@@ -145,6 +145,7 @@ export type ProjectHistoryStatus = "FORCED_WITHDRAWAL" | "WITHDRAWAL" | "PARTICI
 
 export interface UserProjectHistory {
     userProjectHistoryId: bigint;
+    projectId: bigint;
     status: ProjectHistoryStatus;
     projectName: string;
     updateDate: string;

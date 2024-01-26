@@ -98,7 +98,7 @@ function UserHistory() {
                       <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
                         <div>
                           <p className="text-sm text-gray-500">
-                            <Link href={`/project?projectId=${history.userProjectHistoryId}`} className="font-medium text-gray-900">
+                            <Link href={`/project?projectId=${history.projectId}`} className="font-medium text-gray-900">
                               {history.projectName}
                             </Link>
                             {' '}{getHistoryStatusText(history.status)}
