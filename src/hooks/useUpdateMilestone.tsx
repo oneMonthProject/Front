@@ -1,10 +1,12 @@
-import {useRecoilValue, useResetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
 import {useMutation} from "@tanstack/react-query";
 import {updateMilestone as updateMilestoneAPI} from "@/service/project/milestone";
 import {useQueryClient} from "@tanstack/react-query";
+import {snackbarState} from "@/store/CommonStateStore";
 
 export default function useUpdateMilestone(){
+    const [snackbar, setSnackBar] = useRecoilState(snackbarState);
     const resetCurrentForm = useResetRecoilState(milestoneModalFormState);
     const currentForm = useRecoilValue(milestoneModalFormState);
 
@@ -13,9 +15,13 @@ export default function useUpdateMilestone(){
     const {mutate:updateMilestone, isPending:isUpdating} = useMutation({
         mutationFn: () => updateMilestoneAPI({milestoneInfo:currentForm!}),
         onSuccess:(data, variables, context) => {
-            console.log("mutation data: ",data);
-            resetCurrentForm();
-            queryClient.invalidateQueries({queryKey:['milestoneList']});
+            if(data.result === 'success'){
+                resetCurrentForm();
+                queryClient.invalidateQueries({queryKey:['milestoneList']});
+            }else{
+                setSnackBar({show:true, content:'마일스톤 수정에 실패했습니다', type:'ERROR'})
+            }
+
 
         },
         onError:(err) => {
