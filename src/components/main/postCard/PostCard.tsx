@@ -24,13 +24,13 @@ const PostCard = ({ postInfo }: { postInfo: PostCardInfo }) => {
           {`주제 | ${project.subject}`}
         </div>
         <div className="text-xl font-bold mt-2 truncate">{boardTitle}</div>
-        <div className="flex gap-1 mt-2">
+        <div className="flex gap-1 mt-2 overflow-scroll">
           {boardPositions.length > 0 && boardPositions.map((boardPosition) => {
             const { positionId, name } = boardPosition.position;
             return <PositionBadge key={positionId.toString()} size="xs" text={name} />
           })}
         </div>
-        <div className="flex gap-1 border-b-2 pb-4 mt-4">
+        <div className="flex gap-1 border-b-2 pb-4 mt-4 overflow-scroll">
           {project.technologyStacks.length > 0 && project.technologyStacks.map((stack) => (
             <TechStackImage key={stack.techStackId.toString()} stackName={stack.techStackName} width={40} height={40} />
           ))}
