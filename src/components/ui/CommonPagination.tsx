@@ -17,7 +17,7 @@ function CommonPagination({
                               pageRangeDisplayed,
                               onChangePageHandler
                           }: CommonPaginationProps) {
-    return (
+    return totalItemsCount > 0 && (
         <div className='mt-12 mb-10 mobile:max-w-[100px] mobile:mx-auto'>
             <div className='customPagination'>
                 <Pagination

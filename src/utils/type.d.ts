@@ -1,5 +1,5 @@
 import {CookieValueTypes} from "cookies-next";
-import {MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
+import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
 import {CREW_STATUS, NOTICE_TYPE} from "@/utils/constant";
 
 export type DropDownItem = {
@@ -73,6 +73,7 @@ export interface MilestoneInfo {
     endDate: string;
     updateDate: string;
     progressStatus: MilestoneStatusName | '';
+    progressStatusCode?: MilestoneStatusCode | ''
 }
 
 export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';

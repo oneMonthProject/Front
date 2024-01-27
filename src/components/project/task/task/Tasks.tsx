@@ -11,7 +11,7 @@ interface TasksProps {
     milestoneId: bigint | string;
 }
 
-const ITEMS_PER_PAGE = 8;
+const ITEMS_PER_PAGE = 6;
 
 function Tasks({milestoneId}: TasksProps) {
     const projectId = useQueryString('projectId');
@@ -22,8 +22,8 @@ function Tasks({milestoneId}: TasksProps) {
         queryFn: () => getTaskList({
             milestoneId,
             projectId,
-            pageIndex:pageNumber,
-            itemCount:ITEMS_PER_PAGE
+            pageIndex: pageNumber,
+            itemCount: ITEMS_PER_PAGE
         })
     });
 
@@ -35,7 +35,7 @@ function Tasks({milestoneId}: TasksProps) {
     const taskList = res.data.data.content;
     const totalCount = res.data.data.totalPages;
 
-    console.log('taskList: ', taskList);
+    console.log('taskList: ', res.data);
 
     return (
         <div className='w-full mt-4 flex flex-col items-center'>

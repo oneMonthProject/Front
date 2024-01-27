@@ -35,7 +35,7 @@ function CustomSwiper({slideItems}: CustomSwiperProps) {
         <div className='w-full flex bg-white overflow-hidden z-0'>
             <Swiper
                 className='swiper'
-                slidesPerView={3}
+                slidesPerView={slideItems.length - 1}
                 slidesPerGroup={1}
                 loopAddBlankSlides={true}
                 loop={true}

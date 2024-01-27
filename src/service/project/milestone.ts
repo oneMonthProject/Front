@@ -33,7 +33,7 @@ export async function createMilestone<T extends MilestoneInfo>(
  * @param milestoneInfo
  */
 export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: { milestoneInfo: T }) {
-    const {content, startDate, endDate, progressStatus: progressStatusCode, mileStoneId} = milestoneInfo;
+    const {content, startDate, endDate, progressStatusCode, mileStoneId} = milestoneInfo;
     const reqData = {content, startDate, endDate, progressStatusCode, mileStoneId};
 
     return await request('PATCH', `/api/project/milestone`, reqData);
