@@ -14,10 +14,11 @@ export default function useUpdateMilestone(){
 
     const {mutate:updateMilestone, isPending:isUpdating} = useMutation({
         mutationFn: () => updateMilestoneAPI({milestoneInfo:currentForm!}),
-        onSuccess:(data, variables, context) => {
+        onSuccess:async (data, variables, context) => {
             if(data.result === 'success'){
                 resetCurrentForm();
-                queryClient.invalidateQueries({queryKey:['milestoneList']});
+                await queryClient.invalidateQueries({queryKey:['milestoneList']});
+                setSnackBar({show:true, content:'마일스톤을 수정했습니다.', type:'SUCCESS'})
             }else{
                 setSnackBar({show:true, content:'마일스톤 수정에 실패했습니다', type:'ERROR'})
             }

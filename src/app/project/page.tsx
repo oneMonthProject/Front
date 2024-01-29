@@ -10,7 +10,7 @@ function ProjectPage() {
 
     useEffect(() => {
         setMounted(true);
-    },[])
+    }, [])
 
     return (
         <>
