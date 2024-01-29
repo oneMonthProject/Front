@@ -2,27 +2,28 @@
 import React, {MouseEvent, useEffect} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
-import {useRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
+    getMilestoneStatus,
     milestoneActiveStateStore,
-    milestoneModalFormState,
     MilestoneModalForm,
+    milestoneModalFormState,
     MilestoneModalFormState,
     MilestoneStatusName
 } from "@/store/project/task/MilestoneStateStore";
 import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
-import {useMutation} from "@tanstack/react-query";
-import {useQueryClient} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
+import {useMilestoneInitActive} from "@/hooks/useMilestoneList";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
-    isInitActive: boolean;
     slideIndex: number;
 }
 
-function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
+
     const {
         projectId,
         mileStoneId,
@@ -36,7 +37,11 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
 
     const [snackbar, setSnackBar] = useRecoilState(snackbarState);
     const [activeMilestone, setActiveMilestone] = useRecoilState(milestoneActiveStateStore);
+    const resetActiveMilestone = useResetRecoilState(milestoneActiveStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
+
+    const initActiveMilestone = useMilestoneInitActive(projectId.toString());
+    const isInitActive  = milestoneInfo.mileStoneId === initActiveMilestone.mileStoneId;
 
     // active 상태 초기화
     useEffect(() => {
@@ -48,6 +53,7 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
                 startDate,
                 endDate,
                 progressStatus: progressStatus as MilestoneStatusName,
+                progressStatusCode: getMilestoneStatus(progressStatus)!.value,
                 slideIndex
             });
         }
@@ -57,14 +63,13 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
     const queryClient = useQueryClient();
     const {mutate: deleteMilestone, isPending: isDeleting} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
-        onSuccess: (res) => {
-            if (res.status !== 200) {
-                if (res.status === 500) {
-                    setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
-                }
+        onSuccess: async (res) => {
+            if (res.message !== 'success') {
+                setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
             } else {
+                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
+                resetActiveMilestone();
                 setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
-                queryClient.invalidateQueries({queryKey: ['milestoneList']})
             }
         },
         onError: (error) => {
@@ -82,6 +87,7 @@ function MilestoneCard({milestoneInfo, isInitActive, slideIndex}: MilestoneCardP
             startDate,
             endDate,
             progressStatus: progressStatus as MilestoneStatusName,
+            progressStatusCode: getMilestoneStatus(progressStatus)!.value,
             slideIndex
         });
     }

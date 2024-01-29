@@ -29,20 +29,25 @@ export const milestoneStatusItems: MilestoneStatusItem[] = [
 ];
 
 
-export function getMilestoneStatusCode(name: MilestoneStatusName | '') {
-    if(name === '') return '';
-    const milestoneStatusItem = milestoneStatusItems.find(v => v.name === name);
+export function getMilestoneStatus(str: MilestoneStatusName | MilestoneStatusCode | '') {
+    if (str === '') return null;
+
+    const milestoneStatusItem = str.charAt(0) === 'P' ?
+        milestoneStatusItems.find(v => v.value === str)
+        : milestoneStatusItems.find(v => v.name === str);
+
     if (!milestoneStatusItem) throw new Error('Unknown Milestone Status');
-    return milestoneStatusItem.value;
+    return milestoneStatusItem;
 }
 
-interface MilestoneActiveState {
+export interface MilestoneActiveState {
     projectId: bigint;
     activeId: bigint | null;
     content: string;
-    startDate:string;
-    endDate:string;
+    startDate: string;
+    endDate: string;
     progressStatus: MilestoneStatusName;
+    progressStatusCode: MilestoneStatusCode;
     slideIndex: number;
 }
 
@@ -89,12 +94,10 @@ export class MilestoneModalForm implements MilestoneModalFormState {
         this.endDate = endDate;
         this.updateDate = updateDate;
         this.progressStatus = progressStatus;
-        this.progressStatusCode = getMilestoneStatusCode(progressStatus);
+        this.progressStatusCode = getMilestoneStatus(progressStatus)?.value || '';
         this.projectId = projectId;
 
     }
-
-
 
 
 }
