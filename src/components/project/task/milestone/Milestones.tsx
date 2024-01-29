@@ -3,22 +3,14 @@
 import React from 'react';
 import {useQueryString} from "@/hooks/useQueryString";
 import MilestoneCard from "@/components/project/task/milestone/MilestoneCard";
-import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import CustomSwiper from "@/components/ui/CustomSwiper";
-import {useSuspenseQuery} from "@tanstack/react-query";
-import {getProjectMilestones} from "@/service/project/milestone";
-import {convertStringToDate, sortByStartDate} from "@/utils/common";
+import {useMilestoneList} from "@/hooks/useMilestoneList";
 
 
 function Milestones() {
     const projectId = useQueryString('projectId');
 
-    const {data} = useSuspenseQuery<ResponseBody<MilestoneInfo[]>, Error>({
-        queryKey: ['milestoneList'],
-        queryFn: () => getProjectMilestones(projectId)
-    });
-
-    const milestoneList = data!.data;
+    const milestoneList = useMilestoneList(projectId);
 
     if (milestoneList.length < 1)
         return (
@@ -27,28 +19,15 @@ function Milestones() {
             </div>
         );
 
-    const milestoneInfo = sortByStartDate(milestoneList, 'asc').map(v => {
-        return {
-            ...v,
-            createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
-            startDate: convertStringToDate(v.startDate, 'yyyy-MM-dd'),
-            endDate: convertStringToDate(v.endDate, 'yyyy-MM-dd'),
-            updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd')
-        }
-    });
-
-    // '진행중'인 마일스톤 중 startDate가 가장 빠른 마일스톤 or 진행중인 마일스톤이 없으면 날짜가 가장 빠른 마일스톤
-    const activeMilestone = milestoneInfo.find(v => v.progressStatus === '진행중') || milestoneInfo[0];
     return (
         <CustomSwiper
             slideItems={
-                milestoneInfo.map((v, index) => (
+                milestoneList.map((v, index) => (
                     {
                         key: v.mileStoneId.toString(),
                         components:
                             <MilestoneCard
                                 milestoneInfo={v}
-                                isInitActive={v.mileStoneId === activeMilestone.mileStoneId}
                                 slideIndex={index}
                             />
                     }

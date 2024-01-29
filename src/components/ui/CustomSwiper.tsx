@@ -31,11 +31,13 @@ function CustomSwiper({slideItems}: CustomSwiperProps) {
         swiperRef.current?.slideToLoop(slideIndex);
     },[slideIndex]);
 
+    const slidesPerView = slideItems.length <= 4 ? slideItems.length - 1 : 3;
+
     return (
         <div className='w-full flex bg-white overflow-hidden z-0'>
             <Swiper
                 className='swiper'
-                slidesPerView={slideItems.length - 1}
+                slidesPerView={slidesPerView}
                 slidesPerGroup={1}
                 loopAddBlankSlides={true}
                 loop={true}
