@@ -53,6 +53,9 @@
         @apply pc:max-w-[1200px] tablet:w-full h-[240px] -mt-10 !important;
     }
 
+    .customTooltip {
+        @apply absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm dark:bg-gray-700;
+    }
 }
 
 
@@ -104,6 +107,3 @@
 
 /*  END custom swiper */
 
-.customTooltip {
-    @apply absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm tooltip dark:bg-gray-700;
-}
