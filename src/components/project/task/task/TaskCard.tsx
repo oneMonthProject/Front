@@ -22,10 +22,10 @@ function TaskCard({item}: TaskCardProps) {
 
     const {mutate: deleteTask, isPending: isDeleting} = useMutation({
         mutationFn: (workId: bigint) => deleteTaskAPI(workId),
-        onSuccess: (res) => {
-            if (res.status === 200) {
+        onSuccess: async (res) => {
+            if (res.result === 'success') {
+                await queryClient.invalidateQueries({queryKey: ['taskList']});
                 setSnackbar({show: true, type: 'SUCCESS', content: '업무를 삭제했습니다'});
-                queryClient.invalidateQueries({queryKey: ['taskList']});
             } else {
                 setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
             }
@@ -35,6 +35,8 @@ function TaskCard({item}: TaskCardProps) {
             setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
         }
     })
+
+    console.log("item: ", item);
 
 
     return (
@@ -62,7 +64,6 @@ function TaskCard({item}: TaskCardProps) {
                 <div className='flex items-center'>
                     <div className='basis-[100px] font-semibold pc:text-lg text-greyBlue'>담당</div>
                     <div className='flex-1 flex items-center space-x-3'>
-                        <Avatar alt='담당자 프로필 이미지' size='xs'/>
                         <span className='text-greyBlue'>{item.assignedUser?.nickname}</span>
                     </div>
                 </div>

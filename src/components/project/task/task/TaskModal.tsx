@@ -9,6 +9,7 @@ import {upsertTask as upsertTaskApi} from "@/service/project/task";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
 
+
 function TaskModal() {
   const setSnackbar = useSetRecoilState(snackbarState);
   const { isOpen, title } = useRecoilValue(taskModalStateSelector);
@@ -21,20 +22,18 @@ function TaskModal() {
 
   const {mutate: upsertTask, isPending:isUpdating} = useMutation({
     mutationFn: (currentForm:TaskModalForm) => upsertTaskApi(currentForm),
-    onSuccess:(res, variables, context) => {
-      console.log("upsert data success: ", res);
-      if(res.status === 200){
+    onSuccess: async (res, variables, context) => {
+      if(res.result === "success"){
         resetCurrentForm();
         const content =  currentForm?.type === 'add' ? '업무를 생성을 완료했습니다.' : '업무 수정을 완료했습니다.';
+        await queryClient.invalidateQueries({queryKey:['taskList']});
         setSnackbar({show:true, type:'SUCCESS', content});
-        queryClient.invalidateQueries({queryKey:['taskList']});
       }else{
-        setSnackbar({show:true, type:'ERROR', content:'예상치 못한 서버 에러가 발생했습니다.'});
+        setSnackbar({show:true, type:'ERROR', content:'프로세스 수행중 에러가 발생했습니다.'});
       }
     },
     onError:(error) => {
-      console.log('error: ',error);
-      setSnackbar({show:true, type:'ERROR', content:'예상치 못한 서버 에러가 발생했습니다.'});
+      setSnackbar({show:true, type:'ERROR', content:error.message});
     }
   });
 
