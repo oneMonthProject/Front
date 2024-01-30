@@ -10,21 +10,21 @@ function TaskSection() {
     const [mounted, setMounted] = useState(false);
     const activeMilestone = useRecoilValue(milestoneActiveStateStore);
 
-    useEffect(()=>{
+    useEffect(() => {
         setMounted(true);
-    },[])
+    }, [])
 
     return (
         <section className='w-full flex flex-col items-start'>
             {(activeMilestone && mounted) &&
-                <TaskSectionHeader
-                    content={activeMilestone.content}
-                    startDate={activeMilestone.startDate}
-                    endDate={activeMilestone.endDate}
-                    progressStatus={activeMilestone.progressStatus}/>
-            }
-            {
-                (activeMilestone && mounted) && <Tasks milestoneId={activeMilestone.activeId as bigint}/>
+                <>
+                    <TaskSectionHeader
+                        content={activeMilestone.content}
+                        startDate={activeMilestone.startDate}
+                        endDate={activeMilestone.endDate}
+                        progressStatus={activeMilestone.progressStatus}/>
+                    <Tasks milestoneId={activeMilestone.activeId as bigint}/>
+                </>
             }
         </section>
     )

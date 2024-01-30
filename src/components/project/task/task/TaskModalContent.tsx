@@ -25,7 +25,6 @@ function TaskModalContent() {
         }
     }
 
-
     return (
         <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-4 flex-col mt-5'>
             <div className="space-y-5 mobile:space-y-3 mx-4 mobile:mx-0 mobile:text-sm">
@@ -38,7 +37,7 @@ function TaskModalContent() {
                 </div>
                 {taskModalForm?.type === 'modify' && (
                     <div className='flex'>
-                        <label className="text-gray-700 font-semibold self-center">진행상황</label>
+                        <label className="text-gray-700 font-semibold self-center">진행</label>
                         <div
                             className='flex w-[350px] mobile:w-[220px] h-[42px] mobile:h-[38px] space-x-3 ml-auto items-center'>
                             <TaskStatusSelector/>

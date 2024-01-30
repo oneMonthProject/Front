@@ -31,8 +31,7 @@ export async function GET(req: NextRequest) {
  * @constructor
  */
 export async function POST(req: NextRequest) {
-    const {projectId, milestoneId, content, startDate, endDate, assignedUser} = await req.json();
-
+    const {task:{projectId, milestoneId, content, startDate, endDate, assignedUser}} = await req.json();
     const res = await authApi(
         `${baseURL}/api/work/project/${projectId}/milestone/${milestoneId}`,
         {
@@ -55,7 +54,7 @@ export async function POST(req: NextRequest) {
  * @constructor
  */
 export async function PATCH(req: NextRequest) {
-    const {workId, content, startDate, endDate, progressStatusCode, assignedUser} = await req.json();
+    const {task:{workId, content, startDate, endDate, progressStatusCode, assignedUser}} = await req.json();
 
     const res = await authApi(
         `${baseURL}/api/work/${workId}`,

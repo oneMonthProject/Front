@@ -11,5 +11,5 @@ export default function useProjectCrewList(){
         queryFn: () => getProjectCrewList({projectId})
     });
 
-    return data.data;
+    return data;
 }

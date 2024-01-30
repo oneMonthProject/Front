@@ -18,7 +18,7 @@ function Tasks({milestoneId}: TasksProps) {
     const [pageNumber, setPageNumber] = useState(0);
 
     const res = useSuspenseQuery<PageResponseBody<TaskItem[]>, Error>({
-        queryKey: ['taskList'],
+        queryKey: ['taskList', milestoneId, projectId, pageNumber, ITEMS_PER_PAGE],
         queryFn: () => getTaskList({
             milestoneId,
             projectId,
@@ -34,8 +34,6 @@ function Tasks({milestoneId}: TasksProps) {
 
     const taskList = res.data.data.content;
     const totalCount = res.data.data.totalPages;
-
-    console.log('taskList: ', res.data);
 
     return (
         <div className='w-full mt-4 flex flex-col items-center'>
