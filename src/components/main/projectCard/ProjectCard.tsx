@@ -49,12 +49,11 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
             </div>
             <div className="relative my-3 flex items-start">
                 <span className='basis-[50px] text-base text-gray-500 font-semibold'>주제</span>
-                <div className=' group' data-tooltip-target='tooltip-subject'>
+                <div className='group'>
                     <div className='max-w-[180px] truncate text-lg font-semibold'>{subject}</div>
                     <div id="tooltip-subject" role="tooltip"
-                         className="w-fit absolute z-10 invisible group-hover:visible inline-block px-3 py-2 text-sm font-medium text-white bg-gray-900 rounded-lg shadow-sm tooltip dark:bg-gray-700">
+                         className="customTooltip group-hover:visible">
                         {subject}
-                        <div className="tooltip-arrow" data-popper-arrow></div>
                     </div>
                 </div>
             </div>
