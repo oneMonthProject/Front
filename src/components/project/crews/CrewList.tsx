@@ -15,7 +15,7 @@ export default function CrewList() {
 
     return (
         <ul role="list" className="divide-y divide-gray-100">
-            {data.projectMembers.map(({
+            {data.data.projectMembers.map(({
                                           lastWorkDate,
                                           position: {name},
                                           projectMemberAuth: {projectMemberAuthName},
