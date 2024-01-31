@@ -59,7 +59,7 @@ function TaskCard({item}: TaskCardProps) {
                 </div>
                 <div className='flex items-center'>
                     <div className='basis-[100px] font-semibold pc:text-lg text-greyBlue'>진행 상태</div>
-                    <div className='flex-1'><TaskStatusBadge size='sm' text='진행중'/></div>
+                    <div className='flex-1'><TaskStatusBadge size='sm' text={item.progressStatus}/></div>
                 </div>
                 <div className='flex items-center'>
                     <div className='basis-[100px] font-semibold pc:text-lg text-greyBlue'>담당</div>
