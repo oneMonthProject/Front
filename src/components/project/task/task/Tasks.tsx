@@ -29,7 +29,7 @@ function Tasks({milestoneId}: TasksProps) {
 
 
     function onChangePageHandler(pageNumber: number) {
-        setPageNumber(pageNumber);
+        setPageNumber(pageNumber - 1);
     }
 
     const taskList = res.data.data.content;
@@ -54,7 +54,7 @@ function Tasks({milestoneId}: TasksProps) {
 
             }
             <CommonPagination
-                activePage={pageNumber}
+                activePage={pageNumber + 1}
                 totalItemsCount={totalCount}
                 pageRangeDisplayed={5}
                 itemsCountPerPage={ITEMS_PER_PAGE}
