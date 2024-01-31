@@ -26,7 +26,7 @@ export default function CrewList() {
                     <li key={userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000">
                         <Link
                             href={{
-                                pathname: `/project/crewDetail`,
+                                pathname: `/projectCrewDetail`,
                                 query: {projectId, projectMemberId:projectMemberId.toString()}
                             }}
                             className="w-full min-w-0 flex mobile:flex-col items-center mobile:items-start mobile:space-y-3 tablet:px-6 mobile:pl-4">

@@ -14,7 +14,7 @@ function getIconByPointType(pointType: string) {
     else return <FaPlus className='h-4 w-4 text-white bg-primary' aria-hidden="true"/>
 }
 
-const ITEM_PER_PAGE = 10;
+const ITEM_PER_PAGE = 5;
 const PAGE_RANGE = 5;
 
 function CrewTaskHistory() {
@@ -25,6 +25,8 @@ function CrewTaskHistory() {
         queryKey: ['crewTaskHistory', projectMemberId],
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, ITEM_PER_PAGE)
     });
+
+    console.log("data: ",data);
 
     const taskHistory = data.data.content;
     const totalCount = data.data.totalPages;
@@ -71,9 +73,9 @@ function CrewTaskHistory() {
                                         </div>
                                         <div
                                             className="flex items-center space-x-1 whitespace-nowrap text-right tablet:text-md mobile:text-sm text-gray-500">
-                                            <span>${event.startDate}</span>
+                                            <span>{event.startDate}</span>
                                             <span>&#126;</span>
-                                            <span>${event.endDate}</span>
+                                            <span>{event.endDate}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -83,11 +85,11 @@ function CrewTaskHistory() {
                 </ul>
             </div>
             <CommonPagination
-                activePage={pageIndex}
+                activePage={pageIndex + 1}
                 pageRangeDisplayed={PAGE_RANGE}
                 itemsCountPerPage={ITEM_PER_PAGE}
                 totalItemsCount={totalCount}
-                onChangePageHandler={(pageIndex: number) => setPageIndex(pageIndex)}
+                onChangePageHandler={(pageIndex: number) => setPageIndex(pageIndex - 1)}
             />
         </>
     );
