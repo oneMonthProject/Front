@@ -1,8 +1,6 @@
 'use client';
-import React, { useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { useRouter } from 'next/navigation';
-import MultiSelect from "@/components/ui/MultiSelect";
-import Select from "@/components/ui/Select";
 import Input from "@/components/ui/form/Input";
 import PasswordInput from "@/components/ui/form/PasswordInput";
 import TextArea from "@/components/ui/form/TextArea";
@@ -10,27 +8,27 @@ import FormButton from "@/components/ui/form/FormButton";
 import NicknameField from "@/components/ui/form/NickNameField";
 import { SelectItem } from "@/utils/type";
 import { SignUpRequest, signUp } from "@/service/user/signup";
-import { getPositionSelectItems, getSelectItemValue, getTechStackSelectItems, isValidEmail, isValidNickname, isValidPassword } from "@/utils/common";
+import { getSelectItemValue, isValidEmail, isValidNickname, isValidPassword } from "@/utils/common";
 import { useSetRecoilState } from "recoil";
-import { usePositionList } from "@/hooks/usePositionList";
-import { useTechStackList } from "@/hooks/useTechStackList";
 import { snackbarState } from "@/store/CommonStateStore";
+import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
+import TechStackSelect from "@/components/ui/form/TechStackSelect";
+import PositionSelect from "@/components/user/signup/PositionSelect";
 
 function SignUpForm() {
   const router = useRouter();
-  const positions = usePositionList();
-  const techStacks = useTechStackList();
+  const setSnackbar = useSetRecoilState(snackbarState);
+  const [mounted, setMounted] = useState<boolean>(false);
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
   const [position, setPosition] = useState<SelectItem | null>(null);
-  const [techStack, setTechStack] = useState<SelectItem[]>([]);
+  const [techStacks, setTechStacks] = useState<SelectItem[]>([]);
   const [selfIntroduction, setSelfIntroduction] = useState("");
 
   const [isCheckedNickname, setIsCheckedNickname] = useState(false);
-  const setSnackbar = useSetRecoilState(snackbarState);
 
   const isValid = () => {
     if (email === "") {
@@ -88,7 +86,7 @@ function SignUpForm() {
       return false;
     }
 
-    if (techStack.length === 0) {
+    if (techStacks.length === 0) {
       setSnackbar({ show: true, type: "ERROR", content: "관심 스택을 선택해주세요." });
       return false;
     }
@@ -103,7 +101,7 @@ function SignUpForm() {
 
     if (position) {
       const positionId = getSelectItemValue(position);
-      const techStackIds = techStack.map(stack => getSelectItemValue(stack));
+      const techStackIds = techStacks.map(stack => getSelectItemValue(stack));
 
       const signUpRequest = { email, password, nickname, positionId, techStackIds, intro: selfIntroduction } as SignUpRequest;
       signUp(signUpRequest).then(response => {
@@ -122,6 +120,10 @@ function SignUpForm() {
     setIsCheckedNickname(false);
   }
 
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   return (
     <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3">
       <Input id="email" label="이메일" placeholder="example@trustcrews.com" required
@@ -132,8 +134,20 @@ function SignUpForm() {
         value={passwordConfirmation} onChange={(e) => setPasswordConfirmation(e.target.value)} />
       <NicknameField placeholder="영문, 숫자 포함 6~10자" setCheck={setIsCheckedNickname} required
         value={nickname} onChange={onChangeNickname} />
-      <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="직무" placeholder="직무를 선택해주세요." required />
-      <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
+      {
+        mounted ? (
+          <Suspense fallback={<SelectSkeleton label="직무" placeholder="직무를 선택해주세요." required />}>
+            <PositionSelect position={position} setPosition={setPosition} required />
+          </Suspense>
+        ) : <SelectSkeleton label="직무" placeholder="직무를 선택해주세요." required />
+      }
+      {
+        mounted ? (
+          <Suspense fallback={<SelectSkeleton label="관심 스택" placeholder="관심 스택을 선택해주세요." required />}>
+            <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
+          </Suspense>
+        ) : <SelectSkeleton label="관심 스택" placeholder="관심 스택을 선택해주세요." required />
+      }
       <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
         value={selfIntroduction} onChange={(e) => setSelfIntroduction(e.target.value)} />
       <FormButton onClick={userSignUp}>가입</FormButton>
