@@ -1,20 +1,22 @@
 'use client';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {TaskItem} from "@/utils/type";
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
-import Avatar from "@/components/ui/Avatar";
 import TaskCardMenu from "@/components/project/task/task/TaskCardMenu";
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
+import {getTaskStatusCode, TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {deleteTask as deleteTaskAPI} from "@/service/project/task";
 import {snackbarState} from '@/store/CommonStateStore';
+import {checkExpiration} from "@/utils/common";
+import useUpsertTask from "@/hooks/useUpsertTask";
 
 interface TaskCardProps {
     item: TaskItem;
 }
 
 function TaskCard({item}: TaskCardProps) {
+    const {upsertTask, isUpdating} = useUpsertTask();
     const [taskModalForm, setTaskModalForm] = useRecoilState(taskModalFormState);
     const setSnackbar = useSetRecoilState(snackbarState);
 
@@ -30,20 +32,32 @@ function TaskCard({item}: TaskCardProps) {
                 setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
             }
         },
-        onError:(error) => {
-            console.log("error: ",error);
+        onError: (error) => {
+            console.log("error: ", error);
             setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
         }
     })
 
-    console.log("item: ", item);
+    // 업무 기간이 지난 상태면 자동으로 진행상태 '만료'로 업데이트
+    useEffect(() => {
+        if (checkExpiration(item.endDate) && item.progressStatus !== '만료') {
+            const taskForm: TaskModalForm = {
+                ...item,
+                type: 'modify',
+                progressStatus:'만료',
+                progressStatusCode: getTaskStatusCode('만료')
+            }
+
+            upsertTask(taskForm);
+        }
+    },[])
+
 
 
     return (
         <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg">
             <div className="w-full flex items-center px-4 py-3 mobile:px-6 bg-ground100">
-                <span className='pc:text-[1.3rem] font-semibold text-greyDarkBlue'>{item.content}</span>
-                {/*<p className='ml-auto pc:text-sm text-grey800'>업데이트: {item.updateDate}</p>*/}
+                <div className='pc:text-[1.3rem] font-semibold text-greyDarkBlue'>{item.content}</div>
                 <div className='ml-auto self-border border-black'>
                     <TaskCardMenu
                         taskId={item.workId}

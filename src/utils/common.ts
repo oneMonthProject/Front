@@ -259,3 +259,7 @@ export function getRefreshToken(setCookieHeader: string) {
 
     return { token: refreshTokenValue, options: cookieOptions };
 }
+
+export function checkExpiration(endDate:string){
+    return new Date(endDate).getTime() < new Date().getTime()
+}
