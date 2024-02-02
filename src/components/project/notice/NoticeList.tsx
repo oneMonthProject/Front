@@ -10,7 +10,7 @@ import {useRecoilValue} from "recoil";
 import {currentProjectNoticeNavTabSelector} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 
 
-const ITEM_COUNT = 10;
+const ITEM_COUNT = 5;
 const PAGE_RANGE = 5;
 
 function NoticeList() {
@@ -22,11 +22,15 @@ function NoticeList() {
     const {data} = useSuspenseQuery<PageResponseBody<Notice[]>, Error>({
         queryKey: ['noticeList', projectId],
         queryFn: () => getProjectNoticeList(projectId, pageIndex, ITEM_COUNT),
-        refetchInterval: 5000,
-        refetchIntervalInBackground: true
+        refetchInterval: 5000
     });
 
-    const noticeList = data.data.content.filter(v => v.type === currentNoticeNavTab.type);
+
+    const noticeList = data.data.content;
+    const filteredList = currentNoticeNavTab.type === 'ALL'
+        ? noticeList
+        : noticeList.filter(v => v.type === currentNoticeNavTab.type);
+
     const totalCount = data.data.totalPages;
     return (
         <>
@@ -39,11 +43,11 @@ function NoticeList() {
                 ))}
             </ul>
             <CommonPagination
-                activePage={pageIndex}
+                activePage={pageIndex + 1}
                 itemsCountPerPage={ITEM_COUNT}
                 totalItemsCount={totalCount}
                 pageRangeDisplayed={PAGE_RANGE}
-                onChangePageHandler={(pageIndex:number) => setPageIndex(pageIndex)}
+                onChangePageHandler={(pageIndex:number) => setPageIndex(pageIndex - 1)}
             />
         </>
 

@@ -12,3 +12,7 @@ export const NOTICE_TYPE = {
     CREW: '크루'
 } as const;
 
+export enum POINT_TYPE {
+    plus = 1,
+    minus = 2
+}
