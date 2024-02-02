@@ -6,11 +6,14 @@ import { SelectItem } from "@/utils/type";
 interface TechStackSelectProps {
   techStacks: SelectItem[];
   setTechStacks: (item: SelectItem[]) => void;
+  label?: string;
+  placeholder?: string;
+  required?: boolean;
 }
 
-const TechStackSelect = ({ techStacks, setTechStacks }: TechStackSelectProps) => {
+const TechStackSelect = ({ techStacks, setTechStacks, label, placeholder, required }: TechStackSelectProps) => {
   const techStackList = useTechStackList();
-  return <MultiSelect values={techStacks} setValues={setTechStacks} items={getTechStackSelectItems(techStackList)} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
+  return <MultiSelect values={techStacks} setValues={setTechStacks} items={getTechStackSelectItems(techStackList)} label={label} placeholder={placeholder} required={required} />
 }
 
 export default TechStackSelect;

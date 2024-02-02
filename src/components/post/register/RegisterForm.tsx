@@ -14,9 +14,9 @@ import { isEqual } from "lodash";
 import { useSetRecoilState } from "recoil";
 import { snackbarState } from "@/store/CommonStateStore";
 import TrustGradeSelect from "./TrustGradeSelect";
-import TechStackSelect from "./TechStackSelect";
+import TechStackSelect from "@/components/ui/form/TechStackSelect";
 import MultiPositionSelect from "./MultiPositionSelect";
-import SelectSkeleton from "./SelectSkeleton";
+import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -190,7 +190,7 @@ function RegisterForm() {
           {
             mounted ? (
               <Suspense fallback={<SelectSkeleton label="사용 스택" placeholder="사용 스택을 선택해주세요." />}>
-                <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} />
+                <TechStackSelect techStacks={techStacks} setTechStacks={setTechStacks} label="사용 스택" placeholder="사용 스택을 선택해주세요." />
               </Suspense>
             ) : <SelectSkeleton label="사용 스택" placeholder="사용 스택을 선택해주세요." />
           }
