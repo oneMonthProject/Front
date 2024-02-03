@@ -1,5 +1,5 @@
 import {request} from "@/service/project/request";
-import {NoticeCreateForm, NoticeTypeKey, TaskStatusCode} from "@/utils/type";
+import {NoticeCreateForm, NoticeTypeKey} from "@/utils/type";
 
 
 /**

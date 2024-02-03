@@ -33,24 +33,3 @@ export async function GET(
     return NextResponse.json(data);
 }
 
-/**
- * 프로젝트 알림 생성
- * @param req
- * @constructor
- */
-export async function POST(req: NextRequest) {
-    const noticeCreateForm = await req.json();
-
-    const res = await authApi(
-        `${baseURL}/api/alert`,
-        {
-            method: 'POST',
-            body: JSON.stringify(noticeCreateForm)
-        }
-    );
-
-    const data = await res.json();
-    console.log("create alert res data: ", data);
-
-    return NextResponse.json(data);
-}

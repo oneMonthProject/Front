@@ -31,25 +31,3 @@ export async function GET(
     return NextResponse.json(data);
 }
 
-export async function POST(
-    req: NextRequest,
-    {params}: { params: { slug: string } }
-) {
-    const method = req.method;
-    
-    let res: Response;
-    if (params.slug === 'participation') {
-        const { searchParams } = new URL(req.url);
-        const projectId = searchParams.get("projectId");
-        const requestData = await req.json();
-
-        res = await authApi(`/api/project/${projectId}/participate`, {
-            method,
-            body: JSON.stringify(requestData)
-        });
-    } else {
-        throw Error('Unknown Api Route');
-    }
-    const data = await res.json();
-    return NextResponse.json(data);
-}
