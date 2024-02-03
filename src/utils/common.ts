@@ -156,7 +156,7 @@ export const isValidNickname = (nickname: string) => {
 }
 
 export const isValidPassword = (password: string) => {
-    const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^&*(),.?":{}|<>])[a-zA-Z!@#$%^&*(),.?":{}|<>]{6,12}$/;
+    const passwordRegex: RegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{6,12}$/;
     return passwordRegex.test(password);
 }
 
