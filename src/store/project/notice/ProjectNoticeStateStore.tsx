@@ -1,5 +1,5 @@
 import {atom, selector} from "recoil";
-import {Notice, NoticeTypeKey, Position} from "@/utils/type";
+import {Notice, NoticeTypeKey, PointTypeValue, Position} from "@/utils/type";
 
 
 /**
@@ -32,7 +32,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
     updateDate: string;
     workId: bigint | null;
 
-    constructor(notice:Notice) {
+    constructor(notice: Notice) {
         const {
             type,
             alertId,
@@ -67,7 +67,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
  * 업무 알림 form 상태
  */
 interface ProjectNoticeTaskFormState extends Notice {
-    isTaskSuccess?: boolean;
+    scoreTypeId: PointTypeValue | null;
 }
 
 export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
@@ -75,7 +75,6 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
     checkUserId: bigint;
     content: string;
     createDate: string;
-    isTaskSuccess: boolean;
     milestoneId: bigint | null;
     position: Position | null;
     projectId: bigint;
@@ -83,9 +82,9 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
     type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
+    scoreTypeId: PointTypeValue | null;
 
-    constructor(isTaskSuccess:boolean, notice:Notice) {
-        this.isTaskSuccess = isTaskSuccess;
+    constructor(notice: Notice, scoreTypeId: PointTypeValue | null) {
         const {
             type,
             alertId,
@@ -97,7 +96,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
             createDate,
             updateDate,
             content,
-            position
+            position,
         } = notice;
 
         this.type = type;
@@ -111,6 +110,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
         this.updateDate = updateDate;
         this.content = content;
         this.position = position;
+        this.scoreTypeId = scoreTypeId;
     }
 
 
@@ -137,7 +137,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
     updateDate: string;
     workId: bigint | null;
 
-    constructor(isPermit:boolean, notice:Notice) {
+    constructor(isPermit: boolean, notice: Notice) {
         this.isPermit = isPermit;
         const {
             type,

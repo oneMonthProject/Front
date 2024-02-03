@@ -1,7 +1,7 @@
 'use client';
 import React, {useEffect, useState} from 'react';
 import Modal from "@/components/ui/Modal";
-import NoticeItemDetail from "@/components/project/notice/noticeItemDetail/NoticeItemDetail";
+import NoticeModalContents from "@/components/project/notice/noticeModalContents/NoticeModalContents";
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import {
     projectNoticeCurrentFormState,
@@ -45,7 +45,7 @@ function NoticeModal() {
                             title={title}
                             onClickConfirmHandler={onConfirmHandler}
                         >
-                            {currentNoticeForm !== null && <NoticeItemDetail/>}
+                            {currentNoticeForm !== null && <NoticeModalContents/>}
                         </Modal>
                     ), portalElement)
                     : null

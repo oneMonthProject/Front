@@ -1,5 +1,5 @@
 import React from 'react';
-import {Notice} from "@/utils/type";
+import {Notice, NoticeTypeKey} from "@/utils/type";
 import NoticeBadge from "@/components/ui/badge/NoticeBadge";
 import {useSetRecoilState} from "recoil";
 import {
@@ -13,15 +13,15 @@ function NoticeItem({item}: { item: Notice }) {
     const {type, alertId, content, createDate} = item;
     const setCurrentNoticeForm = useSetRecoilState(projectNoticeCurrentFormState);
 
-    function onClickHandler(type: string) {
+    function onClickHandler(type: NoticeTypeKey) {
         switch (type) {
-            case '업무':
-                setCurrentNoticeForm(new ProjectNoticeTaskForm(false, item));
+            case "WORK":
+                setCurrentNoticeForm(new ProjectNoticeTaskForm(item, null));
                 break;
-            case '모집':
+            case "RECRUIT":
                 setCurrentNoticeForm(new ProjectNoticeRecruitForm(false, item));
                 break;
-            case '크루':
+            case "CREW":
                 setCurrentNoticeForm(new ProjectNoticeCrewForm(item));
                 break;
             default:

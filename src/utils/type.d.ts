@@ -1,6 +1,6 @@
 import {CookieValueTypes} from "cookies-next";
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS, NOTICE_TYPE} from "@/utils/constant";
+import {CREW_STATUS, NOTICE_TYPE, POINT_TYPE} from "@/utils/constant";
 
 export type DropDownItem = {
     name: string;
@@ -332,6 +332,17 @@ export interface Notice {
     updateDate: string;
 }
 
+export interface NoticeCreateForm {
+    projectId: bigint | string;
+    checkUserId?: bigint | string | null;
+    sendUserId?: bigint | string | null;
+    workId?: bigint | string | null;
+    milestoneId?: bigint | string | null;
+    positionId?: bigint | string | null;
+    type: string;
+    content: string;
+}
+
 /**
  * CREW_STATUS enum의 키값 타입
  */
@@ -347,7 +358,8 @@ export interface CrewTaskHistory {
     endDate: string;
     progressStatus: CrewStatusKeys;
     point: number | null;
-    point_type: WorkPointType | null;
+    point_type: PointTypeKey | null;
 }
 
-export type WorkPointType = 'plus' | 'minus';
+export type PointTypeKey = keyof typeof POINT_TYPE;
+export type PointTypeValue = typeof POINT_TYPE[PointTypeKey]
