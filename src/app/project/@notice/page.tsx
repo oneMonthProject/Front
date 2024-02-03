@@ -13,7 +13,7 @@ function NoticePage() {
     }, [])
 
     return (
-        <section className='tablet:basis-4/5'>
+        <section className='mb-20 tablet:basis-4/5'>
             {
                 mounted &&
                 <Suspense fallback={<div>loading...</div>}>
