@@ -38,7 +38,7 @@ function NoticeList() {
                         ?
                         (
                             <div className='flex w-full h-full'>
-                                <Loader size={16}/>
+                                <Loader size='md'/>
                             </div>
                         )
                         : noticeList.length > 0

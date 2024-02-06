@@ -6,9 +6,9 @@ import logo from '../../../public/images/logo.png';
 import Link from "next/link";
 import RegisterNav from "@/components/header/RegisterNav";
 import {hasCookie} from 'cookies-next';
-import UserMenu from './UserMenu';
 import AvatarSkeleton from '../ui/skeleton/AvatarSkeleton';
 import Skeleton from '../ui/skeleton/Skeleton';
+import {UserMenu} from "@/components/header/UserMenu";
 
 function Header() {
     const [mounted, setMounted] = useState(false);

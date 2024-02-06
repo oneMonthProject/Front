@@ -363,3 +363,18 @@ export interface CrewTaskHistory {
 
 export type PointTypeKey = keyof typeof POINT_TYPE;
 export type PointTypeValue = typeof POINT_TYPE[PointTypeKey]
+
+export interface UserBasicInfo {
+    nickname: string;
+    profileImgSrc: string;
+}
+
+export interface UserProjectNotice {
+    alertId: string | bigint;
+    project: {
+        projectId: string | bigint;
+        projectName: string;
+    };
+    position: PositionItem;
+    supportResult: boolean | null;
+}

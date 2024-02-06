@@ -221,6 +221,12 @@ export function getStatusBadgeColor(text: string) {
             return {bgColor: 'bg-primary', textColor: 'text-white'};
         case '탈퇴 진행중':
             return {bgColor: 'bg-danger', textColor: 'text-white'};
+        case '수락':
+            return {bgColor: 'bg-green-50 ring-green-600/20', textColor: 'text-green-700'}
+        case '거절':
+            return {bgColor: 'bg-yellow-50 ring-yellow-600/20', textColor: 'text-yellow-800'}
+        case '미확인':
+            return {bgColor:'bg-gray-50 ring-gray-500/10', textColor: 'text-gray-600'}
         default:
             throw Error("Unknown Status Type");
     }

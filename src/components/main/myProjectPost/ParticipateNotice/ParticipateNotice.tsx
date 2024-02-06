@@ -1,0 +1,52 @@
+'use client';
+
+import React from 'react';
+import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
+import ProjectApplyStatusBadge from "@/components/ui/badge/ProjectApplyStatusBadge";
+import PositionBadge from "@/components/ui/badge/PositionBadge";
+import Link from "next/link";
+import {useProjectInfo} from "@/hooks/useProjectInfo";
+import {FormattedUserProjectNotice} from "@/store/UserNoticeModalStateStore";
+
+interface ParticipateNoticeProps {
+    participateNotice: FormattedUserProjectNotice;
+}
+
+function ParticipateNotice({
+                               participateNotice: {
+                                   projectId,
+                                   projectName,
+                                   positionName,
+                                   supportResult
+                               }
+                           }: ParticipateNoticeProps) {
+
+    // 프로젝트명, position name, 지원 현황, 프로젝트 주제, 프로젝트 등급, 프로젝트 id
+    // const {name, subject, trustGrade, startDate, endDate} = useProjectInfo();
+
+    return (
+        <div className='mobile:w-[320px] tablet:w-[450px] flex items-center justify-between'>
+            <div className="min-w-0">
+                <div className="flex items-center gap-x-3">
+                    <p className="mobile:text-sm tablet:text-xl font-semibold leading-6 text-gray-900">{projectName}</p>
+                    <PositionBadge text={`${positionName} 지원`} size='sm'/>
+                </div>
+            </div>
+            <div className="flex flex-none items-center">
+                <ProjectApplyStatusBadge status={supportResult} size='sm'/>
+                {
+                    supportResult &&
+                    <Link
+                    href={`/project/${projectId}`}
+                    className="hidden rounded-md bg-primary/15 px-2.5 py-1.5 text-sm font-medium text-secondary
+                     shadow-sm ring-1 ring-inset ring-primary/15 hover:bg-primary hover:text-white sm:block"
+                >
+                    프로젝트 가기<span className="sr-only">, {projectName}</span>
+                </Link>
+                }
+            </div>
+        </div>
+    );
+}
+
+export default ParticipateNotice;

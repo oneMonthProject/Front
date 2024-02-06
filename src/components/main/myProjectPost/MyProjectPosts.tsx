@@ -50,8 +50,8 @@ function MyProjectPosts() {
                         </>
                     )
                     : (
-                        <div className='w-full bg-ground100 text-center rounded-md'>
-                            <p className='py-10 text-2xl font-medium text-grey900'>참여하고 있는 프로젝트가 없습니다.</p>
+                        <div className='flex items-center justify-center w-full h-[280px] bg-ground100 text-center rounded-md'>
+                            <p className='py-10 mobile:text-2xl tablet:text-3xl font-medium text-grey900'>참여하고 있는 프로젝트가 없습니다.</p>
                         </div>
                     )
             }
