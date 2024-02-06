@@ -9,7 +9,7 @@ import { isEqual } from "lodash";
 import { useResetRecoilState, useSetRecoilState } from "recoil";
 import { confirmModalState, snackbarState } from "@/store/CommonStateStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { requestParticipationProject as requestParticipationProjectAPI } from "@/service/project/project";
+import { requestParticipationProject as requestParticipationProjectAPI } from "@/service/project/participate";
 import { changeRecruitmentStatus as changeRecruitmentStatusAPI } from "@/service/post/post";
 
 const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo: PostInfo }) => {
@@ -29,7 +29,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
 
   const { mutate: requestParticipationProject } = useMutation({
     mutationFn: (positionId: bigint) => requestParticipationProjectAPI(projectId, positionId),
-    onSuccess: (data) => {
+    onSuccess: async (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {
         setSnackbar({ show: true, type: "SUCCESS", content: message });

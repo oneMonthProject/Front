@@ -1,16 +1,6 @@
 import {request} from "@/service/project/request";
-import {NoticeCreateForm, TaskStatusCode} from "@/utils/type";
+import {NoticeCreateForm, NoticeTypeKey} from "@/utils/type";
 
-/**
- * 프로젝트 알림 목록 조회
- * @param projectId
- */
-export async function getProjectNoticeList(projectId: string | bigint, pageIndex: number, itemCount: number) {
-    return await request(
-        'GET',
-        `/api/project/notice?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
-    );
-}
 
 /**
  * 업무 알림 생성
@@ -22,6 +12,33 @@ export async function createProjectTaskNotice(noticeCreateForm:NoticeCreateForm)
     return await request('POST', '/api/project/notice',{...noticeCreateForm});
 }
 
+/**
+ * 프로젝트 알림 전체/타입별 목록 조회
+ * @param projectId
+ * @param pageIndex
+ * @param itemCount
+ * @param noticeType
+ */
+export async function getProjectNoticeByType(projectId:string|bigint, pageIndex:number, itemCount:number, noticeType:NoticeTypeKey | 'ALL'){
+    let noticeRequestUrl = '/api/project/notice';
+    switch (noticeType){
+        case 'ALL':
+            noticeRequestUrl += '/all';
+            break;
+        case 'WORK':
+            noticeRequestUrl += '/works';
+            break;
+        case 'RECRUIT':
+            noticeRequestUrl += '/recruits';
+            break;
+        case 'CREW':
+            noticeRequestUrl += '/crews';
+            break;
+        default:
+            throw Error('Unknown type of notice');
+    }
 
+    return await request('GET',`${noticeRequestUrl}?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`);
+}
 
 
