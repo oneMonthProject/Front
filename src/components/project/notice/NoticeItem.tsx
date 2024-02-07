@@ -19,7 +19,7 @@ function NoticeItem({item}: { item: Notice }) {
                 setCurrentNoticeForm(new ProjectNoticeTaskForm(item, null));
                 break;
             case "RECRUIT":
-                setCurrentNoticeForm(new ProjectNoticeRecruitForm(false, item));
+                setCurrentNoticeForm(new ProjectNoticeRecruitForm('', item));
                 break;
             case "CREW":
                 setCurrentNoticeForm(new ProjectNoticeCrewForm(item));
