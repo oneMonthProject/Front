@@ -1,6 +1,5 @@
 import {PointTypeValue} from "@/utils/type";
 import {request} from "@/service/project/request";
-import {NextResponse} from "next/server";
 
 /**
  * 업무 알림 confirm
