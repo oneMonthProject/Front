@@ -31,7 +31,7 @@ export interface BadgeProps {
 }
 
 export type SelectItem = {
-    value: string | number | bigint | null | undefined;
+    value: string | number | bigint | boolean | null | undefined;
     name: string;
 }
 

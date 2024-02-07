@@ -7,8 +7,9 @@ import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
 
 const selectItems: SelectItem[] = [
-    {name: '수락', value: 'true'},
-    {name: '거절', value: 'false'}
+    {name:'합류 여부 선택', value: ''},
+    {name: '수락', value: true},
+    {name: '거절', value: false}
 ]
 
 function RecruitSelector() {
@@ -21,23 +22,18 @@ function RecruitSelector() {
         }
     }
 
+    const selectedValue:SelectItem = selectItems.find(v => v.value === (currentNoticeForm as ProjectNoticeRecruitForm).isPermit)!;
 
     return (
         <section className='max-w-[150px] mx-auto my-7 flex flex-col items-stretch'>
             <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>프로젝트
-                합류</label>
+                합류
+            </label>
             <Select
                 items={selectItems}
                 label=''
                 setValue={onChangeJoinPermitHandler}
-                value={
-                    {
-                        name: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit
-                            ? '수락'
-                            : '거절',
-                        value: (currentNoticeForm as ProjectNoticeRecruitForm).isPermit.toString()
-                    }
-                }/>
+                value={selectedValue}/>
         </section>
     );
 }
