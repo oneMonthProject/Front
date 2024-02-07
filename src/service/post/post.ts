@@ -1,7 +1,6 @@
 import { PositionItem, TechStackWithCategory } from "@/utils/type";
 import { isEqual } from "lodash";
-
-const publicURL = process.env.NEXT_PUBLIC_URL;
+import {request} from "@/service/project/request";
 
 export interface SearchParams {
   techStacks: TechStackWithCategory[];
@@ -51,32 +50,18 @@ const createQueryParams = (params: SearchParams) => {
 
 export const getPostList = async (params: SearchParams) => {
   const queryParams = createQueryParams(params);
-  const response = await fetch(`${publicURL}/api/post/search?${queryParams}`);
+  return await request('GET',`/api/post/search?${queryParams}`);
 
-  return await response.json();
 };
 
 export const getPost = async (postId: bigint) => {
-  const response = await fetch(`${publicURL}/api/post?postId=${postId}`);
-  return await response.json();
+  return await request('GET',`/api/post?postId=${postId}`);
 };
 
 export const createPost = async (createData: CreatePostInfo) => {
-  const response = await fetch(`${publicURL}/api/post`, {
-    method: "POST",
-    body: JSON.stringify(createData),
-  });
-
-  return await response.json();
+  return await request('POST',`/api/post`, {createData});
 };
 
 export const changeRecruitmentStatus = async (boardId: bigint) => {
-  const response = await fetch(
-    `${publicURL}/api/post/recruitment-status?boardId=${boardId}`,
-    {
-      method: "PATCH",
-    }
-  );
-
-  return response.json();
+  return await request('PATCH',`/api/post/recruitment-status?boardId=${boardId}`);
 };
