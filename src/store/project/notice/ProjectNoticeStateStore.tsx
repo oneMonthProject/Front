@@ -120,7 +120,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
  * 모집 알림 form 상태
  */
 interface ProjectNoticeRecruitFormState extends Notice {
-    isPermit: boolean;
+    isPermit: boolean | '';
 }
 
 export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
@@ -128,7 +128,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
     checkUserId: bigint;
     content: string;
     createDate: string;
-    isPermit: boolean;
+    isPermit: boolean | '';
     milestoneId: bigint | null;
     position: Position | null;
     projectId: bigint;
@@ -137,7 +137,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
     updateDate: string;
     workId: bigint | null;
 
-    constructor(isPermit: boolean, notice: Notice) {
+    constructor(isPermit: boolean | '', notice: Notice) {
         this.isPermit = isPermit;
         const {
             type,

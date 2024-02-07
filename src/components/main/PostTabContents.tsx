@@ -6,8 +6,6 @@ import Posts from "@/components/main/posts/Posts";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {activeTabState} from '@/store/post/PostStateStore';
 import PostListSkeleton from "@/components/main/PostListSkeleton";
-import ParticipateNoticeModalContents
-    from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNoticeModalContents";
 import ParticipateNoticeModal from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNoticeModal";
 import Button from "@/components/ui/Button";
 import {userNoticeModalStateStore} from "@/store/UserNoticeModalStateStore";

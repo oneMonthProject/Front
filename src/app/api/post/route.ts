@@ -12,12 +12,17 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(data);
 }
 
+/**
+ * 게시글 생성
+ * @param req
+ * @constructor
+ */
 export async function POST(req: NextRequest) {
-  const createDate = await req.json();
+  const {createData} = await req.json();
 
   const res = await authApi("/api/board", {
     method: "POST",
-    body: JSON.stringify(createDate),
+    body: JSON.stringify(createData),
   });
   const data = await res.json();
 

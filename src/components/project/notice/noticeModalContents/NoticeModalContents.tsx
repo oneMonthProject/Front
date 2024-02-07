@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, {Suspense} from 'react';
 import {useRecoilValue} from "recoil";
 import {projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNoticeStateStore";
 import NoticeItemRecruitInfo from "@/components/project/notice/noticeModalContents/NoticeItemRecruitInfo";
@@ -20,7 +20,7 @@ function NoticeModalContents() {
                 </div>
             </section>
             {
-                currentNoticeForm?.type === 'RECRUIT' && <NoticeItemRecruitInfo/>
+                currentNoticeForm?.type === 'RECRUIT' && <Suspense fallback={<div>loading..</div>}><NoticeItemRecruitInfo/></Suspense>
             }
 
             {

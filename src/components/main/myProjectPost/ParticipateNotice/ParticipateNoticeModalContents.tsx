@@ -63,7 +63,8 @@ function ParticipateNoticeModalContents() {
         })
     });
 
-    const totalPageCount = Math.ceil(data.pages[0].data.totalPages / ITEM_COUNT);
+    const totalItemCount = data.pages[0].data.totalPages;
+    const totalPageCount = Math.ceil(totalItemCount / ITEM_COUNT);
     const isEndPage = data.pageParams.length === totalPageCount;
 
     return (
@@ -73,7 +74,8 @@ function ParticipateNoticeModalContents() {
             ref={rootRef}
         >
             {
-                noticeList.length > 0 ? noticeList.map(v => {
+                totalItemCount > 0 ?
+                    noticeList.map(v => {
                         return (
                             <li
                                 key={v.alertId}
@@ -87,17 +89,25 @@ function ParticipateNoticeModalContents() {
                             </li>
                         )
                     })
-                    : <li>데이터가 없습니다</li>
+                    : (
+                        <li className='flex items-center justify-center mobile:w-[320px] tablet:w-[450px] h-[150px] bg-gray-100 rounded-md'>
+                            <div className='text-xl text-center text-gray-600/80'>데이터가 없습니다.</div>
+                        </li>
+                    )
             }
             {
-                isEndPage ?
-                    <li className='flex items-center justify-center w-full h-[100px] text-lg text-center text-gray-600/80'>
-                        <div>데이터가 더 이상 존재하지 않습니다</div>
-                    </li>
-                    :
-                    <li ref={bottomRef} className='flex items-center w-full h-[80px]'>
-                        <Loader size='sm'/>
-                    </li>
+                totalItemCount > 0 &&
+                (
+                    isEndPage
+                        ?
+                        <li className='flex items-center justify-center w-full h-[100px] text-lg text-center text-gray-600/80'>
+                            <div>데이터가 더 이상 존재하지 않습니다</div>
+                        </li>
+                        :
+                        <li ref={bottomRef} className='flex items-center w-full h-[80px]'>
+                            <Loader size='sm'/>
+                        </li>
+                )
             }
         </ul>
     );

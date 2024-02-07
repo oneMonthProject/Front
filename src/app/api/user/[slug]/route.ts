@@ -9,21 +9,27 @@ export async function GET(
   const { searchParams } = new URL(req.url);
 
   let res: Response;
-  if (params.slug === "simple") {
-    res = await authApi("/api/user/simple-me");
-  } else if (params.slug === "history") {
-    const pageNumber = searchParams.get("pageNumber");
-    res = await authApi(
-      `/api/user/me/project-history?pageNumber=${pageNumber}`
-    );
-  } else if (params.slug === "trust-grade") {
-    res = await authApi("/api/trust-grade/me");
-  } else if (params.slug === "nickname") {
-    const nickname = searchParams.get("nickname");
-    res = await publicApi(`/api/user/check-nickname/${nickname}/public`);
-  } else {
-    throw Error("Unknown Api Route");
+
+  switch(params.slug){
+    case 'simple':
+      res = await authApi("/api/user/simple-me");
+      break;
+    case 'history':
+      res = await authApi(`/api/user/me/project-history?pageNumber=${searchParams.get("pageNumber")}`);
+      break;
+    case 'trust-grade':
+      res = await authApi("/api/trust-grade/me");
+      break;
+    case 'nickname':
+      res = await publicApi(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
+      break;
+    case 'general':
+      res = await authApi(`/api/user/user/${searchParams.get('userId')}`);
+      break;
+    default:
+      throw new Error('Unknown User API');
   }
+
 
   const data = await res.json();
   return NextResponse.json(data);
