@@ -37,9 +37,9 @@ function ParticipateNotice({
                 {
                     supportResult &&
                     <Link
-                    href={`/project/${projectId}`}
-                    className="hidden rounded-md bg-primary/15 px-2.5 py-1.5 text-sm font-medium text-secondary
-                     shadow-sm ring-1 ring-inset ring-primary/15 hover:bg-primary hover:text-white sm:block"
+                    href={`/project?projectId=${projectId}`}
+                    className="hidden rounded-md  px-2.5 py-1.5 text-sm font-medium text-white
+                     shadow-sm bg-primary sm:block"
                 >
                     프로젝트 가기<span className="sr-only">, {projectName}</span>
                 </Link>
