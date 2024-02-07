@@ -1,3 +1,5 @@
+import {request} from "@/service/project/request";
+
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
 export interface updateUserInfo {
@@ -63,3 +65,11 @@ export const deleteProfileImage = async () => {
   const response = await fetch(`${publicURL}/api/user/profile-img`, { method: "DELETE" });
   return response.json();
 };
+
+/**
+ * 일반 사용자 정보 조회
+ * @param userId
+ */
+export const getUserInfoByUserId = async (userId: string | bigint) => {
+  return request('GET',`/api/user/general?userId=${userId}`);
+}
