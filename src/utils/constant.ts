@@ -16,3 +16,10 @@ export enum POINT_TYPE {
     plus = 1,
     minus = 2
 }
+
+export enum TRUST_GRADE {
+    '1등급' = 1,
+    '2등급' = 2,
+    '3등급' = 3,
+    '4등급' = 4
+}

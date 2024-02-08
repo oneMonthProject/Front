@@ -1,6 +1,15 @@
-import {MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
+import {
+    MilestoneInfo,
+    PositionItem,
+    ProjectPost,
+    SelectItem,
+    TechStackItem,
+    TrustGradeNameType,
+    TrustGradeValueType
+} from "./type";
 import {format} from "date-fns";
-import _, { camelCase } from "lodash";
+import _, {camelCase} from "lodash";
+import {TRUST_GRADE} from "@/utils/constant";
 
 export function makeBadgeSize(size: string) {
     // 사이즈
@@ -226,7 +235,7 @@ export function getStatusBadgeColor(text: string) {
         case '거절':
             return {bgColor: 'bg-yellow-50 ring-yellow-600/20', textColor: 'text-yellow-800'}
         case '미확인':
-            return {bgColor:'bg-gray-50 ring-gray-500/10', textColor: 'text-gray-600'}
+            return {bgColor: 'bg-gray-50 ring-gray-500/10', textColor: 'text-gray-600'}
         default:
             throw Error("Unknown Status Type");
     }
@@ -257,15 +266,35 @@ export function getRefreshToken(setCookieHeader: string) {
             const optionName = camelCase(cookieItem[0]);
             const optionValue = cookieItem[1] ?? true;
             cookieOptions = {
-            ...cookieOptions,
-            [optionName]: optionValue,
+                ...cookieOptions,
+                [optionName]: optionValue,
             };
         }
     });
 
-    return { token: refreshTokenValue, options: cookieOptions };
+    return {token: refreshTokenValue, options: cookieOptions};
 }
 
-export function checkExpiration(endDate:string){
+/**
+ * 프로젝트 업무 만료여부 검사
+ * @param endDate
+ */
+export function checkExpiration(endDate: string) {
     return new Date(endDate).getTime() < new Date().getTime()
 }
+
+/**
+ * 신뢰등급 selectItem 생성
+ * @param hint
+ */
+export function createTrustGradeSelectItem(hint: TrustGradeNameType | TrustGradeValueType): SelectItem {
+    if ((hint as string).includes('등급')) {
+        return {value: TRUST_GRADE[hint] as string, name: hint as string};
+    } else {
+        return {value: hint as string, name: `${hint}등급`};
+    }
+}
+
+
+
+

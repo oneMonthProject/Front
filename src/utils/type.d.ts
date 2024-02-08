@@ -1,6 +1,6 @@
 import {CookieValueTypes} from "cookies-next";
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS, NOTICE_TYPE, POINT_TYPE} from "@/utils/constant";
+import {CREW_STATUS, NOTICE_TYPE, POINT_TYPE, TRUST_GRADE, TRUST_GRADE_NAME} from "@/utils/constant";
 
 export type DropDownItem = {
     name: string;
@@ -378,3 +378,7 @@ export interface UserProjectNotice {
     position: PositionItem;
     supportResult: boolean | null;
 }
+
+export type TrustGradeNameType = keyof typeof TRUST_GRADE;
+
+export type TrustGradeValueType = typeof TRUST_GRADE[TrustGradeNameType];
