@@ -353,7 +353,8 @@ export type CrewStatusKeys = keyof typeof CREW_STATUS;
  * 프로젝트 크루 업무 이력
  */
 export interface CrewTaskHistory {
-    workId: bigint;
+    workId: bigint | string;
+    trustScoreHistoryId: bigint | string;
     workContent: string;
     startDate: string;
     endDate: string;
