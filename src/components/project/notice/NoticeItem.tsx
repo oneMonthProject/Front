@@ -1,27 +1,33 @@
 import React from 'react';
 import {Notice, NoticeTypeKey} from "@/utils/type";
 import NoticeBadge from "@/components/ui/badge/NoticeBadge";
-import {useSetRecoilState} from "recoil";
+import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     ProjectNoticeCrewForm,
     projectNoticeCurrentFormState,
     ProjectNoticeRecruitForm,
     ProjectNoticeTaskForm
 } from "@/store/project/notice/ProjectNoticeStateStore";
+import {FaUserCheck} from "@react-icons/all-files/fa/FaUserCheck";
+import {snackbarState} from "@/store/CommonStateStore";
 
 function NoticeItem({item}: { item: Notice }) {
-    const {type, alertId, content, createDate} = item;
+    const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+    const {type, alertId, content, createDate, checkedStatus} = item;
     const setCurrentNoticeForm = useSetRecoilState(projectNoticeCurrentFormState);
 
     function onClickHandler(type: NoticeTypeKey) {
         switch (type) {
             case "WORK":
-                setCurrentNoticeForm(new ProjectNoticeTaskForm(item, null));
+                if(checkedStatus) setSnackbar({show:true, type:'INFO', content:'업무 평가가 완료된 상태입니다.'});
+                else setCurrentNoticeForm(new ProjectNoticeTaskForm(item, null));
                 break;
             case "RECRUIT":
-                setCurrentNoticeForm(new ProjectNoticeRecruitForm('', item));
+                if(checkedStatus) setSnackbar({show:true, type:'INFO', content:'지원자 검토가 완료된 상태입니다.'});
+                else setCurrentNoticeForm(new ProjectNoticeRecruitForm('', item));
                 break;
             case "CREW":
+            case "ADD":
                 setCurrentNoticeForm(new ProjectNoticeCrewForm(item));
                 break;
             default:
