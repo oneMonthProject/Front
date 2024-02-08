@@ -64,9 +64,16 @@ function NoticeModal() {
 
             const res = await confirmRecruitNotice(projectId, alertId, confirmResult);
 
-
+            if (res.result === 'success') {
+                await queryClient.invalidateQueries({queryKey: ['noticeList']});
+                setSnackbar({show: true, type: 'SUCCESS', content: '모집 지원 알림을 확인했습니다.'});
+                resetCurrentNoticeForm();
+            }
         }
-        // 크루 - 단순 확인 : checkYN만 바꿈
+
+        if (currentNoticeForm?.type == 'ADD') {
+            resetCurrentNoticeForm();
+        }
     }
 
     return (

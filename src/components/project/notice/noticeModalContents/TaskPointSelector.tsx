@@ -6,6 +6,7 @@ import {projectNoticeCurrentFormState, ProjectNoticeTaskForm} from "@/store/proj
 import {PointTypeValue, SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
 import {POINT_TYPE} from "@/utils/constant";
+import {TiMinus} from "@react-icons/all-files/ti/TiMinus";
 
 const taskPointOptions: SelectItem[] = [
     {
@@ -32,13 +33,29 @@ function TaskPointSelector() {
     }
 
     return (
-        <section className='max-w-[150px] mx-auto mt-12 flex flex-col items-stretch'>
-            <label className='tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수 부여</label>
-            <Select
-                items={taskPointOptions}
-                label=''
-                setValue={onChangeTaskPointHandler}
-                value={taskPointOptions.find(v => v.value === (currentNoticeForm as ProjectNoticeTaskForm).scoreTypeId)!}/>
+        <section className='mx-auto mt-12 flex flex-col items-stretch'>
+            {
+                currentNoticeForm?.content.includes("만료") ?
+                    (
+                        <div className='w-full flex items-center justify-center mb-2 tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold'>
+                            확인을 누르면
+                            <div className='text-gray-500 flex items-center'><TiMinus className='ml-3 mr-1' size={15}/>신뢰점수</div>
+                            가 부여됩니다.
+                        </div>
+                    )
+                    :
+                    (
+                        <>
+                            <label className='max-w-[150px] tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수
+                                부여</label>
+                            <Select
+                                items={taskPointOptions}
+                                label=''
+                                setValue={onChangeTaskPointHandler}
+                                value={taskPointOptions.find(v => v.value === (currentNoticeForm as ProjectNoticeTaskForm).scoreTypeId)!}/>
+                        </>
+                    )
+            }
         </section>
     );
 }

@@ -20,7 +20,7 @@ export async function POST(req: NextRequest, {params}: { params: { slug: string 
                 body: JSONReplaceBigInt(reqData)
             });
     } else if (params.slug === 'recruit') {
-        res = await authApi(`/api/project/${reqData.projectId}/participate/confirm`, {
+        res = await authApi(`/api/project/participate/confirm`, {
             method: 'POST',
             body: JSONReplaceBigInt({alertId:reqData.alertId, confirmResult: reqData.confirmResult})
         })

@@ -36,7 +36,7 @@ function CrewTaskHistory() {
             <div className="flow-root tablet:mt-10 mobile:mt-8 mb-8 mx-2">
                 <ul role="list" className="-mb-8">
                     {taskHistory.map((event, eventIdx) => (
-                        <li key={event.workId}>
+                        <li key={event.trustScoreHistoryId}>
                             <div className="relative pb-8">
                                 {
                                     eventIdx !== totalCount - 1

@@ -31,6 +31,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
     type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
+    checkedStatus:boolean;
 
     constructor(notice: Notice) {
         const {
@@ -44,7 +45,8 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
             createDate,
             updateDate,
             content,
-            position
+            position,
+            checkedStatus
         } = notice;
 
         this.type = type;
@@ -58,6 +60,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
         this.updateDate = updateDate;
         this.content = content;
         this.position = position;
+        this.checkedStatus = checkedStatus;
     }
 
 
@@ -83,6 +86,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
     updateDate: string;
     workId: bigint | null;
     scoreTypeId: PointTypeValue | null;
+    checkedStatus: boolean;
 
     constructor(notice: Notice, scoreTypeId: PointTypeValue | null) {
         const {
@@ -97,6 +101,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
             updateDate,
             content,
             position,
+            checkedStatus
         } = notice;
 
         this.type = type;
@@ -111,6 +116,7 @@ export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
         this.content = content;
         this.position = position;
         this.scoreTypeId = scoreTypeId;
+        this.checkedStatus = checkedStatus;
     }
 
 
@@ -136,6 +142,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
     type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
+    checkedStatus: boolean;
 
     constructor(isPermit: boolean | '', notice: Notice) {
         this.isPermit = isPermit;
@@ -150,7 +157,8 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
             createDate,
             updateDate,
             content,
-            position
+            position,
+            checkedStatus
         } = notice;
 
         this.type = type;
@@ -164,6 +172,7 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
         this.updateDate = updateDate;
         this.content = content;
         this.position = position;
+        this.checkedStatus = checkedStatus;
     }
 
 }
