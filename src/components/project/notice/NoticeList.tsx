@@ -45,7 +45,7 @@ function NoticeList() {
                             ? (
                                 <ul
                                     role="list"
-                                    className="divide-y divide-gray-100 mobile:max-h-[23rem] mobile:overflow-y-auto"
+                                    className="divide-y mobile:max-h-[23rem] mobile:overflow-y-auto"
                                 >
                                     {
                                         noticeList.map((item) => (<NoticeItem item={item} key={item.alertId}/>))

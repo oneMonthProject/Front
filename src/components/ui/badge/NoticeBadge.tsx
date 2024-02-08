@@ -1,21 +1,28 @@
 import React from 'react';
 import {makeBadgeColor, makeBadgeSize} from "@/utils/common";
-import {BadgeProps} from "@/utils/type";
+import {BadgeProps, NoticeTypeKey} from "@/utils/type";
 
-function NoticeBadge({size = '', text = ''}: BadgeProps) {
+interface NoticeBadgeProps {
+    size: string;
+    text: NoticeTypeKey;
+}
+function NoticeBadge({size = '', text = 'WORK'}: NoticeBadgeProps) {
     // 사이즈
     const {textSize, px, py} = makeBadgeSize(size);
 
     let color;
     switch (text) {
-        case '업무':
+        case 'WORK':
             color = 'green';
             break;
-        case '모집':
-            color = 'blue';
+        case 'RECRUIT':
+            color = 'yellow';
             break;
-        case '크루':
-            color = 'purple';
+        case 'CREW':
+        case 'ADD':
+        case 'WITHDRAWL':
+        case 'FORCEWITHDRAWL':
+            color = 'blue';
             break;
         default:
             color = 'green';

@@ -330,6 +330,7 @@ export interface Notice {
     type: NoticeTypeKey;
     createDate: string;
     updateDate: string;
+    checkedStatus: boolean;
 }
 
 export interface NoticeCreateForm {

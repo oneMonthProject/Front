@@ -32,12 +32,14 @@ function NoticeItem({item}: { item: Notice }) {
     return (
         <li
             key={alertId}
-            className="flex items-center gap-x-10 py-5 pc:text-lg mobile:text-sm text-grey900 cursor-pointer"
+            className={`flex items-center gap-x-10 px-3 py-5 pc:text-lg mobile:text-sm text-grey900 cursor-pointer 
+                        ${checkedStatus && (type === 'RECRUIT' || type === 'WORK') && 'bg-gray-100 border-b border-[#fff]'}`}
             onClick={() => onClickHandler(type)}
         >
             <div className='flex items-center gap-x-4'>
                 <NoticeBadge size='sm' text={type}/>
                 {content}
+                {checkedStatus && (type === 'RECRUIT' || type === 'WORK') && <FaUserCheck size={20} className='text-primary'/>}
             </div>
             <div className='ml-auto text-grey600'>
                 {createDate}
