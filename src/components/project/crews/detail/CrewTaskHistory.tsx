@@ -22,7 +22,7 @@ function CrewTaskHistory() {
     const projectMemberId = useQueryString('projectMemberId');
 
     const {data} = useSuspenseQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
-        queryKey: ['crewTaskHistory', projectMemberId],
+        queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_PER_PAGE],
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, ITEM_PER_PAGE)
     });
 
