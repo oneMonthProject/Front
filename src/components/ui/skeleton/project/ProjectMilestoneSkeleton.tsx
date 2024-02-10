@@ -3,24 +3,15 @@
 import React, {useEffect, useState} from 'react';
 import {useMediaQuery} from "react-responsive";
 import {MilestoneCardSkeleton} from "@/components/ui/skeleton/project/index";
+import Skeleton from "@/components/ui/skeleton/Skeleton";
+import BadgeStyleSkeleton from "@/components/ui/skeleton/BadgeStyleSkeleton";
 
 function ProjectMilestoneSkeleton() {
-    const [isMobile, setIsMobile] = useState(false);
-
-    const mobile = useMediaQuery({ maxWidth: 700 });
-
-    useEffect(() => {
-        setIsMobile(mobile);
-    }, [mobile, isMobile]);
-
-    const cardCount = isMobile ? 1 : 4;
-
     return (
-        <div className='w-full flex items-center '>
-            {
-                new Array(cardCount).map((v,index) => (<MilestoneCardSkeleton key={index}/>))
-            }
-        </div>
+        <>
+            <BadgeStyleSkeleton className='tablet:w-[135px] tablet:h-[36px] mb-4'/>
+            <Skeleton sizeClassName='w-full h-[220px]'/>
+        </>
     );
 }
 
