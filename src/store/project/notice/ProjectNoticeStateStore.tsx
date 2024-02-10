@@ -177,13 +177,71 @@ export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
 
 }
 
+export interface ProjectNoticeCrewWithdrawFormState extends Notice {
+    withdrawConfirm: boolean | '';
+}
+
+export class ProjectNoticeCrewWithdrawForm implements ProjectNoticeCrewWithdrawFormState {
+    alertId: bigint;
+    checkUserId: bigint;
+    checkedStatus: boolean;
+    content: string;
+    createDate: string;
+    milestoneId: bigint | null;
+    position: Position | null;
+    projectId: bigint;
+    sendUserId: bigint;
+    type: NoticeTypeKey;
+    updateDate: string;
+    withdrawConfirm: boolean | "";
+    workId: bigint | null;
+
+    constructor(withdrawConfirm: boolean | "", notice: Notice) {
+        this.withdrawConfirm = withdrawConfirm;
+        const {
+            type,
+            alertId,
+            checkUserId,
+            sendUserId,
+            milestoneId,
+            projectId,
+            workId,
+            createDate,
+            updateDate,
+            content,
+            position,
+            checkedStatus
+        } = notice;
+
+        this.type = type;
+        this.alertId = alertId;
+        this.checkUserId = checkUserId;
+        this.sendUserId = sendUserId;
+        this.milestoneId = milestoneId;
+        this.projectId = projectId;
+        this.workId = workId;
+        this.createDate = createDate;
+        this.updateDate = updateDate;
+        this.content = content;
+        this.position = position;
+        this.checkedStatus = checkedStatus;
+    }
+
+}
+
+
 /**
  * 현재 알림 form 상태 관리
  */
-export const projectNoticeCurrentFormState = atom<null | ProjectNoticeCrewFormState | ProjectNoticeTaskFormState | ProjectNoticeRecruitFormState>({
-    key: 'projectNoticeCurrentFormState',
-    default: null
-});
+export const projectNoticeCurrentFormState =
+    atom<
+        null | ProjectNoticeCrewFormState | ProjectNoticeTaskFormState
+        | ProjectNoticeRecruitFormState | ProjectNoticeCrewWithdrawFormState
+    >
+    ({
+        key: 'projectNoticeCurrentFormState',
+        default: null
+    });
 
 
 /**

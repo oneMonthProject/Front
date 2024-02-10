@@ -5,6 +5,7 @@ import {projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNotic
 import NoticeItemRecruitInfo from "@/components/project/notice/noticeModalContents/NoticeItemRecruitInfo";
 import TaskPointSelector from "@/components/project/notice/noticeModalContents/TaskPointSelector";
 import RecruitSelector from "@/components/project/notice/noticeModalContents/RecruitSelector";
+import WthdrawSelector from "@/components/project/notice/noticeModalContents/WthdrawSelector";
 
 
 function NoticeModalContents() {
@@ -22,7 +23,9 @@ function NoticeModalContents() {
             {
                 currentNoticeForm?.type === 'RECRUIT' && <Suspense fallback={<div>loading..</div>}><NoticeItemRecruitInfo/></Suspense>
             }
-
+            {
+                currentNoticeForm?.type === 'WITHDRAWL'&& <WthdrawSelector/>
+            }
             {
                 currentNoticeForm?.type === 'RECRUIT' && <RecruitSelector/>
             }

@@ -4,6 +4,7 @@ import NoticeBadge from "@/components/ui/badge/NoticeBadge";
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {
     ProjectNoticeCrewForm,
+    ProjectNoticeCrewWithdrawForm,
     projectNoticeCurrentFormState,
     ProjectNoticeRecruitForm,
     ProjectNoticeTaskForm
@@ -39,6 +40,14 @@ function NoticeItem({item}: { item: Notice }) {
             case "CREW":
             case "ADD":
                 setCurrentNoticeForm(new ProjectNoticeCrewForm(item));
+                break;
+            case "WITHDRAWL":
+                if(!milestoneAuth) {
+                    setSnackbar({show: true, type: 'INFO', content: '알림 확인 권한이 없습니다.'});
+                    return;
+                }
+                if(checkedStatus) setSnackbar({show:true, type:'INFO', content:'탈퇴 검토가 완료된 상태입니다.'});
+                setCurrentNoticeForm(new ProjectNoticeCrewWithdrawForm('', item));
                 break;
             default:
                 throw Error('Unknown Project Notice Type');

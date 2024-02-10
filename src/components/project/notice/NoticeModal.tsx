@@ -5,13 +5,14 @@ import Modal from "@/components/ui/Modal";
 import NoticeModalContents from "@/components/project/notice/noticeModalContents/NoticeModalContents";
 import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
 import {
+    ProjectNoticeCrewWithdrawForm,
     projectNoticeCurrentFormState,
     projectNoticeModalStateSelector,
     ProjectNoticeRecruitForm,
     ProjectNoticeTaskForm
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
-import {confirmRecruitNotice, confirmTaskNotice} from "@/service/project/confirm";
+import {confirmCrewWithdrawNotice, confirmRecruitNotice, confirmTaskNotice} from "@/service/project/confirm";
 import {snackbarState} from "@/store/CommonStateStore";
 import {useQueryClient} from "@tanstack/react-query";
 
@@ -73,6 +74,22 @@ function NoticeModal() {
 
         if (currentNoticeForm?.type == 'ADD') {
             resetCurrentNoticeForm();
+        }
+
+        if(currentNoticeForm?.type === 'WITHDRAWL'){
+            const {alertId, withdrawConfirm} = currentNoticeForm as ProjectNoticeCrewWithdrawForm;
+            if(withdrawConfirm === '') {
+                setSnackbar({show: true, type: 'ERROR', content: '탈퇴 여부를 선택해주세요.'});
+                return;
+            }
+
+            const res = await confirmCrewWithdrawNotice(alertId, withdrawConfirm);
+
+            if(res.result === 'success'){
+                await queryClient.invalidateQueries({queryKey:['crewList']});
+                setSnackbar({show: true, type: 'SUCCESS', content: '탈퇴 처리를 완료했습니다.'});
+                resetCurrentNoticeForm();
+            }
         }
     }
 
