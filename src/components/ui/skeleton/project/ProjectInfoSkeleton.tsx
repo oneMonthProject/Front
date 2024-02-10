@@ -16,7 +16,7 @@ function ProjectInfoSkeleton() {
                 className='h-full tablet:pl-20 mobile:p-1 mobile:mt-3 flex-col tablet:text-[1.25rem] mobile:text-[14px] font-semibold mobile:bg-ground200 mobile:rounded-md'>
                 <div aria-hidden={true} className='flex items-center my-3'>
                     <div className='w-[5rem] mr-10 text-grey800 text-center'>모임 등급</div>
-                    <BadgeStyleSkeleton/>
+                    <BadgeStyleSkeleton className='tablet:w-20 tablet:h-8 mobile:w-16 mobile:h-6'/>
                 </div>
                 <div aria-hidden={true} className='flex items-center my-3'>
                     <div className='w-[5rem] mr-10 text-center text-grey800'>기간</div>
