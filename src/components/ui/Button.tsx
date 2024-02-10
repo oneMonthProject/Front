@@ -10,7 +10,8 @@ export type ButtonTheme =
     | "disabled-hollow"
     | "cancel"
     | "black"
-    | "black-hollow";
+    | "black-hollow"
+    | "danger";
 
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
 
@@ -85,6 +86,10 @@ export function makeButtonColor(theme: ButtonTheme) {
             bgColor = "bg-white";
             textColor = "text-grey500";
             ring = "ring-1 ring-inset ring-grey500";
+            break;
+        case "danger":
+            bgColor = "bg-danger";
+            textColor = "text-white";
             break;
         default:
             bgColor = "bg-primary";
