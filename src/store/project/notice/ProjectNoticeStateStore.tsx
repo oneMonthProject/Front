@@ -31,7 +31,7 @@ export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
     type: NoticeTypeKey;
     updateDate: string;
     workId: bigint | null;
-    checkedStatus:boolean;
+    checkedStatus: boolean;
 
     constructor(notice: Notice) {
         const {
