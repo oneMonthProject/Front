@@ -3,12 +3,12 @@ import React from 'react';
 import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
-import Button from "@/components/ui/Button";
 import {useQueryString} from "@/hooks/useQueryString";
 import {useSuspenseQuery} from "@tanstack/react-query";
 import {ProjectMemberProfile, ResponseBody} from "@/utils/type";
 import {getCrewDetail} from "@/service/project/crews";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
+import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 
 
 function ProfileSection() {
@@ -30,7 +30,7 @@ function ProfileSection() {
                         {user.nickname}
                     </li>
                 </ul>
-                <Button theme='black' size='md'>프로젝트 탈퇴</Button>
+                <CrewOutButton projectMemberInfo={projectMemberInfo}/>
             </section>
             <section
                 className='mobile:w-full tablet:h-[200px] mobile:h-[180px] flex flex-col flex-wrap justify-between p-6 mobile:p-4 bg-ground100 rounded-lg'>

@@ -8,7 +8,6 @@ function ProjectRoleBadge({size = '', text = ''}: BadgeProps) {
     const bgColor = text === '매니저' ? 'bg-[#FF513A]' : 'bg-[#FFF9CF]';
     const textColor = text === '매니저' ? 'text-[#FFFFFF]' : 'text[#7B5C03]';
 
-    if(text === '구성원') return null;
     return (
         <span
             className={`inline-flex items-center rounded-full ${bgColor} ${textColor} font-medium ${textSize} ${px} ${py}`}>

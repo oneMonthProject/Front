@@ -31,9 +31,23 @@ export async function confirmRecruitNotice(projectId: string | bigint, alertId: 
 }
 
 /**
- * 크루 추가 알림 confirm
+ * 크루 추가 알림 confirm - 알림 확인 업데이트만.
  * @param alertId
  */
 export async function confirmCrewAddNotice(alertId: string | bigint) {
     return await request('PATCH', '/api/project/notice', {alertId});
+}
+
+/**
+ * 크루 탈퇴 신청 알림 confirm
+ * @param alertId
+ * @param withdrawConfirm
+ */
+export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdrawConfirm: boolean) {
+    const confirmRes = await request('POST', '/api/project/confirm/withdraw', {alertId, withdrawConfirm});
+    if (confirmRes.result === 'success') {
+        return await request('PATCH', '/api/project/notice', {alertId});
+    } else {
+        return confirmRes;
+    }
 }

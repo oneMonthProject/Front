@@ -1,8 +1,13 @@
-import React from 'react';
+import React, {HTMLAttributes} from 'react';
+import {classNames} from "@/utils/common";
 
-function BadgeStyleSkeleton() {
+
+function BadgeStyleSkeleton({...props}: HTMLAttributes<HTMLDivElement>) {
     return (
-        <div className="tablet:w-20 tablet:h-8 mobile:w-15 mobile:h-6 bg-gray-200 rounded-full animate-pulse">
+        <div
+            className={
+                classNames(props.className || '',
+                    ` bg-gray-200 rounded-full animate-pulse`)}>
         </div>
     );
 }

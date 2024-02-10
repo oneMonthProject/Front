@@ -13,12 +13,14 @@ function MilestoneSection() {
         setMounted(true)
     }, []);
 
-    return mounted && <section className='w-full flex flex-col items-start'>
-        <MilestoneAddButton/>
-        <Suspense fallback={<ProjectMilestoneSkeleton/>}>
-            <Milestones/>
-        </Suspense>
-    </section>;
+    return mounted && (
+        <section className='w-full flex flex-col items-start'>
+            <Suspense fallback={<ProjectMilestoneSkeleton/>}>
+                <MilestoneAddButton/>
+                <Milestones/>
+            </Suspense>
+        </section>
+    );
 }
 
 export default MilestoneSection;

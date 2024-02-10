@@ -26,3 +26,11 @@ export async function getCrewTaskHistory(projectMemberId: string | bigint, pageI
         `/api/project/crewTaskHistory?projectMemberId=${projectMemberId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );
 }
+
+/**
+ * 프로젝트 크루 강제 탈퇴
+ * @param projectMemberId
+ */
+export async function expelCrew(projectMemberId: string | bigint) {
+    return await request('POST', `/api/project/crews/expel`, {projectMemberId});
+}

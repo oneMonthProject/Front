@@ -19,13 +19,13 @@ export default function useUpsertTask(){
         mutationFn: (currentForm: TaskModalForm) => upsertTaskApi(currentForm),
         onSuccess: async (res, variables, context) => {
             if (res.result === "success") {
-                const {progressStatusCode, projectId, workId, assignedUser, milestoneId, type} = variables;
+                const {progressStatusCode, projectId, workId, assignedUser, milestoneId, type, content:taskContent} = variables;
 
                 // 업무 완료/만료시 알림 생성
                 if (progressStatusCode === 'PS003' || progressStatusCode === 'PS004') {
                     const content = progressStatusCode === 'PS003'
-                        ? `${assignedUser?.nickname}님이 업무를 완료했습니다.`
-                        : `${assignedUser?.nickname}님의 업무가 만료되었습니다.`
+                        ? `${assignedUser?.nickname}님이 ${taskContent}(을)를 완료했습니다.`
+                        : `${assignedUser?.nickname}님의 ${taskContent}(이)가 만료되었습니다.`
                     const noticeCreateForm: NoticeCreateForm = {
                         projectId,
                         workId,

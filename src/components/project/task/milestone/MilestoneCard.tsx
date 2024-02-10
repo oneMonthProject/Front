@@ -67,7 +67,7 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
             if (res.message !== 'success') {
                 setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
             } else {
-                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
+                queryClient.invalidateQueries({queryKey: ['milestoneList']});
                 resetActiveMilestone();
                 setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
             }
