@@ -11,21 +11,25 @@ function TaskAddButton() {
     const setTaskFormState = useSetRecoilState(taskModalFormState);
 
     const {projectId, activeId} = useRecoilValue(milestoneActiveStateStore)!;
-    const newTaskItem: TaskItem = {
-        workId: 0n,
-        projectId,
-        milestoneId: activeId as bigint,
-        assignedUser:null,
-        lastModifiedMemberNickname:'',
-        content: '',
-        startDate: '',
-        endDate: '',
-        progressStatus: ''
+
+    function onClickTaskAddButtonHandler() {
+            const newTaskItem: TaskItem = {
+                workId: 0n,
+                projectId,
+                milestoneId: activeId as bigint,
+                assignedUser: null,
+                lastModifiedMemberNickname: '',
+                content: '',
+                startDate: '',
+                endDate: '',
+                progressStatus: ''
+            }
+            setTaskFormState(new TaskModalForm('add', newTaskItem));
     }
 
     return (
         <Button size='md'
-                onClickHandler={() => setTaskFormState(new TaskModalForm('add', newTaskItem))}>
+                onClickHandler={() => onClickTaskAddButtonHandler()}>
                     <span className='flex items-center'>
                         <FaPlus className='tablet:w-3 tablet:h-3 mr-2'/>
                         업무 추가
