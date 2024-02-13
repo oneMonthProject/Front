@@ -3,7 +3,7 @@
 import {Suspense, useEffect, useState} from 'react';
 import Milestones from "@/components/project/task/milestone/Milestones";
 import MilestoneAddButton from "@/components/project/task/milestone/MilestoneAddButton";
-import {ProjectMilestoneSkeleton} from "@/components/ui/skeleton/project";
+import {MilestoneSectionSkeleton} from "@/components/ui/skeleton/project";
 
 
 function MilestoneSection() {
@@ -15,7 +15,7 @@ function MilestoneSection() {
 
     return mounted && (
         <section className='w-full flex flex-col items-start'>
-            <Suspense fallback={<ProjectMilestoneSkeleton/>}>
+            <Suspense fallback={<MilestoneSectionSkeleton/>}>
                 <MilestoneAddButton/>
                 <Milestones/>
             </Suspense>
