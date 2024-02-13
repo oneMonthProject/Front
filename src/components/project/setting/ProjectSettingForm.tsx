@@ -3,10 +3,19 @@ import React, {useState} from "react";
 import Button from "@/components/ui/Button";
 import CalendarInput from "@/components/ui/form/CalendarInput";
 import Input from "@/components/ui/form/Input";
-import {SelectItem, TrustGradeNameType} from "@/utils/type";
+import {SelectItem, TrustGradeNameType, TrustGradeValueType} from "@/utils/type";
 import {useProjectInfo} from "@/hooks/useProjectInfo";
 import TrustGradeSelect from "@/components/post/register/TrustGradeSelect";
 import {createTrustGradeSelectItem} from "@/utils/common";
+import {useQueryClient} from "@tanstack/react-query";
+import {useSetRecoilState} from "recoil";
+import {snackbarState} from "@/store/CommonStateStore";
+import {
+    endProject as endProjectAPI,
+    updateProjectInfo as updateProjectInfoAPI,
+    WritableProjectInfo
+} from "@/service/project/project";
+import {useRouter} from "next/navigation";
 
 
 export default function ProjectSetting() {
@@ -18,7 +27,8 @@ export default function ProjectSetting() {
         endDate: initEndDate,
         trustGrade: {name: initTrustGrade},
         status: initStatus,
-        subject: initSubject
+        subject: initSubject,
+        authMap: {milestoneAuth}
     } = useProjectInfo();
 
     const [projectName, setProjectName] = useState(() => initProjectName);
@@ -26,6 +36,11 @@ export default function ProjectSetting() {
     const [trustGrade, setTrustGrade] = useState<SelectItem | null>(() => createTrustGradeSelectItem(initTrustGrade as TrustGradeNameType));
     const [startDate, setStartDate] = useState<string | null>(() => initStartDate);
     const [endDate, setEndDate] = useState<string | null>(() => initEndDate);
+    const router = useRouter();
+
+    const setSnackbar = useSetRecoilState(snackbarState);
+
+    const queryClient = useQueryClient();
 
     const initProjectInfo = () => {
         setProjectName(initProjectName);
@@ -36,12 +51,70 @@ export default function ProjectSetting() {
     }
 
 
-    const saveProjectInfo = () => {
+    const updateProjectInfo = async () => {
+        if (confirm("프로젝트 정보를 수정하시겠습니까?")) {
+            if (!milestoneAuth) {
+                setSnackbar({show: true, type: 'INFO', content: '프로젝트 수정 권한이 없습니다.'});
+                return;
+            }
 
+            if (!projectName) {
+                setSnackbar({show: true, type: 'ERROR', content: '프로젝트 이름을 입력해주세요'});
+                return;
+            }
+
+            if (!projectSubject) {
+                setSnackbar({show: true, type: 'ERROR', content: '프로젝트 주제를 입력해주세요'});
+                return;
+            }
+
+            if (!trustGrade?.value) {
+                setSnackbar({show: true, type: 'ERROR', content: '프로젝트 신뢰등급을 선택해주세요'});
+                return;
+            }
+
+            if (!startDate) {
+                setSnackbar({show: true, type: 'ERROR', content: '시작날짜를 선택해주세요'});
+                return;
+            }
+
+            if (!endDate) {
+                setSnackbar({show: true, type: 'ERROR', content: '종료날짜를 선택해주세요'});
+                return;
+            }
+
+            const projectInfo: WritableProjectInfo = {
+                projectId,
+                projectName,
+                subject: projectSubject,
+                trustGradeId: trustGrade!.value as TrustGradeValueType,
+                startDate,
+                endDate
+            }
+
+            const res = await updateProjectInfoAPI(projectInfo);
+            if (res.result === 'success') {
+                queryClient.invalidateQueries({queryKey: ['projectInfo']});
+                setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트 정보를 수정했습니다.'});
+            } else {
+                setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
+            }
+        }
     }
 
-    const endProject = () => {
-
+    const endProject = async () => {
+        if(confirm("프로젝트 종료시, 획득한 신뢰점수를 제외한 프로젝트와 관련된 모든 정보가 삭제됩니다. 반드시 멤버들과 상의후 종료해주세요. \r\n\r\n 종료하시겠습니까?")){
+            const res = await endProjectAPI(projectId);
+            if(res.result === 'success'){
+                setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트를 종료했습니다.'});
+                router.push("/");
+                router.refresh();
+            }else if(res.result === 'fail'){
+                setSnackbar({show: true, type: 'ERROR', content: res.message});
+            }else{
+                setSnackbar({show: true, type: 'ERROR', content: "프로세스 수행중 에러가 발생했습니다."});
+            }
+        }
     }
 
     return (
@@ -66,7 +139,7 @@ export default function ProjectSetting() {
                 </div>
                 <div className="text-end space-x-2 px-3 mobile:px-0">
                     <Button theme="primary-hollow" size="md" onClickHandler={initProjectInfo}>초기화</Button>
-                    <Button size="md" onClickHandler={saveProjectInfo}>저장</Button>
+                    <Button size="md" onClickHandler={updateProjectInfo}>저장</Button>
                 </div>
             </div>
             <div className="space-y-3">
