@@ -1,8 +1,16 @@
-import React from 'react';
+import React, {HTMLAttributes} from 'react';
+import {classNames} from "@/utils/common";
 
-function Skeleton({sizeClassName}:{sizeClassName:string}) {
+interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
+    sizeClassName?: string;
+    text?: string;
+}
+
+function Skeleton({sizeClassName = '', text = '', ...props}: SkeletonProps) {
     return (
-        <div className={`${sizeClassName} bg-gray-200 animate-pulse rounded-2xl`}></div>
+        <div className={classNames(props.className || '', `${sizeClassName} bg-gray-200 animate-pulse rounded-2xl`)}>
+            {text}
+        </div>
     );
 }
 
