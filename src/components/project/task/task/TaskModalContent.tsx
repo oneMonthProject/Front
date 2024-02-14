@@ -6,6 +6,7 @@ import Input from '@/components/ui/form/Input';
 import CalendarInput from '@/components/ui/form/CalendarInput';
 import ProjectCrewSelect from "@/components/project/ProjectCrewSelect";
 import TaskStatusSelector from "@/components/project/task/task/TaskStatusSelector";
+import TaskContentDetail from "./TaskContentDetail/TaskContentDetail";
 
 
 function TaskModalContent() {
@@ -26,15 +27,8 @@ function TaskModalContent() {
     }
 
     return (
-        <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-4 flex-col mt-5'>
+        <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-10 flex-col mt-5'>
             <div className="space-y-5 mobile:space-y-3 mx-4 mobile:mx-0 mobile:text-sm">
-                <div className='flex'>
-                    <label htmlFor="content" className="text-gray-700 font-semibold self-center">내용</label>
-                    <div className='w-[350px] mobile:w-[220px] ml-auto'>
-                        <Input id="content" placeholder="내용을 입력해주세요."
-                               value={taskModalForm?.content} onChange={onInputChange}/>
-                    </div>
-                </div>
                 {taskModalForm?.type === 'modify' && (
                     <div className='flex'>
                         <label className="text-gray-700 font-semibold self-center">진행</label>
@@ -70,6 +64,7 @@ function TaskModalContent() {
                         </div>
                     </div>
                 )}
+                <TaskContentDetail/>
             </div>
         </section>
     );

@@ -105,5 +105,13 @@
     transform: translateX('100%') !important;
 }
 
+input[type=text].customInput, input:focus {
+    appearance: none !important;
+    border-color: transparent !important;
+    z-index: 100;
+    outline: none 0 !important;
+}
+
+
 /*  END custom swiper */
 

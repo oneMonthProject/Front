@@ -51,7 +51,7 @@ const config: Config = {
     require("tailwindcss"),
     require("autoprefixer"),
     require("@tailwindcss/forms"),
-    plugin(function ({ addBase, theme }) {
+    plugin(function ({ addBase, matchUtilities, addComponents,theme }) {
       const mobile = theme("screens.mobile", { max: "max" });
       const tablet = theme("screens.tablet", {});
       const pc = theme("screens.pc", {});
@@ -70,6 +70,79 @@ const config: Config = {
           margin: "0 auto",
         },
       });
+      addComponents({
+        '.checkbox': {
+          position: 'relative',
+          'input,svg': {
+            width: '21px',
+            height: '21px',
+            display: 'block'
+          },
+          'input': {
+            '-webkit-appearance': 'none',
+            '-moz-appearance': 'none',
+            position: 'relative;',
+            outline: 'none;',
+            backgroundColor: '#fff',
+            border: 'none',
+            margin: '0',
+            padding: '0',
+            cursor: 'pointer',
+            borderRadius: '4px',
+            boxShadow: 'inset 0 0 0 1px #D1D6EE',
+            '&:hover': {
+              boxShadow: 'inset 0 0 0 2px, #BBC1E1'
+            },
+            '&:checked': {
+              boxShadow: 'inset 0 0 0 2px #1E2235',
+              '& + svg':{
+                stroke:'#333',
+                'stroke-dasharray': '16.1 86.12',
+                'stroke-dashoffset': '102.22'
+              }
+            },
+            '&:disabled':{
+              boxShadow:'inset 0 0 0 2px #999',
+              cursor:'default',
+              '& + svg':{
+                stroke:'#999',
+                'stroke-dasharray': '16.1 86.12',
+                'stroke-dashoffset': '102.22'
+              }
+            }
+          },
+          'svg': {
+            pointerEvents: 'none',
+            fill: 'none',
+            'stroke-width': '2px',
+            'stroke-linecap': 'round',
+            'stroke-linejoin': 'round',
+            stroke:'#999',
+            position: 'absolute',
+            top: '0',
+            left: '0',
+            width: '21px',
+            height: '21px',
+            'stroke-dasharray': '16.1 86.12',
+            'stroke-dashoffset': '102.22'
+          }
+
+        },
+
+
+      })
+      matchUtilities({
+            hoverColorChange:(value) => ({
+                border: `1px solid ${value}`,
+                borderRadius: '0.25rem',
+                backgroundColor: `${value}`,
+                transitionTimingFunction: 'transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)',
+                transitionDuration: '120ms',
+                transitionProperty: 'background-color'
+            })
+          },
+          {values:theme('colors')}
+      )
     }),
   ],
 };

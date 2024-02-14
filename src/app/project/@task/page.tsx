@@ -7,7 +7,7 @@ import TaskModal from '@/components/project/task/task/TaskModal';
 function TaskPage() {
     return (
         <>
-            <Suspense fallback={<div>loading...</div>}>
+            <Suspense>
                 <MilestoneSection/>
                 <TaskSection/>
                 <MilestoneModal/>
