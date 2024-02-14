@@ -117,8 +117,8 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
             <div className="flex-1 truncate px-4 text-sm">
                 <div
                     className={`mb-2 flex flex-wrap items-center space-x-2 pc:text-xl tablet:text-lg ${textClass} hover:text-secondary`}>
-                    <span>{content}</span>
-                    <MilestoneStatusBadge text={progressStatus} size='sm'/>
+                    <span className='max-w-[150px] truncate'>{content}</span>
+                    <MilestoneStatusBadge text={progressStatus} size='xs'/>
                 </div>
                 <div
                     className="flex flex-wrap items-center justify-between space-x-1 pc:text-lg tablet:text-md text-gray-500">
