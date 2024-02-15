@@ -22,7 +22,7 @@ function CrewOutButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPr
             if (res.result === 'success') {
                 setSnackBar({show: true, type: 'SUCCESS', content: '프로젝트 탈퇴 신청 알림이 발송되었습니다.'});
             } else {
-                setSnackBar({show: true, type: 'ERROR', content: '프로세스 진행중 에러가 발생했습니다.'});
+                setSnackBar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
             }
         }
     }
@@ -34,7 +34,7 @@ function CrewOutButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPr
                 setSnackBar({show: true, type: 'SUCCESS', content: '멤버 강제 탈퇴를 완료했습니다.'});
                 queryClient.invalidateQueries({queryKey:['crewList']});
             } else {
-                setSnackBar({show: true, type: 'ERROR', content: '프로세스 진행중 에러가 발생했습니다.'});
+                setSnackBar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
             }
         }
     }
