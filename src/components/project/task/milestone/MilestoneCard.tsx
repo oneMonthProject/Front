@@ -65,7 +65,7 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
         onSuccess: async (res) => {
             if (res.message !== 'success') {
-                setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
+                setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
             } else {
                 queryClient.invalidateQueries({queryKey: ['milestoneList']});
                 resetActiveMilestone();
@@ -73,7 +73,7 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
             }
         },
         onError: (error) => {
-            setSnackBar({show: true, content: '예상치 못한 서버 에러가 발생했습니다.', type: 'ERROR'});
+            setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
         }
     })
 

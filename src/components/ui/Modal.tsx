@@ -9,9 +9,10 @@ interface ModalProps extends ModalState {
     children:ReactNode;
     close: () => void;
     onClickConfirmHandler?: () => void;
+    isUpdating?: boolean;
 }
 
-function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalProps) {
+function Modal({isOpen, close, title, onClickConfirmHandler, children, isUpdating = false}: ModalProps) {
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -91,6 +92,8 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children}: ModalPro
                                 className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
                                 <Button
                                     size='md'
+                                    disabled={isUpdating}
+                                    className={`${isUpdating && '!bg-gray-400 !text-white'}`}
                                     onClickHandler={
                                         () => {
                                             if (typeof onClickConfirmHandler === 'function') onClickConfirmHandler();

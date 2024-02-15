@@ -30,6 +30,10 @@ function TaskModal() {
         }
     }, [isOpen]);
 
+    function onClickConfirmHandler(){
+        upsertTask(currentForm!);
+    }
+
     return (
         <>
             {
@@ -39,7 +43,8 @@ function TaskModal() {
                             isOpen={isOpen}
                             close={() => resetCurrentForm()}
                             title={title}
-                            onClickConfirmHandler={() => upsertTask(currentForm!)}
+                            onClickConfirmHandler={onClickConfirmHandler}
+                            isUpdating={isUpdating}
                         >
                             {currentForm !== null && <TaskModalContent/>}
                         </Modal>

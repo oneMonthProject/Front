@@ -38,6 +38,22 @@ function TaskModalContent() {
                         </div>
                     </div>
                 )}
+                {
+                    taskModalForm?.type === 'add' && (
+                        <div className='flex space-x-10'>
+                            <label htmlFor="content" className="text-gray-700 font-semibold self-center">제목</label>
+                            <div className='w-[250px] mobile:w-[220px]'>
+                                <Input
+                                    id="content"
+                                    placeholder="제목 입력"
+                                    value={taskModalForm?.content}
+                                    onChange={onInputChange}
+                                    maxLength={20}
+                                />
+                            </div>
+                        </div>
+                    )
+                }
                 <div className='flex'>
                     <label className="text-gray-700 font-semibold self-center">기간</label>
                     <div className='flex w-[350px] mobile:w-[220px] ml-auto'>

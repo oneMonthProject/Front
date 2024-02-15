@@ -36,7 +36,16 @@ function TaskCard({item}: TaskCardProps) {
             console.log("error: ", error);
             setSnackbar({show: true, type: 'ERROR', content: '예상치 못한 서버 에러가 발생했습니다'});
         }
-    })
+    });
+
+    /**
+     * 업무 삭제 click
+     */
+    function onClickDeleteCardHandler(){
+        if(confirm("업무를 삭제하시겠습니까?")){
+            deleteTask(item.workId);
+        }
+    }
 
     // 업무 기간이 지난 상태면 자동으로 진행상태 '만료'로 업데이트
     useEffect(() => {
@@ -44,15 +53,17 @@ function TaskCard({item}: TaskCardProps) {
             const taskForm: TaskModalForm = {
                 ...item,
                 type: 'modify',
-                progressStatus:'만료',
+                progressStatus: '만료',
                 progressStatusCode: getTaskStatusCode('만료')
             }
 
             upsertTask(taskForm);
         }
-    },[])
+    }, [])
 
-
+    // const contentDetail = item.contentDetail.length > 1
+    //     ? `${item.contentDetail.split("&")[0]} 외 ${item.contentDetail.length - 1}개`
+    //     : `${item.contentDetail.split("&")[0]}`;
 
     return (
         <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg">
@@ -62,7 +73,7 @@ function TaskCard({item}: TaskCardProps) {
                     <TaskCardMenu
                         taskId={item.workId}
                         onEditClickHandler={() => setTaskModalForm(new TaskModalForm('modify', item))}
-                        onDeleteClickHandler={() => deleteTask(item.workId)}
+                        onDeleteClickHandler={onClickDeleteCardHandler}
                     />
                 </div>
             </div>
@@ -79,6 +90,12 @@ function TaskCard({item}: TaskCardProps) {
                     <div className='basis-[100px] font-semibold pc:text-lg text-greyBlue'>담당</div>
                     <div className='flex-1 flex items-center space-x-3'>
                         <span className='text-greyBlue'>{item.assignedUser?.nickname}</span>
+                    </div>
+                </div>
+                <div className='flex items-center'>
+                    <div className='basis-[100px] font-semibold pc:text-lg text-greyBlue'>할 일</div>
+                    <div className='flex-1 flex items-center space-x-3'>
+                        {/*<span className='text-greyBlue'>{contentDetail}</span>*/}
                     </div>
                 </div>
             </div>

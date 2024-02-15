@@ -39,6 +39,7 @@ export async function upsertTask(task: TaskModalForm) {
     if(!task.content) throw Error('업무 제목을 입력해주세요');
     if(!task.startDate) throw Error('시작 날짜를 입력해주세요');
     if(!task.endDate) throw Error('시작 날짜를 입력해주세요');
+    if(!task.contentDetail) throw Error('할 일을 입력해주세요.');
 
     if (task.type === 'add') {
         method = 'POST';
