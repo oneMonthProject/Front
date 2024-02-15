@@ -14,7 +14,7 @@ function TaskContentDetail() {
     return (
         <div className='w-full flex-col pb-3'>
             <div
-                className='w-full py-3 flex justify-center text-xl font-semibold text-gray-700 bg-gray-300/40 rounded-sm'>
+                className='w-full py-3 flex justify-center text-xl font-medium text-gray-700 bg-greyBlue/5 rounded-sm'>
                 할 일
             </div>
             <button
