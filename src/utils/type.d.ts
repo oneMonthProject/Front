@@ -94,6 +94,7 @@ export interface TaskItem {
     startDate: string;
     endDate: string;
     progressStatus: TaskStatusName | '';
+    contentDetail: string | '';
 }
 
 interface TrustGradeItem {
@@ -384,3 +385,8 @@ export interface UserProjectNotice {
 export type TrustGradeNameType = keyof typeof TRUST_GRADE;
 
 export type TrustGradeValueType = typeof TRUST_GRADE[TrustGradeNameType];
+
+export interface TaskContentDetailItem {
+    id: string;
+    data: string;
+}

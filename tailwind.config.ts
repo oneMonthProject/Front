@@ -68,7 +68,7 @@ const config: Config = {
             maxWidth: "1200px",
           },
           margin: "0 auto",
-        },
+        }
       });
       addComponents({
         '.checkbox': {
@@ -128,7 +128,6 @@ const config: Config = {
           }
 
         },
-
 
       })
       matchUtilities({

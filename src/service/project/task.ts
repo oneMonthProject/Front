@@ -36,7 +36,7 @@ export async function upsertTask(task: TaskModalForm) {
     let method: HTTP_METHOD;
 
     if(!task.assignedUser?.projectMemberId) throw Error('업무 담당자를 선택해 주세요');
-    if(!task.content) throw Error('업무 내용을 입력해주세요');
+    if(!task.content) throw Error('업무 제목을 입력해주세요');
     if(!task.startDate) throw Error('시작 날짜를 입력해주세요');
     if(!task.endDate) throw Error('시작 날짜를 입력해주세요');
 
