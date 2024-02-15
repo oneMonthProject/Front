@@ -1,10 +1,12 @@
-import {atom, selector} from "recoil";
-import {AssignedUser, ModalState, SelectItem, TaskItem, TaskStatusCode, TaskStatusName} from "@/utils/type";
+import {atom, DefaultValue, selector} from "recoil";
+import {AssignedUser, ModalState, TaskContentDetailItem, TaskItem, TaskStatusCode, TaskStatusName} from "@/utils/type";
+import _ from "lodash";
+import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
 
 // Task
 export interface TaskStatusItem {
     name: TaskStatusName;
-    value:TaskStatusCode;
+    value: TaskStatusCode;
 }
 
 export const taskStatusItems: TaskStatusItem[] = [
@@ -27,7 +29,7 @@ export const taskStatusItems: TaskStatusItem[] = [
 ];
 
 export function getTaskStatusCode(name: TaskStatusName | '') {
-    if(name === '') return '';
+    if (name === '') return '';
     const taskStatusItem = taskStatusItems.find(v => v.name === name);
     if (!taskStatusItem) throw new Error('Unknown Milestone Status');
     return taskStatusItem.value;
@@ -50,6 +52,7 @@ export class TaskModalForm implements TaskModalFormState {
     projectId: bigint;
     startDate: string;
     workId: bigint;
+    contentDetail: string | '';
 
     constructor(type: 'add' | 'modify', taskItem: TaskItem) {
         const {
@@ -61,7 +64,8 @@ export class TaskModalForm implements TaskModalFormState {
             progressStatus,
             projectId,
             startDate,
-            workId
+            workId,
+            contentDetail
         } = taskItem
 
         this.type = type;
@@ -75,9 +79,9 @@ export class TaskModalForm implements TaskModalFormState {
         this.progressStatusCode = getTaskStatusCode(progressStatus);
         this.projectId = projectId;
         this.workId = workId;
+        this.contentDetail = contentDetail;
 
     }
-
 
 
 }
@@ -99,7 +103,7 @@ export const taskModalStateSelector = selector<ModalState>({
                     title = '업무 추가';
                     break;
                 case 'modify':
-                    title = '업무 수정';
+                    title = state.content;
                     break;
                 default:
                     throw Error('Unknown Project Notice Form Type');
@@ -109,3 +113,40 @@ export const taskModalStateSelector = selector<ModalState>({
         return {isOpen: state !== null, title: title};
     }
 })
+
+
+export interface TaskContentDetailFormState {
+    contentDetail: TaskContentDetailItem[] | [];
+}
+
+export const taskContentDetailSelector = selector<TaskContentDetailFormState>({
+    key: 'taskContentDetailSelector',
+    get: ({get}) => {
+        const state = get(taskModalFormState);
+
+        let contentDetail: TaskContentDetailItem[] | [] = [];
+
+        if (state && state.contentDetail) {
+            contentDetail = state.contentDetail
+                .split("&")
+                .map((v: string) => {
+                    return {data: v, id: uuidv4()}
+                });
+        }
+
+        return {contentDetail};
+    },
+    set: ({set, get}, newValue: TaskContentDetailFormState | DefaultValue) => {
+        if (!(newValue instanceof DefaultValue)) {
+            const contentDetailItems = newValue.contentDetail;
+            const contentDetailStr = contentDetailItems.length > 0
+                ? newValue.contentDetail?.map(v => v.data).join("&")
+                : newValue.contentDetail[0].data || '';
+
+            const updated = {...get(taskModalFormState), contentDetail: contentDetailStr} as TaskModalFormState;
+            console.log("updated: ", updated);
+            set(taskModalFormState, updated);
+        }
+    }
+});
+

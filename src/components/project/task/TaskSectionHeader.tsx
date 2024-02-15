@@ -13,15 +13,16 @@ interface TaskSectionHeaderProps {
 export default function TaskSectionHeader({ content, startDate, endDate, progressStatus}:TaskSectionHeaderProps) {
 
     return (
-        <div className='w-full flex items-center justify-start mb-4'>
+        <div className='w-full flex mobile:flex-col mobile:items-start items-center justify-start mobile:space-y-4 tablet:mb-4'>
            <TaskAddButton/>
-            <div className='ml-4 mr-auto flex items-center space-x-3'>
-                <h3 className='my-2 tablet:text-3xl font-medium text-greyDarkBlue'>
+            <div className='flex-wrap flex items-center tablet:ml-4 mr-auto space-x-3'>
+                <h3 className='my-2 tablet:text-3xl font-medium text-greyDarkBlue truncate'>
                     {content}
                 </h3>
                 <TaskStatusBadge text={progressStatus}/>
-                <div className='flex items-center space-x-3 tablet:text-xl text-grey800'>
-                    <span>{startDate} &#126;</span>
+                <div className='flex-wrap flex items-center space-x-2 tablet:text-xl text-grey800'>
+                    <span>{startDate}</span>
+                    <span>&#126;</span>
                     <span>{endDate}</span>
                 </div>
             </div>

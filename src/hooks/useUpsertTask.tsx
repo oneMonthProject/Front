@@ -36,7 +36,6 @@ export default function useUpsertTask(){
                     };
 
                     const res = await createProjectTaskNotice(noticeCreateForm);
-                    console.log("업무 알림 생성 res: ", res);
 
                 }
 
@@ -44,7 +43,7 @@ export default function useUpsertTask(){
 
                 await queryClient.invalidateQueries({queryKey: ['taskList']});
 
-                const content = type === 'add' ? '업무를 생성을 완료했습니다.' : '업무 수정을 완료했습니다.';
+                const content = type === 'add' ? '업무를 생성했습니다.' : '업무 수정했습니다.';
                 setSnackbar({show: true, type: 'SUCCESS', content});
             } else {
                 setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
