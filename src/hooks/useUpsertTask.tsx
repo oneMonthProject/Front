@@ -39,12 +39,11 @@ export default function useUpsertTask(){
 
                 }
 
-                resetCurrentForm();
-
-                await queryClient.invalidateQueries({queryKey: ['taskList']});
-
                 const content = type === 'add' ? '업무를 생성했습니다.' : '업무 수정했습니다.';
                 setSnackbar({show: true, type: 'SUCCESS', content});
+
+                await queryClient.invalidateQueries({queryKey: ['taskList']});
+                resetCurrentForm();
             } else {
                 setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
             }
