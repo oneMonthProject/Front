@@ -19,7 +19,7 @@ export default function TaskSectionHeader({ content, startDate, endDate, progres
                 <h3 className='my-2 tablet:text-3xl font-medium text-greyDarkBlue truncate'>
                     {content}
                 </h3>
-                <TaskStatusBadge text={progressStatus}/>
+                <TaskStatusBadge text={progressStatus} size='sm'/>
                 <div className='flex-wrap flex items-center space-x-2 tablet:text-xl text-grey800'>
                     <span>{startDate}</span>
                     <span>&#126;</span>
