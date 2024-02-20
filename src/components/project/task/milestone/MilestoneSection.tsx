@@ -3,7 +3,7 @@
 import {Suspense, useEffect, useState} from 'react';
 import Milestones from "@/components/project/task/milestone/Milestones";
 import MilestoneAddButton from "@/components/project/task/milestone/MilestoneAddButton";
-import {MilestoneSectionSkeleton} from "@/components/ui/skeleton/project";
+import {MilestoneSectionSkeleton} from "@/components/ui/skeleton/project/task";
 
 
 function MilestoneSection() {

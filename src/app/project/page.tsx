@@ -3,7 +3,7 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import ProjectInfo from "@/components/project/layout/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
-import {ProjectInfoSkeleton, ProjectNavTabSkeleton} from "@/components/ui/skeleton/project";
+import {ProjectInfoSkeleton, ProjectNavTabSkeleton} from "@/components/ui/skeleton/project/task";
 
 function ProjectPage() {
     const [mounted, setMounted] = useState(false);

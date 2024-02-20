@@ -8,7 +8,7 @@ interface SkeletonProps extends HTMLAttributes<HTMLDivElement> {
 
 function Skeleton({sizeClassName = '', text = '', ...props}: SkeletonProps) {
     return (
-        <div className={classNames(props.className || '', `${sizeClassName} bg-gray-200 animate-pulse rounded-2xl`)}>
+        <div className={classNames(props.className || '', `${sizeClassName} text-transparent bg-gray-200 animate-pulse rounded-2xl`)}>
             {text}
         </div>
     );

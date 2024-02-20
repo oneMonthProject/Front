@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import MilestoneListSkeleton from "@/components/ui/skeleton/project/MilestoneListSkeleton";
+import MilestoneListSkeleton from "@/components/ui/skeleton/project/task/MilestoneListSkeleton";
 import ButtonStyleSkeleton from "@/components/ui/skeleton/ButtonStyleSkeleton";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 
