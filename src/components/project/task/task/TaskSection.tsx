@@ -5,7 +5,7 @@ import Tasks from "@/components/project/task/task/Tasks";
 import TaskSectionHeader from "@/components/project/task/TaskSectionHeader";
 import {useRecoilValue} from "recoil";
 import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
-import {TaskSectionSkeleton} from "@/components/ui/skeleton/project";
+import {TaskSectionSkeleton} from "@/components/ui/skeleton/project/task";
 
 function TaskSection() {
     const [mounted, setMounted] = useState(false);

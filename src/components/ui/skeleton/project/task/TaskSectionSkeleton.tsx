@@ -2,7 +2,7 @@ import React from 'react';
 import BadgeStyleSkeleton from "@/components/ui/skeleton/BadgeStyleSkeleton";
 import ButtonStyleSkeleton from "@/components/ui/skeleton/ButtonStyleSkeleton";
 import SquareSkeleton from "@/components/ui/skeleton/SquareSkeleton";
-import TaskListSkeleton from "@/components/ui/skeleton/project/TaskListSkeleton";
+import TaskListSkeleton from "@/components/ui/skeleton/project/task/TaskListSkeleton";
 
 function TaskSectionSkeleton() {
     return (

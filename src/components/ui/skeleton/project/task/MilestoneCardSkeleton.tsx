@@ -1,6 +1,5 @@
 import React from 'react';
 import Skeleton from "@/components/ui/skeleton/Skeleton";
-import BadgeStyleSkeleton from "@/components/ui/skeleton/BadgeStyleSkeleton";
 
 function MilestoneCardSkeleton() {
     return (
