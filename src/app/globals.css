@@ -4,7 +4,7 @@
 
 @layer base {
     html {
-        font-family: 'Inter', 'Noto Sans KR', sans-serif;
+        font-family: 'Inter', 'Noto Sans KR', 'sans-serif';
         @apply text-black100;
     }
 
@@ -14,11 +14,11 @@
     }
 
     .customPagination ul.pagination li:nth-of-type(2) {
-        @apply mr-2
+        @apply mr-2;
     }
 
     .customPagination ul.pagination li:nth-last-child(2) {
-        @apply ml-2
+        @apply ml-2;
     }
 
     .customPagination ul.pagination li:nth-of-type(1),
@@ -58,7 +58,7 @@
     }
 
     .noData {
-        @apply text-gray-600/90 text-center bg-gray-200/60 rounded-md
+        @apply text-gray-600/90 text-center bg-gray-200/60 rounded-md;
     }
 }
 
