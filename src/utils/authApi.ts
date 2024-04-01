@@ -56,7 +56,7 @@ const authApi = returnFetch({
           if (accessToken && setCookieHeader) {
             const { token, options } = getRefreshToken(setCookieHeader);
 
-            cookieStore.set("Access", accessToken);
+            cookieStore.set("Access", accessToken, options);
             cookieStore.set("Refresh", token, options);
 
             console.log("complete the reissue of cookies..!");

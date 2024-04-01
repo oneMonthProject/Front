@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       const { token, options } = getRefreshToken(setCookieHeader);
 
       const cookieStore = cookies();
-      cookieStore.set("Access", accessToken);
+      cookieStore.set("Access", accessToken, options);
       cookieStore.set("Refresh", token, options);
     }
   }
