@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
 
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
 /**
  * 프로젝트 알림 목록 조회
@@ -21,7 +20,7 @@ export async function GET(
     const itemCount = searchParams.get('itemCount');
 
     let res: Response;
-    const requestNoticeUrl = `${baseURL}/api/alert/project/${projectId}`;
+    const requestNoticeUrl = `/api/alert/project/${projectId}`;
     if (params.slug === 'all') {
         res = await authApi(`${requestNoticeUrl}?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method});
     } else {
@@ -49,7 +48,7 @@ export async function POST(
     if (params.slug === 'task') { // 업무 알림 생성
         const noticeCreateForm = await req.json();
         res = await authApi(
-            `${baseURL}/api/alert`,
+            `/api/alert`,
             {
                 method,
                 body: JSON.stringify(noticeCreateForm)
@@ -57,7 +56,7 @@ export async function POST(
         );
     } else if (params.slug === 'crewOut') { // 프로젝트 멤버 탈퇴(신청) 알림 생성
         const {projectMemberId} = await req.json();
-        res = await authApi(`${baseURL}/api/projectmember/${projectMemberId}/withdraw`, {method});
+        res = await authApi(`/api/projectmember/${projectMemberId}/withdraw`, {method});
     }else{
         throw new Error(`Unknown Notice API: /api/project/notice/${params.slug}`);
     }
