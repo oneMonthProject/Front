@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 import returnFetch from "return-fetch";
 import { cookies } from "next/headers";
 import { getRefreshToken } from "./common";
