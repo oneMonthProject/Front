@@ -17,7 +17,7 @@ export async function GET(req: NextRequest) {
     const itemCount = searchParams.get('itemCount');
 
     const res = await authApi(
-        `${baseURL}/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
+        `/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
     const data = await res.json();
