@@ -10,7 +10,7 @@ function MilestoneListSkeleton() {
 
     useEffect(() => {
         if(mobile) setItemCount(1);
-    },[]);
+    },[mobile, setItemCount]);
 
     return itemCount > 0 && (
         <ul className='w-full tablet:mt-8 mobile:mt-6 grid justify-items-center pc:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 gap-4 mobile:gap-0'>

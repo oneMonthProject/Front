@@ -29,6 +29,6 @@ export default function useIntersectionObserver(
 
             observer.observe(target.current);
         }
-    }, [target, rootMargin, threshold])
+    }, [root, onIntersectHandler, target, rootMargin, threshold])
 
 }

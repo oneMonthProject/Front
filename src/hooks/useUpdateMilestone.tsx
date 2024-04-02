@@ -1,3 +1,5 @@
+'use client';
+
 import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
 import {useMutation, useQueryClient} from "@tanstack/react-query";

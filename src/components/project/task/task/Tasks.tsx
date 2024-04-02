@@ -1,4 +1,5 @@
 'use client';
+
 import React, {useState} from 'react';
 import TaskCard from "@/components/project/task/task/TaskCard";
 import {useSuspenseQuery} from "@tanstack/react-query";

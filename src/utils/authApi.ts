@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { getRefreshToken } from "./common";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
+
 const authApi = returnFetch({
   baseUrl: baseURL,
   interceptors: {

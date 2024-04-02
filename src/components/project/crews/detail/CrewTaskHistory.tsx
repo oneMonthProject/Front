@@ -6,7 +6,8 @@ import {useSuspenseQuery} from "@tanstack/react-query";
 import {useQueryString} from "@/hooks/useQueryString";
 import {getCrewTaskHistory} from "@/service/project/crews";
 import CommonPagination from "@/components/ui/CommonPagination";
-import {CrewTaskHistory, PageResponseBody} from "@/utils/type";
+import {PageResponseBody} from "@/utils/type";
+import {type CrewTaskHistory} from "@/utils/type";
 
 
 function getIconByPointType(pointType: string) {

@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Skeleton from "@/components/ui/skeleton/Skeleton";
-import {useRecoilValue} from "recoil";
 import {projectMenuList} from "@/utils/constant";
 
 function ProjectNavTabSkeleton() {

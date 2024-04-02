@@ -24,7 +24,7 @@ function ProjectApplyStatusBadge({status, size = ''}: ProjectApplyStatusBadgePro
             <p className='sr-only'>{text}</p>
             {text}
       </span>
-    );;
+    );
 }
 
 export default ProjectApplyStatusBadge;

@@ -8,7 +8,7 @@ import {useMilestoneList} from "@/hooks/useMilestoneList";
 
 
 function Milestones() {
-    const projectId = useQueryString("projectId");
+    const projectId = useQueryString('projectId');
     const {list} = useMilestoneList(projectId);
 
     if (list.length < 1)
