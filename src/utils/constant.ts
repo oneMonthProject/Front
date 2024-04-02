@@ -23,3 +23,38 @@ export enum TRUST_GRADE {
     '3등급' = 3,
     '4등급' = 4
 }
+
+// 프로젝트 상세 > 메뉴
+
+export enum ProjectMenu {
+    TASK = '업무',
+    CREWS = '크루',
+    NOTICE = '알림',
+    SETTING = '프로젝트 세팅'
+}
+
+export enum ProjectMenuURL {
+    TASK = '/project/task',
+    CREWS = '/project/crews',
+    NOTICE = '/project/notice',
+    SETTING = '/project/setting'
+}
+
+export const projectMenuList = [
+    {
+        name: ProjectMenu.TASK,
+        path: ProjectMenuURL.TASK
+    },
+    {
+        name: ProjectMenu.CREWS,
+        path: ProjectMenuURL.CREWS
+    },
+    {
+        name: ProjectMenu.NOTICE,
+        path: ProjectMenuURL.NOTICE
+    },
+    {
+        name: ProjectMenu.SETTING,
+        path: ProjectMenuURL.SETTING
+    },
+];

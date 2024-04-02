@@ -1,7 +1,8 @@
 'use client';
-import React, {Suspense} from 'react';
-import {currentProjectNavTabSelector} from "@/store/project/ProjectNavTabStateStore";
+import React from 'react';
+import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {useRecoilValue} from "recoil";
+import {ProjectMenu} from "@/utils/constant";
 
 interface ProjectNavTabContentsProps {
     slots: {
@@ -13,21 +14,20 @@ interface ProjectNavTabContentsProps {
 }
 
 function ProjectNavTabContents({slots: {task, crews, notice, setting}}: ProjectNavTabContentsProps) {
-    const currentNavTab = useRecoilValue(currentProjectNavTabSelector);
+    const activeNavTab = useRecoilValue(projectActiveNavState);
 
     let contents: React.ReactNode;
-    if (currentNavTab == null) contents = task;
-    else switch (currentNavTab!.name) {
-        case '업무':
+    switch (activeNavTab) {
+        case ProjectMenu.TASK:
             contents = task;
             break;
-        case '크루':
+        case ProjectMenu.CREWS:
             contents = crews;
             break;
-        case '알림':
+        case ProjectMenu.NOTICE:
             contents = notice;
             break;
-        case '프로젝트 설정':
+        case ProjectMenu.SETTING:
             contents = setting;
             break;
         default:
