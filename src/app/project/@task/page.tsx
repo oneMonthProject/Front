@@ -6,14 +6,12 @@ import TaskModal from '@/components/project/task/task/TaskModal';
 
 function TaskPage() {
     return (
-        <>
-            <Suspense>
-                <MilestoneSection/>
-                <TaskSection/>
-                <MilestoneModal/>
-                <TaskModal/>
-            </Suspense>
-        </>
+        <Suspense fallback={<div>loading...</div>}>
+            <MilestoneSection/>
+            <TaskSection/>
+            <MilestoneModal/>
+            <TaskModal/>
+        </Suspense>
     );
 }
 

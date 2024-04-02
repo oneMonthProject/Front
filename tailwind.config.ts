@@ -135,7 +135,7 @@ const config: Config = {
                 border: `1px solid ${value}`,
                 borderRadius: '0.25rem',
                 backgroundColor: `${value}`,
-                transitionTimingFunction: 'transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)',
+                transitionTimingFunction: 'cubic-bezier(0.4, 0, 0.2, 1)',
                 transitionDuration: '120ms',
                 transitionProperty: 'background-color'
             })

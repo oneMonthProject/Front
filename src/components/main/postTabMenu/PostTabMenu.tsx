@@ -3,14 +3,11 @@ import React, { useEffect, useState } from "react";
 import { useRecoilState } from "recoil";
 import { hasCookie } from "cookies-next";
 import { activeTabState } from "@/store/post/PostStateStore";
+import useClientMount from "@/hooks/useClientMount";
 
 const PostTabMenu = () => {
   const [isMyProjectPostsTab, setIsMyProjectPostsTab] = useRecoilState(activeTabState);
-  const [mounted, setMounted] = useState<boolean>(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+  const mounted = useClientMount();
 
   return (
     <div className="flex border-b">

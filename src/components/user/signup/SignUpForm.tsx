@@ -14,11 +14,12 @@ import { snackbarState } from "@/store/CommonStateStore";
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
 import TechStackSelect from "@/components/ui/form/TechStackSelect";
 import PositionSelect from "@/components/user/signup/PositionSelect";
+import useClientMount from "@/hooks/useClientMount";
 
 function SignUpForm() {
   const router = useRouter();
   const setSnackbar = useSetRecoilState(snackbarState);
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useClientMount();
 
   const [email, setEmail] = useState("");
   const [nickname, setNickname] = useState("");
@@ -120,9 +121,6 @@ function SignUpForm() {
     setIsCheckedNickname(false);
   }
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3">

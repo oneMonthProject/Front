@@ -17,6 +17,7 @@ import TrustGradeSelect from "./TrustGradeSelect";
 import TechStackSelect from "@/components/ui/form/TechStackSelect";
 import MultiPositionSelect from "./MultiPositionSelect";
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
+import useClientMount from "@/hooks/useClientMount";
 
 const recruitmentCountList = [
   { value: -1, name: '인원 미정' },
@@ -36,7 +37,7 @@ function RegisterForm() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const setSnackbar = useSetRecoilState(snackbarState);
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useClientMount();
 
   const { mutate } = useMutation({
     mutationFn: (createData: CreatePostInfo) => createPost(createData),
@@ -148,9 +149,6 @@ function RegisterForm() {
     mutate(createData);
   }
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   return (
     <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-8 mobile:my-6">

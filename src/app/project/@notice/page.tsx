@@ -3,14 +3,11 @@
 import React, {Suspense, useEffect, useState} from 'react';
 import NoticeList from "@/components/project/notice/NoticeList";
 import NoticeModal from "@/components/project/notice/NoticeModal";
+import useClientMount from "@/hooks/useClientMount";
 
 
 function NoticePage() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-        setMounted(true);
-    }, [])
+    const mounted = useClientMount();
 
     return (
         <section className='mb-20 tablet:basis-4/5'>

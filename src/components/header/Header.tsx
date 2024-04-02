@@ -9,13 +9,10 @@ import {hasCookie} from 'cookies-next';
 import AvatarSkeleton from '../ui/skeleton/AvatarSkeleton';
 import Skeleton from '../ui/skeleton/Skeleton';
 import {UserMenu} from "@/components/header/UserMenu";
+import useClientMount from "@/hooks/useClientMount";
 
 function Header() {
-    const [mounted, setMounted] = useState(false);
-
-    useEffect(() => {
-       setMounted(true);
-    },[]);
+    const mounted = useClientMount();
 
     return (
         <header className='my-2'>

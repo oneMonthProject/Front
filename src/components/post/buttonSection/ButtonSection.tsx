@@ -11,6 +11,7 @@ import { confirmModalState, snackbarState } from "@/store/CommonStateStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { requestParticipationProject as requestParticipationProjectAPI } from "@/service/project/participate";
 import { changeRecruitmentStatus as changeRecruitmentStatusAPI } from "@/service/post/post";
+import useClientMount from "@/hooks/useClientMount";
 
 const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo: PostInfo }) => {
   const queryClient = useQueryClient();
@@ -18,7 +19,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   const setModalState = useSetRecoilState(confirmModalState);
   const resetModalState = useResetRecoilState(confirmModalState);
   const setSnackbar = useSetRecoilState(snackbarState);
-  const [mounted, setMounted] = useState<boolean>(false);
+  const mounted = useClientMount();
 
   const { boardId: postId, boardPositions, recruitmentStatus, user } = boardInfo;
   const currentUserId = getCookie("user_id");
@@ -109,9 +110,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
     }
   }
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+
 
   return (
     <div className="flex-col mb-5">

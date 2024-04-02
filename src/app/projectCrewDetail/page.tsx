@@ -4,19 +4,17 @@ import React, {Suspense, useEffect, useState} from 'react';
 import ProfileSection from "@/components/project/crews/detail/ProfileSection";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
 import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
+import useClientMount from "@/hooks/useClientMount";
 
 function CrewDetailPage() {
-    const [mounted, setMounted] = useState(false);
+    const mounted = useClientMount();
 
-    useEffect(() => {
-        setMounted(true);
-    }, [])
     return (
         <>
             <section className='tablet:py-3 border-b-2 border-gray-200'>
                 {
                     mounted &&
-                    <Suspense>
+                    <Suspense fallback={<div>loading...</div>}>
                         <ProfileSection/>
                     </Suspense>
                 }
@@ -28,7 +26,7 @@ function CrewDetailPage() {
                 </div>
                 {
                     mounted &&
-                    <Suspense>
+                    <Suspense fallback={<div>loading...</div>}>
                         <CrewTaskHistory/>
                     </Suspense>
                 }
