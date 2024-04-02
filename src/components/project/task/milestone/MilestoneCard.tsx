@@ -1,21 +1,19 @@
 'use client';
-import React, {MouseEvent, useEffect} from 'react';
+import React, {MouseEvent} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
-import {useRecoilState, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {
-    getMilestoneStatus,
-    milestoneActiveStateStore,
+    milestoneActiveStateSelector,
+    milestoneListStateStore,
     MilestoneModalForm,
     milestoneModalFormState,
-    MilestoneModalFormState,
-    MilestoneStatusName
+    MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
 import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
-import {useMilestoneInitActive} from "@/hooks/useMilestoneList";
 
 interface MilestoneCardProps {
     milestoneInfo: MilestoneInfo;
@@ -35,29 +33,10 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
         progressStatus
     } = milestoneInfo;
 
-    const [snackbar, setSnackBar] = useRecoilState(snackbarState);
-    const [activeMilestone, setActiveMilestone] = useRecoilState(milestoneActiveStateStore);
-    const resetActiveMilestone = useResetRecoilState(milestoneActiveStateStore);
+    const setSnackBar = useSetRecoilState(snackbarState);
+    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
+    const setActiveMilestone = useSetRecoilState(milestoneListStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
-
-    const initActiveMilestone = useMilestoneInitActive(projectId.toString());
-    const isInitActive  = milestoneInfo.mileStoneId === initActiveMilestone.mileStoneId;
-
-    // active 상태 초기화
-    useEffect(() => {
-        if (isInitActive && activeMilestone === null) {
-            setActiveMilestone({
-                projectId,
-                activeId: mileStoneId,
-                content,
-                startDate,
-                endDate,
-                progressStatus: progressStatus as MilestoneStatusName,
-                progressStatusCode: getMilestoneStatus(progressStatus)!.value,
-                slideIndex
-            });
-        }
-    }, [isInitActive]);
 
 
     const queryClient = useQueryClient();
@@ -68,7 +47,6 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
                 setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
             } else {
                 queryClient.invalidateQueries({queryKey: ['milestoneList']});
-                resetActiveMilestone();
                 setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
             }
         },
@@ -80,15 +58,8 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setActiveMilestone({
-            projectId,
-            activeId: mileStoneId,
-            content,
-            startDate,
-            endDate,
-            progressStatus: progressStatus as MilestoneStatusName,
-            progressStatusCode: getMilestoneStatus(progressStatus)!.value,
-            slideIndex
+        setActiveMilestone((prev) => {
+            return {list: [...prev.list], activeId: mileStoneId, activeSlideIndex: slideIndex}
         });
     }
 
@@ -106,8 +77,8 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
     }
 
 
-    const activeClass = activeMilestone?.activeId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeMilestone?.activeId === mileStoneId ? 'text-secondary' : 'text-gray-900';
+    const activeClass = activeMilestone?.mileStoneId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeMilestone?.mileStoneId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div

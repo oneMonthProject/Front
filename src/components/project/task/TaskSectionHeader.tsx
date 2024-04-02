@@ -3,14 +3,15 @@ import React from 'react';
 import TaskAddButton from "@/components/project/task/task/TaskAddButton";
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
 import {TaskStatusName} from "@/utils/type";
+import {milestoneActiveStateSelector, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
+import {useRecoilValue} from "recoil";
 
-interface TaskSectionHeaderProps {
-    content:string;
-    startDate:string;
-    endDate:string;
-    progressStatus: TaskStatusName;
-}
-export default function TaskSectionHeader({ content, startDate, endDate, progressStatus}:TaskSectionHeaderProps) {
+
+export default function TaskSectionHeader() {
+    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
+    if(activeMilestone == null) return null;
+
+    const {content, progressStatus, startDate, endDate} = activeMilestone;
 
     return (
         <div className='w-full flex mobile:flex-col mobile:items-start items-center justify-start mobile:space-y-4 tablet:mb-4'>

@@ -7,8 +7,8 @@ import 'swiper/css/scrollbar';
 import {ReactNode, useEffect, useRef, useState} from "react";
 import SwiperCore from 'swiper';
 import {Grid, Navigation, Pagination} from 'swiper/modules';
-import {useRecoilState, useRecoilValue} from "recoil";
-import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
+import {useRecoilValue} from "recoil";
+import {milestoneListStateStore} from "@/store/project/task/MilestoneStateStore";
 import {useMediaQuery} from "react-responsive";
 
 interface SlideItem {
@@ -24,8 +24,8 @@ interface CustomSwiperProps {
 function CustomSwiper({slideItems}: CustomSwiperProps) {
     const mobile = useMediaQuery({ maxWidth: 700 });
     const [slidePerView, setSlidePerView] = useState(() => slideItems.length <= 4 ? slideItems.length - 1 : 3);
-    const activeMilestone = useRecoilValue(milestoneActiveStateStore);
-    const slideIndex = activeMilestone?.slideIndex || 0;
+    const {activeSlideIndex} = useRecoilValue(milestoneListStateStore);
+
 
     SwiperCore.use([Navigation, Pagination, Grid]);
     const swiperRef = useRef<SwiperCore>();
@@ -33,11 +33,12 @@ function CustomSwiper({slideItems}: CustomSwiperProps) {
     // 모바일: 한 View당 슬라이드 갯수 1개
     useEffect(() => {
         if(mobile) setSlidePerView(1);
-    },[])
+    },[mobile]);
+
 
     useEffect(() => {
-        swiperRef.current?.slideToLoop(slideIndex);
-    },[slideIndex]);
+        swiperRef.current?.slideToLoop(activeSlideIndex);
+    },[activeSlideIndex]);
 
 
     return (

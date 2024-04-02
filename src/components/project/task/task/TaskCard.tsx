@@ -32,7 +32,7 @@ function TaskCard({item}: TaskCardProps) {
 
             upsertTask(taskForm);
         }
-    }, []);
+    }, []); // todo- dependency
 
     /**
      * 업무 삭제 click

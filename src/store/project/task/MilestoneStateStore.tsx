@@ -40,21 +40,33 @@ export function getMilestoneStatus(str: MilestoneStatusName | MilestoneStatusCod
     return milestoneStatusItem;
 }
 
-export interface MilestoneActiveState {
-    projectId: bigint;
+export type MilestoneListState = {
+    list: MilestoneInfo[];
     activeId: bigint | null;
-    content: string;
-    startDate: string;
-    endDate: string;
-    progressStatus: MilestoneStatusName;
-    progressStatusCode: MilestoneStatusCode;
-    slideIndex: number;
+    activeSlideIndex: number;
 }
 
-export const milestoneActiveStateStore = atom<MilestoneActiveState | null>({
-    key: 'milestoneActiveStateStore',
-    default: null
-})
+export const milestoneListStateStore = atom<MilestoneListState>({
+    key: "milestoneListStateStore",
+    default: {
+        list: [],
+        activeId: null,
+        activeSlideIndex: 0
+    }
+});
+
+
+export const milestoneActiveStateSelector = selector<MilestoneInfo | null>({
+    key: "milestoneActiveStateSelector",
+    get: ({get}) => {
+        const {activeId, list} = get(milestoneListStateStore);
+        const activeMilestone = activeId == null
+            ? list.find(v => v.progressStatus === '진행중') || list[0]
+            : list.find(v => v.mileStoneId === activeId);
+
+        return activeMilestone || null;
+    }
+});
 
 
 export interface MilestoneModalFormState extends MilestoneInfo {

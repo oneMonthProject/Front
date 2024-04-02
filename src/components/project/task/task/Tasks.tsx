@@ -7,13 +7,10 @@ import {useQueryString} from "@/hooks/useQueryString";
 import {PageResponseBody, TaskItem} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 
-interface TasksProps {
-    milestoneId: bigint | string;
-}
 
 const ITEMS_PER_PAGE = 6;
 
-function Tasks({milestoneId}: TasksProps) {
+function Tasks({milestoneId}: { milestoneId: string | bigint }) {
     const projectId = useQueryString('projectId');
     const [pageNumber, setPageNumber] = useState(0);
 

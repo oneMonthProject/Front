@@ -5,26 +5,30 @@ import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateS
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {TaskItem} from "@/utils/type";
-import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
+import {milestoneActiveStateSelector} from "@/store/project/task/MilestoneStateStore";
 
 function TaskAddButton() {
     const setTaskFormState = useSetRecoilState(taskModalFormState);
 
-    const {projectId, activeId} = useRecoilValue(milestoneActiveStateStore)!;
+    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
+    if(activeMilestone == null) return null;
+
+    const {mileStoneId, projectId} = activeMilestone;
 
     function onClickTaskAddButtonHandler() {
-            const newTaskItem: TaskItem = {
-                workId: 0n,
-                projectId,
-                milestoneId: activeId as bigint,
-                assignedUser: null,
-                lastModifiedMemberNickname: '',
-                content: '',
-                startDate: '',
-                endDate: '',
-                progressStatus: ''
-            }
-            setTaskFormState(new TaskModalForm('add', newTaskItem));
+        const newTaskItem: TaskItem = {
+            workId: 0n,
+            projectId,
+            milestoneId: mileStoneId as bigint,
+            assignedUser: null,
+            lastModifiedMemberNickname: '',
+            content: '',
+            contentDetail: '',
+            startDate: '',
+            endDate: '',
+            progressStatus: ''
+        }
+        setTaskFormState(new TaskModalForm('add', newTaskItem));
     }
 
     return (

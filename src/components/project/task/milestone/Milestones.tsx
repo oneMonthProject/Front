@@ -8,11 +8,10 @@ import {useMilestoneList} from "@/hooks/useMilestoneList";
 
 
 function Milestones() {
-    const projectId = useQueryString('projectId');
+    const projectId = useQueryString("projectId");
+    const {list} = useMilestoneList(projectId);
 
-    const milestoneList = useMilestoneList(projectId);
-
-    if (milestoneList.length < 1)
+    if (list.length < 1)
         return (
             <div className='w-full h-[12rem] flex items-center justify-center bg-ground200 rounded-lg'>
                 <span className='tablet:text-3xl text-grey800 font-semibold'>마일스톤을 추가해 주세요</span>
@@ -22,7 +21,7 @@ function Milestones() {
     return (
         <CustomSwiper
             slideItems={
-                milestoneList.map((v, index) => (
+                list.map((v, index) => (
                     {
                         key: v.mileStoneId.toString(),
                         components:
