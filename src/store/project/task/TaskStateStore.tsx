@@ -1,6 +1,13 @@
 import {atom, DefaultValue, selector} from "recoil";
-import {AssignedUser, ModalState, TaskContentDetailItem, TaskItem, TaskStatusCode, TaskStatusName} from "@/utils/type";
-import _ from "lodash";
+import {
+    AssignedUser,
+    DataId,
+    ModalState,
+    TaskContentDetailItem,
+    TaskItem,
+    TaskStatusCode,
+    TaskStatusName
+} from "@/utils/type";
 import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
 
 // Task
@@ -46,10 +53,10 @@ export class TaskModalForm implements TaskModalFormState {
     endDate: string;
     assignedUser: AssignedUser | null;
     lastModifiedMemberNickname: string;
-    milestoneId: bigint;
+    milestoneId: DataId;
     progressStatus: TaskStatusName | "";
     progressStatusCode: TaskStatusCode | '';
-    projectId: bigint;
+    projectId: DataId;
     startDate: string;
     workId: bigint;
     contentDetail: string | '';
