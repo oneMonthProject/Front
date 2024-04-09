@@ -1,4 +1,4 @@
-import {MilestoneInfo} from "@/utils/type";
+import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import {request} from "@/service/project/request";
 import {convertStringToDate, sortByStartDate} from "@/utils/common";
 
@@ -6,16 +6,17 @@ import {convertStringToDate, sortByStartDate} from "@/utils/common";
  * 프로젝트 마일스톤 목록 조회
  * @param projectId
  */
-export async function getProjectMilestones(projectId: string) {
+export async function getProjectMilestones(projectId: string):Promise<ResponseBody<MilestoneInfo[]>> {
     const res = await request('GET', `/api/project/milestone?projectId=${projectId}`);
 
-    res.data = sortByStartDate(res.data, 'asc').map(v => {
+    res.data = sortByStartDate(res.data, 'asc').map((v, index) => {
         return {
             ...v,
             createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
             startDate: convertStringToDate(v.startDate, 'yyyy-MM-dd'),
             endDate: convertStringToDate(v.endDate, 'yyyy-MM-dd'),
-            updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd')
+            updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd'),
+            index: index
         }
     });
 
