@@ -3,8 +3,7 @@ import React, {useState} from "react";
 import Button from "@/components/ui/Button";
 import CalendarInput from "@/components/ui/form/CalendarInput";
 import Input from "@/components/ui/form/Input";
-import {SelectItem, TrustGradeNameType, TrustGradeValueType} from "@/utils/type";
-import {useProjectInfo} from "@/hooks/useProjectInfo";
+import {ProjectInfo, SelectItem, TrustGradeNameType, TrustGradeValueType} from "@/utils/type";
 import TrustGradeSelect from "@/components/post/register/TrustGradeSelect";
 import {createTrustGradeSelectItem} from "@/utils/common";
 import {useQueryClient} from "@tanstack/react-query";
@@ -18,8 +17,7 @@ import {
 import {useRouter} from "next/navigation";
 
 
-export default function ProjectSetting() {
-
+export default function ProjectSetting({data}:{data:ProjectInfo}) {
     const {
         projectId,
         name: initProjectName,
@@ -29,7 +27,7 @@ export default function ProjectSetting() {
         status: initStatus,
         subject: initSubject,
         authMap: {milestoneAuth}
-    } = useProjectInfo();
+    } = data!;
 
     const [projectName, setProjectName] = useState(() => initProjectName);
     const [projectSubject, setProjectSubject] = useState(() => initSubject);
@@ -103,15 +101,15 @@ export default function ProjectSetting() {
     }
 
     const endProject = async () => {
-        if(confirm("프로젝트 종료시, 획득한 신뢰점수를 제외한 프로젝트와 관련된 모든 정보가 삭제됩니다. 반드시 멤버들과 상의후 종료해주세요. \r\n\r\n 종료하시겠습니까?")){
+        if (confirm("프로젝트 종료시, 획득한 신뢰점수를 제외한 프로젝트와 관련된 모든 정보가 삭제됩니다. 반드시 멤버들과 상의후 종료해주세요. \r\n\r\n 종료하시겠습니까?")) {
             const res = await endProjectAPI(projectId);
-            if(res.result === 'success'){
+            if (res.result === 'success') {
                 setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트를 종료했습니다.'});
                 router.push("/");
                 router.refresh();
-            }else if(res.result === 'fail'){
+            } else if (res.result === 'fail') {
                 setSnackbar({show: true, type: 'ERROR', content: res.message});
-            }else{
+            } else {
                 setSnackbar({show: true, type: 'ERROR', content: "프로세스 수행중 에러가 발생했습니다."});
             }
         }

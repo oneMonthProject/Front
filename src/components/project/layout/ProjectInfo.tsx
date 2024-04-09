@@ -1,10 +1,16 @@
 'use client';
+
 import React from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import {useProjectInfo} from "@/hooks/useProjectInfo";
+import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
 
 function ProjectInfo() {
-    const {name, subject, trustGrade, startDate, endDate} = useProjectInfo();
+    const {data, isFetching} = useProjectInfo();
+
+    if(isFetching) return <ProjectInfoSkeleton/>;
+
+    const {name, subject, trustGrade, startDate, endDate} = data!;
     return (
         <section
             className='tablet:flex mobile:flex-col items-center justify-start w-full tablet:mt-[40px] mobile:mt-[10px] '>
