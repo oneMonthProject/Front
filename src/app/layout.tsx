@@ -18,18 +18,10 @@ export default function RootLayout({
     children: React.ReactNode;
 }) {
 
-    const isTestMode = process.env.NEXT_PUBLIC_API_MOCKING === 'true';
-
-    if (isTestMode) {
-        import('../mocks').then(async ({setupMocks}) => {
-            await setupMocks();
-        });
-    }
-
     return (
         <html lang="en">
         <body className="w-full">
-        <Providers isTestMode={isTestMode}>
+        <Providers>
             <div className="responsiveContainer">
                 <Header/>
                 {children}
