@@ -1,7 +1,7 @@
 import React from 'react';
 import Skeleton from "@/components/ui/skeleton/Skeleton";
 
-function TaskListSkeleton({itemCount}: { itemCount: number }) {
+function TasksSkeleton({itemCount}: { itemCount: number }) {
     const items = new Array(itemCount).fill(null);
     return (
         <div
@@ -16,4 +16,4 @@ function TaskListSkeleton({itemCount}: { itemCount: number }) {
     );
 }
 
-export default TaskListSkeleton;
+export default TasksSkeleton;
