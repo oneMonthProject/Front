@@ -73,7 +73,8 @@ export interface MilestoneInfo {
     endDate: string;
     updateDate: string;
     progressStatus: MilestoneStatusName | '';
-    progressStatusCode?: MilestoneStatusCode | ''
+    progressStatusCode?: MilestoneStatusCode | '';
+    index?: number;
 }
 
 export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';
@@ -86,8 +87,8 @@ export type AssignedUser = {
 
 export interface TaskItem {
     workId: bigint;
-    projectId: bigint;
-    milestoneId: bigint;
+    projectId: DataId;
+    milestoneId: DataId;
     assignedUser: AssignedUser | null;
     lastModifiedMemberNickname: string;
     content: string;
@@ -390,3 +391,5 @@ export interface TaskContentDetailItem {
     id: string;
     data: string;
 }
+
+export type DataId = string | bigint;
