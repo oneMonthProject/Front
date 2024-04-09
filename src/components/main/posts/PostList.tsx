@@ -8,6 +8,7 @@ import {useSuspenseQuery} from "@tanstack/react-query";
 import {PageResponseBody, PostCardInfo} from "@/utils/type";
 import {getPostList} from "@/service/post/post";
 import {postSearchValue, selectedPositionState, selectedTechStackState} from "@/store/post/PostStateStore";
+import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 
 const PostList = () => {
     const selectedTechStacks = useRecoilValue(selectedTechStackState);
@@ -48,9 +49,9 @@ const PostList = () => {
                         </ul>
                         <CommonPagination
                             activePage={pageNumber + 1}
-                            itemsCountPerPage={8}
+                            itemsCountPerPage={ITEM_COUNT.CARDS}
                             totalItemsCount={totalPages}
-                            pageRangeDisplayed={5}
+                            pageRangeDisplayed={PAGE_RANGE.DEFAULT}
                             onChangePageHandler={(page) => setPageNumber(page - 1)}/>
                     </>
                 ) : (

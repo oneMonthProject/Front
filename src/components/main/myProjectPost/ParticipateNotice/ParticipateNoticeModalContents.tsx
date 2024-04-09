@@ -8,8 +8,8 @@ import {FormattedUserProjectNotice} from "@/store/UserNoticeModalStateStore";
 import ParticipateNotice from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNotice";
 import Loader from "@/components/ui/Loader";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
+import {ITEM_COUNT} from "@/utils/constant";
 
-const ITEM_COUNT = 5;
 
 function ParticipateNoticeModalContents() {
     const bottomRef = useRef<HTMLLIElement | null>(null);
@@ -26,11 +26,11 @@ function ParticipateNoticeModalContents() {
 
     const {data, fetchNextPage} = useSuspenseInfiniteQuery<PageResponseBody<UserProjectNotice[]>>({
         queryKey: ['userProjectNotice'],
-        queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT),
+        queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT.LIST_SM),
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             const nextPage = parseInt(lastPageParam as string, 10) + 1;
-            if (nextPage * ITEM_COUNT > lastPage.data.totalPages) return false;
+            if (nextPage * ITEM_COUNT.LIST_SM > lastPage.data.totalPages) return false;
             return nextPage;
         }
     });
@@ -64,7 +64,7 @@ function ParticipateNoticeModalContents() {
     });
 
     const totalItemCount = data.pages[0].data.totalPages;
-    const totalPageCount = Math.ceil(totalItemCount / ITEM_COUNT);
+    const totalPageCount = Math.ceil(totalItemCount / ITEM_COUNT.LIST_SM);
     const isEndPage = data.pageParams.length === totalPageCount;
 
     return (

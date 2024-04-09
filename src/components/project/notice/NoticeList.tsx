@@ -9,10 +9,8 @@ import CommonPagination from "@/components/ui/CommonPagination";
 import {useRecoilValue} from "recoil";
 import {currentProjectNoticeNavTabSelector} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 import Loader from "@/components/ui/Loader";
+import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 
-
-const ITEM_COUNT = 5;
-const PAGE_RANGE = 5;
 
 function NoticeList() {
     const projectId = useQueryString('projectId');
@@ -21,8 +19,8 @@ function NoticeList() {
 
     // 5초마다 백그라운드에서 알림 목록 refetch
     const {data, isFetching} = useSuspenseQuery<PageResponseBody<Notice[]>, Error>({
-        queryKey: ['noticeList', projectId, pageIndex, ITEM_COUNT, currentNoticeNavTab.type],
-        queryFn: () => getProjectNoticeByType(projectId, pageIndex, ITEM_COUNT, currentNoticeNavTab.type),
+        queryKey: ['noticeList', projectId, pageIndex, currentNoticeNavTab.type],
+        queryFn: () => getProjectNoticeByType(projectId, pageIndex, ITEM_COUNT.LIST_SM, currentNoticeNavTab.type),
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });
@@ -63,9 +61,9 @@ function NoticeList() {
             </div>
             <CommonPagination
                 activePage={pageIndex + 1}
-                itemsCountPerPage={ITEM_COUNT}
+                itemsCountPerPage={ITEM_COUNT.LIST_SM}
                 totalItemsCount={totalCount}
-                pageRangeDisplayed={PAGE_RANGE}
+                pageRangeDisplayed={PAGE_RANGE.DEFAULT}
                 onChangePageHandler={(pageIndex: number) => setPageIndex(pageIndex - 1)}
             />
         </>

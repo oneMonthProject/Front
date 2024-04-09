@@ -21,7 +21,7 @@ function Tasks({milestoneId, projectId}: { milestoneId: DataId, projectId: DataI
         projectId,
         milestoneId,
         pageNumber,
-        itemsPerPage: ITEM_COUNT.TASKS
+        itemsPerPage: ITEM_COUNT.CARDS_SM
     })
 
 
@@ -31,7 +31,7 @@ function Tasks({milestoneId, projectId}: { milestoneId: DataId, projectId: DataI
 
 
     return isTasksFetching
-        ? <TasksSkeleton itemCount={ITEM_COUNT.TASKS}/>
+        ? <TasksSkeleton itemCount={ITEM_COUNT.CARDS_SM}/>
         : (
             <div className='w-full mt-4 flex flex-col items-center'>
                 {
@@ -54,13 +54,11 @@ function Tasks({milestoneId, projectId}: { milestoneId: DataId, projectId: DataI
                     activePage={pageNumber + 1}
                     totalItemsCount={totalPages}
                     pageRangeDisplayed={5}
-                    itemsCountPerPage={ITEM_COUNT.TASKS}
+                    itemsCountPerPage={ITEM_COUNT.CARDS_SM}
                     onChangePageHandler={onChangePageHandler}
                 />
             </div>
         );
 }
-
-// todo - 마일스톤 아이디(전역에 저장)로 업무 목록 조회
 
 export default Tasks;

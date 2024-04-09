@@ -60,6 +60,11 @@ export const projectMenuList = [
 ];
 
 export enum ITEM_COUNT {
-    TASKS = 6,
-    ProjectNotice = 5,
+    CARDS_SM = 6,
+    LIST_SM = 5,
+    CARDS = 8,
+}
+
+export enum PAGE_RANGE {
+    DEFAULT = 5
 }

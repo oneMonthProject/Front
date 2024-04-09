@@ -7,7 +7,7 @@ function TaskSectionSkeleton() {
     return (
         <section className='w-full flex flex-col items-start'>
             <TaskSectionHeaderSkeleton/>
-            <TasksSkeleton itemCount={ITEM_COUNT.TASKS}/>
+            <TasksSkeleton itemCount={ITEM_COUNT.CARDS_SM}/>
         </section>
     );
 }

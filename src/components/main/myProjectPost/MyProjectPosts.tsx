@@ -6,6 +6,7 @@ import {getMyProjectList} from "@/service/project/project";
 import {PageResponseBody, ProjectPost} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
+import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 
 
 function MyProjectPosts() {
@@ -42,9 +43,9 @@ function MyProjectPosts() {
                             </ul>
                             <CommonPagination
                                 activePage={pageNumber}
-                                itemsCountPerPage={8}
+                                itemsCountPerPage={ITEM_COUNT.CARDS}
                                 totalItemsCount={projectPosts.length}
-                                pageRangeDisplayed={5}
+                                pageRangeDisplayed={PAGE_RANGE.DEFAULT}
                                 onChangePageHandler={onChangePageHandler}
                             />
                         </>

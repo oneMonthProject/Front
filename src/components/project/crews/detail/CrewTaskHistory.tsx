@@ -8,6 +8,7 @@ import {getCrewTaskHistory} from "@/service/project/crews";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {PageResponseBody} from "@/utils/type";
 import {type CrewTaskHistory} from "@/utils/type";
+import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 
 
 function getIconByPointType(pointType: string) {
@@ -15,16 +16,15 @@ function getIconByPointType(pointType: string) {
     else return <FaPlus className='h-4 w-4 text-white bg-primary' aria-hidden="true"/>
 }
 
-const ITEM_PER_PAGE = 5;
-const PAGE_RANGE = 5;
+
 
 function CrewTaskHistory() {
     const [pageIndex, setPageIndex] = useState(0);
     const projectMemberId = useQueryString('projectMemberId');
 
     const {data} = useSuspenseQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
-        queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_PER_PAGE],
-        queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, ITEM_PER_PAGE)
+        queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_COUNT.LIST_SM],
+        queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT)
     });
 
     const taskHistory = data.data.content;
@@ -98,8 +98,8 @@ function CrewTaskHistory() {
             </div>
             <CommonPagination
                 activePage={pageIndex + 1}
-                pageRangeDisplayed={PAGE_RANGE}
-                itemsCountPerPage={ITEM_PER_PAGE}
+                pageRangeDisplayed={PAGE_RANGE.DEFAULT}
+                itemsCountPerPage={ITEM_COUNT.LIST_SM}
                 totalItemsCount={totalCount}
                 onChangePageHandler={(pageIndex: number) => setPageIndex(pageIndex - 1)}
             />
