@@ -3,7 +3,7 @@ import React, {useEffect} from 'react';
 import {TaskItem} from "@/utils/type";
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
 import TaskCardMenu from "@/components/project/task/task/TaskCardMenu";
-import {useRecoilState} from "recoil";
+import {useSetRecoilState} from "recoil";
 import {getTaskStatusCode, TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
 import {checkExpiration} from "@/utils/common";
 import useUpsertTask from "@/hooks/useUpsertTask";
@@ -17,7 +17,7 @@ interface TaskCardProps {
 function TaskCard({item}: TaskCardProps) {
     const {upsertTask, isUpdating} = useUpsertTask();
     const {deleteTask, isDeleting} = useDeleteTask();
-    const [taskModalForm, setTaskModalForm] = useRecoilState(taskModalFormState);
+    const setTaskModalForm = useSetRecoilState(taskModalFormState);
     const isMobile = useMediaQuery({maxWidth: 700});
 
     // 업무 기간이 지난 상태면 자동으로 진행상태 '만료'로 업데이트

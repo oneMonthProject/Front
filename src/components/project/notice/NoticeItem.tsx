@@ -1,7 +1,7 @@
 import React from 'react';
 import {Notice, NoticeTypeKey} from "@/utils/type";
 import NoticeBadge from "@/components/ui/badge/NoticeBadge";
-import {useRecoilState, useSetRecoilState} from "recoil";
+import {useSetRecoilState} from "recoil";
 import {
     ProjectNoticeCrewForm,
     ProjectNoticeCrewWithdrawForm,
@@ -14,10 +14,12 @@ import {useProjectInfo} from "@/hooks/useProjectInfo";
 import ManagerCheckIcon from "@/components/project/notice/ManagerCheckIcon";
 
 function NoticeItem({item}: { item: Notice }) {
-    const {authMap:{milestoneAuth}} = useProjectInfo();
-    const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+    const setSnackbar = useSetRecoilState(snackbarState);
     const {type, alertId, content, createDate, checkedStatus} = item;
     const setCurrentNoticeForm = useSetRecoilState(projectNoticeCurrentFormState);
+
+    const {data} = useProjectInfo();
+    const {authMap:{milestoneAuth}} = data;
 
     function onClickHandler(type: NoticeTypeKey) {
         switch (type) {

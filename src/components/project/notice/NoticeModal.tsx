@@ -3,7 +3,7 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "@/components/ui/Modal";
 import NoticeModalContents from "@/components/project/notice/noticeModalContents/NoticeModalContents";
-import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     ProjectNoticeCrewWithdrawForm,
     projectNoticeCurrentFormState,
@@ -17,7 +17,7 @@ import {snackbarState} from "@/store/CommonStateStore";
 import {useQueryClient} from "@tanstack/react-query";
 
 function NoticeModal() {
-    const [snackbar, setSnackbar] = useRecoilState(snackbarState);
+    const setSnackbar = useSetRecoilState(snackbarState);
     const {isOpen, title} = useRecoilValue(projectNoticeModalStateSelector);
     const [portalElement, setPortalElement] = useState<Element | null>(null);
     const resetCurrentNoticeForm = useResetRecoilState(projectNoticeCurrentFormState);
