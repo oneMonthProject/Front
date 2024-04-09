@@ -58,3 +58,8 @@ export const projectMenuList = [
         path: ProjectMenuURL.SETTING
     },
 ];
+
+export enum ITEM_COUNT {
+    TASKS = 6,
+    ProjectNotice = 5,
+}
