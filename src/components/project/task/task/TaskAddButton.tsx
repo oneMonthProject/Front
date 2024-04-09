@@ -1,25 +1,25 @@
 'use client';
+
 import React from 'react';
 import Button from "@/components/ui/Button";
 import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
-import {useRecoilValue, useSetRecoilState} from "recoil";
+import {useSetRecoilState} from "recoil";
 import {TaskItem} from "@/utils/type";
-import {milestoneActiveStateSelector} from "@/store/project/task/MilestoneStateStore";
 
-function TaskAddButton() {
+type TaskAddButtonProps = {
+    milestoneId: string | bigint;
+    projectId: string | bigint;
+}
+
+function TaskAddButton({milestoneId, projectId}:TaskAddButtonProps) {
     const setTaskFormState = useSetRecoilState(taskModalFormState);
-
-    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
-    if(activeMilestone == null) return null;
-
-    const {mileStoneId, projectId} = activeMilestone;
 
     function onClickTaskAddButtonHandler() {
         const newTaskItem: TaskItem = {
             workId: 0n,
             projectId,
-            milestoneId: mileStoneId as bigint,
+            milestoneId,
             assignedUser: null,
             lastModifiedMemberNickname: '',
             content: '',

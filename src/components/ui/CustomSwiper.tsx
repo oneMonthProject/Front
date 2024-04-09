@@ -7,8 +7,6 @@ import 'swiper/css/scrollbar';
 import {ReactNode, useEffect, useRef, useState} from "react";
 import SwiperCore from 'swiper';
 import {Grid, Navigation, Pagination} from 'swiper/modules';
-import {useRecoilValue} from "recoil";
-import {milestoneListStateStore} from "@/store/project/task/MilestoneStateStore";
 import {useMediaQuery} from "react-responsive";
 
 interface SlideItem {
@@ -18,14 +16,13 @@ interface SlideItem {
 
 interface CustomSwiperProps {
     slideItems: SlideItem[];
+    activeSlideIndex: number;
 
 }
 
-function CustomSwiper({slideItems}: CustomSwiperProps) {
+function CustomSwiper({slideItems, activeSlideIndex}: CustomSwiperProps) {
     const mobile = useMediaQuery({ maxWidth: 700 });
     const [slidePerView, setSlidePerView] = useState(() => slideItems.length <= 4 ? slideItems.length - 1 : 3);
-    const {activeSlideIndex} = useRecoilValue(milestoneListStateStore);
-
 
     SwiperCore.use([Navigation, Pagination, Grid]);
     const swiperRef = useRef<SwiperCore>();

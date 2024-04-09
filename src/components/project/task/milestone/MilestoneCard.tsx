@@ -2,10 +2,9 @@
 import React, {MouseEvent} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
-import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {useSetRecoilState} from "recoil";
 import {
-    milestoneActiveStateSelector,
-    milestoneListStateStore,
+    milestoneActiveStateStore,
     MilestoneModalForm,
     milestoneModalFormState,
     MilestoneModalFormState
@@ -15,12 +14,14 @@ import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
 
-interface MilestoneCardProps {
+type MilestoneCardProps = {
     milestoneInfo: MilestoneInfo;
-    slideIndex: number;
+    activeMilestoneId: string | bigint | null;
 }
 
-function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, activeMilestoneId}: MilestoneCardProps) {
+
+    const setSnackBar = useSetRecoilState(snackbarState);
 
     const {
         projectId,
@@ -30,16 +31,15 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
         endDate,
         updateDate,
         createDate,
-        progressStatus
+        progressStatus,
+        index
     } = milestoneInfo;
 
-    const setSnackBar = useSetRecoilState(snackbarState);
-    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
-    const setActiveMilestone = useSetRecoilState(milestoneListStateStore);
+    const setActiveMilestone = useSetRecoilState(milestoneActiveStateStore);
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
-
     const queryClient = useQueryClient();
+
     const {mutate: deleteMilestone, isPending: isDeleting} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
         onSuccess: async (res) => {
@@ -58,9 +58,7 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setActiveMilestone((prev) => {
-            return {list: [...prev.list], activeId: mileStoneId, activeSlideIndex: slideIndex}
-        });
+        setActiveMilestone({activeMilestone:milestoneInfo});
     }
 
     function onEditClickHandler() {
@@ -77,8 +75,8 @@ function MilestoneCard({milestoneInfo, slideIndex}: MilestoneCardProps) {
     }
 
 
-    const activeClass = activeMilestone?.mileStoneId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeMilestone?.mileStoneId === mileStoneId ? 'text-secondary' : 'text-gray-900';
+    const activeClass = activeMilestoneId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeMilestoneId === mileStoneId ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div

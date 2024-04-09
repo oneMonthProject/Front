@@ -40,34 +40,16 @@ export function getMilestoneStatus(str: MilestoneStatusName | MilestoneStatusCod
     return milestoneStatusItem;
 }
 
-export type MilestoneListState = {
-    list: MilestoneInfo[];
-    activeId: bigint | null;
-    activeSlideIndex: number;
+type MilestoneActiveState = {
+    activeMilestone: MilestoneInfo | null
 }
 
-export const milestoneListStateStore = atom<MilestoneListState>({
-    key: "milestoneListStateStore",
+export const milestoneActiveStateStore = atom<MilestoneActiveState>({
+    key: 'milestoneActiveState',
     default: {
-        list: [],
-        activeId: null,
-        activeSlideIndex: 0
+        activeMilestone: null
     }
-});
-
-
-export const milestoneActiveStateSelector = selector<MilestoneInfo | null>({
-    key: "milestoneActiveStateSelector",
-    get: ({get}) => {
-        const {activeId, list} = get(milestoneListStateStore);
-        const activeMilestone = activeId == null
-            ? list.find(v => v.progressStatus === '진행중') || list[0]
-            : list.find(v => v.mileStoneId === activeId);
-
-        return activeMilestone || null;
-    }
-});
-
+})
 
 export interface MilestoneModalFormState extends MilestoneInfo {
     type: "add" | "modify";
@@ -85,6 +67,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
     progressStatus: MilestoneStatusName | '';
     progressStatusCode: MilestoneStatusCode | '';
     projectId: bigint;
+    index?: number;
 
     constructor(type: 'add' | 'modify', milestoneInfo: MilestoneInfo) {
         const {
@@ -96,6 +79,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
             , updateDate
             , progressStatus
             , projectId
+            , index
         } = milestoneInfo;
 
         this.type = type;
@@ -108,9 +92,9 @@ export class MilestoneModalForm implements MilestoneModalFormState {
         this.progressStatus = progressStatus;
         this.progressStatusCode = getMilestoneStatus(progressStatus)?.value || '';
         this.projectId = projectId;
+        this.index = index;
 
     }
-
 
 }
 

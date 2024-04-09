@@ -1,25 +1,23 @@
 'use client';
 
-import React, {Suspense, useEffect, useState} from 'react';
+import React from 'react';
 import Tasks from "@/components/project/task/task/Tasks";
 import TaskSectionHeader from "@/components/project/task/TaskSectionHeader";
 import {useRecoilValue} from "recoil";
-import {milestoneActiveStateSelector} from "@/store/project/task/MilestoneStateStore";
-import {TaskSectionSkeleton} from "@/components/ui/skeleton/project/task";
-import useClientMount from "@/hooks/useClientMount";
+import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
+import {MilestoneInfo} from "@/utils/type";
 
-function TaskSection() {
-    const mounted = useClientMount();
-    const activeMilestone = useRecoilValue(milestoneActiveStateSelector);
+function TaskSection({milestoneList}: { milestoneList: MilestoneInfo[] }) {
+    const {activeMilestone} = useRecoilValue(milestoneActiveStateStore);
+
+    const {mileStoneId, projectId} = activeMilestone
+        ? activeMilestone
+        : milestoneList.find(v => v.progressStatus === '진행중') || milestoneList[0];
 
     return (
         <section className='w-full flex flex-col items-start'>
-            {(activeMilestone && mounted) &&
-                <Suspense fallback={<TaskSectionSkeleton/>}>
-                    <TaskSectionHeader/>
-                    <Tasks milestoneId={activeMilestone.mileStoneId}/>
-                </Suspense>
-            }
+            <TaskSectionHeader activeMilestone={activeMilestone}/>
+            <Tasks milestoneId={mileStoneId} projectId={projectId}/>
         </section>
     );
 }

@@ -12,7 +12,9 @@ interface MilestoneCardMenuProps {
 }
 
 function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandler}: MilestoneCardMenuProps) {
-    const {authMap} = useProjectInfo();
+    const {data, isFetching} = useProjectInfo();
+
+    const authMap = data?.authMap;
 
     const milestoneMenus = [
         {
@@ -29,7 +31,6 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
 
     return (
         authMap?.milestoneAuth ?
-            // <div className="flex-shrink-0 pr-2 overflow-visible">
             (
                 <Menu as="div" className="self-start flex-shrink-0 pr-2 text-center">
                     {/*<Menu as="div" className="relative inline-block text-center">*/}
