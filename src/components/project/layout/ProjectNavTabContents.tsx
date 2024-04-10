@@ -2,7 +2,7 @@
 import React, {Suspense} from 'react';
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {useRecoilValue} from "recoil";
-import {ProjectMenu} from "@/utils/constant";
+import {PROJECT_MENU as PM} from "@/app/project/_utils/constant";
 
 interface ProjectNavTabContentsProps {
     slots: {
@@ -18,16 +18,16 @@ function ProjectNavTabContents({slots: {task, crews, notice, setting}}: ProjectN
 
     let contents: React.ReactNode;
     switch (activeNavTab) {
-        case ProjectMenu.TASK:
+        case PM.TASK.value:
             contents = task;
             break;
-        case ProjectMenu.CREWS:
+        case PM.CREWS.value:
             contents = crews;
             break;
-        case ProjectMenu.NOTICE:
+        case PM.NOTICE.value:
             contents = notice;
             break;
-        case ProjectMenu.SETTING:
+        case PM.SETTING.value:
             contents = setting;
             break;
         default:

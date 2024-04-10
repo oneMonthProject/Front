@@ -24,47 +24,21 @@ export enum TRUST_GRADE {
     '4등급' = 4
 }
 
-// 프로젝트 상세 > 메뉴
+/**
+ * paging - 페이지별 row
+ */
+export const ITEM_COUNT = {
+    CARDS_SM: 6,
+    CARDS: 8,
+    LIST_SM: 5,
+} as const;
 
-export enum ProjectMenu {
-    TASK = '업무',
-    CREWS = '크루',
-    NOTICE = '알림',
-    SETTING = '프로젝트 세팅'
-}
+/**
+ * paging - 페이지 range
+ */
+export const PAGE_RANGE = {
+    DEFAULT: 5
+} as const;
 
-export enum ProjectMenuURL {
-    TASK = '/project/task',
-    CREWS = '/project/crews',
-    NOTICE = '/project/notice',
-    SETTING = '/project/setting'
-}
 
-export const projectMenuList = [
-    {
-        name: ProjectMenu.TASK,
-        path: ProjectMenuURL.TASK
-    },
-    {
-        name: ProjectMenu.CREWS,
-        path: ProjectMenuURL.CREWS
-    },
-    {
-        name: ProjectMenu.NOTICE,
-        path: ProjectMenuURL.NOTICE
-    },
-    {
-        name: ProjectMenu.SETTING,
-        path: ProjectMenuURL.SETTING
-    },
-];
 
-export enum ITEM_COUNT {
-    CARDS_SM = 6,
-    LIST_SM = 5,
-    CARDS = 8,
-}
-
-export enum PAGE_RANGE {
-    DEFAULT = 5
-}

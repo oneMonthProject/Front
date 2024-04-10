@@ -1,7 +1,8 @@
 import {atom} from "recoil";
-import {ProjectMenu} from "@/utils/constant";
+import {ProjectMenuKeyType} from "@/app/project/_utils/type";
+import {PROJECT_MENU as PM} from "@/app/project/_utils/constant";
 
-export const projectActiveNavState = atom<ProjectMenu>({
+export const projectActiveNavState = atom<ProjectMenuKeyType>({
     key:'projectActiveNavState',
-    default: ProjectMenu.TASK
+    default: PM.TASK.value
 });
