@@ -116,13 +116,13 @@ export function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(" ");
 }
 
-export function getSelectItemValue(item: SelectItem) {
+export function getSelectItemValue<T extends ReactNode, V extends ReactNode>(item: SelectItem<T, V>) {
     return item.value;
 }
 
 export function getPositionSelectItem(item: PositionItem | null) {
     if (item) {
-        return {value: item.positionId, name: item.positionName} as SelectItem;
+        return {value: item.positionId, name: item.positionName};
     }
 
     return item;
@@ -131,19 +131,19 @@ export function getPositionSelectItem(item: PositionItem | null) {
 export function getPositionSelectItems(items: PositionItem[]) {
     if (items.length > 0) {
         return items.map(
-            (item) =>
-                ({value: item.positionId, name: item.positionName} as SelectItem)
+            ({positionId, positionName}) =>
+                ({value: bigIntToString(positionId), name: positionName})
         );
     }
 
     return [];
 }
 
-export function getTechStackSelectItems(items: TechStackItem[]) {
+export function getTechStackSelectItems(items: TechStackItem[]):SelectItem<string, string>[] {
     if (items.length > 0) {
         return items.map(
-            (item) =>
-                ({value: item.techStackId, name: item.techStackName} as SelectItem)
+            ({techStackId,techStackName}) =>
+                ({value: bigIntToString(techStackId), name: techStackName})
         );
     }
 
@@ -287,7 +287,7 @@ export function checkExpiration(endDate: string) {
  * 신뢰등급 selectItem 생성
  * @param hint
  */
-export function createTrustGradeSelectItem(hint: TrustGradeNameType | TrustGradeValueType): SelectItem {
+export function createTrustGradeSelectItem(hint: TrustGradeNameType | TrustGradeValueType): SelectItem<string, string> {
     if ((hint as string).includes('등급')) {
         return {value: TRUST_GRADE[hint] as string, name: hint as string};
     } else {
@@ -295,6 +295,19 @@ export function createTrustGradeSelectItem(hint: TrustGradeNameType | TrustGrade
     }
 }
 
+/**
+ * bigint 데이터 string으로 변환
+ * @param data
+ */
+export function bigIntToString(data: bigint | string){
+    return typeof data === "string" ? data : Number(data).toString();
+}
 
-
+/**
+ * 숫자문자열 bigint로 변환
+ * @param data
+ */
+export function numStrToBigInt(data: string) {
+    return _.isNumber(Number(data)) ? BigInt(data) : data;
+}
 

@@ -2,10 +2,11 @@ import Select from "@/components/ui/Select"
 import {getTrustGradeListByUser} from "@/service/user/user";
 import {ResponseBody, SelectItem, TrustGradeItem} from "@/utils/type";
 import {useSuspenseQuery} from "@tanstack/react-query";
+import {bigIntToString} from "@/utils/common";
 
 interface TrustGradeSelectProps {
-    trustGrade: SelectItem | null;
-    setTrustGrade: (item: SelectItem) => void;
+    trustGrade: SelectItem<string, string>;
+    setTrustGrade: (item: SelectItem<string, string>) => void;
 }
 
 
@@ -18,10 +19,10 @@ const TrustGradeSelect = ({trustGrade, setTrustGrade}: TrustGradeSelectProps) =>
 
     const getTrustGradeSelectItems = (items: TrustGradeItem[]) => {
         if (items.length > 0) {
-            const selectArr: SelectItem[] = [{name: '신뢰등급 선택', value: ''}];
+            const selectArr: SelectItem<string, string>[] = [{name: '신뢰등급 선택', value: ''}];
             items.forEach(
-                (item) => {
-                    selectArr.push(({value: item.trustGradeId, name: item.trustGradeName} as SelectItem));
+                ({trustGradeId, trustGradeName}) => {
+                    selectArr.push(({value: bigIntToString(trustGradeId), name: trustGradeName}));
                 }
             );
             return selectArr;
