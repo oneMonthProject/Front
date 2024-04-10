@@ -1,247 +1,57 @@
 import {atom, selector} from "recoil";
-import {Notice, NoticeTypeKey, PointTypeValue, Position} from "@/utils/type";
+import {
+    ProjectNoticeCrew,
+    ProjectNoticeCrewFWDL,
+    ProjectNoticeRecruit,
+    ProjectNoticeTask
+} from "@/app/project/@notice/_utils/type";
+import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
 
 /**
- * 크루 알림 form 상태
+ * 프로젝트 알림 Form > 크루 추가 & 크루 컨펌
  */
-export interface ProjectNoticeCrewFormState extends Notice {
-    type: NoticeTypeKey;
-    alertId: bigint;
-    checkUserId: bigint;
-    sendUserId: bigint;
-    milestoneId: bigint | null;
-    projectId: bigint;
-    workId: bigint | null;
-    createDate: string;
-    updateDate: string;
-    content: string;
-    position: Position | null;
-}
-
-export class ProjectNoticeCrewForm implements ProjectNoticeCrewFormState {
-    alertId: bigint;
-    checkUserId: bigint;
-    content: string;
-    createDate: string;
-    milestoneId: bigint | null;
-    position: Position | null;
-    projectId: bigint;
-    sendUserId: bigint;
-    type: NoticeTypeKey;
-    updateDate: string;
-    workId: bigint | null;
-    checkedStatus: boolean;
-
-    constructor(notice: Notice) {
-        const {
-            type,
-            alertId,
-            checkUserId,
-            sendUserId,
-            milestoneId,
-            projectId,
-            workId,
-            createDate,
-            updateDate,
-            content,
-            position,
-            checkedStatus
-        } = notice;
-
-        this.type = type;
-        this.alertId = alertId;
-        this.checkUserId = checkUserId;
-        this.sendUserId = sendUserId;
-        this.milestoneId = milestoneId;
-        this.projectId = projectId;
-        this.workId = workId;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.content = content;
-        this.position = position;
-        this.checkedStatus = checkedStatus;
-    }
-
-
+export type ProjectNoticeCrewForm = {
+    name: typeof PNT.CREW_CONFIRM.value | typeof PNT.ADD.value;
+    form: ProjectNoticeCrew;
 }
 
 /**
- * 업무 알림 form 상태
+ * 프로젝트 알림 Form > 업무 알림
  */
-interface ProjectNoticeTaskFormState extends Notice {
-    scoreTypeId: PointTypeValue | null;
-}
-
-export class ProjectNoticeTaskForm implements ProjectNoticeTaskFormState {
-    alertId: bigint;
-    checkUserId: bigint;
-    content: string;
-    createDate: string;
-    milestoneId: bigint | null;
-    position: Position | null;
-    projectId: bigint;
-    sendUserId: bigint;
-    type: NoticeTypeKey;
-    updateDate: string;
-    workId: bigint | null;
-    scoreTypeId: PointTypeValue | null;
-    checkedStatus: boolean;
-
-    constructor(notice: Notice, scoreTypeId: PointTypeValue | null) {
-        const {
-            type,
-            alertId,
-            checkUserId,
-            sendUserId,
-            milestoneId,
-            projectId,
-            workId,
-            createDate,
-            updateDate,
-            content,
-            position,
-            checkedStatus
-        } = notice;
-
-        this.type = type;
-        this.alertId = alertId;
-        this.checkUserId = checkUserId;
-        this.sendUserId = sendUserId;
-        this.milestoneId = milestoneId;
-        this.projectId = projectId;
-        this.workId = workId;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.content = content;
-        this.position = position;
-        this.scoreTypeId = scoreTypeId;
-        this.checkedStatus = checkedStatus;
-    }
-
-
+export type ProjectNoticeTaskForm = {
+    name: typeof PNT.WORK.value;
+    form: ProjectNoticeTask;
 }
 
 /**
- * 모집 알림 form 상태
+ * 프로젝트 알림 Form > 모집 알림
  */
-interface ProjectNoticeRecruitFormState extends Notice {
-    isPermit: boolean | '';
+export type ProjectNoticeRecruitForm = {
+    name: typeof PNT.RECRUIT.value;
+    form: ProjectNoticeRecruit;
 }
 
-export class ProjectNoticeRecruitForm implements ProjectNoticeRecruitFormState {
-    alertId: bigint;
-    checkUserId: bigint;
-    content: string;
-    createDate: string;
-    isPermit: boolean | '';
-    milestoneId: bigint | null;
-    position: Position | null;
-    projectId: bigint;
-    sendUserId: bigint;
-    type: NoticeTypeKey;
-    updateDate: string;
-    workId: bigint | null;
-    checkedStatus: boolean;
-
-    constructor(isPermit: boolean | '', notice: Notice) {
-        this.isPermit = isPermit;
-        const {
-            type,
-            alertId,
-            checkUserId,
-            sendUserId,
-            milestoneId,
-            projectId,
-            workId,
-            createDate,
-            updateDate,
-            content,
-            position,
-            checkedStatus
-        } = notice;
-
-        this.type = type;
-        this.alertId = alertId;
-        this.checkUserId = checkUserId;
-        this.sendUserId = sendUserId;
-        this.milestoneId = milestoneId;
-        this.projectId = projectId;
-        this.workId = workId;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.content = content;
-        this.position = position;
-        this.checkedStatus = checkedStatus;
-    }
-
+/**
+ * 프로젝트 알림 Form > 강제 탈퇴 알림
+ */
+export type ProjectNoticeCrewFWDLForm = {
+    name: typeof PNT.FORCEWITHDRAWL.value;
+    form: ProjectNoticeCrewFWDL;
 }
 
-export interface ProjectNoticeCrewWithdrawFormState extends Notice {
-    withdrawConfirm: boolean | '';
-}
-
-export class ProjectNoticeCrewWithdrawForm implements ProjectNoticeCrewWithdrawFormState {
-    alertId: bigint;
-    checkUserId: bigint;
-    checkedStatus: boolean;
-    content: string;
-    createDate: string;
-    milestoneId: bigint | null;
-    position: Position | null;
-    projectId: bigint;
-    sendUserId: bigint;
-    type: NoticeTypeKey;
-    updateDate: string;
-    withdrawConfirm: boolean | "";
-    workId: bigint | null;
-
-    constructor(withdrawConfirm: boolean | "", notice: Notice) {
-        this.withdrawConfirm = withdrawConfirm;
-        const {
-            type,
-            alertId,
-            checkUserId,
-            sendUserId,
-            milestoneId,
-            projectId,
-            workId,
-            createDate,
-            updateDate,
-            content,
-            position,
-            checkedStatus
-        } = notice;
-
-        this.type = type;
-        this.alertId = alertId;
-        this.checkUserId = checkUserId;
-        this.sendUserId = sendUserId;
-        this.milestoneId = milestoneId;
-        this.projectId = projectId;
-        this.workId = workId;
-        this.createDate = createDate;
-        this.updateDate = updateDate;
-        this.content = content;
-        this.position = position;
-        this.checkedStatus = checkedStatus;
-    }
-
-}
-
-
+type ProjectNoticeCurrentForm = | null
+    | ProjectNoticeCrewForm
+    | ProjectNoticeTaskForm
+    | ProjectNoticeRecruitForm
+    | ProjectNoticeCrewFWDLForm;
 /**
  * 현재 알림 form 상태 관리
  */
-export const projectNoticeCurrentFormState =
-    atom<
-        null | ProjectNoticeCrewFormState | ProjectNoticeTaskFormState
-        | ProjectNoticeRecruitFormState | ProjectNoticeCrewWithdrawFormState
-    >
-    ({
-        key: 'projectNoticeCurrentFormState',
-        default: null
-    });
+export const projectNoticeCurrentFormState = atom<ProjectNoticeCurrentForm>({
+    key: 'projectNoticeCurrentFormState',
+    default: null
+});
 
 
 /**
@@ -259,16 +69,15 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
         let title = '';
 
         if (currentFormState !== null) {
-            switch (currentFormState?.type) {
-                case 'WORK' :
+            switch (currentFormState?.name) {
+                case PNT.WORK.value :
                     title = '업무 알림';
                     break;
-                case 'RECRUIT':
+                case PNT.RECRUIT.value:
                     title = '모집 알림';
                     break;
-                case 'ADD':
-                case 'WITHDRAWL':
-                case 'FORCEWITHDRAWL':
+                case PNT.CREW_CONFIRM.value:
+                case PNT.ADD.value:
                     title = '크루 알림';
                     break;
                 default:

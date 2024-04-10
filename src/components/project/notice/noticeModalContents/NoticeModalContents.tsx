@@ -6,10 +6,13 @@ import NoticeItemRecruitInfo from "@/components/project/notice/noticeModalConten
 import TaskPointSelector from "@/components/project/notice/noticeModalContents/TaskPointSelector";
 import RecruitSelector from "@/components/project/notice/noticeModalContents/RecruitSelector";
 import WthdrawSelector from "@/components/project/notice/noticeModalContents/WthdrawSelector";
-
+import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
 function NoticeModalContents() {
     const currentNoticeForm = useRecoilValue(projectNoticeCurrentFormState);
+    if (!currentNoticeForm) return null;
+
+    const {name: formName, form} = currentNoticeForm;
 
     return (
         <section className='tablet:w-[450px] min-h-[400px] mb-4 overflow-y-auto flex-col items-center'>
@@ -17,20 +20,23 @@ function NoticeModalContents() {
                 <div className='flex flex-col px-8 py-4 rounded-md bg-ground200'>
                     <span className='tablet:text-[1.2rem] mb-3 font-semibold text-grey800'>Message :</span>
                     <span
-                        className='tablet:text-[1.4rem] text-grey900 font-semibold text-center'>{currentNoticeForm?.content}</span>
+                        className='tablet:text-[1.4rem] text-grey900 font-semibold text-center'>{form.content}</span>
                 </div>
             </section>
             {
-                currentNoticeForm?.type === 'RECRUIT' && <Suspense fallback={<div>loading..</div>}><NoticeItemRecruitInfo/></Suspense>
+                formName === PNT.RECRUIT.value &&
+                <Suspense fallback={<div>loading..</div>}>
+                    <NoticeItemRecruitInfo/>
+                </Suspense>
             }
             {
-                currentNoticeForm?.type === 'WITHDRAWL'&& <WthdrawSelector/>
+                formName === PNT.FORCEWITHDRAWL.value && <WthdrawSelector/>
             }
             {
-                currentNoticeForm?.type === 'RECRUIT' && <RecruitSelector/>
+                formName === PNT.RECRUIT.value && <RecruitSelector/>
             }
             {
-                currentNoticeForm?.type === 'WORK' && <TaskPointSelector/>
+                formName === PNT.WORK.value && <TaskPointSelector/>
             }
 
         </section>

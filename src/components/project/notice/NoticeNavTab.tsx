@@ -1,12 +1,11 @@
 'use client';
-import {useRecoilState, useRecoilValue} from "recoil";
-import React, {MouseEvent} from "react";
-import {NoticeNavTabItem, SelectItem} from "@/utils/type";
-import {
-    currentProjectNoticeNavTabSelector,
-    projectNoticeNavTabStateStore
-} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
+import {useRecoilState} from "recoil";
+import React from "react";
+import {SelectItem} from "@/utils/type";
+import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 import Select from "@/components/ui/Select";
+import {PROJECT_NOTICE_MENU} from "@/app/project/@notice/_utils/constant";
+import {ProjectNoticeMenuName, ProjectNoticeMenuValue} from "@/app/project/@notice/_utils/type";
 
 
 function classNames(...classes: string[]) {
@@ -15,41 +14,15 @@ function classNames(...classes: string[]) {
 
 
 export default function NoticeNavTab() {
-    const [noticeNavTabs, setNoticeNavTabs] = useRecoilState(projectNoticeNavTabStateStore);
-    const currentNoticeNavTab = useRecoilValue(currentProjectNoticeNavTabSelector);
+    const [activeNoticeMenu, setActiveNoticeMenu] = useRecoilState(projectNoticeActiveMenuStateStore);
 
-    /**
-     * 태블릿/pc nav tab handler
-     * @param target
-     */
-    function onClickHandler({target}: MouseEvent<HTMLElement>) {
-        const updatedNavTabs: NoticeNavTabItem[] = [];
-
-        [...noticeNavTabs].forEach((v) => {
-            updatedNavTabs.push({
-                ...v,
-                current: v.type_kor === (target as HTMLElement).textContent
-            });
-        });
-
-        setNoticeNavTabs(updatedNavTabs);
-    }
 
     /**
      * 모바일 nav select handler
      * @param item
      */
-    function onChangeSelectHandler(item: SelectItem) {
-        const updatedNavTabs: NoticeNavTabItem[] = [];
-
-        [...noticeNavTabs].forEach((v) => {
-            updatedNavTabs.push({
-                ...v,
-                current: v.type_kor === item.name
-            });
-        });
-
-        setNoticeNavTabs(updatedNavTabs);
+    function onChangeSelectHandler(item: SelectItem<ProjectNoticeMenuName, ProjectNoticeMenuValue>) {
+        setActiveNoticeMenu(item);
     }
 
     return (
@@ -58,15 +31,15 @@ export default function NoticeNavTab() {
             <ul role="list"
                 className="mobile:hidden tablet:-mx-2 tablet:space-y-1">
                 {
-                    noticeNavTabs.map((item) => (
-                            <li key={item.type}>
+                    Object.values(PROJECT_NOTICE_MENU).map(({name, value}) => (
+                            <li key={value}>
                                 <div
                                     className={classNames(
-                                        item.type_kor === currentNoticeNavTab.type_kor ? 'bg-gray-50 text-primary' : 'text-gray-700 hover:text-primary hover:bg-gray-50',
+                                        value === activeNoticeMenu.value ? 'bg-gray-50 text-primary' : 'text-gray-700 hover:text-primary hover:bg-gray-50',
                                         'group flex items-center rounded-md p-5 pl-3 text-xl text-center leading-6 font-medium cursor-pointer'
                                     )}
-                                    onClick={onClickHandler}>
-                                    {item.type_kor}
+                                    onClick={() => setActiveNoticeMenu({name, value})}>
+                                    {name}
                                 </div>
                             </li>
                         )
@@ -74,21 +47,10 @@ export default function NoticeNavTab() {
             </ul>
             <div className='mobile:block hidden'>
                 <Select
-                    items={
-                        noticeNavTabs.map(
-                            v => {
-                                return {
-                                    name: v.type_kor,
-                                    value: v.type
-                                }
-                            }
-                        )}
+                    items={Object.values(PROJECT_NOTICE_MENU)}
                     label=''
                     setValue={onChangeSelectHandler}
-                    value={{
-                        name: currentNoticeNavTab.type_kor,
-                        value: currentNoticeNavTab.type
-                    }}
+                    value={activeNoticeMenu}
                 />
             </div>
         </nav>

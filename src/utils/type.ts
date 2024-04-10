@@ -9,19 +9,7 @@ export type DropDownItem = {
 }
 
 export interface DropDownProps {
-    items: DropDownItems[];
-}
-
-export interface NoticeNavTabItem {
-    type: NoticeTypeKey | 'ALL';
-    type_kor: NoticeTypeValue | '전체';
-    current: boolean;
-}
-
-export interface ProjectNavTabItem {
-    name: string;
-    href: string;
-    current: boolean;
+    items: DropDownItem[];
 }
 
 export interface BadgeProps {
@@ -252,7 +240,7 @@ export interface Project {
     createDate: Date;
     updateDate: Date;
     status: string;
-    crewNumber: int;
+    crewNumber: number;
     authMap: {
         milestoneAuth: boolean;
         workAuth: boolean;

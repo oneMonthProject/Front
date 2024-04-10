@@ -11,7 +11,7 @@ import {getUserInfoByUserId} from "@/service/user/user";
 function NoticeItemRecruitInfo() {
     const currentNoticeForm = useRecoilValue(projectNoticeCurrentFormState);
 
-    const {sendUserId, content, createDate, updateDate} = currentNoticeForm as ProjectNoticeRecruitForm;
+    const {form:{sendUserId}} = currentNoticeForm as ProjectNoticeRecruitForm;
 
     const {data} = useSuspenseQuery<ResponseBody<ProfileInfo>, Error>({
         queryKey: ['userInfoById', sendUserId],
@@ -21,11 +21,11 @@ function NoticeItemRecruitInfo() {
     const {
         intro,
         nickname,
-        position: {positionId, positionName},
+        position: {positionName},
         profileImgSrc,
         projectHistoryTotalCount,
         techStacks,
-        trustGrade: {trustGradeId, trustGradeName},
+        trustGrade: {trustGradeName},
         trustScore
     }:ProfileInfo = data.data;
 

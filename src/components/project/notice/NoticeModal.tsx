@@ -3,18 +3,16 @@
 import React, {useEffect, useState} from 'react';
 import Modal from "@/components/ui/Modal";
 import NoticeModalContents from "@/components/project/notice/noticeModalContents/NoticeModalContents";
-import {useRecoilState, useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
-    ProjectNoticeCrewWithdrawForm,
     projectNoticeCurrentFormState,
-    projectNoticeModalStateSelector,
-    ProjectNoticeRecruitForm,
-    ProjectNoticeTaskForm
+    projectNoticeModalStateSelector
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
 import {confirmCrewWithdrawNotice, confirmRecruitNotice, confirmTaskNotice} from "@/service/project/confirm";
 import {snackbarState} from "@/store/CommonStateStore";
 import {useQueryClient} from "@tanstack/react-query";
+import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
 function NoticeModal() {
     const setSnackbar = useSetRecoilState(snackbarState);
@@ -40,12 +38,14 @@ function NoticeModal() {
 
     async function onConfirmHandler() {
         // 업무 - 신뢰도 부여하거나, 깎거나
-        if (currentNoticeForm?.type === 'WORK') {
-            const {alertId, scoreTypeId} = currentNoticeForm as ProjectNoticeTaskForm;
+        if (currentNoticeForm?.name === PNT.WORK.value) {
+            const {form: {alertId, scoreTypeId}} = currentNoticeForm;
+
             if (scoreTypeId === null) {
                 setSnackbar({show: true, type: 'ERROR', content: '신뢰점수를 선택해주세요.'});
                 return;
             }
+
             const res = await confirmTaskNotice(alertId, scoreTypeId);
 
             if (res.result === 'success') {
@@ -53,12 +53,13 @@ function NoticeModal() {
                 setSnackbar({show: true, type: 'SUCCESS', content: '업무를 완료한 크루에게 신뢰점수를 부여했습니다.'});
                 resetCurrentNoticeForm();
             }
-
         }
+
         // 모집 - 거절하거나 수락
-        if (currentNoticeForm?.type === 'RECRUIT') {
-            const {projectId, alertId, isPermit: confirmResult} = currentNoticeForm as ProjectNoticeRecruitForm;
-            if (confirmResult === '') {
+        if (currentNoticeForm?.name === PNT.RECRUIT.value) {
+            const {form: {projectId, alertId, isPermit: confirmResult}} = currentNoticeForm;
+
+            if (!confirmResult) {
                 setSnackbar({show: true, type: 'ERROR', content: '프로젝트 합류 여부를 선택해주세요.'});
                 return;
             }
@@ -72,21 +73,22 @@ function NoticeModal() {
             }
         }
 
-        if (currentNoticeForm?.type == 'ADD') {
+        if (currentNoticeForm?.name == PNT.ADD.value) {
             resetCurrentNoticeForm();
         }
 
-        if(currentNoticeForm?.type === 'WITHDRAWL'){
-            const {alertId, withdrawConfirm} = currentNoticeForm as ProjectNoticeCrewWithdrawForm;
-            if(withdrawConfirm === '') {
+        if (currentNoticeForm?.name === PNT.FORCEWITHDRAWL.value) {
+            const {form: {alertId, withdrawConfirm}} = currentNoticeForm;
+
+            if (!withdrawConfirm) {
                 setSnackbar({show: true, type: 'ERROR', content: '탈퇴 여부를 선택해주세요.'});
                 return;
             }
 
             const res = await confirmCrewWithdrawNotice(alertId, withdrawConfirm);
 
-            if(res.result === 'success'){
-                await queryClient.invalidateQueries({queryKey:['crewList']});
+            if (res.result === 'success') {
+                await queryClient.invalidateQueries({queryKey: ['crewList']});
                 setSnackbar({show: true, type: 'SUCCESS', content: '탈퇴 처리를 완료했습니다.'});
                 resetCurrentNoticeForm();
             }

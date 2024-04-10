@@ -1,32 +1,33 @@
 'use client';
 import React, {useState} from 'react';
-import {Notice, PageResponseBody} from "@/utils/type";
+import {PageResponseBody} from "@/utils/type";
 import NoticeItem from "@/components/project/notice/NoticeItem";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {useQueryString} from "@/hooks/useQueryString";
-import {getProjectNoticeByType} from "@/service/project/notice";
+import {getProjectNoticeByMenu} from "@/service/project/notice";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {useRecoilValue} from "recoil";
-import {currentProjectNoticeNavTabSelector} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
+import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 import Loader from "@/components/ui/Loader";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
+import {Notice} from "@/app/project/@notice/_utils/type";
 
 
 function NoticeList() {
     const projectId = useQueryString('projectId');
     const [pageIndex, setPageIndex] = useState(0);
-    const currentNoticeNavTab = useRecoilValue(currentProjectNoticeNavTabSelector);
+    const {value} = useRecoilValue(projectNoticeActiveMenuStateStore);
 
     // 5초마다 백그라운드에서 알림 목록 refetch
-    const {data, isFetching} = useSuspenseQuery<PageResponseBody<Notice[]>, Error>({
-        queryKey: ['noticeList', projectId, pageIndex, currentNoticeNavTab.type],
-        queryFn: () => getProjectNoticeByType(projectId, pageIndex, ITEM_COUNT.LIST_SM, currentNoticeNavTab.type),
+    const {data, isFetching} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
+        queryKey: ['noticeList', projectId, pageIndex, value],
+        queryFn: () => getProjectNoticeByMenu(projectId, pageIndex, ITEM_COUNT.LIST_SM, value),
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });
 
-    const noticeList = data.data.content;
-    const totalCount = data.data.totalPages;
+    const noticeList = data?.data.content || [];
+    const totalCount = data?.data.totalPages || 0;
 
     return (
         <>

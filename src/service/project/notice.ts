@@ -1,5 +1,7 @@
 import {request} from "@/service/project/request";
-import {NoticeCreateForm, NoticeTypeKey} from "@/utils/type";
+import {DataId, NoticeCreateForm, PageResponseBody} from "@/utils/type";
+import {Notice, ProjectNoticeMenuKey} from "@/app/project/@notice/_utils/type";
+import {PROJECT_NOTICE_MENU} from "@/app/project/@notice/_utils/constant";
 
 
 /**
@@ -17,28 +19,17 @@ export async function createProjectTaskNotice(noticeCreateForm: NoticeCreateForm
  * @param projectId
  * @param pageIndex
  * @param itemCount
- * @param noticeType
+ * @param noticeMenu
  */
-export async function getProjectNoticeByType(projectId: string | bigint, pageIndex: number, itemCount: number, noticeType: NoticeTypeKey | 'ALL') {
-    let noticeRequestUrl = '/api/project/notice';
-    switch (noticeType) {
-        case 'ALL':
-            noticeRequestUrl += '/all';
-            break;
-        case 'WORK':
-            noticeRequestUrl += '/works';
-            break;
-        case 'RECRUIT':
-            noticeRequestUrl += '/recruits';
-            break;
-        case 'CREW':
-            noticeRequestUrl += '/crews';
-            break;
-        default:
-            throw Error('Unknown type of notice');
-    }
-
-    return await request('GET', `${noticeRequestUrl}?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`);
+export async function getProjectNoticeByMenu(
+    projectId: DataId,
+    pageIndex: number,
+    itemCount: number,
+    noticeMenu: ProjectNoticeMenuKey
+): Promise<PageResponseBody<Notice[]>> {
+    const noticeRequestUrl = `/api/project/notice${PROJECT_NOTICE_MENU[noticeMenu].path}`;
+    return await request('GET',
+        `${noticeRequestUrl}?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
 
 /**

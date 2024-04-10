@@ -1,38 +1,33 @@
 import React from 'react';
 import {useRecoilState} from "recoil";
-import {
-    ProjectNoticeCrewWithdrawForm,
-    projectNoticeCurrentFormState
-} from "@/store/project/notice/ProjectNoticeStateStore";
+import {ProjectNoticeCrewFWDLForm, projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNoticeStateStore";
 import {SelectItem} from "@/utils/type";
 import Select from "@/components/ui/Select";
+import {
+    ForceWDLOption,
+    ForceWDLOptionNameType as NameType,
+    ForceWDLOptionValueType as ValueType, PROJECT_NOTICE_TYPE as PNT
+} from "@/app/project/@notice/_utils/constant";
+import {ProjectNoticeCrewFWDL} from "@/app/project/@notice/_utils/type";
 
-const selectItems: SelectItem[] = [
-    {
-        name: '선택',
-        value: ''
-    },
-    {
-        name: '탈퇴',
-        value: true
-    },
-    {
-        name: '보류',
-        value: false
-    }
-];
+const selectItems = Object.values(ForceWDLOption);
 
 function WthdrawSelector() {
     const [currentNoticeForm, setCurrentNoticeForm] = useRecoilState(projectNoticeCurrentFormState);
 
-    function onChangeJoinPermitHandler(selectItem: SelectItem) {
-        if (currentNoticeForm instanceof ProjectNoticeCrewWithdrawForm) {
-            const updatedNoticeForm = {...currentNoticeForm, withdrawConfirm: selectItem.value};
-            setCurrentNoticeForm(updatedNoticeForm);
-        }
+    function onChangeJoinPermitHandler(selectItem: SelectItem<NameType, ValueType>) {
+        const form: ProjectNoticeCrewFWDL = {
+            ...currentNoticeForm!.form,
+            withdrawConfirm: selectItem.value
+        };
+        const updatedNoticeFormState: ProjectNoticeCrewFWDLForm = {name: PNT.FORCEWITHDRAWL.value, form};
+        setCurrentNoticeForm(updatedNoticeFormState);
     }
 
-    const selectedValue: SelectItem = selectItems.find(v => v.value === (currentNoticeForm as ProjectNoticeCrewWithdrawForm).withdrawConfirm)!;
+    const selectedValue = selectItems.find(
+        v => v.value === (currentNoticeForm as ProjectNoticeCrewFWDLForm)
+            .form.withdrawConfirm
+    )!;
 
     return (
         <section className='mx-auto my-7 flex flex-col items-stretch'>

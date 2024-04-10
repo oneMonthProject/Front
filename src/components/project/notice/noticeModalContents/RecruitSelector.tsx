@@ -5,24 +5,31 @@ import Select from "@/components/ui/Select";
 import {projectNoticeCurrentFormState, ProjectNoticeRecruitForm} from "@/store/project/notice/ProjectNoticeStateStore";
 import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
+import {
+    PROJECT_NOTICE_TYPE as PNT,
+    RecruitOption,
+    RecruitOptionNameType,
+    RecruitOptionValueType
+} from "@/app/project/@notice/_utils/constant";
+import {ProjectNoticeRecruit} from "@/app/project/@notice/_utils/type";
 
-const selectItems: SelectItem[] = [
-    {name:'합류 여부 선택', value: ''},
-    {name: '수락', value: true},
-    {name: '거절', value: false}
-]
+const selectItems = Object.values(RecruitOption);
 
 function RecruitSelector() {
     const [currentNoticeForm, setCurrentNoticeForm] = useRecoilState(projectNoticeCurrentFormState);
 
-    function onChangeJoinPermitHandler(selectItem: SelectItem) {
-        if (currentNoticeForm instanceof ProjectNoticeRecruitForm) {
-            const updatedNoticeForm = {...currentNoticeForm, isPermit: selectItem.value};
-            setCurrentNoticeForm(updatedNoticeForm);
-        }
+    function onChangeJoinPermitHandler(selectItem: SelectItem<RecruitOptionNameType, RecruitOptionValueType>) {
+        const updatedNoticeRecruit: ProjectNoticeRecruit = {...currentNoticeForm!.form, isPermit: selectItem.value};
+        const updatedNoticeRecruitForm: ProjectNoticeRecruitForm = {
+            name: PNT.RECRUIT.value,
+            form: updatedNoticeRecruit
+        };
+        setCurrentNoticeForm(updatedNoticeRecruitForm);
+
     }
 
-    const selectedValue:SelectItem = selectItems.find(v => v.value === (currentNoticeForm as ProjectNoticeRecruitForm).isPermit)!;
+    const selectedValue = selectItems
+        .find(v => v.value === (currentNoticeForm as ProjectNoticeRecruitForm).form.isPermit)!;
 
     return (
         <section className='max-w-[150px] mx-auto my-7 flex flex-col items-stretch'>

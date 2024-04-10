@@ -1,10 +1,10 @@
 import React from 'react';
 import {FaUserCheck} from "@react-icons/all-files/fa/FaUserCheck";
-import {NoticeTypeKey} from "@/utils/type";
+import {ProjectNoticeTypeKey} from "@/app/project/@notice/_utils/type";
 
 interface ManagerCheckIconProps {
     isChecked: boolean;
-    alertType: NoticeTypeKey;
+    alertType: ProjectNoticeTypeKey;
 }
 
 function ManagerCheckIcon({isChecked, alertType}: ManagerCheckIconProps) {
