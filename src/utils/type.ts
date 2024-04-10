@@ -67,8 +67,8 @@ export interface ConfirmModalState extends ModalState {
 }
 
 export interface MilestoneInfo {
-    mileStoneId: bigint;
-    projectId: bigint;
+    mileStoneId: DataId;
+    projectId: DataId;
     content: string;
     createDate: string;
     startDate: string;
@@ -83,12 +83,12 @@ export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';
 export type TaskStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
 
 export type AssignedUser = {
-    projectMemberId: bigint;
+    projectMemberId: DataId;
     nickname: string;
 }
 
 export interface TaskItem {
-    workId: bigint;
+    workId: DataId;
     projectId: DataId;
     milestoneId: DataId;
     assignedUser: AssignedUser | null;
@@ -124,15 +124,8 @@ export interface TechStackWithCategory extends TechStackItem {
     categories: string[];
 }
 
-export interface UserInfo {
-    id: string | number | null;
-    nickname: string;
-    imageSrc?: string | null;
-    position?: SelectItem;
-}
-
 export interface ProfileInfo {
-    userId: string | number | bigint | null;
+    userId: DataId | null;
     email: string;
     nickname: string;
     profileImgSrc?: string | null;
@@ -149,8 +142,8 @@ export interface ProfileInfo {
 export type ProjectHistoryStatus = "FORCED_WITHDRAWAL" | "WITHDRAWAL" | "PARTICIPATING" | "FINISH";
 
 export interface UserProjectHistory {
-    userProjectHistoryId: bigint;
-    projectId: bigint;
+    userProjectHistoryId: DataId;
+    projectId: DataId;
     status: ProjectHistoryStatus;
     projectName: string;
     updateDate: string;
@@ -169,7 +162,7 @@ export interface PostUserInfo {
 }
 
 export interface PostCardInfo {
-    boardId: bigint;
+    boardId: DataId;
     boardTitle: string;
     boardPositions: PostPosition[];
     project: ProjectInfo;
@@ -204,7 +197,7 @@ export interface TrustGrade {
 }
 
 export interface User {
-    userId: bigint;
+    userId: DataId;
     email: string;
     nickname: string;
     profileImgSrc: string;
@@ -220,8 +213,8 @@ export interface ProjectUser extends User {
 }
 
 export interface ProjectMemberProfile {
-    projectMemberId: bigint;
-    projectId: bigint;
+    projectMemberId: DataId;
+    projectId: DataId;
     projectCount: number;
     user: ProjectUser;
     projectMemberAuth: ProjectMemberAuth;
@@ -245,19 +238,19 @@ export interface ProjectMemberAuth {
 }
 
 export interface Position {
-    positionId: bigint;
+    positionId: DataId;
     name: string;
 }
 
 export interface Project {
-    projectId: bigint;
+    projectId: DataId;
     name: string;
     subject: string;
     trustGrade: TrustGrade;
-    startDate: date;
-    endDate: date;
-    createDate: date;
-    updateDate: date;
+    startDate: Date;
+    endDate: Date;
+    createDate: Date;
+    updateDate: Date;
     status: string;
     crewNumber: int;
     authMap: {
@@ -316,12 +309,12 @@ export interface SnackbarState {
 
 
 export interface NoticeCreateForm {
-    projectId: bigint | string;
-    checkUserId?: bigint | string | null;
-    sendUserId?: bigint | string | null;
-    workId?: bigint | string | null;
-    milestoneId?: bigint | string | null;
-    positionId?: bigint | string | null;
+    projectId: DataId;
+    checkUserId?: DataId | null;
+    sendUserId?: DataId | null;
+    workId?: DataId | null;
+    milestoneId?: DataId | null;
+    positionId?: DataId | null;
     type: string;
     content: string;
 }
@@ -335,8 +328,8 @@ export type CrewStatusKeys = keyof typeof CREW_STATUS;
  * 프로젝트 크루 업무 이력
  */
 export interface CrewTaskHistory {
-    workId: bigint | string;
-    trustScoreHistoryId: bigint | string;
+    workId: DataId;
+    trustScoreHistoryId: DataId;
     workContent: string;
     startDate: string;
     endDate: string;
@@ -354,9 +347,9 @@ export interface UserBasicInfo {
 }
 
 export interface UserProjectNotice {
-    alertId: string | bigint;
+    alertId: DataId;
     project: {
-        projectId: string | bigint;
+        projectId: DataId;
         projectName: string;
     };
     position: PositionItem;
