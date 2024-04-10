@@ -10,6 +10,8 @@ import {
 import {format} from "date-fns";
 import _, {camelCase} from "lodash";
 import {TRUST_GRADE} from "@/utils/constant";
+import {ReactNode} from "react";
+
 
 export function makeBadgeSize(size: string) {
     // 사이즈
