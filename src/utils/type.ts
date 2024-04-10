@@ -1,6 +1,6 @@
-import {CookieValueTypes} from "cookies-next";
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS, NOTICE_TYPE, POINT_TYPE, TRUST_GRADE, TRUST_GRADE_NAME} from "@/utils/constant";
+import {CREW_STATUS, POINT_TYPE, TRUST_GRADE} from "@/utils/constant";
+import {ReactNode} from "react";
 
 export type DropDownItem = {
     name: string;
@@ -54,7 +54,7 @@ export interface MultiSelectProps extends SingleSelectProps {
     setValue?: (value: SelectItem) => void;
 }
 
-interface ModalState {
+export interface ModalState {
     title: string;
     isOpen: boolean;
 }
@@ -98,8 +98,8 @@ export interface TaskItem {
     contentDetail: string | '';
 }
 
-interface TrustGradeItem {
-    trustGradeId: string | bigint;
+export type TrustGradeItem = {
+    trustGradeId: DataId;
     trustGradeName: string;
 }
 
@@ -154,12 +154,12 @@ export interface UserProjectHistory {
     updateDate: string;
 }
 
-interface PostPosition {
-    boardPositionId: bigint;
+export interface PostPosition {
+    boardPositionId: DataId;
     position: Position;
 }
 
-interface PostUserInfo {
+export interface PostUserInfo {
     email: string;
     nickname: string;
     profileImgSrc: string | null;
@@ -178,22 +178,18 @@ export interface PostCardInfo {
     updateDate: string;
 }
 
-export interface AuthRequestParam {
-    accessToken: CookieValueTypes;
-}
-
-export interface ResponseBody<T> {
+export type ResponseBody<T> = {
     result: string;
     message: string;
     data: T
 }
 
-interface Paged<T> {
+export type Paged<T> = {
     content: T,
     totalPages: number;
 }
 
-export interface PageResponseBody<T> {
+export type PageResponseBody<T> = {
     result: string;
     message: string;
     data: Paged<T>
@@ -278,19 +274,19 @@ export interface ProjectPost extends Project {
     members: ProjectMember[];
 }
 
-interface PostDetailUserInfo {
-    userId: bigint;
+export interface PostDetailUserInfo {
+    userId: DataId;
     nickName: string;
     userProfileImgSrc: string;
 }
 
-interface PostDetailPosition {
-    boardPositionId: bigint;
+export interface PostDetailPosition {
+    boardPositionId: DataId;
     position: Position;
 }
 
-interface PostInfo {
-    boardId: bigint;
+export interface PostInfo {
+    boardId: DataId;
     title: string;
     content: string;
     pageView: number;
@@ -316,24 +312,6 @@ export interface SnackbarState {
     duration?: number;
 }
 
-export type NoticeTypeKey = keyof typeof NOTICE_TYPE;
-
-export type NoticeTypeValue = typeof NOTICE_TYPE[NoticeTypeKey];
-
-export interface Notice {
-    alertId: bigint;
-    projectId: bigint;
-    checkUserId: bigint;
-    sendUserId: bigint;
-    workId: bigint | null;
-    milestoneId: bigint | null;
-    position: Position | null;
-    content: string;
-    type: NoticeTypeKey;
-    createDate: string;
-    updateDate: string;
-    checkedStatus: boolean;
-}
 
 export interface NoticeCreateForm {
     projectId: bigint | string;
@@ -393,3 +371,4 @@ export interface TaskContentDetailItem {
 }
 
 export type DataId = string | bigint;
+
