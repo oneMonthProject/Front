@@ -30,28 +30,30 @@ export interface BadgeProps {
     text?: string;
 }
 
-export type SelectItem = {
-    value: string | number | bigint | boolean | null | undefined;
-    name: string;
+export type SelectItem<T extends ReactNode, V extends ReactNode> = {
+    name: T;
+    value: V;
 }
 
-export interface SelectProps {
-    items: SelectItem[];
-}
-
-export interface SingleSelectProps extends SelectProps {
-    value: SelectItem | null;
-    setValue: (value: SelectItem) => void;
+export interface SelectProps<T extends ReactNode, V extends ReactNode> {
+    items: SelectItem<T, V>[];
+    value: SelectItem<T, V>;
+    setValue: (item: SelectItem<T, V>) => void;
     label?: string;
     placeholder?: string;
     required?: boolean;
 }
 
-export interface MultiSelectProps extends SingleSelectProps {
-    values: SelectItem[];
-    setValues: (value: SelectItem[]) => void;
-    value?: SelectItem | null;
-    setValue?: (value: SelectItem) => void;
+
+export type MultiSelectProps<T extends ReactNode, V extends ReactNode> = {
+    items: SelectItem<T, V>[];
+    values: SelectItem<T,V>[];
+    setValues: (value: SelectItem<T,V>[]) => void;
+    value?: SelectItem<T,V> | null;
+    setValue?: (value: SelectItem<T,V>) => void;
+    label?: string;
+    placeholder?: string;
+    required?: boolean;
 }
 
 export interface ModalState {
