@@ -3,11 +3,6 @@ export const CREW_STATUS = {
     WITHDRAWLING: '탈퇴 진행중'
 } as const;
 
-export enum POINT_TYPE {
-    plus = 1,
-    minus = 2
-}
-
 export enum TRUST_GRADE {
     '1등급' = 1,
     '2등급' = 2,

@@ -101,3 +101,18 @@ export const PROJECT_NOTICE_TYPE = {
         color: PROJECT_NOTICE_COLOR.CREW
     }
 } as const;
+
+export const TaskPointOptions = {
+    default: {
+        name: '점수 타입 선택',
+        value: null,
+    },
+    plus: {
+        name: '+ 신뢰점수',
+        value: 1
+    },
+    minus: {
+        name: '- 신뢰점수',
+        value: 2
+    }
+}

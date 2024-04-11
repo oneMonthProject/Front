@@ -1,5 +1,5 @@
-import {PointTypeValue} from "@/utils/type";
 import {request} from "@/service/project/request";
+import {PointTypeValue} from "@/app/project/@notice/_utils/type";
 
 /**
  * 업무 알림 confirm

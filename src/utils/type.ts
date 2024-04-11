@@ -1,6 +1,7 @@
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS, POINT_TYPE, TRUST_GRADE} from "@/utils/constant";
+import {CREW_STATUS, TRUST_GRADE} from "@/utils/constant";
 import {ReactNode} from "react";
+import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 
 export type DropDownItem = {
     name: string;
@@ -325,9 +326,6 @@ export interface CrewTaskHistory {
     point: number | null;
     point_type: PointTypeKey | null;
 }
-
-export type PointTypeKey = keyof typeof POINT_TYPE;
-export type PointTypeValue = typeof POINT_TYPE[PointTypeKey]
 
 export interface UserBasicInfo {
     nickname: string;

@@ -1,9 +1,10 @@
-import {DataId, PointTypeValue, Position} from "@/utils/type";
+import {DataId, Position} from "@/utils/type";
 import {
     ForceWDLOptionValueType,
     PROJECT_NOTICE_MENU,
     PROJECT_NOTICE_TYPE,
-    RecruitOptionValueType
+    RecruitOptionValueType,
+    TaskPointOptions
 } from "@/app/project/@notice/_utils/constant";
 
 /**
@@ -42,6 +43,9 @@ export type Notice = {
  */
 export type ProjectNoticeCrew = Notice;
 
+export type PointTypeKey = keyof typeof TaskPointOptions;
+export type PointTypeName = (typeof TaskPointOptions)[PointTypeKey]["name"];
+export type PointTypeValue = (typeof TaskPointOptions)[PointTypeKey]["value"];
 /**
  * 프로젝트 업무알림 데이터
  */
