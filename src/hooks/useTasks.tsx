@@ -1,6 +1,7 @@
-import {DataId, PageResponseBody, TaskItem} from "@/utils/type";
+import {DataId, PageResponseBody} from "@/utils/type";
 import {getTaskList} from "@/service/project/task";
 import {useQuery} from "@tanstack/react-query";
+import {TaskItem} from "@/app/project/@task/_utils/type";
 
 
 export type TasksReqParam = {
