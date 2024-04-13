@@ -1,5 +1,6 @@
 import {request} from "@/service/project/request";
-import {ProjectInfo, ResponseBody, TrustGradeValueType} from "@/utils/type";
+import {ProjectInfo, ResponseBody} from "@/utils/type";
+import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
 
 
 /**
@@ -19,20 +20,11 @@ export async function getMyProjectDetail(projectId: string | bigint):Promise<Res
     return await request('GET', `/api/project/detail?projectId=${projectId}`)
 }
 
-export interface WritableProjectInfo {
-    projectId: string | bigint;
-    projectName: string;
-    subject: string;
-    trustGradeId: TrustGradeValueType;
-    startDate: string;
-    endDate: string;
-}
-
 /**
  * 프로젝트 정보 수정
  * @param projectInfo
  */
-export async function updateProjectInfo(projectInfo: WritableProjectInfo) {
+export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
     return await request('PUT', `/api/project`, {projectInfo});
 }
 

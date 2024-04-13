@@ -1,36 +1,30 @@
 import Select from "@/components/ui/Select"
 import {getTrustGradeListByUser} from "@/service/user/user";
 import {ResponseBody, SelectItem, TrustGradeItem} from "@/utils/type";
-import {useSuspenseQuery} from "@tanstack/react-query";
-import {bigIntToString} from "@/utils/common";
+import {useQuery} from "@tanstack/react-query";
+import {TrustGradeIdType} from "@/app/project/@setting/_utils/type";
 
 interface TrustGradeSelectProps {
-    trustGrade: SelectItem<string, string>;
-    setTrustGrade: (item: SelectItem<string, string>) => void;
+    trustGrade: SelectItem<string, TrustGradeIdType>;
+    setTrustGrade: (item: SelectItem<string, TrustGradeIdType>) => void;
 }
 
 
 const TrustGradeSelect = ({trustGrade, setTrustGrade}: TrustGradeSelectProps) => {
-    const {data} = useSuspenseQuery<ResponseBody<TrustGradeItem[]>, Error>({
+    const {data} = useQuery<Promise<ResponseBody<TrustGradeItem[]>>, Error, ResponseBody<TrustGradeItem[]>>({
         queryKey: ['trustGradeListByUser'],
         queryFn: () => getTrustGradeListByUser()
     });
-    const {data: trustGradeList} = data;
+    const {data: trustGradeList} = data!;
 
-    const getTrustGradeSelectItems = (items: TrustGradeItem[]) => {
-        if (items.length > 0) {
-            const selectArr: SelectItem<string, string>[] = [{name: '신뢰등급 선택', value: ''}];
-            items.forEach(
-                ({trustGradeId, trustGradeName}) => {
-                    selectArr.push(({value: bigIntToString(trustGradeId), name: trustGradeName}));
-                }
-            );
-            return selectArr;
+    const selectItems: SelectItem<string, TrustGradeIdType>[] = [{name: '신뢰등급 선택', value: null}];
+    trustGradeList.forEach(
+        ({trustGradeId, trustGradeName}) => {
+            selectItems.push(({value: trustGradeId, name: trustGradeName}));
         }
-        return [];
-    }
+    );
 
-    return <Select value={trustGrade} setValue={setTrustGrade} items={getTrustGradeSelectItems(trustGradeList)}
+    return <Select value={trustGrade} setValue={setTrustGrade} items={selectItems}
                    label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요."/>
 }
 

@@ -1,18 +1,21 @@
-import { InputHTMLAttributes, useEffect, useRef, useState } from 'react';
+import {InputHTMLAttributes, useEffect, useRef, useState} from 'react';
 import DatePicker from 'react-datepicker';
-import { AiTwotoneCalendar } from "@react-icons/all-files/ai/AiTwotoneCalendar";
-import { format } from 'date-fns';
+import {AiTwotoneCalendar} from "@react-icons/all-files/ai/AiTwotoneCalendar";
+import {format} from 'date-fns';
 
 import 'react-datepicker/dist/react-datepicker.css';
 
 export interface CalenderProps extends InputHTMLAttributes<HTMLInputElement> {
   label?: string;
   required?: boolean;
-  date: string | null;
+  date?: string | null;
   setDate: (value: string) => void;
 }
 
-function CalendarInput({ id, label, required = false, date, setDate, ...props }: CalenderProps) {
+
+
+
+function CalendarInput({ id, label, required = false, date = format(new Date(), 'yyyy-MM-dd'), setDate, ...props }: CalenderProps) {
   const datePickerRef = useRef<HTMLDivElement | null>(null);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
