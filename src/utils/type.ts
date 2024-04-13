@@ -1,7 +1,8 @@
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
-import {CREW_STATUS, TRUST_GRADE} from "@/utils/constant";
+import {CREW_STATUS} from "@/utils/constant";
 import {ReactNode} from "react";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
+import {TrustGradeIdType, TrustGradeNameType} from "@/app/project/@setting/_utils/type";
 
 export type DropDownItem = {
     name: string;
@@ -68,29 +69,8 @@ export interface MilestoneInfo {
     index?: number;
 }
 
-export type TaskStatusName = '시작전' | '진행중' | '완료' | '만료';
-export type TaskStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
-
-export type AssignedUser = {
-    projectMemberId: DataId;
-    nickname: string;
-}
-
-export interface TaskItem {
-    workId: DataId;
-    projectId: DataId;
-    milestoneId: DataId;
-    assignedUser: AssignedUser | null;
-    lastModifiedMemberNickname: string;
-    content: string;
-    startDate: string;
-    endDate: string;
-    progressStatus: TaskStatusName | '';
-    contentDetail: string | '';
-}
-
-export type TrustGradeItem = {
-    trustGradeId: DataId;
+export interface TrustGradeItem {
+    trustGradeId: TrustGradeIdType;
     trustGradeName: string;
 }
 
@@ -180,7 +160,7 @@ export type PageResponseBody<T> = {
 }
 
 export interface TrustGrade {
-    name: string;
+    name: TrustGradeNameType;
     minimumScore: number;
     maximumScore: number;
 }
@@ -242,15 +222,17 @@ export interface Project {
     updateDate: string;
     status: string;
     crewNumber: number;
-    authMap: {
-        milestoneAuth: boolean;
-        workAuth: boolean;
-    }
+    authMap: ProjectTaskAuth
+}
+
+export type ProjectTaskAuth = {
+    milestoneAuth: boolean;
+    workAuth: boolean;
 }
 
 export interface ProjectInfo extends Project {
     technologyStacks: TechStackItem[];
-    trustGradeId: bigint[];
+    trustGradeId: TrustGradeIdType[];
     technologyIds: bigint[];
 }
 
@@ -340,15 +322,6 @@ export interface UserProjectNotice {
     };
     position: PositionItem;
     supportResult: boolean | null;
-}
-
-export type TrustGradeNameType = keyof typeof TRUST_GRADE;
-
-export type TrustGradeValueType = typeof TRUST_GRADE[TrustGradeNameType];
-
-export interface TaskContentDetailItem {
-    id: string;
-    data: string;
 }
 
 export type DataId = string | bigint;

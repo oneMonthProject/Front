@@ -3,13 +3,6 @@ export const CREW_STATUS = {
     WITHDRAWLING: '탈퇴 진행중'
 } as const;
 
-export enum TRUST_GRADE {
-    '1등급' = 1,
-    '2등급' = 2,
-    '3등급' = 3,
-    '4등급' = 4
-}
-
 /**
  * paging - 페이지별 row
  */
