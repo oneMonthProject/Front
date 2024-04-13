@@ -1,15 +1,15 @@
 'use client';
 import React, {Fragment} from 'react';
 import useProjectCrewList from "@/hooks/useProjectCrewList";
-import {ProjectMember, SelectItem} from "@/utils/type";
+import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
-import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
+import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {Listbox, Transition} from "@headlessui/react";
-import {classNames} from "@/utils/common";
+import {bigIntToString, classNames} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import Avatar from "@/components/ui/Avatar";
 
-const compareItems = (a: SelectItem, b: SelectItem) => {
+const compareItems = (a: SelectItem<string, string>, b: SelectItem<string, string>) => {
     if (a && b) {
         return a?.value === b?.value;
     }
@@ -18,29 +18,41 @@ const compareItems = (a: SelectItem, b: SelectItem) => {
 }
 
 function ProjectCrewSelect() {
-    const [taskModalForm, setTaskModalForm] = useRecoilState(taskModalFormState);
+    const [modalState, setModalState] = useRecoilState(taskModalState);
+    const {form} = modalState;
+    const {assignedUser} = form!;
+
     const {data} = useProjectCrewList();
 
-    const projectCrewListItems = data.projectMembers.map((v: ProjectMember) => {
-        return {
-            name: v.user.nickname,
-            value: v.projectMemberId.toString(),
-            profileImgSrc: v.user.profileImgSrc
-        }
-    });
+    const projectCrews =
+        data.projectMembers.map(({user: {nickname}, projectMemberId}) => (
+            {
+                name: nickname,
+                value: bigIntToString(projectMemberId),
+            }
+        ));
 
-    console.log("taskform in crewselect: ", taskModalForm);
+    const crewImages: Record<string, string> = {};
+    for (const {projectMemberId, user: {profileImgSrc}} of data.projectMembers) {
+        crewImages[bigIntToString(projectMemberId)] = profileImgSrc;
+    }
 
-    const selectedCrew = projectCrewListItems
-            .find((v: SelectItem) => v.value === taskModalForm?.assignedUser?.projectMemberId.toString())
-        || {name: '멤버 선택', value: ''};
+    const projectCrewItems: SelectItem<string, string | null>[]
+        = [{name: '멤버 선택', value: null}, ...projectCrews];
 
-    function setSelectedCrew(item: SelectItem) {
-        const updated = {
-            ...taskModalForm as TaskModalForm,
-            assignedUser: {projectMemberId: item.value as bigint, nickname: item.name}
+
+    const selectedCrew = assignedUser
+        ? projectCrewItems.find(({value}) =>
+            value === bigIntToString(assignedUser.projectMemberId)
+        )! : projectCrewItems[0];
+
+
+    function setSelectedCrew({name, value}: SelectItem<string, string | null>) {
+        const updatedForm: typeof form = {
+            ...modalState.form!,
+            assignedUser: value ? {projectMemberId: BigInt(value), nickname: name} : null
         };
-        setTaskModalForm(updated);
+        setModalState({...modalState, form: updatedForm});
     }
 
 
@@ -52,7 +64,7 @@ function ProjectCrewSelect() {
                         <Listbox.Button
                             className="w-full mobile:text-sm cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
                               <span className={classNames(selectedCrew ? '' : 'text-greyUnselect', 'block truncate')}>
-                                {selectedCrew ? selectedCrew.name : '멤버 선택'}
+                                {selectedCrew.name}
                               </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                                    <AiFillCaretDown className="w-5 text-gray-400" aria-hidden="true"/>
@@ -67,47 +79,16 @@ function ProjectCrewSelect() {
                         >
                             <Listbox.Options
                                 className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                <Listbox.Option
-                                    key='default'
-                                    className={({active}) =>
-                                        classNames(
-                                            active ? 'bg-primary opacity-50 text-white' : 'text-gray-900',
-                                            'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
-                                        )
-                                    }
-                                    value=''
-                                >
-                                    {({selected, active}) => (
-                                        <>
-                                          <span
-                                              className={classNames(selected ? 'font-bold' : 'font-normal', 'flex items-center space-x-2 block truncate')}>
-                                                <span>멤버 선택</span>
-                                          </span>
-                                            {
-                                                selected ?
-                                                    (
-                                                        <span
-                                                            className={classNames(
-                                                                active ? 'text-white' : 'text-primary',
-                                                                'absolute inset-y-0 right-0 flex items-center pr-4'
-                                                            )}
-                                                        ></span>
-                                                    )
-                                                    : null
-                                            }
-                                        </>
-                                    )}
-                                </Listbox.Option>
-                                {projectCrewListItems.map((item) => (
+                                {projectCrewItems.map(({name, value}) => (
                                     <Listbox.Option
-                                        key={item.value}
+                                        key={value}
                                         className={({active}) =>
                                             classNames(
                                                 active ? 'bg-primary opacity-50 text-white' : 'text-gray-900',
                                                 'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
                                             )
                                         }
-                                        value={item}
+                                        value={name}
                                     >
                                         {
                                             ({selected, active}) =>
@@ -115,10 +96,12 @@ function ProjectCrewSelect() {
                                                     <>
                                                         <span
                                                             className={classNames(selected ? 'font-bold' : 'font-normal', 'flex items-center space-x-2 block truncate')}>
-                                                            <Avatar src={item.profileImgSrc}
-                                                                    alt={`${item.name}의 프로필 이미지`}
-                                                                    size='2xs'/>
-                                                          <span>{item.name}</span>
+                                                            {
+                                                                value && <Avatar src={crewImages[value]}
+                                                                                 alt={`${name}의 프로필 이미지`}
+                                                                                 size='2xs'/>
+                                                            }
+                                                            <span>{name}</span>
                                                         </span>
                                                         {
                                                             selected ?
