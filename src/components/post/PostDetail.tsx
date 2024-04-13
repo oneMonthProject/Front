@@ -4,20 +4,24 @@ import TitleSection from "./titleSection/TitleSection";
 import InfoSection from "./infoSection/InfoSection";
 import BodySection from "./bodySection/BodySection";
 import ButtonSection from "./buttonSection/ButtonSection";
-import { useQueryString } from "@/hooks/useQueryString";
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { ResponseBody, PostDetailInfo } from "@/utils/type";
-import { getPost } from "@/service/post/post";
+import {useQueryString} from "@/hooks/useQueryString";
+import {useQuery} from "@tanstack/react-query";
+import {PostDetailInfo, ResponseBody} from "@/utils/type";
+import {getPost} from "@/service/post/post";
 
 const PostDetail = () => {
-  const postId = useQueryString('postId');
+    const postId = useQueryString('postId');
 
-  const { data } = useSuspenseQuery<ResponseBody<PostDetailInfo>, Error>({
-    queryKey: ['postInfo', postId],
-    queryFn: () => getPost(BigInt(postId))
-  });
+    const {data, isFetching} = useQuery<Promise<ResponseBody<PostDetailInfo>>, Error, ResponseBody<PostDetailInfo>>({
+        queryKey: ['postInfo', postId],
+        queryFn: () => getPost(BigInt(postId))
+    });
 
-  const { board, project } = data.data;
+    if (isFetching) return <div>loading...</div>;
+
+    console.log("data: ", data);
+
+    const {board, project} = data!.data;
 
     return (
         <div className="p-5 mobile:p-1 m-auto">
