@@ -2,15 +2,17 @@
 
 import React from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
-import {useProjectInfo} from "@/hooks/useProjectInfo";
 import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
+import {useRecoilValueLoadable} from "recoil";
+import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
 
 function ProjectInfo() {
-    const {data, isFetching} = useProjectInfo();
+    const {state, contents} = useRecoilValueLoadable(projectInfoState);
 
-    if(isFetching) return <ProjectInfoSkeleton/>;
+    if(state === 'loading') return <ProjectInfoSkeleton/>;
 
-    const {name, subject, trustGrade, startDate, endDate} = data!;
+    const {name, subject, trustGrade, startDate, endDate} = contents!;
+
     return (
         <section
             className='tablet:flex mobile:flex-col items-center justify-start w-full tablet:mt-[40px] mobile:mt-[10px] '>

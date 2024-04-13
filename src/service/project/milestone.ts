@@ -12,10 +12,10 @@ export async function getProjectMilestones(projectId: string):Promise<ResponseBo
     res.data = sortByStartDate(res.data, 'asc').map((v, index) => {
         return {
             ...v,
-            createDate: convertStringToDate(v.createDate, 'yyyy-MM-dd'),
-            startDate: convertStringToDate(v.startDate, 'yyyy-MM-dd'),
-            endDate: convertStringToDate(v.endDate, 'yyyy-MM-dd'),
-            updateDate: convertStringToDate(v.updateDate, 'yyyy-MM-dd'),
+            createDate: convertStringToDate(v.createDate as string, 'yyyy-MM-dd'),
+            startDate: convertStringToDate(v.startDate as string, 'yyyy-MM-dd'),
+            endDate: convertStringToDate(v.endDate as string, 'yyyy-MM-dd'),
+            updateDate: convertStringToDate(v.updateDate as string, 'yyyy-MM-dd'),
             index: index
         }
     });

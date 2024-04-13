@@ -2,9 +2,10 @@
 import React from 'react';
 import Link from "next/link";
 import {useQueryString} from "@/hooks/useQueryString";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useRecoilValue} from "recoil";
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {PROJECT_MENU} from "@/app/project/_utils/constant";
+import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')
@@ -12,7 +13,7 @@ function classNames(...classes: string[]) {
 
 
 export default function ProjectNavTab() {
-    const projectId = useQueryString('projectId');
+    const projectId = useRecoilValue(projectIdState);
     const [activeTabName, setActiveTabName] = useRecoilState(projectActiveNavState);
 
 

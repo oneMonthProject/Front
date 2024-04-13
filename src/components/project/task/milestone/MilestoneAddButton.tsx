@@ -6,13 +6,18 @@ import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
 import {MilestoneInfo} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {useSetRecoilState} from "recoil";
+import {useRecoilValueLoadable, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
+import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import MilestoneAddButtonSkeleton from "../../../ui/skeleton/project/task/MilestoneAddButtonSkeleton";
 
-function MilestoneAddButton({milestoneAuth}:{milestoneAuth:boolean}) {
+function MilestoneAddButton() {
+    const {state, contents:{milestoneAuth}} = useRecoilValueLoadable(projectTaskAuthSelector)!;
     const setSnackBar = useSetRecoilState(snackbarState);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
+    if(state === 'loading') return <MilestoneAddButtonSkeleton/>;
+    
     const onClickHandler = () => {
         if(milestoneAuth){
             const today = getTodayString();
@@ -33,7 +38,6 @@ function MilestoneAddButton({milestoneAuth}:{milestoneAuth:boolean}) {
         }
 
     }
-
 
     return (
         <Button size='md' className='mb-4' onClickHandler={onClickHandler} aria-label='마일스톤 추가'>

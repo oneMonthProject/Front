@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {TRUST_GRADE} from "@/utils/constant";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
