@@ -21,7 +21,7 @@ function NoticeList() {
     // 5초마다 백그라운드에서 알림 목록 refetch
     const {data, isFetching} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
         queryKey: ['noticeList', projectId, pageIndex, value],
-        queryFn: () => getProjectNoticeByMenu(projectId, pageIndex, ITEM_COUNT.LIST_SM, value),
+        queryFn: () => getProjectNoticeByMenu(BigInt(projectId), pageIndex, ITEM_COUNT.LIST_SM, value),
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });

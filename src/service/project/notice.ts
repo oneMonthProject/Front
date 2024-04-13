@@ -22,7 +22,7 @@ export async function createProjectTaskNotice(noticeCreateForm: NoticeCreateForm
  * @param noticeMenu
  */
 export async function getProjectNoticeByMenu(
-    projectId: DataId,
+    projectId: bigint,
     pageIndex: number,
     itemCount: number,
     noticeMenu: ProjectNoticeMenuKey

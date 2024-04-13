@@ -45,7 +45,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
   });
 
   const { mutate: changeRecruitmentStatus } = useMutation({
-    mutationFn: () => changeRecruitmentStatusAPI(postId),
+    mutationFn: () => changeRecruitmentStatusAPI(BigInt(postId)),
     onSuccess: (data) => {
       const { message, result } = data;
       if (isEqual(result, "success")) {

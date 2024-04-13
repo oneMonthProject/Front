@@ -19,14 +19,14 @@ const PostDetail = () => {
 
   const { board, project } = data.data;
 
-  return (
-    <div className="p-5 mobile:p-1 m-auto">
-      <TitleSection boardInfo={board} />
-      <InfoSection projectInfo={project} contact={board.contact} boardPositions={board.boardPositions} />
-      <BodySection content={board.content} />
-      <ButtonSection projectId={project.projectId} boardInfo={board} />
-    </div>
-  );
+    return (
+        <div className="p-5 mobile:p-1 m-auto">
+            <TitleSection boardInfo={board}/>
+            <InfoSection projectInfo={project} contact={board.contact} boardPositions={board.boardPositions}/>
+            <BodySection content={board.content}/>
+            <ButtonSection projectId={project.projectId as bigint} boardInfo={board}/>
+        </div>
+    );
 };
 
 export default PostDetail;
