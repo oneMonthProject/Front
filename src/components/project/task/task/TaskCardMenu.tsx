@@ -3,28 +3,42 @@ import React, {Fragment} from 'react';
 import {Menu, Transition} from "@headlessui/react";
 import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
 import {classNames} from "@/utils/common";
-
-interface TaskCardMenuProps {
-    onEditClickHandler: () => void;
-    onDeleteClickHandler: () => void;
-    taskId: bigint;
-}
-
-function TaskCardMenu({taskId, onEditClickHandler, onDeleteClickHandler}: TaskCardMenuProps) {
+import {TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
+import {useSetRecoilState} from "recoil";
+import {taskModalState} from "@/store/project/task/TaskStateStore";
+import {TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
+import {deleteTask} from "@/service/project/task";
+import useDeleteTask from "@/hooks/useDeleteTask";
 
 
-    const taskMenus = [
-        {
-            name: '수정',
-            value: taskId,
-            onClickHandler: onEditClickHandler
-        },
-        {
-            name: '삭제',
-            value: taskId,
-            onClickHandler: onDeleteClickHandler
+function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
+    const {content:title, workId, progressStatus} = taskItem;
+    const {deleteTask, isDeleting} = useDeleteTask();
+    const setTaskModalForm = useSetRecoilState(taskModalState);
+
+    function onClickUpdateHandler() {
+        const updateForm: TaskModifyForm = {
+            ...taskItem,
+            title,
+            type: 'modify',
+            progressStatusCode: null
+        };
+
+        setTaskModalForm({isOpen:true, form:updateForm});
+    }
+
+    /**
+     * 업무 삭제 click
+     */
+    function onClickDeleteCardHandler() {
+        const confirmContent = progressStatus === TS.EXPIRED.name || progressStatus === TS.FINISH.name
+            ? "완료 및 만료된 업무 삭제시 업무 완료/만료 알림도 함께 삭제됩니다. \r\n 업무를 삭제하시겠습니까?"
+            : "업무를 삭제하시겠습니까?"
+        if (confirm(confirmContent)) {
+            deleteTask(workId);
         }
-    ]
+    }
+
 
     return (
         <Menu as="div" className="relative flex-shrink-0 text-center">
@@ -47,27 +61,40 @@ function TaskCardMenu({taskId, onEditClickHandler, onDeleteClickHandler}: TaskCa
                 <Menu.Items
                     className="absolute right-2 z-10 mt-1 tablet:min-w-[60px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1 ">
-                        {
-                            taskMenus.map(v =>
-                                <Menu.Item key={v.name}>
-                                    {({active}) => (
-                                            <a
-                                                href="javascript;"
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    v.onClickHandler!();
-                                                }}
-                                                className={classNames(
-                                                    active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                                    'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
-                                                )}
-                                            >
-                                                {v.name}
-                                            </a>
+                        <Menu.Item key='modify'>
+                            {({active}) => (
+                                <a
+                                    href="javascript;"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onClickUpdateHandler();
+                                    }}
+                                    className={classNames(
+                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                        'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
                                     )}
-                                </Menu.Item>
-                            )
-                        }
+                                >
+                                    수정
+                                </a>
+                            )}
+                        </Menu.Item>
+                        <Menu.Item key='delete'>
+                            {({active}) => (
+                                <a
+                                    href="javascript;"
+                                    onClick={(e) => {
+                                        e.preventDefault();
+                                        onClickDeleteCardHandler();
+                                    }}
+                                    className={classNames(
+                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                        'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
+                                    )}
+                                >
+                                    삭제
+                                </a>
+                            )}
+                        </Menu.Item>
                     </div>
                 </Menu.Items>
             </Transition>

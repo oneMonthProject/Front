@@ -2,10 +2,11 @@
 
 import React from 'react';
 import Button from "@/components/ui/Button";
-import {TaskModalForm, taskModalFormState} from "@/store/project/task/TaskStateStore";
+import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {useSetRecoilState} from "recoil";
-import {TaskItem} from "@/utils/type";
+import {TaskAddForm} from "@/app/project/@task/_utils/type";
+import {TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
 
 type TaskAddButtonProps = {
     milestoneId: string | bigint;
@@ -13,22 +14,25 @@ type TaskAddButtonProps = {
 }
 
 function TaskAddButton({milestoneId, projectId}:TaskAddButtonProps) {
-    const setTaskFormState = useSetRecoilState(taskModalFormState);
+    const setTaskFormState = useSetRecoilState(taskModalState);
 
     function onClickTaskAddButtonHandler() {
-        const newTaskItem: TaskItem = {
+        const form: TaskAddForm = {
+            title:'업무 추가',
+            type:'add',
             workId: 0n,
-            projectId,
-            milestoneId,
+            projectId: BigInt(projectId),
+            milestoneId: BigInt(milestoneId),
             assignedUser: null,
             lastModifiedMemberNickname: '',
             content: '',
             contentDetail: '',
             startDate: '',
             endDate: '',
-            progressStatus: ''
+            progressStatus: TS.DEFAULT.name
         }
-        setTaskFormState(new TaskModalForm('add', newTaskItem));
+
+        setTaskFormState({isOpen:true, form});
     }
 
     return (

@@ -1,8 +1,7 @@
 import {request} from "@/service/project/request";
-import {PageResponseBody, ResponseBody, TaskItem} from "@/utils/type";
-import {TaskModalForm} from "@/store/project/task/TaskStateStore";
-import {HTTP_METHOD} from "next/dist/server/web/http";
+import {PageResponseBody} from "@/utils/type";
 import {TasksReqParam} from "@/hooks/useTasks";
+import {TaskItem} from "@/app/project/@task/_utils/type";
 
 /**
  * 업무 목록 조회
@@ -26,28 +25,33 @@ export async function getTaskList(tasksReqParam: TasksReqParam): Promise<PageRes
 }
 
 /**
- * 업무 생성/수정
+ * 업무 생성
  * @param task
  */
-export async function upsertTask(task: TaskModalForm) {
-    let method: HTTP_METHOD;
-
+export async function createTask(task: TaskItem) {
     if (!task.assignedUser?.projectMemberId) throw Error('업무 담당자를 선택해 주세요');
     if (!task.content) throw Error('업무 제목을 입력해주세요');
     if (!task.startDate) throw Error('시작 날짜를 입력해주세요');
     if (!task.endDate) throw Error('시작 날짜를 입력해주세요');
     if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
 
-    if (task.type === 'add') {
-        method = 'POST';
-    } else if (task.type === 'modify') {
-        method = 'PATCH';
-        if (!task.progressStatus) throw Error('업무 진행상태를 입력해주세요');
-    } else {
-        throw Error('Unknown TaskModalForm Type');
-    }
+    return await request('POST', '/api/project/task', {task});
 
-    return await request(method, '/api/project/task', {task});
+}
+
+/**
+ * 업무 수정
+ * @param task
+ */
+export async function updateTask(task: TaskItem) {
+    if (!task.assignedUser?.projectMemberId) throw Error('업무 담당자를 선택해 주세요');
+    if (!task.content) throw Error('업무 제목을 입력해주세요');
+    if (!task.startDate) throw Error('시작 날짜를 입력해주세요');
+    if (!task.endDate) throw Error('시작 날짜를 입력해주세요');
+    if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
+    if (!task.progressStatus) throw Error('업무 진행상태를 입력해주세요');
+
+    return await request('PATCH', '/api/project/task', {task});
 }
 
 

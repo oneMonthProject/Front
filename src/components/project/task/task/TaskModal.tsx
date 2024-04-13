@@ -2,19 +2,21 @@
 import React, {useEffect, useState} from 'react';
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import Modal from "@/components/ui/Modal";
-import {taskModalFormState, taskModalStateSelector} from "@/store/project/task/TaskStateStore";
+import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {createPortal} from "react-dom";
 import TaskModalContent from './TaskModalContent';
-import useUpsertTask from "@/hooks/useUpsertTask";
+import useUpdateTask from "@/hooks/useUpdateTask";
+import useCreateTask from "@/hooks/useCreateTask";
 
 
 function TaskModal() {
-    const {isOpen, title} = useRecoilValue(taskModalStateSelector);
-    const [portalElement, setPortalElement] = useState<Element | null>(null);
-    const {upsertTask, isUpdating} = useUpsertTask();
+    const {isOpen, form} = useRecoilValue(taskModalState);
+    const resetCurrentForm = useResetRecoilState(taskModalState);
+    const {updateTask, isUpdating} = useUpdateTask();
+    const {createTask, isCreating} = useCreateTask();
+    const isPending = isUpdating || isCreating;
 
-    const resetCurrentForm = useResetRecoilState(taskModalFormState);
-    const currentForm = useRecoilValue(taskModalFormState);
+    const [portalElement, setPortalElement] = useState<Element | null>(null);
 
 
     useEffect(() => {
@@ -31,22 +33,26 @@ function TaskModal() {
     }, [isOpen]);
 
     function onClickConfirmHandler(){
-        upsertTask(currentForm!);
+        if(form?.type === 'add'){
+            createTask(form);
+        }else{
+            updateTask(form!);
+        }
     }
 
     return (
         <>
             {
-                isOpen && portalElement
+                isOpen && form && portalElement
                     ? createPortal((
                         <Modal
                             isOpen={isOpen}
                             close={() => resetCurrentForm()}
-                            title={title}
+                            title={form.title}
                             onClickConfirmHandler={onClickConfirmHandler}
-                            isUpdating={isUpdating}
+                            isUpdating={isPending}
                         >
-                            {currentForm !== null && <TaskModalContent/>}
+                            <TaskModalContent form={form}/>
                         </Modal>
                     ), portalElement)
                     : null
