@@ -6,16 +6,12 @@ import {ProjectPost} from "@/utils/type";
 import {format} from "date-fns";
 import Link from "next/link";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
-import {useSetRecoilState} from "recoil";
-import {bigIntToString} from "@/utils/common";
-import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
 interface ProjectCardProps {
     projectPost: ProjectPost;
 }
 
 const ProjectCard = ({projectPost}: ProjectCardProps) => {
-    const setProjectIdState = useSetRecoilState(projectIdState);
     const {
         name,
         trustGrade,
@@ -100,12 +96,7 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
                     className='mobile:py-1 tablet:py-1.5 mobile:px-3 tablet:px-3.5 mobile:text-sm tablet:text-base text-white rounded-full font-semibold shadow-sm bg-primary'
                     aria-label={`${name} 페이지로 이동`}
                 >
-                    <a onClick={(e) => {
-                        e.preventDefault();
-                        setProjectIdState(bigIntToString(projectId))
-                    }}>
-                        프로젝트로 이동
-                    </a>
+                    프로젝트로 이동
                 </Link>
             </div>
         </article>

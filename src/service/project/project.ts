@@ -7,8 +7,7 @@ import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
  * 프로젝트 목록 조회
  */
 export async function getMyProjectList(pageIndex: number, itemCount: number) {
-    return await request('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`
-    );
+    return await request('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
 
 

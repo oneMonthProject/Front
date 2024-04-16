@@ -1,5 +1,5 @@
 'use client';
-import React, {Suspense} from 'react';
+import React from 'react';
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {useRecoilValue} from "recoil";
 import {PROJECT_MENU as PM} from "@/app/project/_utils/constant";
@@ -35,9 +35,9 @@ function ProjectNavTabContents({slots: {task, crews, notice, setting}}: ProjectN
     }
 
     return (
-        <Suspense>
+        <>
             {contents}
-        </Suspense>
+        </>
     );
 }
 

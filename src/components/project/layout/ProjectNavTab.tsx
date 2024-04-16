@@ -12,8 +12,7 @@ function classNames(...classes: string[]) {
 }
 
 
-export default function ProjectNavTab() {
-    const projectId = useRecoilValue(projectIdState);
+export default function ProjectNavTab({projectId}:{projectId:string}) {
     const [activeTabName, setActiveTabName] = useRecoilState(projectActiveNavState);
 
 

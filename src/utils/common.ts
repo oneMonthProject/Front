@@ -310,6 +310,6 @@ export function bigIntToString(data: bigint | string){
  * @param data
  */
 export function numStrToBigInt(data: string) {
-    return _.isNumber(Number(data)) ? BigInt(data) : data;
+    return BigInt(data);
 }
 

@@ -2,14 +2,15 @@
 
 import React from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
-import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
 import {useRecoilValueLoadable} from "recoil";
-import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
+import {projectInitSelector} from "@/store/project/ProjectInfoStateStore";
+import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
 
-function ProjectInfo() {
-    const {state, contents} = useRecoilValueLoadable(projectInfoState);
+function ProjectInfo({projectId}: { projectId: string }) {
+    const {state, contents} = useRecoilValueLoadable(projectInitSelector(projectId));
 
-    if(state === 'loading') return <ProjectInfoSkeleton/>;
+    if (state == 'loading') return <ProjectInfoSkeleton/>;
+
 
     const {name, subject, trustGrade, startDate, endDate} = contents!;
 
