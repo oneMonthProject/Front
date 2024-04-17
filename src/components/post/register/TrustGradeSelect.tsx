@@ -1,8 +1,13 @@
+'use client';
+
 import Select from "@/components/ui/Select"
 import {getTrustGradeListByUser} from "@/service/user/user";
 import {ResponseBody, SelectItem, TrustGradeItem} from "@/utils/type";
 import {useQuery} from "@tanstack/react-query";
 import {TrustGradeIdType} from "@/app/project/@setting/_utils/type";
+import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
+import React from "react";
+import useGradeListByUser from "@/hooks/useGradeListByUser";
 
 interface TrustGradeSelectProps {
     trustGrade: SelectItem<string, TrustGradeIdType>;
@@ -11,20 +16,21 @@ interface TrustGradeSelectProps {
 
 
 const TrustGradeSelect = ({trustGrade, setTrustGrade}: TrustGradeSelectProps) => {
-    const {data} = useQuery<Promise<ResponseBody<TrustGradeItem[]>>, Error, ResponseBody<TrustGradeItem[]>>({
-        queryKey: ['trustGradeListByUser'],
-        queryFn: () => getTrustGradeListByUser()
-    });
-    const {data: trustGradeList} = data!;
+    const {gradeList, isFetching} = useGradeListByUser(trustGrade);
 
-    const selectItems: SelectItem<string, TrustGradeIdType>[] = [{name: '신뢰등급 선택', value: null}];
-    trustGradeList.forEach(
-        ({trustGradeId, trustGradeName}) => {
-            selectItems.push(({value: trustGradeId, name: trustGradeName}));
-        }
-    );
+    if(isFetching) return <SelectSkeleton label='프로젝트 신뢰등급' placeholder='신뢰등급 선택'/>
 
-    return <Select value={trustGrade} setValue={setTrustGrade} items={selectItems}
+    const selectItems: SelectItem<string, TrustGradeIdType>[] =
+        gradeList.map(({trustGradeId, trustGradeName}) =>
+            ({name: trustGradeName, value: trustGradeId}))
+        || [];
+
+    selectItems.unshift({name: '신뢰등급 선택', value: null});
+
+    const selected = selectItems.find(({name, value}) => value === trustGrade.value) || {name: '신뢰등급 선택', value: null};
+
+
+    return <Select value={selected} setValue={setTrustGrade} items={selectItems}
                    label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요."/>
 }
 

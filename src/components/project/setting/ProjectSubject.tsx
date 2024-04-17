@@ -12,8 +12,8 @@ function ProjectSubject() {
                placeholder="주제를 입력해주세요."
                value={subject}
                onChange={(e) => {
-                   const subject = e.target.value as string;
-                   setSubject({subject})
+                   const newSubject = e.target.value as string;
+                   setSubject({subject:newSubject})
                }}
         />
     );

@@ -1,65 +1,54 @@
 'use client';
 import React from "react";
 import Button from "@/components/ui/Button";
-import {numStrToBigInt, throwErrorIfInvalid} from "@/utils/common";
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
+import {bigIntToString} from "@/utils/common";
+import {useRecoilRefresher_UNSTABLE, useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 import {endProject as endProjectAPI, updateProjectInfo as updateProjectInfoAPI} from "@/service/project/project";
 import {useRouter} from "next/navigation";
 import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
-import {projectSettingFormState} from "@/store/project/setting/ProjectSettingFormStateStore";
+import {projectSettingFormFields, projectSettingFormInit} from "@/store/project/setting/ProjectSettingFormStateStore";
 import ProjectDate from "@/components/project/setting/ProjectDate";
 import ProjectSubject from "@/components/project/setting/ProjectSubject";
 import ProjectName from "@/components/project/setting/ProjectName";
 import ProjectTrustGrade from "@/components/project/setting/ProjectTrustGrade";
-import {projectIdState, projectInfoState, projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {projectInitSelector, projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {ResponseBody} from "@/utils/type";
 
 
 export default function ProjectSettingForm() {
     const setSnackbar = useSetRecoilState(snackbarState);
-    const projectId = useRecoilValue(projectIdState);
-    const {milestoneAuth} = useRecoilValue(projectTaskAuthSelector)!;
-    const formData = useRecoilValue(projectSettingFormState);
-    const revertForm = useResetRecoilState(projectSettingFormState);
-    const invalidateProjectInfo = useResetRecoilState(projectInfoState);
+    const router = useRouter();
+    const authMap = useRecoilValue(projectTaskAuthSelector);
+    const settingForm = useRecoilValue(projectSettingFormFields);
+    const {projectId} = settingForm;
+    const resetForm = useResetRecoilState(projectSettingFormFields);
+    const invalidateProjectInfo = useRecoilRefresher_UNSTABLE(projectInitSelector(bigIntToString(projectId)));
+    const invalidateProjectSettingForm = useRecoilRefresher_UNSTABLE(projectSettingFormInit);
 
 
     // 프로젝트 업데이트
     const updateProjectInfo = async () => {
         if (confirm("프로젝트 정보를 수정하시겠습니까?")) {
 
-            if (!milestoneAuth) {
-                setSnackbar({show: true, type: 'INFO', content: '프로젝트 수정 권한이 없습니다.'});
-                return;
-            }
-
-            const {name: projectName, subject, trustGradeId, startDate, endDate} = formData!;
-            try {
-                throwErrorIfInvalid(!projectName, '프로젝트 이름을 입력해주세요');
-                throwErrorIfInvalid(!subject, '프로젝트 주제를 입력해주세요');
-                throwErrorIfInvalid(!trustGradeId, '프로젝트 신뢰등급을 선택해주세요');
-                throwErrorIfInvalid(!startDate, '시작날짜를 선택해주세요');
-                throwErrorIfInvalid(!endDate, '종료날짜를 선택해주세요');
-            } catch (e: unknown) {
-                setSnackbar({show: true, type: 'ERROR', content: (e as Error).message});
-            }
-
             const projectInfo: ProjectInfoUpdateReq = {
-                projectId: numStrToBigInt(projectId),
-                projectName,
-                subject,
-                trustGradeId: BigInt(trustGradeId!),
-                startDate,
-                endDate
+                ...settingForm,
+                authMap
             }
 
-            const res = await updateProjectInfoAPI(projectInfo);
+            let res: ResponseBody<unknown>;
+            try{
+                res = await updateProjectInfoAPI(projectInfo);
 
-            if (res.result === 'success') {
-                invalidateProjectInfo();
-                setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트 정보를 수정했습니다.'});
-            } else {
-                setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
+                if (res.result === 'success') {
+                    setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트 정보를 수정했습니다.'});
+                    invalidateProjectInfo();
+                    invalidateProjectSettingForm();
+                } else {
+                    setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
+                }
+            }catch (e:unknown) {
+                setSnackbar({show:true, type:'ERROR', content:(e as Error).message});
             }
         }
     }
@@ -67,7 +56,6 @@ export default function ProjectSettingForm() {
     /**
      * 프로젝트 종료
      */
-    const router = useRouter();
     const endProject = async () => {
         if (confirm("프로젝트 종료시, 획득한 신뢰점수를 제외한 프로젝트와 관련된 모든 정보가 삭제됩니다. 반드시 멤버들과 상의후 종료해주세요. \r\n\r\n 종료하시겠습니까?")) {
             const res = await endProjectAPI(projectId);
@@ -99,11 +87,13 @@ export default function ProjectSettingForm() {
                     <Button
                         theme="primary-hollow"
                         size="md"
-                        onClickHandler={() => revertForm()}
+                        onClickHandler={() => resetForm()}
                     >
                         초기화
                     </Button>
-                    <Button size="md" onClickHandler={updateProjectInfo}>저장</Button>
+                    <Button size="md" onClickHandler={updateProjectInfo}>
+                        저장
+                    </Button>
                 </div>
             </div>
             <div className="space-y-3">
