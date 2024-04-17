@@ -79,6 +79,9 @@ export interface PositionItem {
     positionName: string;
 }
 
+export type PositionId = PositionItem['positionId'];
+export type PositionName = PositionItem['positionName'];
+
 export interface TechStackCategory {
     techStackCategoryId: bigint;
     techStackCategoryName: string;
@@ -88,6 +91,9 @@ export interface TechStackItem {
     techStackId: bigint;
     techStackName: string;
 }
+
+export type TechStackId = TechStackItem['techStackId'];
+export type TechStackName = TechStackItem['techStackName'];
 
 export interface TechStackWithCategory extends TechStackItem {
     categories: string[];

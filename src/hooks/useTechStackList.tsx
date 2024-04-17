@@ -1,13 +1,13 @@
 'use client';
-import { useSuspenseQuery } from "@tanstack/react-query";
-import { getTechStackList as getTechStackListAPI } from "@/service/setting";
-import { TechStackItem, ResponseBody } from "@/utils/type";
+import {useQuery} from "@tanstack/react-query";
+import {getTechStackList as getTechStackListAPI} from "@/service/setting";
+import {ResponseBody, TechStackItem} from "@/utils/type";
 
 export function useTechStackList() {
-  const { data } = useSuspenseQuery<ResponseBody<TechStackItem[]>, Error>({
+  const { data, isFetching, isError } = useQuery<Promise<ResponseBody<TechStackItem[]>>, Error, ResponseBody<TechStackItem[]>>({
     queryKey: ['techStacks'],
     queryFn: getTechStackListAPI
   });
 
-  return data.data;
+  return {data:data?.data, isFetching, isError};
 }
