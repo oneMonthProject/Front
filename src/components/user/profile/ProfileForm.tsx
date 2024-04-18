@@ -41,8 +41,8 @@ function ProfileForm() {
         email
     } = useProfileInfo();
 
-    const positions = usePositionList();
-    const techStacks = useTechStackList();
+    const {data: positions} = usePositionList();
+    const {data: techStacks} = useTechStackList();
 
     const [imageSrc, setImageSrc] = useState<string | null>(profileImgSrc || null);
     const [nickname, setNickname] = useState(initNickname);
