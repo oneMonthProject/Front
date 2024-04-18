@@ -1,22 +1,28 @@
-import {useMutation} from "@tanstack/react-query";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {CreatePostForm} from "@/app/register/_utils/type";
 import {createPost as createPostAPI} from "@/service/post/post";
 import {isEqual} from "lodash";
 import {useRouter} from "next/navigation";
-import {useSetRecoilState} from "recoil";
+import {useResetRecoilState, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
+import {createPostStateStore, createProjectStateStore} from "@/store/register/RegisterPostStateStore";
 
 export default function useCreatePost() {
+    const resetPostFields = useResetRecoilState(createPostStateStore);
+    const resetProjectFields = useResetRecoilState(createProjectStateStore);
+    const queryClient = useQueryClient();
     const setSnackbar = useSetRecoilState(snackbarState);
 
     const router = useRouter();
-    const {mutate: createPost} = useMutation({
+    const {mutate: createPost, isPending} = useMutation({
         mutationFn: (createData: CreatePostForm) => createPostAPI(createData),
         onSuccess: (data) => {
             const {message, result} = data;
 
             if (isEqual(result, "success")) {
                 setSnackbar({show: true, type: "SUCCESS", content: message});
+                resetPostFields();
+                resetProjectFields();
                 queryClient.invalidateQueries({queryKey: ['postList']});
                 queryClient.invalidateQueries({queryKey: ['myProjectList']});
                 router.push('/');
@@ -29,5 +35,5 @@ export default function useCreatePost() {
         }
     });
 
-    return {createPost}
+    return {createPost, isCreating:isPending}
 }
