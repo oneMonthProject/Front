@@ -1,19 +1,17 @@
 import React from 'react';
 import TrustGradeSelect from "@/components/post/register/TrustGradeSelect";
-import {useRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilState} from "recoil";
 import {projectFieldSelector} from "@/store/register/RegisterPostStateStore";
-import {TRUST_GRADE as TG} from "@/app/project/@setting/_utils/constant";
-import {TrustGradeIdType as TValue, TrustGradeNameType as TName} from "@/app/project/@setting/_utils/type";
+import {TrustGradeNameType as Name, TrustGradeValueType as Value,} from "@/app/project/@setting/_utils/type";
+import {SelectItem} from "@/utils/type";
 
 function ProjectTrustGrade_Reg() {
     const [{trustGradeId}, setTrustGradeId] = useRecoilState(projectFieldSelector('trustGradeId'));
 
-    const {name, id} = Object.values(TG).find(({id}) => id === trustGradeId)!;
-
     return (
         <TrustGradeSelect
-            trustGrade={{name, value:id}}
-            setTrustGrade={(item:SelectItem<TName, TValue>) => setTrustGradeId(item.value)}
+            trustGradeId={trustGradeId}
+            setTrustGrade={(item:SelectItem<Name, Value>) => setTrustGradeId({trustGradeId: item.value})}
         />
     );
 }

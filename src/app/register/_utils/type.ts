@@ -1,6 +1,6 @@
-import {TrustGradeIdType} from "@/app/project/@setting/_utils/type";
-import {PositionId, TechStackId} from "@/utils/type";
-import {recruitmentEntries} from "@/app/register/_utils/constant";
+import {TrustGradeValueType} from "@/app/project/@setting/_utils/type";
+import {PositionId, ReadOnlyArrayValue, TechStackValueType} from "@/utils/type";
+import {recruitmentCountList} from "@/app/register/_utils/constant";
 
 
 export type CreatePost = {
@@ -12,19 +12,18 @@ export type CreatePost = {
 
 export type CreatePostKey = keyof CreatePost;
 
-type RecruitCount = typeof recruitmentEntries extends IterableIterator<infer T> ? T : never;
-
+type RecruitCount = ReadOnlyArrayValue<typeof recruitmentCountList>;
 export type RecruitCountValue = RecruitCount['value'];
 export type RecruitCountName = RecruitCount['name'];
 
 export type CreateProject = {
     name: string;
     subject: string;
-    trustGradeId: TrustGradeIdType;
+    trustGradeId: TrustGradeValueType;
     crewNumber: RecruitCountValue;
     startDate: string;
     endDate: string;
-    technologyIds: TechStackId[];
+    technologyIds: TechStackValueType[];
 }
 
 export type CreateProjectKey = keyof CreateProject;

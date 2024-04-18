@@ -1,16 +1,15 @@
 import {TRUST_GRADE} from "@/app/project/@setting/_utils/constant";
-import {ProjectTaskAuth} from "@/utils/type";
+import {ProjectTaskAuth, ReadOnlyArrayValue} from "@/utils/type";
 
-export type TrustGradeKey = keyof typeof TRUST_GRADE;
-export type TrustGradeNameType = (typeof TRUST_GRADE)[TrustGradeKey]["name"];
-export type TrustGradeValueType = (typeof TRUST_GRADE)[TrustGradeKey]["value"];
-export type TrustGradeIdType = (typeof TRUST_GRADE)[TrustGradeKey]["id"];
+export type TrustGradeSelectType = ReadOnlyArrayValue<typeof TRUST_GRADE>;
+export type TrustGradeNameType = TrustGradeSelectType['name'];
+export type TrustGradeValueType = TrustGradeSelectType['value'];
 
 export type ProjectInfoForm = {
     projectId: bigint;
     projectName: string;
     subject: string;
-    trustGradeId: TrustGradeIdType
+    trustGradeId: TrustGradeValueType
     startDate: string;
     endDate: string;
 }
@@ -23,7 +22,7 @@ export type ProjectInfoUpdateReq = {
     projectId: bigint;
     projectName: string;
     subject: string;
-    trustGradeId: TrustGradeIdType;
+    trustGradeId: TrustGradeValueType;
     startDate: string;
     endDate: string;
 }

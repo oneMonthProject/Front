@@ -2,7 +2,7 @@ import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/Mil
 import {CREW_STATUS} from "@/utils/constant";
 import {ReactNode} from "react";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
-import {TrustGradeIdType, TrustGradeNameType} from "@/app/project/@setting/_utils/type";
+import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 
 export type DropDownItem = {
     name: string;
@@ -70,8 +70,8 @@ export interface MilestoneInfo {
 }
 
 export interface TrustGradeItem {
-    trustGradeId: TrustGradeIdType;
-    trustGradeName: string;
+    trustGradeId: TrustGradeValueType;
+    trustGradeName: TrustGradeNameType;
 }
 
 export interface PositionItem {
@@ -238,7 +238,7 @@ export type ProjectTaskAuth = {
 
 export interface ProjectInfo extends Project {
     technologyStacks: TechStackItem[];
-    trustGradeId: TrustGradeIdType[];
+    trustGradeId: TrustGradeValueType[];
     technologyIds: bigint[];
 }
 
@@ -332,3 +332,4 @@ export interface UserProjectNotice {
 
 export type DataId = string | bigint;
 
+export type ReadOnlyArrayValue<T> = T extends ReadonlyArray<infer U> ? U : never;

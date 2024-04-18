@@ -1,27 +1,22 @@
-export const TRUST_GRADE = {
-    DEFAULT:{
+export const TRUST_GRADE = [
+    {
         name:'신뢰등급 선택',
-        value:'DEFAULT',
-        id: null
+        value:null
     },
-    FIRST:{
+    {
         name:'1등급',
-        value:'FIRST',
-        id:1
+        value:1n
     },
-    SCND:{
+    {
         name:'2등급',
-        value:'SCND',
-        id:2
+        value:2n,
     },
-    THIRD:{
+    {
         name:'3등급',
-        value:'THIRD',
-        id:3
+        value:3n
     },
-    FOURTH:{
+    {
         name:'4등급',
-        value:'FOURTH',
-        id:4
+        value:4n
     }
-} as const;
+] as const;
