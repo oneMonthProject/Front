@@ -91,8 +91,8 @@ export interface TechStackItem {
     techStackName: string;
 }
 
-export type TechStackId = TechStackItem['techStackId'];
-export type TechStackName = TechStackItem['techStackName'];
+export type TechStackValueType = TechStackItem['techStackId'];
+export type TechStackNameType = TechStackItem['techStackName'];
 
 export interface TechStackWithCategory extends TechStackItem {
     categories: string[];
