@@ -20,7 +20,7 @@ export const postFieldSelector = selectorFamily<Partial<CreatePost>, CreatePostK
     },
     set:(param:CreatePostKey) => ({get, set}, newValue) => {
         const data = get(createPostStateStore);
-        set(createPostStateStore, {...data, [param]:newValue});
+        set(createPostStateStore, {...data, ...newValue});
     }
 })
 
@@ -45,7 +45,7 @@ export const projectFieldSelector = selectorFamily<Partial<CreateProject>, Creat
     },
     set:(param:CreateProjectKey) => ({get, set}, newValue) => {
         const data = get(createProjectStateStore);
-        set(createProjectStateStore, {...data, [param]:newValue});
+        set(createProjectStateStore, {...data, ...newValue});
     }
 })
 

@@ -14,14 +14,14 @@ function ProjectDate_Reg() {
                 label="시작 날짜"
                 placeholder="날짜를 선택해주세요."
                 date={startDate}
-                setDate={(e) => setStartDate({startDate: e.target.value})}
+                setDate={(value) => setStartDate({startDate:value})}
             />
             <CalendarInput
                 id="endDate"
                 label="종료 날짜"
                 placeholder="날짜를 선택해주세요."
                 date={endDate}
-                setDate={(e) => setEndDate({endDate: e.target.value})}
+                setDate={(value) => setEndDate({endDate:value})}
             />
         </>
     );
