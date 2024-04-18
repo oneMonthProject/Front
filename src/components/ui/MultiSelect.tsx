@@ -5,14 +5,14 @@ import {AiOutlineCheck} from "@react-icons/all-files/ai/AiOutlineCheck";
 import {MultiSelectProps, SelectItem} from "@/utils/type";
 import {classNames} from '@/utils/common';
 
-export default function MultiSelect<T extends ReactNode, V extends ReactNode>({
-                                                                                  values,
-                                                                                  setValues,
-                                                                                  items = [],
-                                                                                  label,
-                                                                                  placeholder = "",
-                                                                                  required = false
-                                                                              }: MultiSelectProps<T, V>) {
+export default function MultiSelect<T, V>({
+                                              values,
+                                              setValues,
+                                              items = [],
+                                              label,
+                                              placeholder = "",
+                                              required = false
+                                          }: MultiSelectProps<T, V>) {
 
     const compareItems = (a: SelectItem<T, V>, b: SelectItem<T, V>) => {
         return a.value === b.value;
