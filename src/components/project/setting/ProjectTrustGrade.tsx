@@ -12,7 +12,7 @@ function ProjectTrustGrade() {
 
     return (
         <TrustGradeSelect
-            trustGradeId={trustGradeId}
+            trustGradeId={trustGradeId!}
             setTrustGrade={(item: SelectItem<Name, Value>) => {
                 setTrustGradeId({trustGradeId: item.value});
             }}

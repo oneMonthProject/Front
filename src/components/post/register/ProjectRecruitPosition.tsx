@@ -7,7 +7,7 @@ function ProjectRecruitPosition() {
     const [{positionIds}, setPositionIds] = useRecoilState(postFieldSelector('positionIds'));
 
     return (
-        <MultiPositionSelect positions={positionIds}
+        <MultiPositionSelect positions={positionIds!}
                              setPositions={(item) => setPositionIds({positionIds: item})}/>
     );
 }

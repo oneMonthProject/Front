@@ -14,6 +14,4 @@ export const recruitmentCountList = [
     {value: 10, name: '10명'},
 ] as const;
 
-export const recruitmentEntries = recruitmentCountList.values();
-
 
