@@ -25,7 +25,7 @@ export type SelectItem<T, V> = {
 }
 
 export interface SelectProps<T, V> {
-    items: SelectItem<T, V>[];
+    items: readonly SelectItem<T, V>[];
     value: SelectItem<T, V>;
     setValue: (item: SelectItem<T, V>) => void;
     label?: string;
@@ -35,11 +35,11 @@ export interface SelectProps<T, V> {
 
 
 export type MultiSelectProps<T, V> = {
-    items: SelectItem<T, V>[];
-    values: SelectItem<T,V>[];
-    setValues: (value: SelectItem<T,V>[]) => void;
-    value?: SelectItem<T,V> | null;
-    setValue?: (value: SelectItem<T,V>) => void;
+    items: readonly SelectItem<T, V>[];
+    values: readonly SelectItem<T, V>[];
+    setValues: (value: readonly SelectItem<T, V>[]) => void;
+    value?: SelectItem<T, V> | null;
+    setValue?: (value: SelectItem<T, V>) => void;
     label?: string;
     placeholder?: string;
     required?: boolean;
@@ -331,4 +331,4 @@ export interface UserProjectNotice {
 
 export type DataId = string | bigint;
 
-export type ReadOnlyArrayValue<T> = T extends ReadonlyArray<infer U> ? U : never;
+export type ArrayValue<T> = T extends () => IterableIterator<infer U> ? U : never;

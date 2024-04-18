@@ -4,6 +4,7 @@ import {useRecoilState} from "recoil";
 import {projectFieldSelector} from "@/store/register/RegisterPostStateStore";
 import {recruitmentCountList as rcList} from "@/app/register/_utils/constant";
 import {RecruitCountValue as RCValue, RecruitCountName as RCName} from "@/app/register/_utils/type";
+import {SelectItem} from "@/utils/type";
 
 function ProjectCrewCount() {
 const [{crewNumber}, setCrewNumber] = useRecoilState(projectFieldSelector('crewNumber'));

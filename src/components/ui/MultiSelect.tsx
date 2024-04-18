@@ -62,7 +62,7 @@ export default function MultiSelect<T, V>({
                                         {({selected, active}) => (
                                             <>
                         <span className={classNames(selected ? 'font-bold' : 'font-normal', 'block truncate')}>
-                          {item.name}
+                          {item.name as string}
                         </span>
                                                 {selected ? (
                                                     <span

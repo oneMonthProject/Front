@@ -19,7 +19,7 @@ const MultiPositionSelect = ({positions, setPositions, required}: MultiPositionS
         ({positionId, positionName}) => ({name: positionName, value: positionId})
     );
 
-    const selectedPositions: SelectItem<string, string>[] = positionList.filter(
+    const selectedPositions: SelectItem<string, bigint>[] = positionList.filter(
         ({name, value}) => positions.includes(value)
     );
 

@@ -1,17 +1,17 @@
-import {Fragment, ReactNode} from 'react'
+import {Fragment} from 'react'
 import {Listbox, Transition} from '@headlessui/react'
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import {SelectItem, SelectProps} from "@/utils/type";
 import {classNames} from '@/utils/common';
 
-export default function Select<T extends ReactNode, V extends ReactNode>({
-                                                                             value,
-                                                                             setValue,
-                                                                             items = [],
-                                                                             label,
-                                                                             placeholder = "",
-                                                                             required = false
-                                                                         }: SelectProps<T, V>) {
+export default function Select<T, V>({
+                                         value,
+                                         setValue,
+                                         items = [],
+                                         label,
+                                         placeholder = "",
+                                         required = false
+                                     }: SelectProps<T, V>) {
 
     const compareItems = (a: SelectItem<T, V>, b: SelectItem<T, V>) => {
         if (a && b) {
@@ -33,7 +33,7 @@ export default function Select<T extends ReactNode, V extends ReactNode>({
                         <Listbox.Button
                             className="mobile:text-sm w-full cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
               <span className={classNames(value ? '' : 'text-greyUnselect', 'block truncate')}>
-                {value ? value.name : placeholder}
+                {value ? value.name as string : placeholder}
               </span>
                             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
                 <AiFillCaretDown className="w-5 text-gray-400" aria-hidden="true"/>
@@ -62,7 +62,7 @@ export default function Select<T extends ReactNode, V extends ReactNode>({
                                         {({selected, active}) => (
                                             <>
                         <span className={classNames(selected ? 'font-bold' : 'font-normal', 'block truncate')}>
-                          {item.name}
+                          {item.name as string}
                         </span>
                                                 {selected ? (
                                                     <span
