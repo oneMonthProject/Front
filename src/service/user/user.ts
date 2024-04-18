@@ -3,27 +3,27 @@ import {request} from "@/service/project/request";
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
 export interface updateUserInfo {
-  nickname: string;
-  positionId: bigint;
-  techStackIds: bigint[];
-  intro: string;
+    nickname: string;
+    positionId: bigint;
+    techStackIds: bigint[];
+    intro: string;
 }
 
 export const checkNickname = async (nickname: string) => {
-  const response = await fetch(
-    `${publicURL}/api/user/nickname?nickname=${nickname}`
-  );
-  return response.json();
+    const response = await fetch(
+        `${publicURL}/api/user/nickname?nickname=${nickname}`
+    );
+    return response.json();
 };
 
 export const getSimpleUser = async () => {
-  const response = await fetch(`${publicURL}/api/user/simple`);
-  return response.json();
+    const response = await fetch(`${publicURL}/api/user/simple`);
+    return response.json();
 };
 
 export const getUserIfo = async () => {
-  const response = await fetch(`${publicURL}/api/user`);
-  return response.json();
+    const response = await fetch(`${publicURL}/api/user`);
+    return response.json();
 };
 
 export const updateUser = async (
