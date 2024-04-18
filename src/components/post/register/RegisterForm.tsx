@@ -18,7 +18,7 @@ import {useRouter} from "next/navigation";
 
 function RegisterForm() {
     const router = useRouter();
-    const {createPost} = useCreatePost();
+    const {createPost, isCreating} = useCreatePost();
     const registerForm = useRecoilValue(registerPostFormState);
 
     return (
@@ -50,7 +50,10 @@ function RegisterForm() {
                 >
                     취소
                 </Button>
-                <Button onClickHandler={() => createPost(registerForm)}>
+                <Button
+                    disabled={isCreating}
+                    onClickHandler={() => createPost(registerForm)}
+                >
                     등록
                 </Button>
             </div>
