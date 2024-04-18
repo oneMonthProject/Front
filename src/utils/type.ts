@@ -1,6 +1,5 @@
 import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/MilestoneStateStore";
 import {CREW_STATUS} from "@/utils/constant";
-import {ReactNode} from "react";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 
@@ -20,12 +19,12 @@ export interface BadgeProps {
     text?: string;
 }
 
-export type SelectItem<T extends ReactNode, V extends ReactNode> = {
+export type SelectItem<T, V> = {
     name: T;
     value: V;
 }
 
-export interface SelectProps<T extends ReactNode, V extends ReactNode> {
+export interface SelectProps<T, V> {
     items: SelectItem<T, V>[];
     value: SelectItem<T, V>;
     setValue: (item: SelectItem<T, V>) => void;
@@ -35,7 +34,7 @@ export interface SelectProps<T extends ReactNode, V extends ReactNode> {
 }
 
 
-export type MultiSelectProps<T extends ReactNode, V extends ReactNode> = {
+export type MultiSelectProps<T, V> = {
     items: SelectItem<T, V>[];
     values: SelectItem<T,V>[];
     setValues: (value: SelectItem<T,V>[]) => void;
