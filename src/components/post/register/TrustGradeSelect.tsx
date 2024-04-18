@@ -6,7 +6,6 @@ import {TrustGradeNameType as Name, TrustGradeValueType as Value} from "@/app/pr
 import React from "react";
 import useGradeListByUser from "@/hooks/useGradeListByUser";
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
-import {bigIntToString} from "@/utils/common";
 
 type TrustGradeSelectProps = {
     trustGradeId: Value;
@@ -25,7 +24,7 @@ const TrustGradeSelect = ({trustGradeId, setTrustGrade}: TrustGradeSelectProps) 
 
     selectItems.unshift({name: '신뢰등급 선택', value: null});
 
-    const selected = selectItems.find(({value}) => bigIntToString(value) === bigIntToString(trustGradeId));
+    const selected = selectItems.find(({value}) => value === trustGradeId)!;
 
     return <Select value={selected} setValue={setTrustGrade} items={selectItems}
                    label="프로젝트 신뢰등급" placeholder="등급을 선택해주세요."/>

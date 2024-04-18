@@ -5,8 +5,8 @@ import {SelectItem, TechStackNameType as Name, TechStackValueType as Value} from
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
 
 interface TechStackSelectProps {
-    techStacks: Value[];
-    setTechStacks: (item: SelectItem<Name, Value>[]) => void;
+    techStacks: readonly Value[];
+    setTechStacks: (item: readonly Value[]) => void;
     label?: string;
     placeholder?: string;
     required?: boolean;
@@ -28,7 +28,10 @@ const TechStackSelect = ({techStacks, setTechStacks, label, placeholder, require
     return (
         <MultiSelect
             values={selectedTechStacks}
-            setValues={(item: SelectItem<Name, Value>[]) => setTechStacks(item.map(({value}) => value))}
+            setValues={
+                (item: readonly SelectItem<Name, Value>[]) =>
+                    setTechStacks(item.map(({value}) => value))
+            }
             items={techStackList}
             label={label}
             placeholder={placeholder}

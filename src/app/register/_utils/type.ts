@@ -1,5 +1,5 @@
 import {TrustGradeValueType} from "@/app/project/@setting/_utils/type";
-import {PositionId, ReadOnlyArrayValue, TechStackValueType} from "@/utils/type";
+import {ArrayValue, PositionId, TechStackValueType} from "@/utils/type";
 import {recruitmentCountList} from "@/app/register/_utils/constant";
 
 
@@ -12,7 +12,7 @@ export type CreatePost = {
 
 export type CreatePostKey = keyof CreatePost;
 
-type RecruitCount = ReadOnlyArrayValue<typeof recruitmentCountList>;
+type RecruitCount = ArrayValue<typeof recruitmentCountList.values>;
 export type RecruitCountValue = RecruitCount['value'];
 export type RecruitCountName = RecruitCount['name'];
 
@@ -23,7 +23,7 @@ export type CreateProject = {
     crewNumber: RecruitCountValue;
     startDate: string;
     endDate: string;
-    technologyIds: TechStackValueType[];
+    technologyIds: readonly TechStackValueType[];
 }
 
 export type CreateProjectKey = keyof CreateProject;

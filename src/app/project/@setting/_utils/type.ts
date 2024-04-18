@@ -1,7 +1,7 @@
 import {TRUST_GRADE} from "@/app/project/@setting/_utils/constant";
-import {ProjectTaskAuth, ReadOnlyArrayValue} from "@/utils/type";
+import {ArrayValue, ProjectTaskAuth} from "@/utils/type";
 
-export type TrustGradeSelectType = ReadOnlyArrayValue<typeof TRUST_GRADE>;
+export type TrustGradeSelectType = ArrayValue<typeof TRUST_GRADE.values>;
 export type TrustGradeNameType = TrustGradeSelectType['name'];
 export type TrustGradeValueType = TrustGradeSelectType['value'];
 
