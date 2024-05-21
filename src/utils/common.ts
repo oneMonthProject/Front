@@ -1,15 +1,6 @@
-import {
-    MilestoneInfo,
-    PositionItem,
-    ProjectPost,
-    SelectItem,
-    TechStackItem,
-    TrustGradeNameType,
-    TrustGradeValueType
-} from "./type";
+import {MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
 import {format} from "date-fns";
 import _, {camelCase} from "lodash";
-import {TRUST_GRADE} from "@/utils/constant";
 import {ReactNode} from "react";
 
 
@@ -141,10 +132,10 @@ export function getPositionSelectItems(items: PositionItem[]) {
     return [];
 }
 
-export function getTechStackSelectItems(items: TechStackItem[]):SelectItem<string, string>[] {
+export function getTechStackSelectItems(items: TechStackItem[]): SelectItem<string, string>[] {
     if (items.length > 0) {
         return items.map(
-            ({techStackId,techStackName}) =>
+            ({techStackId, techStackName}) =>
                 ({value: bigIntToString(techStackId), name: techStackName})
         );
     }
@@ -286,22 +277,10 @@ export function checkExpiration(endDate: string) {
 }
 
 /**
- * 신뢰등급 selectItem 생성
- * @param hint
- */
-export function createTrustGradeSelectItem(hint: TrustGradeNameType | TrustGradeValueType): SelectItem<string, string> {
-    if ((hint as string).includes('등급')) {
-        return {value: TRUST_GRADE[hint] as string, name: hint as string};
-    } else {
-        return {value: hint as string, name: `${hint}등급`};
-    }
-}
-
-/**
  * bigint 데이터 string으로 변환
  * @param data
  */
-export function bigIntToString(data: bigint | string){
+export function bigIntToString(data: bigint | string) {
     return typeof data === "string" ? data : Number(data).toString();
 }
 
@@ -313,3 +292,15 @@ export function numStrToBigInt(data: string) {
     return BigInt(data);
 }
 
+export function throwErrorIfInvalid(flag: boolean, message: string) {
+    if (flag) throw Error(message);
+}
+
+export function changeImageUrl(imgSrc: string | null = null) {
+    const imgUrl = imgSrc
+        ? imgSrc.replace("projectmatch-user-image.s3.ap-northeast-2.amazonaws.com"
+            , "projectmatch-bucket.s3.ap-northeast-2.amazonaws.com")
+        : imgSrc;
+
+    return imgUrl;
+}

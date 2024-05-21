@@ -1,61 +1,48 @@
 'use client';
 import React, {ChangeEvent, useRef, useState} from "react";
-import MultiSelect from "@/components/ui/MultiSelect";
-import Select from "@/components/ui/Select";
 import Avatar from "@/components/ui/Avatar";
 import Button from "@/components/ui/Button";
 import Input from "@/components/ui/form/Input";
 import NicknameField from "@/components/ui/form/NickNameField";
 import TextArea from "@/components/ui/form/TextArea";
 import FormButton from "@/components/ui/form/FormButton";
-import {SelectItem} from "@/utils/type";
-import {
-    bigIntToString,
-    getPositionSelectItems,
-    getTechStackSelectItems,
-    isValidNickname,
-    numStrToBigInt
-} from "@/utils/common";
-import {useProfileInfo} from "@/hooks/useProfileInfo";
+import {PositionId, ProfileInfo, TechStackValueType} from "@/utils/type";
+import {changeImageUrl, isValidNickname} from "@/utils/common";
 import {
     deleteProfileImage as deleteProfileImageAPI,
     updateUser as updateUserAPI,
     updateUserInfo
 } from "@/service/user/user";
 import {useSetRecoilState} from "recoil";
-import {usePositionList} from "@/hooks/usePositionList";
-import {useTechStackList} from "@/hooks/useTechStackList";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {isEqual} from "lodash";
 import {snackbarState} from "@/store/CommonStateStore";
+import PositionSelect from "@/components/user/signup/PositionSelect";
+import TechStackSelect from "@/components/ui/form/TechStackSelect";
 
-function ProfileForm() {
-    const queryClient = useQueryClient();
-
+function ProfileForm({profileInfo}: { profileInfo: ProfileInfo }) {
     const {
-        position: {positionId: value, positionName: name},
+        position,
         profileImgSrc,
         nickname: initNickname,
         techStacks: initTechStack,
         intro: initIntroduction,
         email
-    } = useProfileInfo();
+    } = profileInfo;
 
-    const {data: positions} = usePositionList();
-    const {data: techStacks} = useTechStackList();
-
-    const [imageSrc, setImageSrc] = useState<string | null>(profileImgSrc || null);
+    const [imageSrc, setImageSrc] = useState<string | null>(() => changeImageUrl(profileImgSrc));
     const [nickname, setNickname] = useState(initNickname);
-    const [position, setPosition] = useState<SelectItem<string, string>>(() => {
-        return {name, value: bigIntToString(value)}
-    });
-    const [techStack, setTechStack] = useState<SelectItem<string, string>[]>(getTechStackSelectItems(initTechStack));
-    const [selfIntroduction, setSelfIntroduction] = useState(initIntroduction);
-
+    const [positionId, setPositionId] = useState<PositionId | null>(() => position.positionId);
+    const [techStackIds, setTechStackIds] = useState<readonly TechStackValueType[]>(
+        () => initTechStack.map(item => item.techStackId)
+    );
+    const [selfIntroduction, setSelfIntroduction] = useState(() => initIntroduction);
     const fileRef = useRef<HTMLInputElement>(null);
     const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const [isCheckedNickname, setIsCheckedNickname] = useState(true);
     const setSnackbar = useSetRecoilState(snackbarState);
+
+    const queryClient = useQueryClient();
 
     const {mutate: updateUser} = useMutation({
         mutationFn: (updateData: updateUserInfo) => updateUserAPI(updateData, selectedImage),
@@ -66,13 +53,15 @@ function ProfileForm() {
                 queryClient.invalidateQueries({queryKey: ['profileInfo']});
                 queryClient.invalidateQueries({queryKey: ['simpleUserInfo']});
             } else {
-                setSnackbar({show: true, type: "ERROR", content: message});
+                setSnackbar({show: true, type: "ERROR", content: '프로세스 수행중 에러가 발생했습니다.'});
             }
         },
         onError: (err) => {
             console.log("err", err);
+            setSnackbar({show:true, type:'ERROR', content: '프로세스 수행중 에러가 발생했습니다.'});
         }
     });
+
     const {mutate: deleteProfileImage} = useMutation({
         mutationFn: deleteProfileImageAPI,
         onSuccess: (data) => {
@@ -106,7 +95,7 @@ function ProfileForm() {
             return false;
         }
 
-        if (techStack.length === 0) {
+        if (techStackIds.length === 0) {
             setSnackbar({show: true, type: "ERROR", content: "관심 스택을 선택해주세요."});
             return false;
         }
@@ -116,10 +105,7 @@ function ProfileForm() {
 
     const updateUserInfo = () => {
         if (position) {
-            const positionId = numStrToBigInt(position.value);
-            const techStackIds = techStack.map(stack => numStrToBigInt(stack.value));
             const updateData = {nickname, positionId, techStackIds, intro: selfIntroduction} as updateUserInfo;
-
             updateUser(updateData);
         }
     }
@@ -129,7 +115,7 @@ function ProfileForm() {
             return;
         }
 
-        if (profileImgSrc !== null && imageSrc === null) {
+        if (profileImgSrc && imageSrc === null) {
             // 기존 프로필 이미지 삭제 시, s3 에서 삭제 후 사용자 정보 업데이트
             deleteProfileImage();
         } else {
@@ -142,7 +128,6 @@ function ProfileForm() {
 
         if (files && files.length > 0) {
             const file = files[0];
-
             setSelectedImage(file);
             setImageSrc(URL.createObjectURL(file));
         }
@@ -188,10 +173,8 @@ function ProfileForm() {
             <Input id="email" label="이메일" required disabled defaultValue={email}/>
             <NicknameField value={nickname} defaultValue={initNickname} onChange={onChangeNickname}
                            placeholder="영문, 숫자 포함 6자 이상" setCheck={setIsCheckedNickname} required/>
-            <Select value={position} setValue={setPosition} items={getPositionSelectItems(positions)} label="직무"
-                    placeholder="직무를 선택해주세요." required/>
-            <MultiSelect values={techStack} setValues={setTechStack} items={getTechStackSelectItems(techStacks)}
-                         label="관심 스택" placeholder="관심 스택을 선택해주세요." required/>
+            <PositionSelect positionId={positionId} setPosition={setPositionId}/>
+            <TechStackSelect techStacks={techStackIds} setTechStacks={setTechStackIds}/>
             <TextArea id="information" label="자기소개" placeholder="텍스트를 입력해주세요." rows={3} cols={25}
                       value={selfIntroduction} onChange={(e) => setSelfIntroduction(e.target.value)}/>
             <FormButton onClick={saveProfile}>저장</FormButton>

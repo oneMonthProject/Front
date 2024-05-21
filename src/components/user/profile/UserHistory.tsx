@@ -9,65 +9,69 @@ import CommonPagination from "@/components/ui/CommonPagination";
 import {getUserProjectHistory} from "@/service/user/user";
 import {classNames} from "@/utils/common";
 import {PageResponseBody, ProjectHistoryStatus, UserProjectHistory} from "@/utils/type";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
+import UserHistorySkeleton from "@/components/user/profile/UserHistorySkeleton";
+
+const getIconColorByStatus = (status: ProjectHistoryStatus) => {
+    switch (status) {
+        case "PARTICIPATING":
+            return 'bg-blue-500'
+        case "FINISH":
+            return 'bg-green-500'
+        case "WITHDRAWAL":
+            return 'bg-gray-400'
+        case "FORCED_WITHDRAWAL":
+            return 'bg-red-400'
+        default:
+            return ''
+    }
+}
+
+const getIconByStatus = (status: ProjectHistoryStatus) => {
+    const iconClassName = 'h-5 w-5 text-white';
+
+    switch (status) {
+        case "PARTICIPATING":
+            return <BiUser className={iconClassName} aria-hidden="true"/>
+        case "FINISH":
+            return <BiCheck className={iconClassName} aria-hidden="true"/>
+        case "WITHDRAWAL":
+            return <BiUndo className={iconClassName} aria-hidden="true"/>
+        case "FORCED_WITHDRAWAL":
+            return <BiX className={iconClassName} aria-hidden="true"/>
+        default:
+            return <></>
+    }
+}
+
+const getHistoryStatusText = (status: ProjectHistoryStatus) => {
+    switch (status) {
+        case "PARTICIPATING":
+            return "프로젝트에 참여 하였습니다."
+        case "FINISH":
+            return "프로젝트를 완료 하였습니다."
+        case "WITHDRAWAL":
+            return "프로젝트를 탈퇴 하셨습니다."
+        case "FORCED_WITHDRAWAL":
+            return "프로젝트에서 강제탈퇴 당하셨습니다."
+        default:
+            return ""
+    }
+}
+
 
 function UserHistory() {
     const [pageNumber, setPageNumber] = useState(0);
-    const {data} = useSuspenseQuery<PageResponseBody<UserProjectHistory[]>, Error>({
+    const {data, isFetching} = useQuery<PageResponseBody<UserProjectHistory[]>, Error>({
         queryKey: ['userHistory', pageNumber],
         queryFn: () => getUserProjectHistory(pageNumber)
     });
 
-    const getIconColorByStatus = (status: ProjectHistoryStatus) => {
-        switch (status) {
-            case "PARTICIPATING":
-                return 'bg-blue-500'
-            case "FINISH":
-                return 'bg-green-500'
-            case "WITHDRAWAL":
-                return 'bg-gray-400'
-            case "FORCED_WITHDRAWAL":
-                return 'bg-red-400'
-            default:
-                return ''
-        }
-    }
+    if(isFetching) return <UserHistorySkeleton/>;
 
-    const getIconByStatus = (status: ProjectHistoryStatus) => {
-        const iconClassName = 'h-5 w-5 text-white';
-
-        switch (status) {
-            case "PARTICIPATING":
-                return <BiUser className={iconClassName} aria-hidden="true"/>
-            case "FINISH":
-                return <BiCheck className={iconClassName} aria-hidden="true"/>
-            case "WITHDRAWAL":
-                return <BiUndo className={iconClassName} aria-hidden="true"/>
-            case "FORCED_WITHDRAWAL":
-                return <BiX className={iconClassName} aria-hidden="true"/>
-            default:
-                return <></>
-        }
-    }
-
-    const getHistoryStatusText = (status: ProjectHistoryStatus) => {
-        switch (status) {
-            case "PARTICIPATING":
-                return "프로젝트에 참여 하였습니다."
-            case "FINISH":
-                return "프로젝트를 완료 하였습니다."
-            case "WITHDRAWAL":
-                return "프로젝트를 탈퇴 하셨습니다."
-            case "FORCED_WITHDRAWAL":
-                return "프로젝트에서 강제탈퇴 당하셨습니다."
-            default:
-                return ""
-        }
-    }
-
-    const {content: histories, totalPages} = data.data;
+    const {content: histories, totalPages} = data!.data;
 
     return (
         <div className='p-3 mobile:p-0 mobile:pt-3 space-y-5'>

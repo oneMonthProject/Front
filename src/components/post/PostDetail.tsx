@@ -8,6 +8,7 @@ import {useQueryString} from "@/hooks/useQueryString";
 import {useQuery} from "@tanstack/react-query";
 import {PostDetailInfo, ResponseBody} from "@/utils/type";
 import {getPost} from "@/service/post/post";
+import PostSkeleton from "@/components/post/PostSkeleton";
 
 const PostDetail = () => {
     const postId = useQueryString('postId');
@@ -17,9 +18,7 @@ const PostDetail = () => {
         queryFn: () => getPost(BigInt(postId))
     });
 
-    if (isFetching) return <div>loading...</div>;
-
-    console.log("data: ", data);
+    if (isFetching) return <PostSkeleton />;
 
     const {board, project} = data!.data;
 

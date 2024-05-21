@@ -10,7 +10,10 @@ import {format} from "date-fns";
 import {FaPlusCircle} from "@react-icons/all-files/fa/FaPlusCircle";
 
 const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
-    const {boardId, boardTitle, project, boardPositions, boardPageView, user} = postInfo;
+    const {boardId, boardTitle, project, boardPositions, boardPageView, user: {profileImgSrc, nickname}} = postInfo;
+
+    const profileImgUrl = profileImgSrc?.replace("projectmatch-user-image.s3.ap-northeast-2.amazonaws.com", "projectmatch-bucket.s3.ap-northeast-2.amazonaws.com")
+        || null;
 
     const {name: projectName, trustGrade, startDate, endDate, subject, technologyStacks} = project;
 
@@ -80,7 +83,7 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                     <div className="flex items-center gap-2 border-b-2 pb-4 mt-3 ">
                         <ul className='flex items-center space-x-1 basis-[180px]'>
                             {
-                                technologyStacks.slice(0,5).map(({techStackId, techStackName}) => (
+                                technologyStacks.slice(0, 5).map(({techStackId, techStackName}) => (
                                     <li key={techStackId}>
                                         <TechStackImage
                                             key={techStackId}
@@ -105,8 +108,8 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                 }
                 <div className="flex items-center pt-3 px-1 justify-between">
                     <div className="flex">
-                        <Avatar size="2xs" alt="사용자" src={user.profileImgSrc}/>
-                        <div className="ml-2 text-sm self-center">{user.nickname}</div>
+                        <Avatar size="2xs" alt="사용자" src={profileImgUrl}/>
+                        <div className="ml-2 text-sm self-center">{nickname}</div>
                     </div>
                     <div className="flex">
                         <BsEyeFill className="w-4 h-4 self-center text-grey500"/>

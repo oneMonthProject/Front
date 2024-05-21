@@ -4,7 +4,7 @@ import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import Avatar from "@/components/ui/Avatar";
 import {useRecoilValue} from "recoil";
 import {projectNoticeCurrentFormState, ProjectNoticeRecruitForm} from "@/store/project/notice/ProjectNoticeStateStore";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {ProfileInfo, ResponseBody, TechStackItem} from "@/utils/type";
 import {getUserInfoByUserId} from "@/service/user/user";
 
@@ -13,10 +13,12 @@ function NoticeItemRecruitInfo() {
 
     const {form:{sendUserId}} = currentNoticeForm as ProjectNoticeRecruitForm;
 
-    const {data} = useSuspenseQuery<ResponseBody<ProfileInfo>, Error>({
+    const {data, isFetching} = useQuery<ResponseBody<ProfileInfo>, Error>({
         queryKey: ['userInfoById', sendUserId],
         queryFn: () => getUserInfoByUserId(sendUserId)
     });
+
+    if(isFetching) return <div>loading...</div>;
 
     const {
         intro,
@@ -27,7 +29,7 @@ function NoticeItemRecruitInfo() {
         techStacks,
         trustGrade: {trustGradeName},
         trustScore
-    }:ProfileInfo = data.data;
+    }:ProfileInfo = data!.data;
 
 
     return (

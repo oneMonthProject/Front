@@ -1,13 +1,11 @@
 'use client';
 
-import React, {Suspense, useEffect, useState} from 'react';
+import React from 'react';
 import Image from 'next/image';
 import logo from '../../../public/images/logo.png';
 import Link from "next/link";
 import RegisterNav from "@/components/header/RegisterNav";
 import {hasCookie} from 'cookies-next';
-import AvatarSkeleton from '../ui/skeleton/AvatarSkeleton';
-import Skeleton from '../ui/skeleton/Skeleton';
 import {UserMenu} from "@/components/header/UserMenu";
 import useClientMount from "@/hooks/useClientMount";
 
@@ -28,14 +26,7 @@ function Header() {
                     </li>
                     {
                         mounted && hasCookie("user_id") ? (
-                            <Suspense fallback={(
-                                <div className='flex space-x-1'>
-                                    <AvatarSkeleton size="2xs" className='mobile:hidden'/>
-                                    <Skeleton sizeClassName="w-[110px] h-[24px] mobile:w-[60px]"/>
-                                </div>
-                            )}>
                                 <UserMenu/>
-                            </Suspense>
                         ) : (
                             <li className='tablet:mx-5 mobile:mx-2 tablet:text-[20px] mobile:text-[16px] text-black100 font-semibold'>
                                 <Link href='/login'>로그인</Link>

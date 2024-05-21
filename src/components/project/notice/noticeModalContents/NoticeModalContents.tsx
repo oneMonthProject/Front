@@ -24,10 +24,7 @@ function NoticeModalContents() {
                 </div>
             </section>
             {
-                formName === PNT.RECRUIT.value &&
-                <Suspense fallback={<div>loading..</div>}>
-                    <NoticeItemRecruitInfo/>
-                </Suspense>
+                formName === PNT.RECRUIT.value && <NoticeItemRecruitInfo/>
             }
             {
                 formName === PNT.FORCEWITHDRAWL.value && <WthdrawSelector/>

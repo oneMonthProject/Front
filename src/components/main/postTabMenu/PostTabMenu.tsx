@@ -1,8 +1,8 @@
 'use client';
-import React, { useEffect, useState } from "react";
-import { useRecoilState } from "recoil";
-import { hasCookie } from "cookies-next";
-import { activeTabState } from "@/store/post/PostStateStore";
+import React from "react";
+import {useRecoilState} from "recoil";
+import {hasCookie} from "cookies-next";
+import {activeTabState} from "@/store/post/PostStateStore";
 import useClientMount from "@/hooks/useClientMount";
 
 const PostTabMenu = () => {

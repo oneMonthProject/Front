@@ -1,21 +1,24 @@
 'use client';
 import React, {useState} from "react";
 import ProjectCard from "../projectCard/ProjectCard";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {getMyProjectList} from "@/service/project/project";
 import {PageResponseBody, ProjectPost} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {sortByStartDate} from "@/utils/common";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
+import PostListSkeleton from "@/components/main/PostListSkeleton";
 
 
 function MyProjectPosts() {
     const [pageNumber, setPageNumber] = useState(0);
 
-    const {data} = useSuspenseQuery<PageResponseBody<ProjectPost[]>, Error>({
+    const {data, isFetching} = useQuery<Promise<PageResponseBody<ProjectPost[]>>, Error, PageResponseBody<ProjectPost[]>>({
         queryKey: ['myProjectList', pageNumber],
         queryFn: () => getMyProjectList(pageNumber, 8)
     });
+
+    if(isFetching) return <PostListSkeleton itemCount={8}/>;
 
     function onChangePageHandler(pageNumber: number) {
         setPageNumber(pageNumber);

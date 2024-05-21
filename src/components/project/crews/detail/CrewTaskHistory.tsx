@@ -2,12 +2,11 @@
 import React, {useState} from 'react';
 import {FaMinus} from "@react-icons/all-files/fa/FaMinus";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {useQueryString} from "@/hooks/useQueryString";
 import {getCrewTaskHistory} from "@/service/project/crews";
 import CommonPagination from "@/components/ui/CommonPagination";
-import {PageResponseBody} from "@/utils/type";
-import {type CrewTaskHistory} from "@/utils/type";
+import {type CrewTaskHistory, PageResponseBody} from "@/utils/type";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 
 
@@ -22,13 +21,15 @@ function CrewTaskHistory() {
     const [pageIndex, setPageIndex] = useState(0);
     const projectMemberId = useQueryString('projectMemberId');
 
-    const {data} = useSuspenseQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
+    const {data, isFetching} = useQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
         queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_COUNT.LIST_SM],
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT)
     });
 
-    const taskHistory = data.data.content;
-    const totalCount = data.data.totalPages;
+    if(isFetching) return <div>loading...</div>;
+
+    const taskHistory = data!.data.content;
+    const totalCount = data!.data.totalPages;
 
     return (
         <>

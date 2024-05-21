@@ -7,8 +7,10 @@ import {useRecoilValue} from "recoil";
 import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
 import {MilestoneInfo} from "@/utils/type";
 
-function TaskSection({milestoneList}: { milestoneList: MilestoneInfo[] }) {
+function TaskSection({milestoneList}:{milestoneList:MilestoneInfo[]}) {
     const {activeMilestone} = useRecoilValue(milestoneActiveStateStore);
+
+    if(milestoneList.length < 1) return null;
 
     const {mileStoneId, projectId} = activeMilestone
         ? activeMilestone

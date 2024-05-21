@@ -1,30 +1,13 @@
-'use client';
-import React, {Suspense, useEffect, useState} from 'react';
+import React from 'react';
 import ProfileCard from '@/components/user/profile/ProfileCard';
 import UserHistory from '@/components/user/profile/UserHistory';
-import ProfileCardSkeleton from '@/components/user/profile/ProfileCardSkeleton';
-import UserHistorySkeleton from '@/components/user/profile/UserHistorySkeleton';
-import useClientMount from "@/hooks/useClientMount";
 
 function ProfilePage() {
-    const mounted = useClientMount();
-
     return (
-        mounted ? (
-            <>
-                <Suspense fallback={<ProfileCardSkeleton/>}>
-                    <ProfileCard/>
-                </Suspense>
-                <Suspense fallback={<UserHistorySkeleton/>}>
-                    <UserHistory/>
-                </Suspense>
-            </ >
-        ) : (
-            <>
-                <ProfileCardSkeleton/>
-                <UserHistorySkeleton/>
-            </ >
-        )
+        <>
+            <ProfileCard/>
+            <UserHistory/>
+        </ >
     );
 }
 

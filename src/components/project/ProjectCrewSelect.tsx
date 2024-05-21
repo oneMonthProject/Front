@@ -22,10 +22,12 @@ function ProjectCrewSelect() {
     const {form} = modalState;
     const {assignedUser} = form!;
 
-    const {data} = useProjectCrewList();
+    const {data, isFetching} = useProjectCrewList();
+
+    if(isFetching) return <div>loading...</div>;
 
     const projectCrews =
-        data.projectMembers.map(({user: {nickname}, projectMemberId}) => (
+        data!.data.map(({user: {nickname}, projectMemberId}) => (
             {
                 name: nickname,
                 value: bigIntToString(projectMemberId),
@@ -33,7 +35,7 @@ function ProjectCrewSelect() {
         ));
 
     const crewImages: Record<string, string> = {};
-    for (const {projectMemberId, user: {profileImgSrc}} of data.projectMembers) {
+    for (const {projectMemberId, user: {profileImgSrc}} of data!.data) {
         crewImages[bigIntToString(projectMemberId)] = profileImgSrc;
     }
 

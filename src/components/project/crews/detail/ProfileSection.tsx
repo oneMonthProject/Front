@@ -4,7 +4,7 @@ import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import {useQueryString} from "@/hooks/useQueryString";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {ProjectMemberProfile, ResponseBody} from "@/utils/type";
 import {getCrewDetail} from "@/service/project/crews";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
@@ -13,12 +13,14 @@ import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 
 function ProfileSection() {
     const projectMemberId = useQueryString('projectMemberId');
-    const {data: {data: projectMemberInfo}} = useSuspenseQuery<ResponseBody<ProjectMemberProfile>, Error>({
+    const {data, isFetching} = useQuery<ResponseBody<ProjectMemberProfile>, Error>({
         queryKey: ['crewDetail', projectMemberId],
         queryFn: () => getCrewDetail(projectMemberId)
     });
 
-    const {user, position, status, projectMemberAuth} = projectMemberInfo;
+    if(isFetching) return <div>loading..</div>;
+
+    const {user, position, status, projectMemberAuth} = data!.data;
 
     return (
         <div
@@ -30,7 +32,7 @@ function ProfileSection() {
                         {user.nickname}
                     </li>
                 </ul>
-                <CrewOutButton projectMemberInfo={projectMemberInfo}/>
+                <CrewOutButton projectMemberInfo={data!.data}/>
             </section>
             <section
                 className='mobile:w-full tablet:h-[200px] mobile:h-[180px] flex flex-col flex-wrap justify-between p-6 mobile:p-4 bg-ground100 rounded-lg'>

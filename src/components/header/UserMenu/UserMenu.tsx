@@ -2,22 +2,32 @@
 import React from 'react';
 import {useMediaQuery} from "react-responsive";
 import {ResponseBody, UserBasicInfo} from "@/utils/type";
-import {useSuspenseQuery} from '@tanstack/react-query';
+import {useQuery} from '@tanstack/react-query';
 import Avatar from '@/components/ui/Avatar';
 import {getSimpleUser} from '@/service/user/user';
 import UserMenuDropdown from "@/components/header/UserMenu/UserMenuDropdown";
+import AvatarSkeleton from "@/components/ui/skeleton/AvatarSkeleton";
+import Skeleton from "@/components/ui/skeleton/Skeleton";
 
 
 function UserMenu() {
-    const {data} = useSuspenseQuery<ResponseBody<UserBasicInfo>, Error>(
+    const isDesktop = useMediaQuery({query: '(min-width: 376px)'});
+    const {data, isFetching, isError} = useQuery<ResponseBody<UserBasicInfo>, Error>(
         {
             queryKey: ['simpleUserInfo'],
             queryFn: getSimpleUser
         }
     );
-    const {nickname, profileImgSrc} = data.data;
 
-    const isDesktop = useMediaQuery({query: '(min-width: 376px)'});
+    if (isFetching) return (
+        <div className='flex space-x-1'>
+            <AvatarSkeleton size="2xs" className='mobile:hidden'/>
+            <Skeleton sizeClassName="w-[110px] h-[24px] mobile:w-[60px]"/>
+        </div>
+    );
+
+    const {nickname, profileImgSrc} = data!.data;
+
 
     return (
         <ul className='flex items-center'>

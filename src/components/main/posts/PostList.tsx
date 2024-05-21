@@ -4,11 +4,12 @@ import CommonPagination from "@/components/ui/CommonPagination"
 import PostCard from "../postCard/PostCard"
 import {useRecoilValue} from "recoil";
 import React, {useState} from "react";
-import {useSuspenseQuery} from "@tanstack/react-query";
+import {useQuery} from "@tanstack/react-query";
 import {PageResponseBody, PostCardInfo} from "@/utils/type";
 import {getPostList} from "@/service/post/post";
 import {postSearchValue, selectedPositionState, selectedTechStackState} from "@/store/post/PostStateStore";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
+import PostListSkeleton from "@/components/main/PostListSkeleton";
 
 const PostList = () => {
     const selectedTechStacks = useRecoilValue(selectedTechStackState);
@@ -16,7 +17,7 @@ const PostList = () => {
     const searchValue = useRecoilValue(postSearchValue);
     const [pageNumber, setPageNumber] = useState(0);
 
-    const {data} = useSuspenseQuery<PageResponseBody<PostCardInfo[]>, Error>({
+    const {data, isPending} = useQuery<PageResponseBody<PostCardInfo[]>, Error, PageResponseBody<PostCardInfo[]>>({
         queryKey: ['postList', selectedTechStacks, selectedPosition, searchValue, pageNumber],
         queryFn: () => getPostList({
             techStacks: selectedTechStacks,
@@ -26,7 +27,9 @@ const PostList = () => {
         })
     });
 
-    const {content: infos, totalPages} = data.data;
+    if(isPending) return <PostListSkeleton itemCount={8} />
+
+    const {content: infos, totalPages} = data!.data;
 
     return (
         <section className="mt-6 mobile:mt-2">

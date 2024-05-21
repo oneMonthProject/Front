@@ -1,11 +1,10 @@
 'use client';
 
-import React, {Suspense} from 'react';
+import React from 'react';
 import MyProjectPosts from "@/components/main/myProjectPost/MyProjectPosts";
 import Posts from "@/components/main/posts/Posts";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {activeTabState} from '@/store/post/PostStateStore';
-import PostListSkeleton from "@/components/main/PostListSkeleton";
 import ParticipateNoticeModal from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNoticeModal";
 import Button from "@/components/ui/Button";
 import {userNoticeModalStateStore} from "@/store/UserNoticeModalStateStore";
@@ -18,7 +17,7 @@ function PostTabContents() {
         <>
             {isMyProjectPostsTab
                 ? (
-                    <Suspense fallback={<PostListSkeleton itemCount={8}/>}>
+                    <>
                         <Button
                             className='mt-10'
                             type='button'
@@ -28,7 +27,8 @@ function PostTabContents() {
                         </Button>
                         <MyProjectPosts/>
                         <ParticipateNoticeModal/>
-                    </Suspense>
+                    </>
+
                 )
                 : <Posts/>
             }

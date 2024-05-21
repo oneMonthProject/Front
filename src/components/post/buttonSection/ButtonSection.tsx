@@ -123,7 +123,7 @@ const ButtonSection = ({ projectId, boardInfo }: { projectId: bigint, boardInfo:
             </div>
           ) : (
             <div className="flex justify-center gap-5 mt-5">
-              <PositionDropdown items={getPositionSelectItems()} value={position} setValue={setPosition} direction="up" />
+              <PositionDropdown items={getPositionSelectItems()} onChangeValue={setPosition} direction="up" />
               <Button type="button" size="lg" onClickHandler={handleClick}>참여하기</Button>
             </div>
           )
