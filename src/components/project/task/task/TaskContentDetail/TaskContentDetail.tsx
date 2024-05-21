@@ -26,8 +26,8 @@ function TaskContentDetail() {
             </button>
             {showAddElement && <TaskContentDetailAddInput setIsOpen={setShowAddElement}/>}
             <div className='max-h-[150px] overflow-y-auto'>
-                {taskContentDetail.contentDetail.length > 0
-                    ? taskContentDetail.contentDetail.map((v) =>
+                {taskContentDetail.contents.length > 0
+                    ? taskContentDetail.contents.map((v) =>
                         <TaskContentDetailInput key={v.id} initContents={v}/>
                     )
                     : (

@@ -2,11 +2,11 @@
 
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import {useRecoilState, useSetRecoilState} from "recoil";
-import {TaskContentDetailFormState, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
+import {TaskContentDetailsState, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
 import _ from "lodash";
-import {TaskContentDetailItem} from "@/utils/type";
 import {snackbarState} from "@/store/CommonStateStore";
 import TaskContentAddButton from "@/components/project/task/task/TaskContentDetail/TaskContentAddButton";
+import {TaskContentDetail} from "@/app/project/@task/_utils/type";
 
 function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>; }) {
     const setSnackbar = useSetRecoilState(snackbarState);
@@ -16,15 +16,15 @@ function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAc
 
 
     function onClickAddButtonHandler(){
-        if(taskContentDetail.contentDetail.length === 5){
+        if(taskContentDetail.contents.length === 5){
             setSnackbar({show:true, type:'INFO', content:'할 일은 업무당 최대 5개 추가할 수 있습니다.'});
             return;
         }
 
         const id = _.random().toString();
-        setTaskContentDetail((prev:TaskContentDetailFormState) => {
-            const updatedContentDetail:TaskContentDetailItem[] = [...prev.contentDetail, {id, data:value}];
-            return {...prev.contentDetail, contentDetail:updatedContentDetail};
+        setTaskContentDetail((prev:TaskContentDetailsState) => {
+            const updatedContentDetail:TaskContentDetail[] = [...prev.contents, {id, data:value}];
+            return {...prev.contents, contents:updatedContentDetail};
         });
         setValue("");
     }

@@ -16,15 +16,15 @@ export default function useCreatePost() {
     const router = useRouter();
     const {mutate: createPost, isPending} = useMutation({
         mutationFn: (createData: CreatePostForm) => createPostAPI(createData),
-        onSuccess: (data) => {
+        onSuccess: async (data) => {
             const {message, result} = data;
 
             if (isEqual(result, "success")) {
                 setSnackbar({show: true, type: "SUCCESS", content: message});
                 resetPostFields();
                 resetProjectFields();
-                queryClient.invalidateQueries({queryKey: ['postList']});
-                queryClient.invalidateQueries({queryKey: ['myProjectList']});
+                await queryClient.invalidateQueries({queryKey: ['postList']});
+                await queryClient.invalidateQueries({queryKey: ['myProjectList']});
                 router.push('/');
             } else {
                 setSnackbar({show: true, type: "ERROR", content: message});

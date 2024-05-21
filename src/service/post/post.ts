@@ -1,5 +1,5 @@
 import {PositionItem, TechStackWithCategory} from "@/utils/type";
-import {isEqual} from "lodash";
+import _, {isEqual} from "lodash";
 import {request} from "@/service/project/request";
 import {CreatePostForm} from "@/app/register/_utils/type";
 import {throwErrorIfInvalid} from "@/utils/common";
@@ -29,10 +29,9 @@ const createQueryParams = (params: SearchParams) => {
     return decodeURI(queryParams.toString());
 };
 
-export const getPostList = async (params: SearchParams) => {
+export const getPostList = async (params: SearchParams = {techStacks: [], position: null, page: 0, keyword: ''}) => {
     const queryParams = createQueryParams(params);
     return await request('GET', `/api/post/search?${queryParams}`);
-
 };
 
 export const getPost = async (postId: bigint) => {
@@ -51,7 +50,7 @@ export const createPost = async (createData: CreatePostForm) => {
                 endDate,
                 startDate
             },
-        board:{
+        board: {
             title,
             content,
             contact,

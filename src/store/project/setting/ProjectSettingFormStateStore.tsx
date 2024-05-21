@@ -22,7 +22,7 @@ export const projectSettingFormInit = selector({
             projectId,
             projectName,
             subject,
-            trustGradeId: Object.values(TG).find(({name}) => trustGradeName === name)?.id || null,
+            trustGradeId: Object.values(TG).find(({name}) => trustGradeName === name)?.value || null,
             startDate,
             endDate
         }

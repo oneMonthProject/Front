@@ -28,7 +28,8 @@ function MilestoneStatusSelector() {
         setCurrentForm(updated);
     }
 
-    const compareItems = (a: SelectItem, b: SelectItem) => {
+    const compareItems = (a: SelectItem<typeof progressStatus, typeof progressStatusCode>
+                          , b: SelectItem<typeof progressStatus, typeof progressStatusCode>) => {
         if (a && b) {
             return a?.value === b?.value;
         }

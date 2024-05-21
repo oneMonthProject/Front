@@ -1,15 +1,15 @@
 'use client';
 
 import React, {useRef, useState} from 'react';
-import {TaskContentDetailItem} from "@/utils/type";
 import {useSetRecoilState} from "recoil";
-import {TaskContentDetailFormState, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
+import {taskContentDetailSelector, TaskContentDetailsState} from "@/store/project/task/TaskStateStore";
 import TaskContentCancelDeleteButton
     from "@/components/project/task/task/TaskContentDetail/TaskContentCancelDeleteButton";
 import TaskContentEditFinishButton from "@/components/project/task/task/TaskContentDetail/TaskContentEditFinishButton";
+import {TaskContentDetail} from "@/app/project/@task/_utils/type";
 
 
-function TaskContentDetailInput({initContents}: { initContents: TaskContentDetailItem }) {
+function TaskContentDetailInput({initContents}: { initContents: TaskContentDetail }) {
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [value, setValue] = useState(() => initContents.data);
     const [placeholder, setPlaceholder] = useState('할 일 입력');
@@ -29,9 +29,9 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
      * 수정 완료 click
      */
     function onClickEditFinishHandler() {
-        setTaskContentDetail((prev: TaskContentDetailFormState) => {
+        setTaskContentDetail((prev: TaskContentDetailsState) => {
             const updatedContentDetail = [];
-            for (const content of prev.contentDetail) {
+            for (const content of prev.contents) {
                 updatedContentDetail.push(
                     content.id === initContents.id ?
                         {...content, data: value} : {...content}
@@ -47,8 +47,8 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
      * 삭제 버튼 click
      */
     function onClickDeleteButtonHandler() {
-        setTaskContentDetail((prev: TaskContentDetailFormState) => {
-            const updatedContentDetail = prev.contentDetail.filter((content) => content.id !== initContents.id);
+        setTaskContentDetail((prev: TaskContentDetailsState) => {
+            const updatedContentDetail = prev.contents.filter((content) => content.id !== initContents.id);
             return {...prev, contentDetail: updatedContentDetail};
         });
 
