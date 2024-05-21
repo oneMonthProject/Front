@@ -4,6 +4,7 @@ import Providers from "@/app/Providers";
 import React from "react";
 import Header from "@/components/header/Header";
 import Snackbar from "@/components/ui/Snackbar";
+import StaticDataProvider from "@/app/StaticDataProvider";
 
 export const metadata: Metadata = {
     title: "trustcrews",
@@ -23,8 +24,10 @@ export default function RootLayout({
         <body className="w-full">
         <Providers>
             <div className="responsiveContainer">
-                <Header/>
-                {children}
+                <StaticDataProvider>
+                    <Header/>
+                    {children}
+                </StaticDataProvider>
             </div>
             <div id="modal" className="absolute top-0 w-full"></div>
             <Snackbar/>
