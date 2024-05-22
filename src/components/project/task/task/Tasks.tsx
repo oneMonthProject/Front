@@ -7,23 +7,26 @@ import CommonPagination from "@/components/ui/CommonPagination";
 import useTasks from "@/hooks/useTasks";
 import TasksSkeleton from "@/components/ui/skeleton/project/task/TasksSkeleton";
 import {ITEM_COUNT} from "@/utils/constant";
+import {useRecoilValue} from "recoil";
+import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
 
 
-function Tasks({milestoneId, projectId}: { milestoneId: DataId, projectId: DataId }) {
+function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigint, projectId: DataId }) {
+    const {activeMilestoneId: updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
+    const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActivemilestoneId;
+
     const [pageNumber, setPageNumber] = useState(0);
 
     const {
         taskList,
         totalPages,
-        isTasksFetching,
-        isTasksError
+        isTasksFetching
     } = useTasks({
         projectId,
-        milestoneId,
+        milestoneId: activeMilestoneId,
         pageNumber,
         itemsPerPage: ITEM_COUNT.CARDS_SM
     })
-
 
     function onChangePageHandler(pageNumber: number) {
         setPageNumber(pageNumber - 1);

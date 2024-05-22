@@ -2,7 +2,7 @@
 import React, {MouseEvent} from 'react';
 import {MilestoneInfo} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
-import {useSetRecoilState} from "recoil";
+import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,
     MilestoneModalForm,
@@ -16,37 +16,38 @@ import {snackbarState} from '@/store/CommonStateStore';
 
 type MilestoneCardProps = {
     milestoneInfo: MilestoneInfo;
-    activeMilestoneId: string | bigint | null;
+    initActiveMilestoneId: string | bigint | null;
 }
 
-function MilestoneCard({milestoneInfo, activeMilestoneId}: MilestoneCardProps) {
-
-    const setSnackBar = useSetRecoilState(snackbarState);
-
+function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProps) {
     const {
-        projectId,
         mileStoneId,
         content,
         startDate,
         endDate,
-        updateDate,
-        createDate,
         progressStatus,
-        index
     } = milestoneInfo;
 
+    const setSnackBar = useSetRecoilState(snackbarState);
+
+    const {activeMilestoneId:updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
+    const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActiveMilestoneId;
+
     const setActiveMilestone = useSetRecoilState(milestoneActiveStateStore);
+    const resetActiveMilestone = useResetRecoilState(milestoneActiveStateStore);
+
     const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
 
     const queryClient = useQueryClient();
 
-    const {mutate: deleteMilestone, isPending: isDeleting} = useMutation({
+    const {mutate: deleteMilestone, isPending} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
         onSuccess: async (res) => {
             if (res.message !== 'success') {
                 setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
             } else {
-                queryClient.invalidateQueries({queryKey: ['milestoneList']});
+                resetActiveMilestone();
+                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
                 setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
             }
         },
@@ -55,10 +56,13 @@ function MilestoneCard({milestoneInfo, activeMilestoneId}: MilestoneCardProps) {
         }
     })
 
-
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
-        setActiveMilestone({activeMilestone:milestoneInfo});
+        setActiveMilestone({
+            activeMilestone: milestoneInfo,
+            activeMilestoneIndex: milestoneInfo.index || null,
+            activeMilestoneId: milestoneInfo.mileStoneId
+        });
     }
 
     function onEditClickHandler() {

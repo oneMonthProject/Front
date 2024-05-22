@@ -29,25 +29,29 @@ export const milestoneStatusItems: MilestoneStatusItem[] = [
 ];
 
 
-export function getMilestoneStatus(str: MilestoneStatusName | MilestoneStatusCode | '') {
-    if (str === '') return null;
+export function getMilestoneStatus(statusName: MilestoneStatusName | MilestoneStatusCode | '') {
+    if (statusName === '') return null;
 
-    const milestoneStatusItem = str.charAt(0) === 'P' ?
-        milestoneStatusItems.find(v => v.value === str)
-        : milestoneStatusItems.find(v => v.name === str);
+    const milestoneStatusItem = statusName.charAt(0) === 'P' ?
+        milestoneStatusItems.find(v => v.value === statusName)
+        : milestoneStatusItems.find(v => v.name === statusName);
 
     if (!milestoneStatusItem) throw new Error('Unknown Milestone Status');
     return milestoneStatusItem;
 }
 
 type MilestoneActiveState = {
-    activeMilestone: MilestoneInfo | null
+    activeMilestone: MilestoneInfo | null;
+    activeMilestoneId: bigint | null;
+    activeMilestoneIndex: number | null;
 }
 
 export const milestoneActiveStateStore = atom<MilestoneActiveState>({
     key: 'milestoneActiveState',
     default: {
-        activeMilestone: null
+        activeMilestone: null,
+        activeMilestoneId: null,
+        activeMilestoneIndex: null
     }
 })
 
