@@ -69,9 +69,9 @@ function TaskStatusSelector() {
                                             className={({active}) =>
                                                 classNames(
                                                     active ? 'bg-primary opacity-50 text-white' : 'text-gray-900',
-                                                    'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
+                                                    'relative cursor-default select-none py-2 pl-3 pr-6 mobile:text-sm'
                                                 )}
-                                            value={value}
+                                            value={{name, value}}
                                         >
                                             {({selected, active}) => (
                                                 <>

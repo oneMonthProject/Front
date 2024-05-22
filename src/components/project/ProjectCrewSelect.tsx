@@ -89,7 +89,7 @@ function ProjectCrewSelect() {
                                                 'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
                                             )
                                         }
-                                        value={name}
+                                        value={{name, value}}
                                     >
                                         {
                                             ({selected, active}) =>

@@ -2,7 +2,7 @@
 
 export const TASK_STATUS = {
     DEFAULT: {
-        name: '진행 상태',
+        name: '진행상태',
         value: null
     },
     NOT_START: {
