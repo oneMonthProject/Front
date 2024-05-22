@@ -5,7 +5,7 @@ import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
 import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {Listbox, Transition} from "@headlessui/react";
-import {bigIntToString, classNames} from "@/utils/common";
+import {bigIntToString, changeImageUrl, classNames} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import Avatar from "@/components/ui/Avatar";
 
@@ -22,21 +22,20 @@ function ProjectCrewSelect() {
     const {form} = modalState;
     const {assignedUser} = form!;
 
-    const {data, isFetching} = useProjectCrewList();
+    const {crewList, isFetching} = useProjectCrewList();
 
     if(isFetching) return <div>loading...</div>;
 
-    const projectCrews =
-        data!.data.map(({user: {nickname}, projectMemberId}) => (
+    const projectCrews = crewList!.map(({user: {nickname}, projectMemberId}) => (
             {
                 name: nickname,
                 value: bigIntToString(projectMemberId),
             }
         ));
 
-    const crewImages: Record<string, string> = {};
-    for (const {projectMemberId, user: {profileImgSrc}} of data!.data) {
-        crewImages[bigIntToString(projectMemberId)] = profileImgSrc;
+    const crewImages: Record<string, string | null> = {};
+    for (const {projectMemberId, user: {profileImgSrc}} of crewList!) {
+        crewImages[bigIntToString(projectMemberId)] = changeImageUrl(profileImgSrc);
     }
 
     const projectCrewItems: SelectItem<string, string | null>[]
