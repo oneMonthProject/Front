@@ -4,7 +4,12 @@ import {SelectItem} from "@/utils/type";
 import {Listbox, Transition} from "@headlessui/react";
 import {classNames} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
-import {TaskModalState, taskModalState} from "@/store/project/task/TaskStateStore";
+import {
+    taskModalFieldSelector,
+    TaskModalState,
+    taskModalState,
+    taskProgressFieldSelector
+} from "@/store/project/task/TaskStateStore";
 import {
     TaskModifyForm,
     TaskStatusNameType as Name,
@@ -12,31 +17,18 @@ import {
 } from "@/app/project/@task/_utils/type";
 import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
+const compareItems = (a: SelectItem<Name, Value>, b: SelectItem<Name, Value>) => {
+    if (a && b) {
+        return a?.value === b?.value;
+    }
+    return false;
+}
+
 function TaskStatusSelector() {
-    const [modalState, setModalState] = useRecoilState(taskModalState);
-
-    if (modalState.form!.type === 'add') return null;
-
-    const form: TaskModifyForm = modalState.form!;
-
-    const {progressStatusCode, progressStatus} = form;
+    const [{progressStatus, progressStatusCode}, setProgressStatus] = useRecoilState(taskProgressFieldSelector)
 
     function onChangeHandler(item: SelectItem<Name, Value>) {
-        const updatedForm: TaskModifyForm = {
-            ...form,
-            progressStatus: item.name,
-            progressStatusCode: item.value
-        };
-
-        const updatedModalState: TaskModalState<TaskModifyForm> = {...modalState, form: updatedForm};
-        setModalState(updatedModalState);
-    }
-
-    const compareItems = (a: SelectItem<Name, Value>, b: SelectItem<Name, Value>) => {
-        if (a && b) {
-            return a?.value === b?.value;
-        }
-        return false;
+        setProgressStatus({progressStatus: item.name, progressStatusCode: item.value});
     }
 
     return (

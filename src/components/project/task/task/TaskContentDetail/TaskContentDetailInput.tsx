@@ -11,9 +11,11 @@ import {TaskContentDetail} from "@/app/project/@task/_utils/type";
 
 function TaskContentDetailInput({initContents}: { initContents: TaskContentDetail }) {
     const [isReadOnly, setIsReadOnly] = useState(true);
-    const [value, setValue] = useState(() => initContents.data);
+    const [value, setValue] = useState(initContents.data);
     const [placeholder, setPlaceholder] = useState('할 일 입력');
     const setTaskContentDetail = useSetRecoilState(taskContentDetailSelector);
+    console.log("initContentsData: ", initContents.data);
+    console.log("value::: ", value);
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -28,19 +30,19 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
     /**
      * 수정 완료 click
      */
-    function onClickEditFinishHandler() {
+    function onClickEditFinishHandler(newData:string) {
         setTaskContentDetail((prev: TaskContentDetailsState) => {
             const updatedContentDetail = [];
             for (const content of prev.contents) {
                 updatedContentDetail.push(
                     content.id === initContents.id ?
-                        {...content, data: value} : {...content}
+                        {...content, data: newData} : {...content}
                 );
             }
             return {...prev, contentDetail: updatedContentDetail};
         });
 
-        setIsReadOnly(true);
+        // setIsReadOnly(true);
     }
 
     /**
@@ -82,7 +84,8 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
                         className={`w-[320px] mobile:w-full h-full absolute top-0 left-0 z-10 appearance-none border-none focus:border-transparent 
                             focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'}`}
                         onChange={(e) => {
-                            if (e.target.value === "") setPlaceholder('할 일 입력');
+                            if (e.target.value === "") {setPlaceholder('할 일 입력');}
+                            console.log("value:: ", e.target.value);
                             setValue(e.target.value);
                         }}
                         value={value}

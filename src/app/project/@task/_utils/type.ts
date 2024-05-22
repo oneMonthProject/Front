@@ -30,6 +30,8 @@ export interface TaskModifyForm extends TaskItem {
     progressStatusCode: TaskStatusValueType;
 }
 
+export type TaskFormKey = keyof Omit<TaskModifyForm, 'progressStatusCode'>;
+
 export type TaskContentDetail = {
     id: string;
     data: string;

@@ -14,7 +14,7 @@ function TaskContentEditFinishButton({onClickHandler, mode}: Props) {
     const isMobile = useMediaQuery({maxWidth: 700});
     const iconSize = isMobile ? 18 : 23;
     return (
-        <button type='button' onClick={onClickHandler}>
+        <button type='button' onClick={() => onClickHandler()}>
             {
                 mode === 'edit'
                     ? <MdModeEdit size={iconSize}/>

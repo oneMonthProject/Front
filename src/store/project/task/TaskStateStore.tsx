@@ -1,6 +1,6 @@
-import {atom, DefaultValue, selector} from "recoil";
+import {atom, DefaultValue, selector, selectorFamily} from "recoil";
 import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
-import {TaskAddForm, TaskContentDetail, TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
+import {TaskAddForm, TaskContentDetail, TaskFormKey, TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
 
 
 export type TaskModalState<T extends TaskItem> = {
@@ -16,10 +16,51 @@ export const taskModalState = atom<TaskModalState<TaskAddForm | TaskModifyForm>>
     }
 });
 
+export const taskModalFieldSelector = selectorFamily<Partial<Omit<TaskModifyForm, 'progressStatusCode' | 'progressStatus' | 'contentDetail'>>,TaskFormKey>
+({
+    key: 'taskModalFieldSelector',
+    get: (param: TaskFormKey) => ({get}) => {
+        const form = get(taskModalState).form!;
+        const value = form[param];
+        return {[param]: value};
+    },
+    set: (param: TaskFormKey) => ({get, set}, newValue) => {
+        const modalState = get(taskModalState);
+        const form = modalState.form!;
+        const updatedForm = {...form, [param]: newValue};
+        set(taskModalState, {isOpen: modalState.isOpen, form: updatedForm});
+    }
+});
+
+export const taskProgressFieldSelector = selector({
+    key: 'taskProgressFieldSelector',
+    get: ({get}) => {
+        const form = get(taskModalState).form! as TaskModifyForm;
+        const progressStatusCode = form.progressStatusCode;
+        const progressStatus = form.progressStatus;
+        return {progressStatusCode, progressStatus};
+    },
+    set: ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
+
+        const modalState = get(taskModalState);
+        const form = get(taskModalState).form! as TaskModifyForm;
+
+        const updatedForm = {
+            ...form,
+            progressStatusCode: newValue.progressStatusCode,
+            progressStatus: newValue.progressStatus
+        };
+
+        set(taskModalState, {isOpen: modalState.isOpen, form: updatedForm});
+    }
+});
+
 
 export type TaskContentDetailsState = {
     contents: TaskContentDetail[];
 }
+
 
 export const taskContentDetailSelector = selector<TaskContentDetailsState>({
     key: 'taskContentDetailSelector',
@@ -49,7 +90,7 @@ export const taskContentDetailSelector = selector<TaskContentDetailsState>({
             const modalStateForm = modalState.form!;
 
             const updatedForm: typeof modalStateForm = {...modalStateForm, contentDetail: contentDetailStr};
-            const updatedModalState: typeof modalState = {...modalState, form: updatedForm};
+            const updatedModalState: typeof modalState = {isOpen:modalState.isOpen, form: updatedForm};
 
             set(taskModalState, updatedModalState);
         }
