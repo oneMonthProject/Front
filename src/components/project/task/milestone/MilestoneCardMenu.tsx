@@ -3,7 +3,8 @@ import React, {Fragment} from 'react';
 import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
 import {Menu, Transition} from "@headlessui/react";
 import {classNames} from "@/utils/common";
-import {useProjectInfo} from "@/hooks/useProjectInfo";
+import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {useRecoilValue} from "recoil";
 
 interface MilestoneCardMenuProps {
     milestoneId: bigint;
@@ -12,9 +13,7 @@ interface MilestoneCardMenuProps {
 }
 
 function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandler}: MilestoneCardMenuProps) {
-    const {data, isFetching} = useProjectInfo();
-
-    const authMap = data?.authMap;
+    const authMap = useRecoilValue(projectTaskAuthSelector);
 
     const milestoneMenus = [
         {

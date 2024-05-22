@@ -1,5 +1,5 @@
 'use client';
-import React, {Suspense} from 'react';
+import React from 'react';
 import {useRecoilValue} from "recoil";
 import {projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNoticeStateStore";
 import NoticeItemRecruitInfo from "@/components/project/notice/noticeModalContents/NoticeItemRecruitInfo";
