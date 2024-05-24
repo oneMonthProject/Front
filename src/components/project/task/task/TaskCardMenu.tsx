@@ -6,25 +6,27 @@ import {classNames} from "@/utils/common";
 import {TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
 import {useSetRecoilState} from "recoil";
 import {taskModalState} from "@/store/project/task/TaskStateStore";
-import {TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
-import {deleteTask} from "@/service/project/task";
+import {TASK_STATUS, TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
 import useDeleteTask from "@/hooks/useDeleteTask";
 
 
 function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
-    const {content:title, workId, progressStatus} = taskItem;
+    const {content: title, workId, progressStatus} = taskItem;
     const {deleteTask, isDeleting} = useDeleteTask();
     const setTaskModalForm = useSetRecoilState(taskModalState);
 
     function onClickUpdateHandler() {
+        const progressStatusCode = Object.values(TASK_STATUS)
+            .find(({name}) => name === progressStatus)!
+            .value;
         const updateForm: TaskModifyForm = {
             ...taskItem,
             title,
             type: 'modify',
-            progressStatusCode: null
+            progressStatusCode
         };
 
-        setTaskModalForm({isOpen:true, form:updateForm});
+        setTaskModalForm({isOpen: true, form: updateForm});
     }
 
     /**
