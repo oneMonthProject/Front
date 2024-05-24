@@ -3,7 +3,7 @@ import {useRecoilState} from "recoil";
 import React from "react";
 import {SelectItem} from "@/utils/type";
 import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/selector/Select";
 import {PROJECT_NOTICE_MENU} from "@/app/project/@notice/_utils/constant";
 import {ProjectNoticeMenuName, ProjectNoticeMenuValue} from "@/app/project/@notice/_utils/type";
 

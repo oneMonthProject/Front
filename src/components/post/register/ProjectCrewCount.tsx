@@ -1,5 +1,5 @@
 import React from 'react';
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/selector/Select";
 import {useRecoilState} from "recoil";
 import {projectFieldSelector} from "@/store/register/RegisterPostStateStore";
 import {recruitmentCountList as rcList} from "@/app/register/_utils/constant";
