@@ -1,32 +1,23 @@
 'use client';
 
-import React, {Dispatch, SetStateAction, useState} from 'react';
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {TaskContentDetailsState, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
-import _ from "lodash";
-import {snackbarState} from "@/store/CommonStateStore";
+import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
+import {useSetRecoilState} from "recoil";
+import {taskContentDetailFieldSelector} from "@/store/project/task/TaskStateStore";
 import TaskContentAddButton from "@/components/project/task/task/TaskContentDetail/TaskContentAddButton";
-import {TaskContentDetail} from "@/app/project/@task/_utils/type";
+import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
 
-function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>; }) {
-    const setSnackbar = useSetRecoilState(snackbarState);
+function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>}) {
     const [value, setValue] = useState('');
     const [placeholder, setPlaceholder] = useState('할 일 입력');
-    const [taskContentDetail, setTaskContentDetail] = useRecoilState(taskContentDetailSelector);
+    const idForEdit = useRef(uuidv4());
+    const setTaskContentDetailField = useSetRecoilState(taskContentDetailFieldSelector(idForEdit.current));
 
+    // e75f0b4e-281e-4bf5-a3da-67d22cd4a133
 
-    function onClickAddButtonHandler(){
-        if(taskContentDetail.contents.length === 5){
-            setSnackbar({show:true, type:'INFO', content:'할 일은 업무당 최대 5개 추가할 수 있습니다.'});
-            return;
-        }
-
-        const id = _.random().toString();
-        setTaskContentDetail((prev:TaskContentDetailsState) => {
-            const updatedContentDetail:TaskContentDetail[] = [...prev.contents, {id, data:value}];
-            return {...prev.contents, contents:updatedContentDetail};
-        });
+    function onClickAddButtonHandler() {
+        setTaskContentDetailField(value);
         setValue("");
+        setIsOpen(false);
     }
 
 
@@ -34,7 +25,8 @@ function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAc
         <div className='my-2 flex items-center'>
             <div
                 className='w-full flex items-center p-1'>
-                <div className={`relative ml-1 min-h-[2.3rem] mobile:min-h-[2rem] ${value.length === 0 && 'min-w-[6.8rem]'}`}>
+                <div
+                    className={`relative ml-1 min-h-[2.3rem] mobile:min-h-[2rem] ${value.length === 0 && 'min-w-[6.8rem]'}`}>
                     <div className='relative flex items-center space-x-1 z-10'>
                         <div className='w-[320px] mobile:w-[240px] whitespace-nowrap text-transparent'>{value}</div>
                     </div>
@@ -56,7 +48,7 @@ function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAc
                 </div>
             </div>
             <div className={`w-full opacity-100 flex space-x-1 mx-1`}>
-               <TaskContentAddButton onClickAddButtonHandler={onClickAddButtonHandler}/>
+                <TaskContentAddButton onClickAddButtonHandler={onClickAddButtonHandler}/>
             </div>
         </div>
     );

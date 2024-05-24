@@ -19,7 +19,7 @@ export interface TaskItem {
     contentDetail: string | '';
 }
 
-export interface TaskAddForm extends TaskItem  {
+export interface TaskAddForm extends TaskItem {
     title: '업무 추가'
     type: 'add';
 }
@@ -30,12 +30,9 @@ export interface TaskModifyForm extends TaskItem {
     progressStatusCode: TaskStatusValueType;
 }
 
-export type TaskFormKey = keyof Omit<TaskModifyForm, 'progressStatusCode'>;
+export type TaskForm = TaskAddForm | TaskModifyForm;
 
-export type TaskContentDetail = {
-    id: string;
-    data: string;
-}
+export type TaskContentDetails = Map<string, string>;
 
 
 export type AssignedUser = {

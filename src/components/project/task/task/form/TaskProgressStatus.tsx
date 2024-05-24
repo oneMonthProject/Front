@@ -4,7 +4,7 @@ import {useRecoilState} from "recoil";
 import {taskModalFieldSelector} from "@/store/project/task/TaskStateStore";
 
 function TaskProgressStatus() {
-    const [{type}, setType] = useRecoilState(taskModalFieldSelector('type'));
+    const [type] = useRecoilState(taskModalFieldSelector('type'));
 
     return type === 'modify' && (
         <div className='flex'>

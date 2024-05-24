@@ -4,9 +4,14 @@ import {useRecoilValue, useResetRecoilState} from "recoil";
 import Modal from "@/components/ui/Modal";
 import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {createPortal} from "react-dom";
-import TaskModalContent from './TaskModalContent';
 import useUpdateTask from "@/hooks/useUpdateTask";
 import useCreateTask from "@/hooks/useCreateTask";
+import TaskContent from "@/components/project/task/task/form/TaskContent";
+import TaskProgressStatus from "@/components/project/task/task/form/TaskProgressStatus";
+import TaskDate from "@/components/project/task/task/form/TaskDate";
+import TaskAssignedCrew from "@/components/project/task/task/form/TaskAssignedCrew";
+import TaskUpdatedBy from "@/components/project/task/task/form/TaskUpdatedBy";
+import TaskContentDetail from "./TaskContentDetail/TaskContentDetail";
 
 
 function TaskModal() {
@@ -52,7 +57,17 @@ function TaskModal() {
                             onClickConfirmHandler={onClickConfirmHandler}
                             isUpdating={isPending}
                         >
-                            <TaskModalContent form={form}/>
+                            {/*<TaskModalContent form={form}/>*/}
+                            <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-10 flex-col mt-5'>
+                                <div className="space-y-5 mobile:space-y-3 mx-4 mobile:mx-0 mobile:text-sm">
+                                    <TaskContent/>
+                                    <TaskProgressStatus/>
+                                    <TaskDate/>
+                                    <TaskAssignedCrew/>
+                                    <TaskUpdatedBy/>
+                                    <TaskContentDetail/>
+                                </div>
+                            </section>
                         </Modal>
                     ), portalElement)
                     : null

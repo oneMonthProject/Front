@@ -1,64 +1,58 @@
 'use client';
 import React, {Fragment} from 'react';
 import useProjectCrewList from "@/hooks/useProjectCrewList";
-import {SelectItem} from "@/utils/type";
+import {ProjectMember, SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
-import {taskModalState} from "@/store/project/task/TaskStateStore";
+import {TaskField, taskModalFieldSelector} from "@/store/project/task/TaskStateStore";
 import {Listbox, Transition} from "@headlessui/react";
 import {bigIntToString, changeImageUrl, classNames} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import Avatar from "@/components/ui/Avatar";
+import {AssignedUser} from "@/app/project/@task/_utils/type";
+import DefaultSelectOption from "@/components/ui/selector/DefaultSelectOption";
 
 const compareItems = (a: SelectItem<string, string>, b: SelectItem<string, string>) => {
     if (a && b) {
         return a?.value === b?.value;
     }
-
     return false;
 }
 
+export const DEFAULT_CREW_OPTION = {name: '멤버 선택', value: null} as const;
+
+function getSelectedCrew(
+    assignedUser: AssignedUser | null, crewList: ProjectMember[]
+): SelectItem<string, bigint | null> {
+    if (!assignedUser) return DEFAULT_CREW_OPTION;
+
+    const selectedCrew = crewList.find(
+        ({projectMemberId}) => projectMemberId === (assignedUser as AssignedUser).projectMemberId
+    )!;
+
+    return {name: selectedCrew.user.nickname, value: selectedCrew.projectMemberId}
+}
+
 function ProjectCrewSelect() {
-    const [modalState, setModalState] = useRecoilState(taskModalState);
-    const {form} = modalState;
-    const {assignedUser} = form!;
+    const [assignedUser, setAssignedUser] = useRecoilState(taskModalFieldSelector('assignedUser'));
 
     const {crewList, isFetching} = useProjectCrewList();
 
-    if(isFetching) return <div>loading...</div>;
+    if (isFetching) return <div>loading...</div>;
 
-    const projectCrews = crewList!.map(({user: {nickname}, projectMemberId}) => (
-            {
-                name: nickname,
-                value: bigIntToString(projectMemberId),
-            }
-        ));
-
-    const crewImages: Record<string, string | null> = {};
-    for (const {projectMemberId, user: {profileImgSrc}} of crewList!) {
-        crewImages[bigIntToString(projectMemberId)] = changeImageUrl(profileImgSrc);
-    }
-
-    const projectCrewItems: SelectItem<string, string | null>[]
-        = [{name: '멤버 선택', value: null}, ...projectCrews];
-
-
-    const selectedCrew = assignedUser
-        ? projectCrewItems.find(({value}) =>
-            value === bigIntToString(assignedUser.projectMemberId)
-        )! : projectCrewItems[0];
-
-
-    function setSelectedCrew({name, value}: SelectItem<string, string | null>) {
-        const updatedForm: typeof form = {
-            ...modalState.form!,
-            assignedUser: value ? {projectMemberId: BigInt(value), nickname: name} : null
-        };
-        setModalState({...modalState, form: updatedForm});
-    }
-
+    const selectedCrew = getSelectedCrew(assignedUser as TaskField<'assignedUser'>, crewList);
 
     return (
-        <Listbox value={selectedCrew} onChange={setSelectedCrew} by={compareItems}>
+        <Listbox
+            value={selectedCrew}
+            onChange={({name, value}) => {
+                const updatedAssignedUser: TaskField<'assignedUser'> = value ? {
+                    projectMemberId: value,
+                    nickname: name
+                } : null;
+                setAssignedUser(updatedAssignedUser);
+            }}
+            by={compareItems}
+        >
             {({open}) => (
                 <div>
                     <div className="relative w-full tablet:w-[200px] ">
@@ -80,16 +74,17 @@ function ProjectCrewSelect() {
                         >
                             <Listbox.Options
                                 className="absolute z-10 mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                                {projectCrewItems.map(({name, value}) => (
+                                <DefaultSelectOption selectItem={DEFAULT_CREW_OPTION} keyProps='defaultOption'/>
+                                {crewList.map(({user: {nickname, profileImgSrc}, projectMemberId}) => (
                                     <Listbox.Option
-                                        key={value}
+                                        key={bigIntToString(projectMemberId)}
                                         className={({active}) =>
                                             classNames(
                                                 active ? 'bg-primary opacity-50 text-white' : 'text-gray-900',
                                                 'relative cursor-default select-none py-2 pl-3 pr-9 mobile:text-sm'
                                             )
                                         }
-                                        value={{name, value}}
+                                        value={{name: nickname, value: projectMemberId}}
                                     >
                                         {
                                             ({selected, active}) =>
@@ -98,15 +93,16 @@ function ProjectCrewSelect() {
                                                         <span
                                                             className={classNames(selected ? 'font-bold' : 'font-normal', 'flex items-center space-x-2 block truncate')}>
                                                             {
-                                                                value && <Avatar src={crewImages[value]}
-                                                                                 alt={`${name}의 프로필 이미지`}
-                                                                                 size='2xs'/>
+                                                                projectMemberId !== null &&
+                                                                <Avatar
+                                                                    src={changeImageUrl(profileImgSrc)}
+                                                                    alt={`${nickname}의 프로필 이미지`}
+                                                                    size='2xs'/>
                                                             }
-                                                            <span>{name}</span>
+                                                            <span>{nickname}</span>
                                                         </span>
                                                         {
-                                                            selected ?
-                                                                (
+                                                            selected ? (
                                                                     <span
                                                                         className={classNames(
                                                                             active ? 'text-white' : 'text-primary',

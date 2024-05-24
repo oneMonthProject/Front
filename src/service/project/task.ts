@@ -1,7 +1,7 @@
 import {request} from "@/service/project/request";
 import {PageResponseBody} from "@/utils/type";
 import {TasksReqParam} from "@/hooks/useTasks";
-import {TaskItem} from "@/app/project/@task/_utils/type";
+import {TaskAddForm, TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
 
 /**
  * 업무 목록 조회
@@ -28,7 +28,7 @@ export async function getTaskList(tasksReqParam: TasksReqParam): Promise<PageRes
  * 업무 생성
  * @param task
  */
-export async function createTask(task: TaskItem) {
+export async function createTask(task: TaskAddForm) {
     if (!task.assignedUser?.projectMemberId) throw Error('업무 담당자를 선택해 주세요');
     if (!task.content) throw Error('업무 제목을 입력해주세요');
     if (!task.startDate) throw Error('시작 날짜를 입력해주세요');
@@ -43,7 +43,7 @@ export async function createTask(task: TaskItem) {
  * 업무 수정
  * @param task
  */
-export async function updateTask(task: TaskItem) {
+export async function updateTask(task: TaskModifyForm) {
     if (!task.assignedUser?.projectMemberId) throw Error('업무 담당자를 선택해 주세요');
     if (!task.content) throw Error('업무 제목을 입력해주세요');
     if (!task.startDate) throw Error('시작 날짜를 입력해주세요');

@@ -5,7 +5,7 @@ import {NoticeCreateForm} from "@/utils/type";
 import {createProjectTaskNotice} from "@/service/project/notice";
 import {useResetRecoilState, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
-import {TaskItem} from "@/app/project/@task/_utils/type";
+import {TaskModifyForm} from "@/app/project/@task/_utils/type";
 import {TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
 import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
@@ -16,7 +16,7 @@ function useUpdateTask() {
     const queryClient = useQueryClient();
 
     const {mutate: updateTask, isPending: isUpdating} = useMutation({
-        mutationFn: (currentForm: TaskItem) => updateTaskAPI(currentForm),
+        mutationFn: (currentForm: TaskModifyForm) => updateTaskAPI(currentForm),
         onSuccess: async (res, variables, context) => {
             if (res.result === "success") {
                 const {

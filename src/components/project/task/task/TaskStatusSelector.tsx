@@ -4,17 +4,8 @@ import {SelectItem} from "@/utils/type";
 import {Listbox, Transition} from "@headlessui/react";
 import {classNames} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
-import {
-    taskModalFieldSelector,
-    TaskModalState,
-    taskModalState,
-    taskProgressFieldSelector
-} from "@/store/project/task/TaskStateStore";
-import {
-    TaskModifyForm,
-    TaskStatusNameType as Name,
-    TaskStatusValueType as Value
-} from "@/app/project/@task/_utils/type";
+import {taskProgressModFieldSelector} from "@/store/project/task/TaskStateStore";
+import {TaskStatusNameType as Name, TaskStatusValueType as Value} from "@/app/project/@task/_utils/type";
 import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 const compareItems = (a: SelectItem<Name, Value>, b: SelectItem<Name, Value>) => {
@@ -25,7 +16,7 @@ const compareItems = (a: SelectItem<Name, Value>, b: SelectItem<Name, Value>) =>
 }
 
 function TaskStatusSelector() {
-    const [{progressStatus, progressStatusCode}, setProgressStatus] = useRecoilState(taskProgressFieldSelector)
+    const [{progressStatus, progressStatusCode}, setProgressStatus] = useRecoilState(taskProgressModFieldSelector)
 
     function onChangeHandler(item: SelectItem<Name, Value>) {
         setProgressStatus({progressStatus: item.name, progressStatusCode: item.value});

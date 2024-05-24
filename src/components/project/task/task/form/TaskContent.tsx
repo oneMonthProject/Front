@@ -2,10 +2,10 @@
 import React from 'react';
 import Input from "@/components/ui/form/Input";
 import {useRecoilState} from "recoil";
-import {taskModalFieldSelector} from "@/store/project/task/TaskStateStore";
+import {TaskField, taskModalFieldSelector} from "@/store/project/task/TaskStateStore";
 
 function TaskContent() {
-    const [{content}, setContent] = useRecoilState(taskModalFieldSelector("content"));
+    const [content, setContent] = useRecoilState(taskModalFieldSelector("content"));
 
     return (
         <div className='flex space-x-10'>
@@ -14,8 +14,8 @@ function TaskContent() {
                 <Input
                     id="content"
                     placeholder="제목 입력"
-                    value={content}
-                    onChange={(e) => setContent({content: e.target.value})}
+                    value={content as TaskField<'content'>}
+                    onChange={(e) => setContent(e.target.value)}
                     maxLength={20}
                 />
             </div>

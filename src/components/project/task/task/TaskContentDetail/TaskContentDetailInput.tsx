@@ -1,21 +1,21 @@
 'use client';
 
 import React, {useRef, useState} from 'react';
-import {useSetRecoilState} from "recoil";
-import {taskContentDetailSelector, TaskContentDetailsState} from "@/store/project/task/TaskStateStore";
+import {useRecoilState, useSetRecoilState} from "recoil";
+import {taskContentDetailFieldSelector, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
 import TaskContentCancelDeleteButton
     from "@/components/project/task/task/TaskContentDetail/TaskContentCancelDeleteButton";
 import TaskContentEditFinishButton from "@/components/project/task/task/TaskContentDetail/TaskContentEditFinishButton";
-import {TaskContentDetail} from "@/app/project/@task/_utils/type";
+import {TaskContentDetails} from "@/app/project/@task/_utils/type";
 
 
-function TaskContentDetailInput({initContents}: { initContents: TaskContentDetail }) {
+function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
     const [isReadOnly, setIsReadOnly] = useState(true);
-    const [value, setValue] = useState(initContents.data);
     const [placeholder, setPlaceholder] = useState('할 일 입력');
-    const setTaskContentDetail = useSetRecoilState(taskContentDetailSelector);
-    console.log("initContentsData: ", initContents.data);
-    console.log("value::: ", value);
+    const [taskContentDetailField, setTaskContentDetailField] =
+        useRecoilState(taskContentDetailFieldSelector(idForEdit));
+    const [value, setValue] = useState(() => taskContentDetailField);
+    const setTaskContentDetails = useSetRecoilState(taskContentDetailSelector);
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -30,28 +30,19 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
     /**
      * 수정 완료 click
      */
-    function onClickEditFinishHandler(newData:string) {
-        setTaskContentDetail((prev: TaskContentDetailsState) => {
-            const updatedContentDetail = [];
-            for (const content of prev.contents) {
-                updatedContentDetail.push(
-                    content.id === initContents.id ?
-                        {...content, data: newData} : {...content}
-                );
-            }
-            return {...prev, contentDetail: updatedContentDetail};
-        });
-
-        // setIsReadOnly(true);
+    function onClickEditFinishHandler() {
+        setTaskContentDetailField(value);
+        setIsReadOnly(true);
     }
 
     /**
      * 삭제 버튼 click
      */
     function onClickDeleteButtonHandler() {
-        setTaskContentDetail((prev: TaskContentDetailsState) => {
-            const updatedContentDetail = prev.contents.filter((content) => content.id !== initContents.id);
-            return {...prev, contentDetail: updatedContentDetail};
+        setTaskContentDetails((prev: TaskContentDetails) => {
+            const updatedContentDetails = new Map(prev);
+            updatedContentDetails.delete(idForEdit);
+            return updatedContentDetails;
         });
 
         setIsReadOnly(true);
@@ -61,7 +52,7 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
      * 수정 취소 버튼 click
      */
     function onClickEditCancelButtonHandler() {
-        setValue(initContents.data);
+        setValue(taskContentDetailField);
         setIsReadOnly(true);
     }
 
@@ -84,7 +75,9 @@ function TaskContentDetailInput({initContents}: { initContents: TaskContentDetai
                         className={`w-[320px] mobile:w-full h-full absolute top-0 left-0 z-10 appearance-none border-none focus:border-transparent 
                             focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'}`}
                         onChange={(e) => {
-                            if (e.target.value === "") {setPlaceholder('할 일 입력');}
+                            if (e.target.value === "") {
+                                setPlaceholder('할 일 입력');
+                            }
                             console.log("value:: ", e.target.value);
                             setValue(e.target.value);
                         }}
