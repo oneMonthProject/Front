@@ -1,4 +1,4 @@
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/selector/Select";
 
 interface SelectSkeletonProps {
     label: string;

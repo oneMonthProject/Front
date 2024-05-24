@@ -2,7 +2,7 @@ import React from 'react';
 import {useRecoilState} from "recoil";
 import {ProjectNoticeCrewFWDLForm, projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNoticeStateStore";
 import {SelectItem} from "@/utils/type";
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/selector/Select";
 import {
     ForceWDLOption,
     ForceWDLOptionNameType as NameType,

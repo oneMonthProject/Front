@@ -1,6 +1,6 @@
 'use client';
 
-import Select from "@/components/ui/Select"
+import Select from "@/components/ui/selector/Select"
 import {SelectItem} from "@/utils/type";
 import {TrustGradeNameType as Name, TrustGradeValueType as Value} from "@/app/project/@setting/_utils/type";
 import React from "react";

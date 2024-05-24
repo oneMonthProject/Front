@@ -1,4 +1,4 @@
-import MultiSelect from "@/components/ui/MultiSelect";
+import MultiSelect from "@/components/ui/selector/MultiSelect";
 import {usePositionList} from "@/hooks/usePositionList";
 import {PositionId, SelectItem} from "@/utils/type";
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";

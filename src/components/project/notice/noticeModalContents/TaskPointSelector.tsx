@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import Select from "@/components/ui/Select";
+import Select from "@/components/ui/selector/Select";
 import {projectNoticeCurrentFormState, ProjectNoticeTaskForm} from "@/store/project/notice/ProjectNoticeStateStore";
 import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
