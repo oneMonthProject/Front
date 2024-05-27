@@ -9,28 +9,24 @@ import {
     ProjectNoticeTaskForm
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {snackbarState} from "@/store/CommonStateStore";
-import {useProjectInfo} from "@/hooks/useProjectInfo";
 import ManagerCheckIcon from "@/components/project/notice/ManagerCheckIcon";
 import {
     Notice,
     ProjectNoticeCrewFWDL,
     ProjectNoticeRecruit,
-    ProjectNoticeTask, ProjectNoticeTypeKey
+    ProjectNoticeTask,
+    ProjectNoticeTypesKey
 } from "@/app/project/@notice/_utils/type";
-import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
-function NoticeItem({item}: { item: Notice }) {
+function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }) {
     const setSnackbar = useSetRecoilState(snackbarState);
     const {type, alertId, content, createDate, checkedStatus} = item;
     const setCurrentNoticeForm = useSetRecoilState(projectNoticeCurrentFormState);
 
-    const {data} = useProjectInfo();
-    const {authMap: {milestoneAuth}} = data;
-
-    function onClickHandler(type: ProjectNoticeTypeKey) {
+    function onClickHandler(type: ProjectNoticeTypesKey) {
         switch (type) {
-            case PNT.WORK.value:
-                if (!milestoneAuth) {
+            case 'WORK':
+                if (!isAuthorized) {
                     setSnackbar({show: true, type: 'INFO', content: '알림 확인 권한이 없습니다.'});
                     return;
                 }
@@ -41,8 +37,8 @@ function NoticeItem({item}: { item: Notice }) {
                     setCurrentNoticeForm(currentFormState);
                 }
                 break;
-            case PNT.RECRUIT.value:
-                if (!milestoneAuth) {
+            case 'RECRUIT':
+                if (!isAuthorized) {
                     setSnackbar({show: true, type: 'INFO', content: '알림 확인 권한이 없습니다.'});
                     return;
                 }
@@ -53,12 +49,12 @@ function NoticeItem({item}: { item: Notice }) {
                     setCurrentNoticeForm(currentFormState);
                 }
                 break;
-            case PNT.CREW_CONFIRM.value:
-            case PNT.ADD.value:
+            case 'CREW_CONFIRM':
+            case 'ADD':
                 setCurrentNoticeForm({name: type, form: item} as ProjectNoticeCrewForm);
                 break;
-            case PNT.FORCEWITHDRAWL.value:
-                if (!milestoneAuth) {
+            case 'FORCEWITHDRAWL':
+                if (!isAuthorized) {
                     setSnackbar({show: true, type: 'INFO', content: '알림 확인 권한이 없습니다.'});
                     return;
                 }
@@ -83,7 +79,7 @@ function NoticeItem({item}: { item: Notice }) {
             <div className='flex items-center gap-x-4'>
                 <NoticeBadge size='sm' noticeType={type}/>
                 {content}
-                <ManagerCheckIcon isChecked={checkedStatus} alertType={type}/>
+                {type !== 'ADD' && <ManagerCheckIcon isChecked={checkedStatus}/>}
             </div>
             <div className='ml-auto text-grey600'>
                 {createDate}

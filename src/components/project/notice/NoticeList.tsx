@@ -3,25 +3,29 @@ import React, {useState} from 'react';
 import {PageResponseBody} from "@/utils/type";
 import NoticeItem from "@/components/project/notice/NoticeItem";
 import {useQuery} from "@tanstack/react-query";
-import {useQueryString} from "@/hooks/useQueryString";
 import {getProjectNoticeByMenu} from "@/service/project/notice";
 import CommonPagination from "@/components/ui/CommonPagination";
-import {useRecoilValue} from "recoil";
+import {useRecoilValue, useRecoilValueLoadable} from "recoil";
 import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
 import Loader from "@/components/ui/Loader";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 import {Notice} from "@/app/project/@notice/_utils/type";
+import {projectIdState, projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 
 
 function NoticeList() {
-    const projectId = useQueryString('projectId');
     const [pageIndex, setPageIndex] = useState(0);
-    const {value} = useRecoilValue(projectNoticeActiveMenuStateStore);
+    const activeNoticeMenu = useRecoilValue(projectNoticeActiveMenuStateStore);
+
+    const projectId = useRecoilValue(projectIdState);
+
+    // 알림 확인 & 컨펌 관련 권한
+    const {state: authState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(projectId));
 
     // 5초마다 백그라운드에서 알림 목록 refetch
     const {data, isFetching} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
-        queryKey: ['noticeList', projectId, pageIndex, value],
-        queryFn: () => getProjectNoticeByMenu(BigInt(projectId), pageIndex, ITEM_COUNT.LIST_SM, value),
+        queryKey: ['noticeList', projectId, pageIndex, activeNoticeMenu],
+        queryFn: () => getProjectNoticeByMenu(BigInt(projectId!), pageIndex, ITEM_COUNT.LIST_SM, activeNoticeMenu),
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });
@@ -33,7 +37,7 @@ function NoticeList() {
         <>
             <div className='tablet:h-[300px]'>
                 {
-                    isFetching
+                    isFetching || authState === 'loading'
                         ?
                         (
                             <div className='flex w-full h-full'>
@@ -47,7 +51,13 @@ function NoticeList() {
                                     className="divide-y mobile:max-h-[23rem] mobile:overflow-y-auto"
                                 >
                                     {
-                                        noticeList.map((item) => (<NoticeItem item={item} key={item.alertId}/>))
+                                        noticeList.map((item) => (
+                                            <NoticeItem
+                                                item={item}
+                                                key={item.alertId}
+                                                isAuthorized={authMap.milestoneAuth}
+                                            />)
+                                        )
                                     }
                                 </ul>
                             )

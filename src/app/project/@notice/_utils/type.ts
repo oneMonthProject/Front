@@ -1,29 +1,24 @@
 import {DataId, Position} from "@/utils/type";
 import {
     ForceWDLOptionValueType,
-    PROJECT_NOTICE_MENU,
-    PROJECT_NOTICE_TYPE,
+    PROJECT_NOTICE,
+    PROJECT_NOTICE_TYPES,
     RecruitOptionValueType,
     TaskPointOptions
 } from "@/app/project/@notice/_utils/constant";
 
 /**
- * 프로젝트 알림타입 index
+ * 프로젝트 알림
  */
-export type ProjectNoticeTypeKey = keyof typeof PROJECT_NOTICE_TYPE;
+export type ProjectNoticeKey = keyof typeof PROJECT_NOTICE;
+export type ProjectNoticeTypesKey = keyof typeof PROJECT_NOTICE_TYPES;
 
-/**
- * 프로젝트 알림메뉴 Index
- */
-export type ProjectNoticeMenuKey = keyof typeof PROJECT_NOTICE_MENU;
-export type ProjectNoticeMenuName = (typeof PROJECT_NOTICE_MENU)[ProjectNoticeMenuKey]["name"];
-export type ProjectNoticeMenuValue = (typeof PROJECT_NOTICE_MENU)[ProjectNoticeMenuKey]["value"];
 
 /**
  * 프로젝트 알림 기본데이터
  */
 export type Notice = {
-    type: ProjectNoticeTypeKey;
+    type: ProjectNoticeTypesKey;
     alertId: DataId;
     checkUserId: DataId;
     sendUserId: DataId;

@@ -43,62 +43,60 @@ export type ForceWDLOptionKeyType = keyof typeof ForceWDLOption;
 export type ForceWDLOptionNameType = (typeof ForceWDLOption)[ForceWDLOptionKeyType]["name"];
 export type ForceWDLOptionValueType = (typeof ForceWDLOption)[ForceWDLOptionKeyType]["value"];
 
+
 /**
  * 프로젝트 상세 > 알림탭 서브메뉴
  */
-export const PROJECT_NOTICE_MENU = {
-    ALL: {name: '전체', value: 'ALL', path: '/all'},
-    RECRUIT: {name: '모집', value: 'RECRUIT', path: '/recruits'},
-    WORK: {name: '업무', value: 'WORK', path: '/works'},
-    CREW: {name: '크루', value: 'CREW', path: '/crews'}
+export const PROJECT_NOTICE = {
+    ALL: {
+        desc: '전체',
+        path: '/all',
+    },
+    RECRUIT: {
+        desc: '모집',
+        path: '/recruits',
+        color: 'yellow'
+    },
+    WORK: {
+        desc: '업무',
+        path: '/works',
+        color: 'green'
+    },
+    CREW: {
+        desc: '크루',
+        path: '/crews',
+        color: 'blue'
+    },
 } as const;
 
 
 /**
- * 프로젝트 상세 > 알림 > 알림타입 & 알림타입별 색상
+ * 프로젝트 상세 > 알림 타입
  */
-export const PROJECT_NOTICE_COLOR = {
-    RECRUIT: 'yellow',
-    WORK: 'green',
-    CREW: 'blue'
-}
-
-export const PROJECT_NOTICE_TYPE = {
+export const PROJECT_NOTICE_TYPES = {
     RECRUIT: {
         name: '모집',
-        value: 'RECRUIT',
-        menu: PROJECT_NOTICE_MENU.RECRUIT.value,
-        color: PROJECT_NOTICE_COLOR.RECRUIT
+        group:'RECRUIT'
     },
     WORK: {
         name: '업무',
-        value: 'WORK',
-        menu: PROJECT_NOTICE_MENU.WORK.value,
-        color: PROJECT_NOTICE_COLOR.WORK
+        group:'WORK'
     },
     ADD: {
         name: '크루 추가',
-        value: 'ADD',
-        menu: PROJECT_NOTICE_MENU.CREW.value,
-        color: PROJECT_NOTICE_COLOR.CREW
+        group: 'CREW'
     },
     WITHDRAWL: {
         name: '크루 탈퇴',
-        value: 'WITHDRAWL',
-        menu: PROJECT_NOTICE_MENU.CREW.value,
-        color: PROJECT_NOTICE_COLOR.CREW
+        group: 'CREW'
     },
     FORCEWITHDRAWL: {
         name: '크루 강제탈퇴',
-        value: 'FORCEWITHDRAWL',
-        menu: PROJECT_NOTICE_MENU.CREW.value,
-        color: PROJECT_NOTICE_COLOR.CREW
+        group: 'CREW'
     },
     CREW_CONFIRM: {
         name: '크루 알림 확인',
-        value: 'CREW_CONFIRM',
-        menu: PROJECT_NOTICE_MENU.CREW.value,
-        color: PROJECT_NOTICE_COLOR.CREW
+        group: 'CREW'
     }
 } as const;
 

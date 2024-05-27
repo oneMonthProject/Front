@@ -1,16 +1,20 @@
 import React from 'react';
 import {makeBadgeColor, makeBadgeSize} from "@/utils/common";
-import {PROJECT_NOTICE_TYPE} from "@/app/project/@notice/_utils/constant";
-import {ProjectNoticeTypeKey} from "@/app/project/@notice/_utils/type";
+import {PROJECT_NOTICE, PROJECT_NOTICE_TYPES} from "@/app/project/@notice/_utils/constant";
+import {ProjectNoticeTypesKey} from "@/app/project/@notice/_utils/type";
 
 interface NoticeBadgeProps {
     size: string;
-    noticeType: ProjectNoticeTypeKey;
+    noticeType: ProjectNoticeTypesKey
 }
-function NoticeBadge({size = '', noticeType = 'WORK'}: NoticeBadgeProps) {
+
+function NoticeBadge({size = '', noticeType}: NoticeBadgeProps) {
     const {textSize, px, py} = makeBadgeSize(size);
 
-    const {bgColor, textColor, ringColor} = makeBadgeColor(PROJECT_NOTICE_TYPE[noticeType].color);
+    const noticeGroupName = PROJECT_NOTICE_TYPES[noticeType]['group'];
+    const color = PROJECT_NOTICE[noticeGroupName].color;
+
+    const {bgColor, textColor, ringColor} = makeBadgeColor(color);
 
     return (
         <>
