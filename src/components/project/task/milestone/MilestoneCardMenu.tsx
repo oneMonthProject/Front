@@ -13,7 +13,7 @@ interface MilestoneCardMenuProps {
 }
 
 function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandler}: MilestoneCardMenuProps) {
-    const authMap = useRecoilValue(projectTaskAuthSelector);
+     const authMap = useRecoilValue(projectTaskAuthSelector(null));
 
     const milestoneMenus = [
         {

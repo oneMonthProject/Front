@@ -4,21 +4,19 @@ import React from 'react';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
-import {MilestoneInfo} from "@/utils/type";
+import {MilestoneInfo, ProjectTaskAuth} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {useRecoilValue, useSetRecoilState} from "recoil";
+import {useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 
-function MilestoneAddButton() {
-    const contents = useRecoilValue(projectTaskAuthSelector);
+function MilestoneAddButton({authMap}: { authMap: ProjectTaskAuth }) {
     const setSnackBar = useSetRecoilState(snackbarState);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
-    const {milestoneAuth} = contents;
+    const {milestoneAuth} = authMap;
 
     const onClickHandler = () => {
-        if(milestoneAuth){
+        if (milestoneAuth) {
             const today = getTodayString();
             const addMilestoneForm: MilestoneInfo = {
                 content: "",
@@ -32,8 +30,8 @@ function MilestoneAddButton() {
             }
 
             setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
-        }else{
-            setSnackBar({show:true, type:'INFO', content:'마일스톤 생성 권한이 없습니다.'});
+        } else {
+            setSnackBar({show: true, type: 'INFO', content: '마일스톤 생성 권한이 없습니다.'});
         }
 
     }

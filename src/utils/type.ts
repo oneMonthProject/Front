@@ -332,3 +332,7 @@ export interface UserProjectNotice {
 export type DataId = string | bigint;
 
 export type ArrayValue<T> = T extends () => IterableIterator<infer U> ? U : never;
+
+// form
+
+export type FormField<T, U extends keyof T, V> = T[Extract<U, V>];

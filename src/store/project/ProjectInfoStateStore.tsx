@@ -1,76 +1,47 @@
-import {atom, noWait, selector, selectorFamily} from "recoil";
+import {atom, atomFamily, noWait, selector, selectorFamily} from "recoil";
 import {getMyProjectDetail} from "@/service/project/project";
+import {ProjectInfo} from "@/utils/type";
 
 
-export const projectIdState = atom<string>({
+export const projectIdState = atom<string | null>({
     key: 'projectIdState',
+    default: null
 });
 
-/**
- * 프로젝트 상세정보 init
- */
-export const projectInitSelector = selectorFamily({
-    key: 'projectInitSelector',
-    get: (param: string = '') => async ({get}) => {
-        const projectId = param === '' ? get(projectIdState) : param;
+export const projectInfoQuery = selectorFamily<ProjectInfo, string>({
+        key: 'projectInfoQuery',
+        get: (projectId:string) => async ({get}) => {
+            const res = await getMyProjectDetail(BigInt(projectId));
+            if (res.message !== 'success') throw Error();
 
-        const res = await getMyProjectDetail(BigInt(projectId));
-        if (res.message !== 'success') throw Error();
+            return res.data;
+        }
+    });
 
-        return res.data;
-    }
-});
-
-/**
- * 프로젝트 상세정보 state
- */
-export const projectInfoState = atom({
-    key: 'projectInfoStateStore',
-    default: projectInitSelector
-});
-
-/**
- * 프로젝트 상세정보 selector
- */
-export const projectInfoSelector = selector({
-    key: 'projectInfoSelector',
-    get: ({get}) => {
-        return get(noWait(get(projectInfoState)(''))).getValue();
-    }
-})
-
-/**
- * 프로젝트 상세정보 auth init
- */
-export const projectTaskAuthInitSelector = selectorFamily({
-    key: 'projectTaskAuthInitSelector',
-    get: (param:string = '') => async ({get}) => {
-        const projectId = param === '' ? get(projectIdState) : param;
-
-        const res = await getMyProjectDetail(BigInt(projectId));
-        if (res.message !== 'success') throw Error();
-
-        const {authMap} = res.data;
-        return authMap;
-    }
-});
-
-/**
- * 프로젝트 상세정보 auth state
- */
-export const projectTaskAuthState = atom({
-    key: 'projectTaskAuthState',
-    default: projectTaskAuthInitSelector
+export const projectInfoState = atomFamily<ProjectInfo | null, string>({
+    key: 'projectInfoState',
+    default: selectorFamily<ProjectInfo | null, string>({
+        key: 'projectInfoSelector',
+        get: (projectId:string) => ({get}) => {
+            return get(projectInfoQuery(projectId!));
+        }
+    })
 });
 
 /**
  * 프로젝트 상세정보 auth selector
  */
-export const projectTaskAuthSelector = selector({
-    key:'projectTaskAuthSelector',
-    get: ({get}) => {
-        return get(noWait(get(projectTaskAuthState)(''))).getValue();
+export const projectTaskAuthSelector = selectorFamily({
+    key: 'projectTaskAuthSelector',
+    get: (param:string | null) => ({get}) => {
+        const projectId = param ? param : get(projectIdState)!;
+
+        const projectInfo = get(projectInfoState(projectId));
+        if (!projectInfo) return;
+        const {authMap} = projectInfo;
+        return authMap;
     }
-})
+});
+
 
 

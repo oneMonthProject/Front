@@ -1,63 +1,58 @@
-import {ProjectInfoForm, ProjectInfoFormKey} from "@/app/project/@setting/_utils/type";
-import {atom, selector, selectorFamily} from "recoil";
+import {ProjectSettingForm, ProjectSettingFormKey} from "@/app/project/@setting/_utils/type";
+import {atom, DefaultValue, selector, selectorFamily} from "recoil";
 import {TRUST_GRADE as TG} from "@/app/project/@setting/_utils/constant";
-import {projectInfoSelector} from "@/store/project/ProjectInfoStateStore";
+import {projectIdState, projectInfoState} from "@/store/project/ProjectInfoStateStore";
 
 
-export const projectSettingFormInit = selector({
-    key: 'projectSettingFormInit',
-    get: ({get}) => {
-        const projectInfo = get(projectInfoSelector);
-
-        const {
-            projectId,
-            name: projectName,
-            subject,
-            trustGrade: {name: trustGradeName},
-            startDate,
-            endDate
-        } = projectInfo;
-
-        const data: ProjectInfoForm = {
-            projectId,
-            projectName,
-            subject,
-            trustGradeId: Object.values(TG).find(({name}) => trustGradeName === name)?.value || null,
-            startDate,
-            endDate
-        }
-
-        return data;
-    }
-});
-
-export const projectSettingFormState = atom({
+export const projectSettingFormState = atom<ProjectSettingForm | null>({
     key: 'projectSettingFormState',
-    default: projectSettingFormInit
+    default: selector<ProjectSettingForm | null>({
+        key: 'projectSettingFormSelector',
+        get: ({get}) => {
+            const projectIdString = get(projectIdState);
+            console.log("projectIdString: ", projectIdString);
+            if (projectIdString === null) return null;
+
+            const projectInfo = get(projectInfoState(projectIdString));
+            if (projectInfo === null) return null;
+
+            const {
+                projectId,
+                name: projectName,
+                subject,
+                trustGrade: {name: trustGradeName},
+                startDate,
+                endDate
+            } = projectInfo;
+
+            const data: ProjectSettingForm = {
+                projectId,
+                projectName,
+                subject,
+                trustGradeId: Object.values(TG).find(({name}) => trustGradeName === name)?.value || null,
+                startDate,
+                endDate
+            }
+
+            return data;
+        }
+    })
 });
 
-export const projectSettingFormSelector = selector({
-    key:'projectSettingFormSelector',
-    get:({get}) => {
-        return get(projectSettingFormState);
-    }
-});
 
-export const projectSettingFormFields = atom({
-    key:'projectSettingFormFields',
-    default:projectSettingFormSelector
-})
-
-
-export const projectInfoFieldSelector = selectorFamily<Partial<ProjectInfoForm>, ProjectInfoFormKey>({
+export type ProjectSettingField<T> = ProjectSettingForm[Extract<ProjectSettingFormKey, T>];
+export const projectInfoFieldSelector = selectorFamily({
     key: 'projectInfoField',
-    get: (param: ProjectInfoFormKey) => ({get}) => {
-        const state = get(projectSettingFormFields);
-        return {[param]: state[param]};
+    get: (param: ProjectSettingFormKey) => ({get}) => {
+        const projectSettingForm = get(projectSettingFormState);
+        if (projectSettingForm === null) return null;
+        return projectSettingForm[param] as ProjectSettingField<typeof param>;
     },
-    set: (param: ProjectInfoFormKey) => ({get, set}, newValue) => {
-        const state = get(projectSettingFormFields);
-        set(projectSettingFormFields, {...state, ...newValue});
+    set: (param: ProjectSettingFormKey) => ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
+
+        const projectSettingForm = get(projectSettingFormState)!;
+        set(projectSettingFormState, {...projectSettingForm, [param]: newValue});
     }
 })
 
