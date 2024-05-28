@@ -1,33 +1,13 @@
 import React from 'react';
 import {useRecoilState} from "recoil";
-import {ProjectNoticeCrewFWDLForm, projectNoticeCurrentFormState} from "@/store/project/notice/ProjectNoticeStateStore";
-import {SelectItem} from "@/utils/type";
+import {projectNoticeForceWDLState} from "@/store/project/notice/ProjectNoticeStateStore";
 import Select from "@/components/ui/selector/Select";
-import {
-    ForceWDLOption,
-    ForceWDLOptionNameType as NameType,
-    ForceWDLOptionValueType as ValueType, PROJECT_NOTICE_TYPE as PNT
-} from "@/app/project/@notice/_utils/constant";
-import {ProjectNoticeCrewFWDL} from "@/app/project/@notice/_utils/type";
+import {ForceWDLOption} from "@/app/project/@notice/_utils/constant";
 
 const selectItems = Object.values(ForceWDLOption);
 
 function WthdrawSelector() {
-    const [currentNoticeForm, setCurrentNoticeForm] = useRecoilState(projectNoticeCurrentFormState);
-
-    function onChangeJoinPermitHandler(selectItem: SelectItem<NameType, ValueType>) {
-        const form: ProjectNoticeCrewFWDL = {
-            ...currentNoticeForm!.form,
-            withdrawConfirm: selectItem.value
-        };
-        const updatedNoticeFormState: ProjectNoticeCrewFWDLForm = {name: PNT.FORCEWITHDRAWL.value, form};
-        setCurrentNoticeForm(updatedNoticeFormState);
-    }
-
-    const selectedValue = selectItems.find(
-        v => v.value === (currentNoticeForm as ProjectNoticeCrewFWDLForm)
-            .form.withdrawConfirm
-    )!;
+    const [{withdrawConfirm}, setWithdrawConfirm] = useRecoilState(projectNoticeForceWDLState);
 
     return (
         <section className='mx-auto my-7 flex flex-col items-stretch'>
@@ -38,8 +18,11 @@ function WthdrawSelector() {
                 <Select
                     items={selectItems}
                     label=''
-                    setValue={onChangeJoinPermitHandler}
-                    value={selectedValue}/>
+                    setValue={
+                        (item) =>
+                            setWithdrawConfirm({withdrawConfirm: item.value})
+                    }
+                    value={selectItems.find(v => v.value === withdrawConfirm)!}/>
             </div>
         </section>
     );

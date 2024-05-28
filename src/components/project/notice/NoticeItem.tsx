@@ -2,19 +2,12 @@ import React from 'react';
 import NoticeBadge from "@/components/ui/badge/NoticeBadge";
 import {useSetRecoilState} from "recoil";
 import {
-    ProjectNoticeCrewForm,
-    ProjectNoticeCrewFWDLForm,
     projectNoticeCurrentFormState,
-    ProjectNoticeRecruitForm,
-    ProjectNoticeTaskForm
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {snackbarState} from "@/store/CommonStateStore";
 import ManagerCheckIcon from "@/components/project/notice/ManagerCheckIcon";
 import {
     Notice,
-    ProjectNoticeCrewFWDL,
-    ProjectNoticeRecruit,
-    ProjectNoticeTask,
     ProjectNoticeTypesKey
 } from "@/app/project/@notice/_utils/type";
 
@@ -32,9 +25,7 @@ function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }
                 }
                 if (checkedStatus) setSnackbar({show: true, type: 'INFO', content: '업무 평가가 완료된 상태입니다.'});
                 else {
-                    const form: ProjectNoticeTask = {...item, scoreTypeId: null};
-                    const currentFormState: ProjectNoticeTaskForm = {name: type, form};
-                    setCurrentNoticeForm(currentFormState);
+                    setCurrentNoticeForm({...item});
                 }
                 break;
             case 'RECRUIT':
@@ -44,14 +35,12 @@ function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }
                 }
                 if (checkedStatus) setSnackbar({show: true, type: 'INFO', content: '지원자 검토가 완료된 상태입니다.'});
                 else {
-                    const form: ProjectNoticeRecruit = {...item, isPermit: null};
-                    const currentFormState: ProjectNoticeRecruitForm = {name: type, form};
-                    setCurrentNoticeForm(currentFormState);
+                    setCurrentNoticeForm({...item});
                 }
                 break;
             case 'CREW_CONFIRM':
             case 'ADD':
-                setCurrentNoticeForm({name: type, form: item} as ProjectNoticeCrewForm);
+                setCurrentNoticeForm({...item});
                 break;
             case 'FORCEWITHDRAWL':
                 if (!isAuthorized) {
@@ -60,9 +49,7 @@ function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }
                 }
                 if (checkedStatus) setSnackbar({show: true, type: 'INFO', content: '탈퇴 검토가 완료된 상태입니다.'});
                 else {
-                    const form: ProjectNoticeCrewFWDL = {...item, withdrawConfirm: null};
-                    const currentFormState: ProjectNoticeCrewFWDLForm = {name: type, form};
-                    setCurrentNoticeForm(currentFormState);
+                    setCurrentNoticeForm({...item});
                 }
                 break;
             default:

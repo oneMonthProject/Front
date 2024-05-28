@@ -2,36 +2,21 @@
 
 import React from 'react';
 import Select from "@/components/ui/selector/Select";
-import {projectNoticeCurrentFormState, ProjectNoticeTaskForm} from "@/store/project/notice/ProjectNoticeStateStore";
-import {SelectItem} from "@/utils/type";
+import {projectNoticeTaskScoreState} from "@/store/project/notice/ProjectNoticeStateStore";
 import {useRecoilState} from "recoil";
 import {TiMinus} from "@react-icons/all-files/ti/TiMinus";
 import {TiInfoOutline} from "@react-icons/all-files/ti/TiInfoOutline";
-import {PROJECT_NOTICE_TYPE as PNT, TaskPointOptions} from "@/app/project/@notice/_utils/constant";
-import {PointTypeName as Name, PointTypeValue as Value, ProjectNoticeTask} from "@/app/project/@notice/_utils/type";
+import {TaskPointOptions} from "@/app/project/@notice/_utils/constant";
 
+const taskPointOptions = Object.values(TaskPointOptions);
+function TaskPointSelector({isTaskExpired}:{isTaskExpired:boolean}) {
+    const [{scoreTypeId}, setScoreTypeId] = useRecoilState(projectNoticeTaskScoreState);
 
-function TaskPointSelector() {
-    const [currentNoticeForm, setCurrentNoticeForm] = useRecoilState(projectNoticeCurrentFormState);
-
-    const {form: {content, scoreTypeId}} = currentNoticeForm as ProjectNoticeTaskForm;
-
-    function onChangeTaskPointHandler(selectItem: SelectItem<Name, Value>) {
-        const scoreTypeId = selectItem.value;
-        const updatedNotice: ProjectNoticeTask = {...currentNoticeForm!.form, scoreTypeId};
-        const updatedNoticeForm: ProjectNoticeTaskForm = {name: PNT.WORK.value, form: updatedNotice};
-        setCurrentNoticeForm(updatedNoticeForm);
-    }
-
-
-    const selectorOptions = content.includes("만료")
-        ? Object.values(TaskPointOptions).filter(v => v.name !== 'plus')
-        : Object.values(TaskPointOptions);
-
+    const selectItems = isTaskExpired ? taskPointOptions.filter(v => v.name !== '+ 신뢰점수') : taskPointOptions;
     return (
         <section className='mx-auto'>
             {
-                content.includes("만료")
+                isTaskExpired
                 &&
                 (
                     <div
@@ -48,10 +33,10 @@ function TaskPointSelector() {
                 <label className='max-w-[150px] tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수
                     부여</label>
                 <Select
-                    items={selectorOptions}
+                    items={selectItems}
                     label=''
-                    setValue={onChangeTaskPointHandler}
-                    value={selectorOptions.find(v => v.value === scoreTypeId)!}/>
+                    setValue={(item) => setScoreTypeId({scoreTypeId: item.value})}
+                    value={selectItems.find(v => v.value === scoreTypeId)!}/>
             </div>
         </section>
     );

@@ -2,23 +2,9 @@ import React from 'react';
 import TechStackImage from "@/components/ui/TechStackImage";
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import Avatar from "@/components/ui/Avatar";
-import {useRecoilValue} from "recoil";
-import {projectNoticeCurrentFormState, ProjectNoticeRecruitForm} from "@/store/project/notice/ProjectNoticeStateStore";
-import {useQuery} from "@tanstack/react-query";
-import {ProfileInfo, ResponseBody, TechStackItem} from "@/utils/type";
-import {getUserInfoByUserId} from "@/service/user/user";
+import {ProfileInfo, TechStackItem} from "@/utils/type";
 
-function NoticeItemRecruitInfo() {
-    const currentNoticeForm = useRecoilValue(projectNoticeCurrentFormState);
-
-    const {form:{sendUserId}} = currentNoticeForm as ProjectNoticeRecruitForm;
-
-    const {data, isFetching} = useQuery<ResponseBody<ProfileInfo>, Error>({
-        queryKey: ['userInfoById', sendUserId],
-        queryFn: () => getUserInfoByUserId(sendUserId)
-    });
-
-    if(isFetching) return <div>loading...</div>;
+function NoticeItemRecruitInfo({applicantProfile}: { applicantProfile: ProfileInfo }) {
 
     const {
         intro,
@@ -29,8 +15,7 @@ function NoticeItemRecruitInfo() {
         techStacks,
         trustGrade: {trustGradeName},
         trustScore
-    }:ProfileInfo = data!.data;
-
+    } = applicantProfile;
 
     return (
         <section className='tablet:max-w-[400px] mx-auto pt-5 flex-col items-center border-t border-b border-grey300 '>
@@ -40,7 +25,7 @@ function NoticeItemRecruitInfo() {
             <div className='mt-1 text-sm text-grey700'>{intro}</div>
             <ul className='mt-2 flex items-center justify-center space-x-1'>
                 {
-                    techStacks.map(({techStackName}:TechStackItem) => {
+                    techStacks.map(({techStackName}: TechStackItem) => {
                         return (
                             <li
                                 key={techStackName}

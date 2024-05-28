@@ -16,10 +16,10 @@ export const RecruitOption = {
     }
 } as const;
 
-export type RecruitOptionKeyType = keyof typeof RecruitOption;
-export type RecruitOptionNameType = (typeof RecruitOption)[RecruitOptionKeyType]["name"];
-export type RecruitOptionValueType = (typeof RecruitOption)[RecruitOptionKeyType]["value"];
 
+export type CrewForceWDLConfirm = {
+    withdrawConfirm: ForceWDLOptionValueType
+};
 
 /**
  * 프로젝트 상세 > 알림 > 강제탈퇴알림용 select 옵션
@@ -113,4 +113,4 @@ export const TaskPointOptions = {
         name: '- 신뢰점수',
         value: 2
     }
-}
+} as const;

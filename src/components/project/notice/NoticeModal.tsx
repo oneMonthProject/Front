@@ -2,26 +2,23 @@
 
 import React, {useEffect, useState} from 'react';
 import Modal from "@/components/ui/Modal";
-import NoticeModalContents from "@/components/project/notice/noticeModalContents/NoticeModalContents";
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilValue, useResetRecoilState} from "recoil";
 import {
     projectNoticeCurrentFormState,
     projectNoticeModalStateSelector
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
-import {confirmCrewWithdrawNotice, confirmRecruitNotice, confirmTaskNotice} from "@/service/project/confirm";
-import {snackbarState} from "@/store/CommonStateStore";
-import {useQueryClient} from "@tanstack/react-query";
-import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
+import Recruit from "@/components/project/notice/noticeModalContents/Recruit";
+import ForceWIthdrawl from "@/components/project/notice/noticeModalContents/ForceWIthdrawl";
+import Work from "@/components/project/notice/noticeModalContents/Work";
+import NoticeModalFooter from "@/components/project/notice/NoticeModalFooter";
 
 function NoticeModal() {
-    const setSnackbar = useSetRecoilState(snackbarState);
     const {isOpen, title} = useRecoilValue(projectNoticeModalStateSelector);
     const [portalElement, setPortalElement] = useState<Element | null>(null);
     const resetCurrentNoticeForm = useResetRecoilState(projectNoticeCurrentFormState);
     const currentNoticeForm = useRecoilValue(projectNoticeCurrentFormState);
 
-    const queryClient = useQueryClient();
 
     useEffect(() => {
         setPortalElement(document.getElementById('modal'));
@@ -36,63 +33,23 @@ function NoticeModal() {
         }
     }, [isOpen]);
 
-    async function onConfirmHandler() {
-        // 업무 - 신뢰도 부여하거나, 깎거나
-        if (currentNoticeForm?.name === PNT.WORK.value) {
-            const {form: {alertId, scoreTypeId}} = currentNoticeForm;
 
-            if (scoreTypeId === null) {
-                setSnackbar({show: true, type: 'ERROR', content: '신뢰점수를 선택해주세요.'});
-                return;
-            }
 
-            const res = await confirmTaskNotice(alertId, scoreTypeId);
+    if(!(isOpen && portalElement) || currentNoticeForm == null) return null;
 
-            if (res.result === 'success') {
-                await queryClient.invalidateQueries({queryKey: ['noticeList']});
-                setSnackbar({show: true, type: 'SUCCESS', content: '업무를 완료한 크루에게 신뢰점수를 부여했습니다.'});
-                resetCurrentNoticeForm();
-            }
-        }
-
-        // 모집 - 거절하거나 수락
-        if (currentNoticeForm?.name === PNT.RECRUIT.value) {
-            const {form: {projectId, alertId, isPermit: confirmResult}} = currentNoticeForm;
-
-            if (!confirmResult) {
-                setSnackbar({show: true, type: 'ERROR', content: '프로젝트 합류 여부를 선택해주세요.'});
-                return;
-            }
-
-            const res = await confirmRecruitNotice(projectId, alertId, confirmResult);
-
-            if (res.result === 'success') {
-                await queryClient.invalidateQueries({queryKey: ['noticeList']});
-                setSnackbar({show: true, type: 'SUCCESS', content: '모집 지원 알림을 확인했습니다.'});
-                resetCurrentNoticeForm();
-            }
-        }
-
-        if (currentNoticeForm?.name == PNT.ADD.value) {
-            resetCurrentNoticeForm();
-        }
-
-        if (currentNoticeForm?.name === PNT.FORCEWITHDRAWL.value) {
-            const {form: {alertId, withdrawConfirm}} = currentNoticeForm;
-
-            if (!withdrawConfirm) {
-                setSnackbar({show: true, type: 'ERROR', content: '탈퇴 여부를 선택해주세요.'});
-                return;
-            }
-
-            const res = await confirmCrewWithdrawNotice(alertId, withdrawConfirm);
-
-            if (res.result === 'success') {
-                await queryClient.invalidateQueries({queryKey: ['crewList']});
-                setSnackbar({show: true, type: 'SUCCESS', content: '탈퇴 처리를 완료했습니다.'});
-                resetCurrentNoticeForm();
-            }
-        }
+    let modalContents = null;
+    switch(currentNoticeForm.type){
+        case 'WORK':
+            modalContents = <Work noticeForm={currentNoticeForm}/>;
+            break;
+        case 'RECRUIT':
+            modalContents = <Recruit noticeForm={currentNoticeForm}/>
+            break;
+        case 'FORCEWITHDRAWL':
+            modalContents = <ForceWIthdrawl noticeForm={currentNoticeForm}/>;
+            break;
+        default:
+            modalContents = null;
     }
 
     return (
@@ -104,9 +61,9 @@ function NoticeModal() {
                             isOpen={isOpen}
                             close={() => resetCurrentNoticeForm()}
                             title={title}
-                            onClickConfirmHandler={onConfirmHandler}
+                            footer={<NoticeModalFooter noticeFormType={currentNoticeForm.type} />}
                         >
-                            {currentNoticeForm !== null && <NoticeModalContents/>}
+                            {modalContents}
                         </Modal>
                     ), portalElement)
                     : null

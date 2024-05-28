@@ -1,58 +1,60 @@
-import {atom, selector} from "recoil";
-import {
-    ProjectNoticeCrew,
-    ProjectNoticeCrewFWDL,
-    ProjectNoticeRecruit,
-    ProjectNoticeTask
-} from "@/app/project/@notice/_utils/type";
-import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
+import {atom, selector, selectorFamily} from "recoil";
+import {Notice, ProjectNoticeTypesKey, RecruitPermit, TaskScore} from "@/app/project/@notice/_utils/type";
+import {CrewForceWDLConfirm} from "@/app/project/@notice/_utils/constant";
 
 
 /**
- * 프로젝트 알림 Form > 크루 추가 & 크루 컨펌
+ * 알림 form
  */
-export type ProjectNoticeCrewForm = {
-    name: typeof PNT.CREW_CONFIRM.value | typeof PNT.ADD.value;
-    form: ProjectNoticeCrew;
-}
-
-/**
- * 프로젝트 알림 Form > 업무 알림
- */
-export type ProjectNoticeTaskForm = {
-    name: typeof PNT.WORK.value;
-    form: ProjectNoticeTask;
-}
-
-/**
- * 프로젝트 알림 Form > 모집 알림
- */
-export type ProjectNoticeRecruitForm = {
-    name: typeof PNT.RECRUIT.value;
-    form: ProjectNoticeRecruit;
-}
-
-/**
- * 프로젝트 알림 Form > 강제 탈퇴 알림
- */
-export type ProjectNoticeCrewFWDLForm = {
-    name: typeof PNT.FORCEWITHDRAWL.value;
-    form: ProjectNoticeCrewFWDL;
-}
-
-type ProjectNoticeCurrentForm = | null
-    | ProjectNoticeCrewForm
-    | ProjectNoticeTaskForm
-    | ProjectNoticeRecruitForm
-    | ProjectNoticeCrewFWDLForm;
-/**
- * 현재 알림 form 상태 관리
- */
-export const projectNoticeCurrentFormState = atom<ProjectNoticeCurrentForm>({
+export const projectNoticeCurrentFormState = atom<Notice | null>({
     key: 'projectNoticeCurrentFormState',
     default: null
 });
 
+
+
+export const projectNoticeRecruitPermitState = atom<RecruitPermit>({
+    key: 'projectNoticeRecruitFieldSelector',
+    default: {
+        isPermit: null
+    }
+});
+
+// 크루 알림 > 강제탈퇴
+export const projectNoticeForceWDLState = atom<CrewForceWDLConfirm>({
+    key: 'projectNoticeForceWDLState',
+    default: {
+        withdrawConfirm: null
+    }
+});
+
+
+// 업무 알림 > 신뢰점수
+export const projectNoticeTaskScoreState = atom<TaskScore>({
+    key: 'projectNoticeTaskPointState',
+    default: {
+        scoreTypeId: null
+    }
+});
+
+
+// 알림 confirm시 필요한 데이터 select
+export const projectConfirmDataSelector = selectorFamily({
+    key: 'projectConfirmDataSelector',
+    get: (param: ProjectNoticeTypesKey) => ({get}) => {
+        if (param === 'WORK') {
+            return get(projectNoticeTaskScoreState);
+        }
+
+        if (param === 'RECRUIT') {
+            return get(projectNoticeRecruitPermitState);
+        }
+
+        if (param === 'FORCEWITHDRAWL') {
+            return get(projectNoticeForceWDLState);
+        }
+    }
+})
 
 /**
  * 현재 알림 modal selector
@@ -69,15 +71,15 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
         let title = '';
 
         if (currentFormState !== null) {
-            switch (currentFormState?.name) {
-                case PNT.WORK.value :
+            switch (currentFormState?.type) {
+                case 'WORK' :
                     title = '업무 알림';
                     break;
-                case PNT.RECRUIT.value:
+                case 'RECRUIT':
                     title = '모집 알림';
                     break;
-                case PNT.CREW_CONFIRM.value:
-                case PNT.ADD.value:
+                case 'CREW_CONFIRM':
+                case 'ADD':
                     title = '크루 알림';
                     break;
                 default:

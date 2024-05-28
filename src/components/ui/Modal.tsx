@@ -6,13 +6,14 @@ import Button from "@/components/ui/Button";
 import {ModalState} from "@/utils/type";
 
 interface ModalProps extends ModalState {
-    children:ReactNode;
+    children: ReactNode;
     close: () => void;
     onClickConfirmHandler?: () => void;
     isUpdating?: boolean;
+    footer?: ReactNode;
 }
 
-function Modal({isOpen, close, title, onClickConfirmHandler, children, isUpdating = false}: ModalProps) {
+function Modal({isOpen, close, title, onClickConfirmHandler, children, isUpdating = false, footer}: ModalProps) {
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -88,22 +89,28 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children, isUpdatin
                                 {children}
                             </div>
                             {/* Start modal footer */}
-                            <div
-                                className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
-                                <Button
-                                    size='md'
-                                    disabled={isUpdating}
-                                    className={`${isUpdating && '!bg-gray-400 !text-white'}`}
-                                    onClickHandler={
-                                        () => {
-                                            if (typeof onClickConfirmHandler === 'function') onClickConfirmHandler();
-                                            else close();
-                                        }}
-                                >
-                                    확인
-                                </Button>
-                                <Button size='md' theme='cancel' onClickHandler={() => close()}>닫기</Button>
-                            </div>
+                            {
+                                footer
+                                    ? footer
+                                    : (
+                                        <div
+                                            className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
+                                            <Button
+                                                size='md'
+                                                disabled={isUpdating}
+                                                className={`${isUpdating && '!bg-gray-400 !text-white'}`}
+                                                onClickHandler={
+                                                    () => {
+                                                        if (typeof onClickConfirmHandler === 'function') onClickConfirmHandler();
+                                                        else close();
+                                                    }}
+                                            >
+                                                확인
+                                            </Button>
+                                            <Button size='md' theme='cancel' onClickHandler={() => close()}>닫기</Button>
+                                        </div>
+                                    )
+                            }
                             {/* End modal footer */}
                         </div>
                     </div>

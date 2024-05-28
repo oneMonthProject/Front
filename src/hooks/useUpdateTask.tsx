@@ -7,7 +7,6 @@ import {useResetRecoilState, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 import {TaskModifyForm} from "@/app/project/@task/_utils/type";
 import {TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
-import {PROJECT_NOTICE_TYPE as PNT} from "@/app/project/@notice/_utils/constant";
 
 function useUpdateTask() {
     const setSnackbar = useSetRecoilState(snackbarState);
@@ -39,7 +38,7 @@ function useUpdateTask() {
                         workId,
                         milestoneId,
                         content,
-                        type: PNT.WORK.value,
+                        type: 'WORK',
                         sendUserId: assignedUser?.projectMemberId
                     };
 

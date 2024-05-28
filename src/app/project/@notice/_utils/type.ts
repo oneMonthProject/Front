@@ -1,11 +1,5 @@
 import {DataId, Position} from "@/utils/type";
-import {
-    ForceWDLOptionValueType,
-    PROJECT_NOTICE,
-    PROJECT_NOTICE_TYPES,
-    RecruitOptionValueType,
-    TaskPointOptions
-} from "@/app/project/@notice/_utils/constant";
+import {PROJECT_NOTICE, PROJECT_NOTICE_TYPES, TaskPointOptions} from "@/app/project/@notice/_utils/constant";
 
 /**
  * 프로젝트 알림
@@ -32,32 +26,19 @@ export type Notice = {
     checkedStatus: boolean;
 }
 
-
-/**
- * 프로젝트 크루알림 데이터
- */
-export type ProjectNoticeCrew = Notice;
-
 export type PointTypeKey = keyof typeof TaskPointOptions;
 export type PointTypeName = (typeof TaskPointOptions)[PointTypeKey]["name"];
 export type PointTypeValue = (typeof TaskPointOptions)[PointTypeKey]["value"];
-/**
- * 프로젝트 업무알림 데이터
- */
-export type ProjectNoticeTask = Notice & {
-    scoreTypeId: PointTypeValue | null;
+
+// 업무 알림 > 신뢰점수
+export type TaskScore = {
+    scoreTypeId: PointTypeValue;
 }
 
-/**
- * 프로젝트 모집알림 데이터
- */
-export type ProjectNoticeRecruit = Notice & {
-    isPermit: RecruitOptionValueType;
+// 모집 알림 > isPermit
+export type RecruitPermit = {
+    isPermit: boolean | null
 }
 
-/**
- * 프로젝트 크루 강제탈퇴 알림 데이터
- */
-export type ProjectNoticeCrewFWDL = Notice & {
-    withdrawConfirm : ForceWDLOptionValueType
-}
+
+

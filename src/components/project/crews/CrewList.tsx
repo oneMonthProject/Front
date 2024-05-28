@@ -15,7 +15,7 @@ export default function CrewList() {
 
     return (
         <ul role="list">
-            {data.data.projectMembers.map(
+            {data.crewList.map(
                 ({
                      lastWorkDate,
                      position: {name},
