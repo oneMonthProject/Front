@@ -10,7 +10,6 @@ export const projectSettingFormState = atom<ProjectSettingForm | null>({
         key: 'projectSettingFormSelector',
         get: ({get}) => {
             const projectIdString = get(projectIdState);
-            console.log("projectIdString: ", projectIdString);
             if (projectIdString === null) return null;
 
             const projectInfo = get(projectInfoState(projectIdString));

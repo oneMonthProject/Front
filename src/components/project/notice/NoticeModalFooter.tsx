@@ -40,7 +40,7 @@ function NoticeModalFooter({
         if (noticeFormType === 'RECRUIT') {
             const {isPermit: confirmResult} = projectConfirmData as RecruitPermit;
 
-            if (!confirmResult) {
+            if (confirmResult === null) {
                 setSnackbar({show: true, type: 'ERROR', content: '프로젝트 합류 여부를 선택해주세요.'});
                 return;
             }

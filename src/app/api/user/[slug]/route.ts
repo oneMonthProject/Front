@@ -24,7 +24,7 @@ export async function GET(
       res = await publicApi(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
       break;
     case 'general':
-      res = await authApi(`/api/user/user/${searchParams.get('userId')}`);
+      res = await authApi(`/api/user/${searchParams.get('userId')}`);
       break;
     default:
       throw new Error('Unknown User API');

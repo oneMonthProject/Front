@@ -5,18 +5,18 @@ export const TRUST_GRADE = [
     },
     {
         name:'1등급',
-        value:1n
+        value:1
     },
     {
         name:'2등급',
-        value:2n,
+        value:2,
     },
     {
         name:'3등급',
-        value:3n
+        value:3
     },
     {
         name:'4등급',
-        value:4n
+        value:4
     }
 ] as const;
