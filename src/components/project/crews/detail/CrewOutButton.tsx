@@ -42,8 +42,9 @@ function CrewOutButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPr
     const isMemberCurrentUser = getCookie('user_id') === user.userId.toString();
     const isManager = projectMemberAuth.projectMemberAuthName === '매니저';
 
+    if(isManager) return null; // TODO: 매니저 탈퇴 구현시, 매니저 권한 양도 로직 추가
+
     return (
-        (isManager || isMemberCurrentUser) &&
         isMemberCurrentUser
             ? (
                 <Button type='button' theme='black' size='md' onClickHandler={onClickCrewOutHandler}>
