@@ -307,8 +307,7 @@ export interface CrewTaskHistory {
     workId: bigint;
     trustScoreHistoryId: bigint;
     workContent: string;
-    startDate: string;
-    endDate: string;
+    createDate: string;
     progressStatus: CrewStatusKeys;
     point: number | null;
     point_type: PointTypeKey | null;

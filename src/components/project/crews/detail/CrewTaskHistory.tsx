@@ -17,7 +17,6 @@ function getIconByPointType(pointType: string) {
 }
 
 
-
 function CrewTaskHistory() {
     const [pageIndex, setPageIndex] = useState(0);
     const projectMemberId = useQueryString('projectMemberId');
@@ -27,63 +26,61 @@ function CrewTaskHistory() {
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT)
     });
 
-    if(isFetching) return <CrewTaskHistorySkeleton/>;
+    if (isFetching) return <CrewTaskHistorySkeleton/>;
 
     const taskHistory = data!.data.content;
     const totalCount = data!.data.totalPages;
 
     return (
         <>
-            <div className="flow-root tablet:mt-10 mobile:mt-8 mb-8 mx-2">
+            <div className="h-[280px] flow-root tablet:mt-10 mobile:mt-8 mb-8 mx-2">
                 {
                     taskHistory.length > 0
                         ? (
                             <ul role="list" className="-mb-8">
                                 {taskHistory.map((event, eventIdx) => (
                                     <li key={event.trustScoreHistoryId}>
-                                        <div className="relative pb-8">
-                                            {
-                                                eventIdx !== taskHistory.length - 1
-                                                    ? (
-                                                        <span
-                                                            className="absolute left-3 top-4 -ml-px h-full w-0.5 bg-gray-200"
-                                                            aria-hidden="true"
-                                                        />
-                                                    )
-                                                    : null
-                                            }
-                                            <div className="relative flex space-x-3">
-                                                <div className='flex items-center'>
-                                                    {
-                                                        event.point && event.point_type ?
-                                                            <>
-                                                  <span
-                                                      className={`${event.point_type === 'minus' ? 'bg-danger' : 'bg-primary'} mr-4 h-6 w-6 rounded-full flex items-center justify-center ring-8 ring-white`}
-                                                  >
-                                                      {getIconByPointType(event.point_type)}
-                                                  </span>
-                                                                <span
-                                                                    className={`tablet:min-w-[40px] mobile:min-w-[30px] ${event.point_type === 'minus' ? 'text-danger' : 'text-primary'} leading-none tablet:text-xl mobile:text-lg font-semibold`}
-                                                                >
-                                                        {event.point}
-                                                    </span>
-                                                            </> : null
-                                                    }
-                                                </div>
-                                                <div className="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
-                                                    <div>
-                                                        <p className="tablet:text-lg mobile:text-md text-gray-500">
-                                                            {event.workContent}
-                                                        </p>
-                                                    </div>
-                                                    <div
-                                                        className="flex items-center space-x-1 whitespace-nowrap text-right tablet:text-md mobile:text-sm text-gray-500">
-                                                        <span>{event.startDate}</span>
-                                                        <span>&#126;</span>
-                                                        <span>{event.endDate}</span>
-                                                    </div>
+                                        <div className="min-w-0 ml-3 pb-8 flex flex-1 justify-start space-x-8 mobile:space-x-5">
+                                            <div
+                                                className="relative whitespace-nowrap font-semibold tablet:text-lg mobile:text-md text-gray-500">
+                                                {
+                                                    eventIdx !== taskHistory.length - 1
+                                                        ? (
+                                                            <span
+                                                                className="absolute left-[50%] top-7 -ml-px h-full w-0.5 bg-gray-200"
+                                                                aria-hidden="true"
+                                                            />
+                                                        )
+                                                        : null
+                                                }
+                                                <span>{event.createDate}</span>
+                                            </div>
+                                            <div className='flex items-center space-x-3 mobile:space-x-1'>
+                                                {
+                                                    event.point && event.point_type
+                                                        ? (
+                                                            <div className='relative flex items-center'>
+                                                                        <span
+                                                                            className={`${event.point_type === 'minus' ? 'bg-danger' : 'bg-primary'} ml-4 mr-2 h-6 w-6 rounded-full flex items-center justify-center ring-8 ring-white`}
+                                                                        >
+                                                                            {getIconByPointType(event.point_type)}
+                                                                        </span>
+                                                                        <span
+                                                                            className={`tablet:min-w-[40px] mobile:min-w-[30px] ${event.point_type === 'minus' ? 'text-danger' : 'text-primary'} leading-none tablet:text-xl mobile:text-lg font-semibold`}
+                                                                        >
+                                                                            {event.point}
+                                                                        </span>
+                                                            </div>
+                                                        )
+                                                        : null
+                                                }
+                                                <div>
+                                                    <p className="tablet:text-lg mobile:text-md text-gray-500">
+                                                        {event.workContent}
+                                                    </p>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </li>
                                 ))}
