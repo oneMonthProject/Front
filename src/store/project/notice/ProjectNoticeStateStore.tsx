@@ -50,7 +50,7 @@ export const projectConfirmDataSelector = selectorFamily({
             return get(projectNoticeRecruitPermitState);
         }
 
-        if (param === 'FORCEWITHDRAWL') {
+        if (param === 'FORCEWITHDRAWAL' || param === 'WITHDRAWAL') {
             return get(projectNoticeForceWDLState);
         }
     }
@@ -81,6 +81,12 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
                 case 'CREW_CONFIRM':
                 case 'ADD':
                     title = '크루 알림';
+                    break;
+                case 'FORCEWITHDRAWAL':
+                    title = '크루 강제탈퇴 신청';
+                    break;
+                case 'WITHDRAWAL':
+                    title = '크루 탈퇴 신청'
                     break;
                 default:
                     throw Error('Unknown Project Notice Form Type');

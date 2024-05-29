@@ -58,10 +58,10 @@ function NoticeModalFooter({
             resetCurrentNoticeForm();
         }
 
-        if (noticeFormType === 'FORCEWITHDRAWL') {
+        if (noticeFormType === 'FORCEWITHDRAWAL' || noticeFormType === 'WITHDRAWAL') {
             const {withdrawConfirm} = projectConfirmData as CrewForceWDLConfirm;
 
-            if (!withdrawConfirm) {
+            if (withdrawConfirm === null) {
                 setSnackbar({show: true, type: 'ERROR', content: '탈퇴 여부를 선택해주세요.'});
                 return;
             }

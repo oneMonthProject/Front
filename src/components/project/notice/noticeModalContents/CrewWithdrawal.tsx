@@ -3,7 +3,7 @@ import NoticeModalContents from "@/components/project/notice/noticeModalContents
 import {Notice} from "@/app/project/@notice/_utils/type";
 import WthdrawSelector from "@/components/project/notice/noticeModalContents/WthdrawSelector";
 
-function ForceWIthdrawl({noticeForm}:{noticeForm:Notice}) {
+function CrewWithdrawal({noticeForm}:{noticeForm:Notice}) {
     const {content} = noticeForm;
 
     return (
@@ -13,4 +13,4 @@ function ForceWIthdrawl({noticeForm}:{noticeForm:Notice}) {
     );
 }
 
-export default ForceWIthdrawl;
+export default CrewWithdrawal;

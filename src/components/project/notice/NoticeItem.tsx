@@ -42,7 +42,8 @@ function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }
             case 'ADD':
                 setCurrentNoticeForm({...item});
                 break;
-            case 'FORCEWITHDRAWL':
+            case 'FORCEWITHDRAWAL':
+            case 'WITHDRAWAL':
                 if (!isAuthorized) {
                     setSnackbar({show: true, type: 'INFO', content: '알림 확인 권한이 없습니다.'});
                     return;

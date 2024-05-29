@@ -9,7 +9,7 @@ import {
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {createPortal} from "react-dom";
 import Recruit from "@/components/project/notice/noticeModalContents/Recruit";
-import ForceWIthdrawl from "@/components/project/notice/noticeModalContents/ForceWIthdrawl";
+import CrewWithdrawal from "@/components/project/notice/noticeModalContents/CrewWithdrawal";
 import Work from "@/components/project/notice/noticeModalContents/Work";
 import NoticeModalFooter from "@/components/project/notice/NoticeModalFooter";
 
@@ -45,8 +45,9 @@ function NoticeModal() {
         case 'RECRUIT':
             modalContents = <Recruit noticeForm={currentNoticeForm}/>
             break;
-        case 'FORCEWITHDRAWL':
-            modalContents = <ForceWIthdrawl noticeForm={currentNoticeForm}/>;
+        case 'FORCEWITHDRAWAL':
+        case 'WITHDRAWAL':
+            modalContents = <CrewWithdrawal noticeForm={currentNoticeForm}/>;
             break;
         default:
             modalContents = null;
