@@ -10,6 +10,7 @@ import { useSetRecoilState } from "recoil";
 import { isValidEmail } from "@/utils/common";
 import { isEqual } from "lodash";
 import { snackbarState } from "@/store/CommonStateStore";
+import {useQueryClient} from "@tanstack/react-query";
 
 function LoginForm() {
   const router = useRouter();
@@ -17,6 +18,8 @@ function LoginForm() {
   const [password, setPassword] = useState("");
 
   const setSnackbar = useSetRecoilState(snackbarState);
+
+  const queryClient = useQueryClient();
 
   const isValid = () => {
     if (email === "") {
@@ -44,15 +47,15 @@ function LoginForm() {
     }
 
     login(email, password)
-      .then((response) => {
+      .then(async (response) => {
         const { data: userId, result, message } = response;
         
         if (isEqual(result, "success")) {
           setCookie("user_id", userId);
-
+          await queryClient.invalidateQueries({queryKey: ['simpleUserInfo']})
           router.back();
           router.refresh();
-          
+
           setSnackbar({ show: true, type: "INFO", content: message });
         } else {
           setSnackbar({ show: true, type: "ERROR", content: message });
