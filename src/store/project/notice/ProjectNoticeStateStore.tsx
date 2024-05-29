@@ -50,7 +50,7 @@ export const projectConfirmDataSelector = selectorFamily({
             return get(projectNoticeRecruitPermitState);
         }
 
-        if (param === 'FORCEWITHDRAWAL' || param === 'WITHDRAWAL') {
+        if (param === 'FORCED_WITHDRAWAL' || param === 'WITHDRAWAL') {
             return get(projectNoticeCrewWithdrawState);
         }
     }
@@ -78,11 +78,11 @@ export const projectNoticeModalStateSelector = selector<ProjectNoticeModalState>
                 case 'RECRUIT':
                     title = '모집 알림';
                     break;
-                case 'CREW_CONFIRM':
+                case 'CREW_UPDATE':
                 case 'ADD':
                     title = '크루 알림';
                     break;
-                case 'FORCEWITHDRAWAL':
+                case 'FORCED_WITHDRAWAL':
                     title = '크루 강제탈퇴 신청';
                     break;
                 case 'WITHDRAWAL':

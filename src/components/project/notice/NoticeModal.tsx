@@ -45,7 +45,7 @@ function NoticeModal() {
         case 'RECRUIT':
             modalContents = <Recruit noticeForm={currentNoticeForm}/>
             break;
-        case 'FORCEWITHDRAWAL':
+        case 'FORCED_WITHDRAWAL':
         case 'WITHDRAWAL':
             modalContents = <CrewWithdrawal noticeForm={currentNoticeForm}/>;
             break;

@@ -81,7 +81,7 @@ function NoticeModalFooter({
             }
         }
 
-        if(noticeFormType === 'FORCEWITHDRAWAL'){
+        if(noticeFormType === 'FORCED_WITHDRAWAL'){
             const {withdrawConfirm} = projectConfirmData as CrewWithdrawConfirm;
             if(withdrawConfirm){
                 if(confirm("강제 탈퇴시 해당 크루의 이력에 강제 탈퇴 기록이 남으며, 탈퇴를 취소할 수 없습니다. \r\n 크루를 강제 탈퇴 하시겠습니까? ")){

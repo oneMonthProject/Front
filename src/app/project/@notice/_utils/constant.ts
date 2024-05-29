@@ -90,11 +90,11 @@ export const PROJECT_NOTICE_TYPES = {
         name: '크루 탈퇴',
         group: 'CREW'
     },
-    FORCEWITHDRAWAL: {
+    FORCED_WITHDRAWAL: {
         name: '크루 강제탈퇴',
         group: 'CREW'
     },
-    CREW_CONFIRM: {
+    CREW_UPDATE: {
         name: '크루 알림 확인',
         group: 'CREW'
     }
