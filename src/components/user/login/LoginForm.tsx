@@ -52,7 +52,10 @@ function LoginForm() {
         
         if (isEqual(result, "success")) {
           setCookie("user_id", userId);
-          await queryClient.invalidateQueries({queryKey: ['simpleUserInfo']})
+          const invalidateUserInfo = queryClient.invalidateQueries({queryKey: ['simpleUserInfo']});
+          const invalidateMyProjectList = queryClient.invalidateQueries({queryKey:['myProjectList']});
+          const invalidateProjectNotice = queryClient.invalidateQueries({queryKey:['userProjectNotice']});
+          await Promise.all([invalidateMyProjectList,invalidateProjectNotice,invalidateUserInfo]);
           router.back();
           router.refresh();
 
