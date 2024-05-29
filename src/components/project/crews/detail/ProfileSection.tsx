@@ -9,6 +9,7 @@ import {ProjectMemberProfile, ResponseBody} from "@/utils/type";
 import {getCrewDetail} from "@/service/project/crews";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
 import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
+import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detail/ProfileSectionSkeleton";
 
 
 function ProfileSection() {
@@ -18,7 +19,7 @@ function ProfileSection() {
         queryFn: () => getCrewDetail(projectMemberId)
     });
 
-    if(isFetching) return <div>loading..</div>;
+    if(isFetching) return <ProfileSectionSkeleton/>;
 
     const {user, position, status, projectMemberAuth} = data!.data;
 

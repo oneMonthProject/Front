@@ -102,7 +102,7 @@ export function makeButtonColor(theme: ButtonTheme) {
 export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     size?: ButtonSize;
     theme?: ButtonTheme;
-    children: ReactNode;
+    children?: ReactNode;
     onClickHandler?: () => void;
 }
 

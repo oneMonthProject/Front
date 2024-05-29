@@ -8,6 +8,7 @@ import {getCrewTaskHistory} from "@/service/project/crews";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {type CrewTaskHistory, PageResponseBody} from "@/utils/type";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
+import CrewTaskHistorySkeleton from "@/components/ui/skeleton/project/crews/detail/CrewTaskHistorySkeleton";
 
 
 function getIconByPointType(pointType: string) {
@@ -26,7 +27,7 @@ function CrewTaskHistory() {
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT)
     });
 
-    if(isFetching) return <div>loading...</div>;
+    if(isFetching) return <CrewTaskHistorySkeleton/>;
 
     const taskHistory = data!.data.content;
     const totalCount = data!.data.totalPages;
