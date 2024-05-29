@@ -62,7 +62,7 @@ function NoticeModal() {
                             isOpen={isOpen}
                             close={() => resetCurrentNoticeForm()}
                             title={title}
-                            footer={<NoticeModalFooter noticeFormType={currentNoticeForm.type} />}
+                            footer={<NoticeModalFooter noticeFormType={currentNoticeForm.type} close={resetCurrentNoticeForm}/>}
                         >
                             {modalContents}
                         </Modal>

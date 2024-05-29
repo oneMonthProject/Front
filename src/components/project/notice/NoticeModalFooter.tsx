@@ -12,8 +12,9 @@ import {useQueryClient} from "@tanstack/react-query";
 import {CrewForceWDLConfirm} from "@/app/project/@notice/_utils/constant";
 
 function NoticeModalFooter({
-                               noticeFormType
-                           }: { noticeFormType: ProjectNoticeTypesKey }) {
+                               noticeFormType,
+                               close
+                           }: { noticeFormType: ProjectNoticeTypesKey, close: () => void }) {
 
     const queryClient = useQueryClient();
     const setSnackbar = useSetRecoilState(snackbarState);
