@@ -17,14 +17,14 @@ export const RecruitOption = {
 } as const;
 
 
-export type CrewForceWDLConfirm = {
-    withdrawConfirm: ForceWDLOptionValueType
+export type CrewWithdrawConfirm = {
+    withdrawConfirm: CrewWithdrawOptionValueType
 };
 
 /**
  * 프로젝트 상세 > 알림 > 강제탈퇴알림용 select 옵션
  */
-export const ForceWDLOption = {
+export const CrewWithdrawOption = {
     DEFAULT: {
         name: '탈퇴 여부 선택',
         value: null
@@ -39,9 +39,9 @@ export const ForceWDLOption = {
     }
 } as const;
 
-export type ForceWDLOptionKeyType = keyof typeof ForceWDLOption;
-export type ForceWDLOptionNameType = (typeof ForceWDLOption)[ForceWDLOptionKeyType]["name"];
-export type ForceWDLOptionValueType = (typeof ForceWDLOption)[ForceWDLOptionKeyType]["value"];
+export type CrewWithdrawOptionKeyType = keyof typeof CrewWithdrawOption;
+export type CrewWithdrawOptionNameType = (typeof CrewWithdrawOption)[CrewWithdrawOptionKeyType]["name"];
+export type CrewWithdrawOptionValueType = (typeof CrewWithdrawOption)[CrewWithdrawOptionKeyType]["value"];
 
 
 /**

@@ -1,7 +1,12 @@
 import React from 'react';
 import Button from "@/components/ui/Button";
 import {ProjectNoticeTypesKey, RecruitPermit, TaskScore} from "@/app/project/@notice/_utils/type";
-import {confirmCrewWithdrawNotice, confirmRecruitNotice, confirmTaskNotice} from "@/service/project/confirm";
+import {
+    confirmCrewForceWithdrawNotice,
+    confirmCrewWithdrawNotice,
+    confirmRecruitNotice,
+    confirmTaskNotice
+} from "@/service/project/confirm";
 import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 import {
@@ -9,7 +14,7 @@ import {
     projectNoticeCurrentFormState
 } from "@/store/project/notice/ProjectNoticeStateStore";
 import {useQueryClient} from "@tanstack/react-query";
-import {CrewForceWDLConfirm} from "@/app/project/@notice/_utils/constant";
+import {CrewWithdrawConfirm} from "@/app/project/@notice/_utils/constant";
 
 function NoticeModalFooter({
                                noticeFormType,
@@ -59,8 +64,8 @@ function NoticeModalFooter({
             resetCurrentNoticeForm();
         }
 
-        if (noticeFormType === 'FORCEWITHDRAWAL' || noticeFormType === 'WITHDRAWAL') {
-            const {withdrawConfirm} = projectConfirmData as CrewForceWDLConfirm;
+        if (noticeFormType === 'WITHDRAWAL') {
+            const {withdrawConfirm} = projectConfirmData as CrewWithdrawConfirm;
 
             if (withdrawConfirm === null) {
                 setSnackbar({show: true, type: 'ERROR', content: '탈퇴 여부를 선택해주세요.'});
@@ -74,6 +79,16 @@ function NoticeModalFooter({
                 setSnackbar({show: true, type: 'SUCCESS', content: '탈퇴 처리를 완료했습니다.'});
                 resetCurrentNoticeForm();
             }
+        }
+
+        if(noticeFormType === 'FORCEWITHDRAWAL'){
+            const {withdrawConfirm} = projectConfirmData as CrewWithdrawConfirm;
+            if(withdrawConfirm){
+                if(confirm("강제 탈퇴시 해당 크루의 이력에 강제 탈퇴 기록이 남으며, 탈퇴를 취소할 수 없습니다. \r\n 크루를 강제 탈퇴 하시겠습니까? ")){
+                    const res = await confirmCrewForceWithdrawNotice(projectId, alertId);
+                }
+            }
+
         }
     }
 

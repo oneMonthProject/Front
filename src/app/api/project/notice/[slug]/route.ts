@@ -43,22 +43,32 @@ export async function POST(
 ) {
 
     let res: Response;
-
     const method = req.method;
-    if (params.slug === 'task') { // 업무 알림 생성
-        const noticeCreateForm = await req.json();
-        res = await authApi(
-            `/api/alert`,
-            {
-                method,
-                body: JSON.stringify(noticeCreateForm)
-            }
-        );
-    } else if (params.slug === 'crewOut') { // 프로젝트 멤버 탈퇴(신청) 알림 생성
-        const {projectMemberId} = await req.json();
-        res = await authApi(`/api/projectmember/${projectMemberId}/withdraw`, {method});
-    }else{
-        throw new Error(`Unknown Notice API: /api/project/notice/${params.slug}`);
+
+    switch (params.slug) {
+        case 'task': {
+            const noticeCreateForm = await req.json();
+            res = await authApi(
+                `/api/alert`,
+                {
+                    method,
+                    body: JSON.stringify(noticeCreateForm)
+                }
+            );
+            break;
+        }
+        case 'crewOut': {
+            const {projectMemberId} = await req.json();
+            res = await authApi(`/api/projectmember/${projectMemberId}/withdraw`, {method});
+            break;
+        }
+        case 'force-crewOut':{
+            const {projectMemberId} = await req.json();
+            res = await authApi(`/api/projectmember/${projectMemberId}/force-withdrawal`, {method});
+            break;
+        }
+        default:
+            throw new Error(`Unknown Notice API: /api/project/notice/${params.slug}`);
     }
 
     const data = await res.json();

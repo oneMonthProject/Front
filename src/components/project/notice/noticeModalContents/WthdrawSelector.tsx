@@ -1,13 +1,13 @@
 import React from 'react';
 import {useRecoilState} from "recoil";
-import {projectNoticeForceWDLState} from "@/store/project/notice/ProjectNoticeStateStore";
+import {projectNoticeCrewWithdrawState} from "@/store/project/notice/ProjectNoticeStateStore";
 import Select from "@/components/ui/selector/Select";
-import {ForceWDLOption} from "@/app/project/@notice/_utils/constant";
+import {CrewWithdrawOption} from "@/app/project/@notice/_utils/constant";
 
-const selectItems = Object.values(ForceWDLOption);
+const selectItems = Object.values(CrewWithdrawOption);
 
 function WthdrawSelector() {
-    const [{withdrawConfirm}, setWithdrawConfirm] = useRecoilState(projectNoticeForceWDLState);
+    const [{withdrawConfirm}, setWithdrawConfirm] = useRecoilState(projectNoticeCrewWithdrawState);
 
     return (
         <section className='mx-auto my-7 flex flex-col items-stretch'>

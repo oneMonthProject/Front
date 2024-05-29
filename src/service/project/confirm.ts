@@ -51,3 +51,17 @@ export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdr
         return confirmRes;
     }
 }
+
+/**
+ * 크루 강제탈퇴 신청 알림 confirm
+ * @param projectMemberId
+ * @param alertId
+ */
+export async function confirmCrewForceWithdrawNotice(projectMemberId: string | bigint, alertId: string | bigint){
+    const confirmRes = await request('POST', '/api/project/confirm/force-withdrawal', {projectMemberId});
+    if (confirmRes.result === 'success') {
+        return await request('PATCH', '/api/project/notice', {alertId});
+    } else {
+        return confirmRes;
+    }
+}

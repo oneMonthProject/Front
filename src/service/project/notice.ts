@@ -40,4 +40,9 @@ export async function createProjectCrewOutNotice(projectMemberId: string | bigin
     return await request('POST', `/api/project/notice/crewOut`, {projectMemberId});
 }
 
+export async function createProjectCrewForceOutNotice(projectMemberId: string | bigint){
+    return await request('POST', `/api/project/notice/force-crewOut`, {projectMemberId});
+}
+
+
 

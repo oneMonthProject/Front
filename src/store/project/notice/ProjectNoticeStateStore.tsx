@@ -1,6 +1,6 @@
 import {atom, selector, selectorFamily} from "recoil";
 import {Notice, ProjectNoticeTypesKey, RecruitPermit, TaskScore} from "@/app/project/@notice/_utils/type";
-import {CrewForceWDLConfirm} from "@/app/project/@notice/_utils/constant";
+import {CrewWithdrawConfirm} from "@/app/project/@notice/_utils/constant";
 
 
 /**
@@ -21,8 +21,8 @@ export const projectNoticeRecruitPermitState = atom<RecruitPermit>({
 });
 
 // 크루 알림 > 강제탈퇴
-export const projectNoticeForceWDLState = atom<CrewForceWDLConfirm>({
-    key: 'projectNoticeForceWDLState',
+export const projectNoticeCrewWithdrawState = atom<CrewWithdrawConfirm>({
+    key: 'projectNoticeCrewWithdrawState',
     default: {
         withdrawConfirm: null
     }
@@ -51,7 +51,7 @@ export const projectConfirmDataSelector = selectorFamily({
         }
 
         if (param === 'FORCEWITHDRAWAL' || param === 'WITHDRAWAL') {
-            return get(projectNoticeForceWDLState);
+            return get(projectNoticeCrewWithdrawState);
         }
     }
 })

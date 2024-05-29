@@ -29,16 +29,3 @@ export async function GET(
     return NextResponse.json(data);
 }
 
-/**
- * 프로젝트 크루 강제탈퇴
- * @param req
- * @constructor
- */
-export async function POST(req:NextRequest){
-    const {projectMemberId} = await req.json();
-
-    const res = await authApi(`/api/projectmember/${projectMemberId}/force-withdrawal`,{method:'POST'});
-
-    const data = await res.json();
-    return NextResponse.json(data);
-}
