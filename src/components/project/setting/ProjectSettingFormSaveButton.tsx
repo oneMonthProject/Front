@@ -18,7 +18,6 @@ function ProjectSettingFormSaveButton({projectId}: { projectId: string }) {
     const {state: projectSettingLoadingState, contents: projectSettingForm} = useRecoilValueLoadable(projectSettingFormState);
     const {state: authMapLoadingState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(projectId));
 
-    if(projectSettingLoadingState === 'loading' || authMapLoadingState === 'loading') return <div>loading...</div>;
 
     const updateProjectInfo = async () => {
         if (confirm("프로젝트 정보를 수정하시겠습니까?")) {
@@ -43,8 +42,11 @@ function ProjectSettingFormSaveButton({projectId}: { projectId: string }) {
         }
     }
 
+    const isUpdating = projectSettingLoadingState === 'loading' || authMapLoadingState === 'loading';
+
     return (
-        <Button size="md" onClickHandler={updateProjectInfo}>
+        <Button size="md" onClickHandler={updateProjectInfo} disabled={isUpdating}
+                className={`${isUpdating && '!bg-gray-400 !text-white'}`}>
             저장
         </Button>
     );

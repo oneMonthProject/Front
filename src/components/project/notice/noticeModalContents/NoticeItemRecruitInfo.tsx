@@ -2,9 +2,20 @@ import React from 'react';
 import TechStackImage from "@/components/ui/TechStackImage";
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import Avatar from "@/components/ui/Avatar";
-import {ProfileInfo, TechStackItem} from "@/utils/type";
+import {DataId, ProfileInfo, ResponseBody, TechStackItem} from "@/utils/type";
+import {useQuery} from "@tanstack/react-query";
+import {getUserInfoByUserId} from "@/service/user/user";
+import NoticeItemRecruitInfoSkeleton
+    from "@/components/ui/skeleton/project/notice/noticeModalContents/NoticeItemRecruitInfoSkeleton";
 
-function NoticeItemRecruitInfo({applicantProfile}: { applicantProfile: ProfileInfo }) {
+function NoticeItemRecruitInfo({applicantId}: { applicantId:DataId }) {
+
+    const {data, isFetching} = useQuery<ResponseBody<ProfileInfo>, Error>({
+        queryKey: ['userInfoById', applicantId],
+        queryFn: () => getUserInfoByUserId(applicantId)
+    });
+
+    if(isFetching) return <NoticeItemRecruitInfoSkeleton/>;
 
     const {
         intro,
@@ -15,7 +26,7 @@ function NoticeItemRecruitInfo({applicantProfile}: { applicantProfile: ProfileIn
         techStacks,
         trustGrade: {trustGradeName},
         trustScore
-    } = applicantProfile;
+    } = data!.data;
 
     return (
         <section className='tablet:max-w-[400px] mx-auto pt-5 flex-col items-center border-t border-b border-grey300 '>

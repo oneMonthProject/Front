@@ -31,7 +31,7 @@ export default function Select<T, V>({
                     </Listbox.Label>
                     <div className="relative">
                         <Listbox.Button
-                            className="mobile:text-sm w-full cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            className="w-full mobile:text-sm cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
               <span className={classNames(value ? '' : 'text-greyUnselect', 'block truncate')}>
                 {value ? value.name as string : placeholder}
               </span>

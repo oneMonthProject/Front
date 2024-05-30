@@ -21,8 +21,6 @@ function ParticipateNotice({
                                }
                            }: ParticipateNoticeProps) {
 
-    // 프로젝트명, position name, 지원 현황, 프로젝트 주제, 프로젝트 등급, 프로젝트 id
-    // const {name, subject, trustGrade, startDate, endDate} = useProjectInfo();
 
     return (
         <div className='mobile:w-[320px] tablet:w-[450px] flex items-center justify-between'>

@@ -10,6 +10,7 @@ import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import Avatar from "@/components/ui/Avatar";
 import {AssignedUser} from "@/app/project/@task/_utils/type";
 import DefaultSelectOption from "@/components/ui/selector/DefaultSelectOption";
+import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
 
 const compareItems = (a: SelectItem<string, string>, b: SelectItem<string, string>) => {
     if (a && b) {
@@ -37,7 +38,7 @@ function ProjectCrewSelect() {
 
     const {crewList, isFetching} = useProjectCrewList();
 
-    if (isFetching) return <div>loading...</div>;
+    if(isFetching) return <SelectSkeleton label='' placeholder='담당 멤버' className='max-w-[150px]'/>
 
     const selectedCrew = getSelectedCrew(assignedUser as TaskField<'assignedUser'>, crewList);
 
@@ -54,7 +55,6 @@ function ProjectCrewSelect() {
             by={compareItems}
         >
             {({open}) => (
-                <div>
                     <div className="relative w-full tablet:w-[200px] ">
                         <Listbox.Button
                             className="w-full mobile:text-sm cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
@@ -119,7 +119,6 @@ function ProjectCrewSelect() {
                             </Listbox.Options>
                         </Transition>
                     </div>
-                </div>
             )}
         </Listbox>
     )

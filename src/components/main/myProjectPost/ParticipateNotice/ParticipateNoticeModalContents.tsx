@@ -80,12 +80,10 @@ function ParticipateNoticeModalContents() {
                             <li
                                 key={v.alertId}
                                 className="flex items-center justify-between gap-x-6 w-full px-2 py-5">
-                                <Suspense fallback={<div>loading...</div>}>
-                                    <ParticipateNotice
-                                        key={v.alertId}
-                                        participateNotice={v}
-                                    />
-                                </Suspense>
+                                <ParticipateNotice
+                                    key={v.alertId}
+                                    participateNotice={v}
+                                />
                             </li>
                         )
                     })

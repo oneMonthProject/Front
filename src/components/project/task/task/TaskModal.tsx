@@ -57,7 +57,6 @@ function TaskModal() {
                             onClickConfirmHandler={onClickConfirmHandler}
                             isUpdating={isPending}
                         >
-                            {/*<TaskModalContent form={form}/>*/}
                             <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-10 flex-col mt-5'>
                                 <div className="space-y-5 mobile:space-y-3 mx-4 mobile:mx-0 mobile:text-sm">
                                     <TaskContent/>
