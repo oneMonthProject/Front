@@ -94,11 +94,9 @@ function NoticeModalFooter({
 
     return (
         <div
-            className='h-[4rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
+            className='h-[3rem] mobile:h-[2rem] mobile:w-[6.8rem] tablet:w-[7.8rem] flex items-center justify-between mx-auto'>
             <Button
                 size='md'
-                // disabled={isUpdating}
-                // className={`${isUpdating && '!bg-gray-400 !text-white'}`}
                 onClickHandler={() => onConfirmHandler()}
             >
                 확인

@@ -30,8 +30,9 @@ function TaskPointSelector({isTaskExpired}:{isTaskExpired:boolean}) {
                 )
             }
             <div className='max-w-[150px] mx-auto mt-6 flex flex-col items-stretch'>
-                <label className='max-w-[150px] tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>신뢰점수
-                    부여</label>
+                <label className='max-w-[150px] tablet:text-[1.45rem] mobile:text-xl text-grey900 font-semibold mb-2'>
+                    신뢰점수 부여
+                </label>
                 <Select
                     items={selectItems}
                     label=''
