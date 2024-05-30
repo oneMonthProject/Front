@@ -17,17 +17,15 @@ export default function useUpdateMilestone() {
         mutationFn: () => updateMilestoneAPI({milestoneInfo: currentForm!}),
         onSuccess: async (data, variables, context) => {
             if (data.result === 'success') {
+                setSnackBar({show: true, content: '마일스톤을 수정했습니다.', type: 'SUCCESS'});
                 resetCurrentForm();
-                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
-                setSnackBar({show: true, content: '마일스톤을 수정했습니다.', type: 'SUCCESS'})
+                queryClient.invalidateQueries({queryKey: ['milestoneList']});
             } else {
-                setSnackBar({show: true, content: '마일스톤 수정에 실패했습니다', type: 'ERROR'})
+                setSnackBar({show: true, content: data.message, type: 'ERROR'});
             }
-
-
         },
         onError: (err) => {
-            console.log("mutation err: ", err);
+            setSnackBar({show: true, content: err.message, type: 'ERROR'});
         }
     });
 

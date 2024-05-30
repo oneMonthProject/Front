@@ -16,11 +16,11 @@ function TaskPage({searchParams: {projectId}}: { searchParams: { projectId: stri
     return (
         <>
             <section className='w-full flex flex-col items-start'>
-                {authState === 'loading' ? <MilestoneAddButtonSkeleton/> : <MilestoneAddButton authMap={authMap}/>}
+                {authState === 'loading' ? <MilestoneAddButtonSkeleton/> : <MilestoneAddButton authMap={authMap} projectId={projectId}/>}
                 <Milestones projectId={projectId}/>
                 <TaskSection projectId={projectId}/>
             </section>
-            <MilestoneModal/>
+            <MilestoneModal />
             <TaskModal/>
         </>
     );

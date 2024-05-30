@@ -1,6 +1,6 @@
 import {MilestoneInfo, ResponseBody} from "@/utils/type";
 import {request} from "@/service/project/request";
-import {convertStringToDate, sortByStartDate} from "@/utils/common";
+import {convertStringToDate, sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
 /**
  * 프로젝트 마일스톤 목록 조회
@@ -31,12 +31,14 @@ export async function getProjectMilestones(projectId: string):Promise<ResponseBo
 export async function createMilestone<T extends MilestoneInfo>(
     {
         milestoneInfo,
-        projectId
     }: {
-        milestoneInfo: T, projectId: string
+        milestoneInfo: T
     }) {
+    const {content, startDate, endDate, projectId} = milestoneInfo;
 
-    const {content, startDate, endDate} = milestoneInfo;
+    throwErrorIfInvalid(!content, "마일스톤 내용을 입력해 주세요");
+    throwErrorIfInvalid(!startDate, "시작날짜를 선택해 주세요");
+    throwErrorIfInvalid(!endDate, "종료날짜를 선택해 주세요");
     const reqData = {projectId, content, startDate, endDate};
 
     return await request('POST', `/api/project/milestone`, reqData);
@@ -48,6 +50,12 @@ export async function createMilestone<T extends MilestoneInfo>(
  */
 export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: { milestoneInfo: T }) {
     const {content, startDate, endDate, progressStatusCode, mileStoneId} = milestoneInfo;
+
+    throwErrorIfInvalid(!content, "마일스톤 내용을 입력해 주세요");
+    throwErrorIfInvalid(!startDate, "시작날짜를 선택해 주세요");
+    throwErrorIfInvalid(!endDate, "종료날짜를 선택해 주세요");
+    throwErrorIfInvalid(!progressStatusCode, "마일스톤 진행상태를 선택해 주세요");
+
     const reqData = {content, startDate, endDate, progressStatusCode, mileStoneId};
 
     return await request('PATCH', `/api/project/milestone`, reqData);

@@ -70,7 +70,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
     updateDate: string;
     progressStatus: MilestoneStatusName | '';
     progressStatusCode: MilestoneStatusCode | '';
-    projectId: bigint;
+    projectId: bigint | string;
     index?: number;
 
     constructor(type: 'add' | 'modify', milestoneInfo: MilestoneInfo) {

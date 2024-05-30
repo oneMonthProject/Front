@@ -13,40 +13,18 @@ function MilestoneModal() {
     const [portalElement, setPortalElement] = useState<Element | null>(null);
 
     const resetCurrentForm = useResetRecoilState(milestoneModalFormState);
-    const currentForm = useRecoilValue(milestoneModalFormState);
+    const currentForm = useRecoilValue(milestoneModalFormState)!;
 
     const {createMilestone, isCreating} = useCreateMilestone();
     const {updateMilestone, isUpdating} = useUpdateMilestone();
+    const isPending = isCreating || isUpdating;
 
-    async function onClickConfirmButtonHandler() {
-            const {startDate, endDate, content, progressStatus} = currentForm!;
-
-            if (!content) {
-                alert('마일스톤 내용을 입력해 주세요');
-                return;
-            }
-
-            if (!startDate) {
-                alert('시작날짜를 선택해 주세요');
-                return;
-            }
-
-            if (!endDate) {
-                alert('종료날짜를 선택해 주세요');
-                return;
-            }
-
-            if(currentForm?.type === 'add') {
-                await createMilestone();
-            } else {
-
-                if(!progressStatus) {
-                    alert('마일스톤 진행상태를 선택해 주세요');
-                    return;
-                }
-
-                await updateMilestone();
-            }
+    function onClickConfirmButtonHandler() {
+        if (currentForm.type === 'add') {
+            createMilestone();
+        } else {
+            updateMilestone();
+        }
     }
 
 
@@ -73,6 +51,7 @@ function MilestoneModal() {
                             isOpen={isOpen}
                             close={() => resetCurrentForm()}
                             title={title}
+                            isUpdating={isPending}
                             onClickConfirmHandler={onClickConfirmButtonHandler}
                         >
                             {currentForm !== null && <MilestoneModalContent/>}

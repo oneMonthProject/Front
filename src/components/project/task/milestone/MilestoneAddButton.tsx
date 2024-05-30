@@ -9,7 +9,7 @@ import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/
 import {useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 
-function MilestoneAddButton({authMap}: { authMap: ProjectTaskAuth }) {
+function MilestoneAddButton({authMap, projectId}: { authMap: ProjectTaskAuth,projectId:string }) {
     const setSnackBar = useSetRecoilState(snackbarState);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
@@ -23,7 +23,7 @@ function MilestoneAddButton({authMap}: { authMap: ProjectTaskAuth }) {
                 createDate: today,
                 mileStoneId: 0n,
                 progressStatus: "",
-                projectId: 0n,
+                projectId: projectId,
                 startDate: '',
                 endDate: '',
                 updateDate: today,

@@ -35,7 +35,9 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
                     {/*<Menu as="div" className="relative inline-block text-center">*/}
                     <div>
                         <Menu.Button
-                            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none">
+                            className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-transparent bg-white text-gray-400 hover:text-gray-500 focus:outline-none "
+                            data-role='milestone-menu'
+                        >
                             <span className="sr-only">마일스톤 메뉴</span>
                             <IoEllipsisVertical className="h-5 w-5" aria-hidden="true" data-role='milestone-menu'/>
                         </Menu.Button>
@@ -60,6 +62,7 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
                                                     href="javascript;"
                                                     onClick={(e) => {
                                                         e.preventDefault();
+                                                        e.stopPropagation();
                                                         v.onClickHandler();
                                                     }}
                                                     className={classNames(

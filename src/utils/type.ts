@@ -57,7 +57,7 @@ export interface ConfirmModalState extends ModalState {
 
 export interface MilestoneInfo {
     mileStoneId: bigint;
-    projectId: bigint;
+    projectId: bigint | string;
     content: string;
     createDate: string;
     startDate: string;
