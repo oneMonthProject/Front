@@ -17,9 +17,8 @@ function getIconByPointType(pointType: string) {
 }
 
 
-function CrewTaskHistory() {
+function CrewTaskHistory({projectMemberId}:{projectMemberId:string}) {
     const [pageIndex, setPageIndex] = useState(0);
-    const projectMemberId = useQueryString('projectMemberId');
 
     const {data, isFetching} = useQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
         queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_COUNT.LIST_SM],

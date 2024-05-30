@@ -12,8 +12,7 @@ import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detail/ProfileSectionSkeleton";
 
 
-function ProfileSection() {
-    const projectMemberId = useQueryString('projectMemberId');
+function ProfileSection({projectMemberId}:{projectMemberId:string}) {
     const {data, isFetching} = useQuery<ResponseBody<ProjectMemberProfile>, Error>({
         queryKey: ['crewDetail', projectMemberId],
         queryFn: () => getCrewDetail(projectMemberId)
@@ -57,10 +56,6 @@ function ProfileSection() {
                         <CrewStatusBadge status={status} size='sm'/>
                     </span>
                 </div>
-                {/*<div className='pc:h-[50px] tablet:mx-8 flex items-center justify-around mobile:space-x-4'>*/}
-                {/*    <span className='tablet:w-[200px] tablet:text-[1.2rem] font-medium text-geryDarkBlue'>신뢰점수 획득률</span>*/}
-                {/*    <span className='min-w-[100px] flex justify-center grow-0 mx-auto text-center tablet:text-lg font-medium text-greyBlue'>80%</span>*/}
-                {/*</div>*/}
             </section>
         </div>
     );

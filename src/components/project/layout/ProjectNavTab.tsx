@@ -1,11 +1,9 @@
 'use client';
 import React from 'react';
 import Link from "next/link";
-import {useQueryString} from "@/hooks/useQueryString";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState} from "recoil";
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {PROJECT_MENU} from "@/app/project/_utils/constant";
-import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
 function classNames(...classes: string[]) {
     return classes.filter(Boolean).join(' ')

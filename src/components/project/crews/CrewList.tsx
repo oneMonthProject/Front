@@ -4,14 +4,15 @@ import Avatar from "@/components/ui/Avatar";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import Link from "next/link";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
-import {useQueryString} from "@/hooks/useQueryString";
 import useProjectCrewList from "@/hooks/useProjectCrewList";
 import {ProjectMember} from "@/utils/type";
 import {convertStringToDate} from "@/utils/common";
+import {useRecoilValue} from "recoil";
+import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
 export default function CrewList() {
-    const projectId = useQueryString('projectId');
-    const data = useProjectCrewList();
+    const projectId = useRecoilValue(projectIdState)!;
+    const data = useProjectCrewList(projectId);
 
     return (
         <ul role="list">
