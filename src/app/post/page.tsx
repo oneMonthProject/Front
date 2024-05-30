@@ -1,12 +1,11 @@
-import React, {Suspense} from "react";
+import React from "react";
 import PostDetail from "@/components/post/PostDetail";
 import ConfirmModal from "@/components/ui/ConfirmModal";
-import PostSkeleton from "@/components/post/PostSkeleton";
 
-const PostDetailPage = () => {
+const PostDetailPage = ({searchParams: {postId}}: { searchParams: { postId: string } }) => {
     return (
         <>
-            <PostDetail/>
+            <PostDetail postId={postId}/>
             <ConfirmModal/>
         </>
     );

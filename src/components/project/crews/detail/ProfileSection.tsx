@@ -3,7 +3,6 @@ import React from 'react';
 import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
-import {useQueryString} from "@/hooks/useQueryString";
 import {useQuery} from "@tanstack/react-query";
 import {ProjectMemberProfile, ResponseBody} from "@/utils/type";
 import {getCrewDetail} from "@/service/project/crews";
