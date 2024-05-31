@@ -21,7 +21,7 @@ function NoticeBadge({size = '', noticeType}: NoticeBadgeProps) {
       <span
           className={`inline-flex items-center rounded-full ${bgColor} ${px} ${py} ${textSize} font-medium ${textColor} ring-1 ring-inset ${ringColor}`}
       >
-        {noticeType}
+        {noticeGroupName}
       </span>
         </>
     );
