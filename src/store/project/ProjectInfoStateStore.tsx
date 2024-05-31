@@ -1,6 +1,7 @@
 import {atom, atomFamily, noWait, selector, selectorFamily} from "recoil";
 import {getMyProjectDetail} from "@/service/project/project";
 import {ProjectInfo} from "@/utils/type";
+import {userStateStore} from "@/store/user/UserStateStore";
 
 
 export const projectIdState = atom<string | null>({
@@ -8,22 +9,35 @@ export const projectIdState = atom<string | null>({
     default: null
 });
 
-export const projectInfoQuery = selectorFamily<ProjectInfo, string>({
-        key: 'projectInfoQuery',
-        get: (projectId:string) => async ({get}) => {
-            const res = await getMyProjectDetail(BigInt(projectId));
-            if (res.message !== 'success') throw Error();
+export type ProjectInfoParamType = { projectId: string, userId: string };
 
-            return res.data;
+export const projectInfoQuery = selectorFamily<ProjectInfo | null, string | null>({
+    key: 'projectInfoQuery',
+    get: (param: string | null) => async ({get}) => {
+        let projectId;
+        let userId;
+        if (param === null) {
+            projectId = get(projectIdState);
+            userId = get(userStateStore);
+        } else {
+            const paramObj:ProjectInfoParamType = JSON.parse(param);
+            projectId = paramObj.projectId;
+            userId = paramObj.userId;
         }
-    });
 
-export const projectInfoState = atomFamily<ProjectInfo | null, string>({
+        const res = await getMyProjectDetail(BigInt(projectId!), BigInt(userId!));
+        if (res.message !== 'success') throw Error();
+
+        return res.data;
+    }
+});
+
+export const projectInfoState = atomFamily<ProjectInfo | null, string | null>({
     key: 'projectInfoState',
-    default: selectorFamily<ProjectInfo | null, string>({
+    default: selectorFamily<ProjectInfo | null, string | null>({
         key: 'projectInfoSelector',
-        get: (projectId:string) => ({get}) => {
-            return get(projectInfoQuery(projectId!));
+        get: (param: string | null) => ({get}) => {
+            return get(projectInfoQuery(param));
         }
     })
 });
@@ -33,10 +47,8 @@ export const projectInfoState = atomFamily<ProjectInfo | null, string>({
  */
 export const projectTaskAuthSelector = selectorFamily({
     key: 'projectTaskAuthSelector',
-    get: (param:string | null) => ({get}) => {
-        const projectId = param ? param : get(projectIdState)!;
-
-        const projectInfo = get(projectInfoState(projectId));
+    get: (param: string | null) => ({get}) => {
+        const projectInfo = get(projectInfoState(param));
         if (!projectInfo) return;
         const {authMap} = projectInfo;
         return authMap;

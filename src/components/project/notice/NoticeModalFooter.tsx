@@ -60,7 +60,7 @@ function NoticeModalFooter({
             }
         }
 
-        if (noticeFormType == 'ADD') {
+        if (noticeFormType == 'ADD' || noticeFormType === 'CREW_UPDATE') {
             resetCurrentNoticeForm();
         }
 

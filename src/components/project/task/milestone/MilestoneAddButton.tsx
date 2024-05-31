@@ -6,15 +6,21 @@ import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
 import {MilestoneInfo, ProjectTaskAuth} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {useSetRecoilState} from "recoil";
+import {useRecoilValueLoadable, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
+import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {MilestoneAddButtonSkeleton} from "@/components/ui/skeleton/project/task";
 
-function MilestoneAddButton({authMap, projectId}: { authMap: ProjectTaskAuth,projectId:string }) {
+function MilestoneAddButton({projectId, userId}: { projectId: string, userId:string }) {
     const setSnackBar = useSetRecoilState(snackbarState);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
-    const {milestoneAuth} = authMap;
+    const stateParam = JSON.stringify({projectId, userId});
+    const {state: authState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
 
+    if (authState === 'loading') return <MilestoneAddButtonSkeleton/>;
+
+    const {milestoneAuth} = authMap;
     const onClickHandler = () => {
         if (milestoneAuth) {
             const today = getTodayString();

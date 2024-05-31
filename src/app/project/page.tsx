@@ -4,14 +4,16 @@ import React from 'react';
 import ProjectInfo from "@/components/project/layout/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
 import useSetProjectIdState from "@/hooks/useSetProjectIdState";
+import useSetUserIdState from "@/hooks/useSetUserIdState";
 
-function ProjectPage({searchParams: {projectId}}: { searchParams: { projectId: string } }) {
+function ProjectPage({searchParams: {projectId, userId}}: { searchParams: { projectId: string, userId: string } }) {
+    useSetUserIdState(userId);
     useSetProjectIdState(projectId);
 
-    return (
+    return  (
         <>
-            <ProjectInfo projectId={projectId}/>
-            <ProjectNavTab projectId={projectId}/>
+            <ProjectInfo projectId={projectId} userId={userId}/>
+            <ProjectNavTab projectId={projectId} userId={userId}/>
         </>
     );
 }

@@ -20,7 +20,7 @@ function NoticeList() {
     const projectId = useRecoilValue(projectIdState);
 
     // 알림 확인 & 컨펌 관련 권한
-    const {state: authState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(projectId));
+    const {state: authState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(null));
 
     // 5초마다 백그라운드에서 알림 목록 refetch
     const {data, isFetching} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({

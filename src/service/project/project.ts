@@ -17,8 +17,8 @@ export async function getMyProjectList(pageIndex: number, itemCount: number) {
  * 프로젝트 상세 조회
  * @param projectId
  */
-export async function getMyProjectDetail(projectId: string | bigint): Promise<ResponseBody<ProjectInfo>> {
-    return await request('GET', `/api/project/detail?projectId=${projectId}`)
+export async function getMyProjectDetail(projectId: string | bigint, userId: string | bigint): Promise<ResponseBody<ProjectInfo>> {
+    return await request('GET', `/api/project/detail?projectId=${projectId}&userId=${userId}`)
 }
 
 /**

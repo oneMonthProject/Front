@@ -10,13 +10,13 @@ import {projectInfoState, projectTaskAuthSelector} from "@/store/project/Project
 import {projectSettingFormState} from "@/store/project/setting/ProjectSettingFormStateStore";
 import {snackbarState} from "@/store/CommonStateStore";
 
-function ProjectSettingFormSaveButton({projectId}: { projectId: string }) {
+function ProjectSettingFormSaveButton({projectId}: { projectId: string}) {
     const setSnackbar = useSetRecoilState(snackbarState);
 
-    const resetProjectInfo = useResetRecoilState(projectInfoState(projectId));
+    const resetProjectInfo = useResetRecoilState(projectInfoState(null));
 
     const {state: projectSettingLoadingState, contents: projectSettingForm} = useRecoilValueLoadable(projectSettingFormState);
-    const {state: authMapLoadingState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(projectId));
+    const {state: authMapLoadingState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(null));
 
 
     const updateProjectInfo = async () => {

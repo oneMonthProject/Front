@@ -11,7 +11,7 @@ import {
     ProjectNoticeTypesKey
 } from "@/app/project/@notice/_utils/type";
 
-function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }) {
+function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized: boolean }) {
     const setSnackbar = useSetRecoilState(snackbarState);
     const {type, alertId, content, createDate, checkedStatus} = item;
     const setCurrentNoticeForm = useSetRecoilState(projectNoticeCurrentFormState);
@@ -67,7 +67,7 @@ function NoticeItem({item, isAuthorized}: { item: Notice, isAuthorized:boolean }
             <div className='flex items-center gap-x-4'>
                 <NoticeBadge size='sm' noticeType={type}/>
                 {content}
-                {type !== 'ADD' && <ManagerCheckIcon isChecked={checkedStatus}/>}
+                {(type !== 'ADD' && type !== 'CREW_UPDATE') && <ManagerCheckIcon isChecked={checkedStatus}/>}
             </div>
             <div className='ml-auto text-grey600'>
                 {createDate}

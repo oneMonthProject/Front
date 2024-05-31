@@ -6,12 +6,14 @@ import {ProjectPost} from "@/utils/type";
 import {format} from "date-fns";
 import Link from "next/link";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
+import {getCookie} from "cookies-next";
 
 interface ProjectCardProps {
     projectPost: ProjectPost;
 }
 
 const ProjectCard = ({projectPost}: ProjectCardProps) => {
+    const userId = getCookie('user_id');
     const {
         name,
         trustGrade,
@@ -92,7 +94,7 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
             </div>
             <div className='flex justify-center mt-5 mb-3'>
                 <Link
-                    href={`/project?projectId=${projectId}`}
+                    href={`/project?projectId=${projectId}&userId=${userId}`}
                     className='mobile:py-1 tablet:py-1.5 mobile:px-3 tablet:px-3.5 mobile:text-sm tablet:text-base text-white rounded-full font-semibold shadow-sm bg-primary'
                     aria-label={`${name} 페이지로 이동`}
                 >

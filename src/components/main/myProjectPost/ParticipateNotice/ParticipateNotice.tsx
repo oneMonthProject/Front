@@ -1,11 +1,9 @@
 'use client';
 
 import React from 'react';
-import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import ProjectApplyStatusBadge from "@/components/ui/badge/ProjectApplyStatusBadge";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import Link from "next/link";
-import {useProjectInfo} from "@/hooks/useProjectInfo";
 import {FormattedUserProjectNotice} from "@/store/UserNoticeModalStateStore";
 
 interface ParticipateNoticeProps {

@@ -1,7 +1,7 @@
 import {ProjectSettingForm, ProjectSettingFormKey} from "@/app/project/@setting/_utils/type";
 import {atom, DefaultValue, selector, selectorFamily} from "recoil";
 import {TRUST_GRADE as TG} from "@/app/project/@setting/_utils/constant";
-import {projectIdState, projectInfoState} from "@/store/project/ProjectInfoStateStore";
+import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
 
 
 export const projectSettingFormState = atom<ProjectSettingForm | null>({
@@ -9,10 +9,7 @@ export const projectSettingFormState = atom<ProjectSettingForm | null>({
     default: selector<ProjectSettingForm | null>({
         key: 'projectSettingFormSelector',
         get: ({get}) => {
-            const projectIdString = get(projectIdState);
-            if (projectIdString === null) return null;
-
-            const projectInfo = get(projectInfoState(projectIdString));
+            const projectInfo = get(projectInfoState(null));
             if (projectInfo === null) return null;
 
             const {

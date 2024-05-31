@@ -1,15 +1,22 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
-import {useRecoilValueLoadable} from "recoil";
+import {useRecoilValueLoadable, useResetRecoilState} from "recoil";
 import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
 import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
 
-function ProjectInfo({projectId}: { projectId: string }) {
-    const {state, contents:projectInfo} = useRecoilValueLoadable(projectInfoState(projectId));
+function ProjectInfo({projectId, userId}: { projectId: string, userId:string}) {
+    const stateParam = JSON.stringify({projectId, userId});
+    const {state, contents: projectInfo} = useRecoilValueLoadable(projectInfoState(stateParam));
 
-    if(state === 'loading') return <ProjectInfoSkeleton/>;
+    const resetProjectInfo = useResetRecoilState(projectInfoState(stateParam)); // 프로젝트 상세 global projectInfo 세팅
+    useEffect(() => {
+        // 프로젝트 상세 페이지 벗어나면 프로젝트 정보 초기화
+        return () => resetProjectInfo();
+    }, [resetProjectInfo]);
+
+    if (state === 'loading') return <ProjectInfoSkeleton/>;
 
     const {name, subject, trustGrade, startDate, endDate} = projectInfo!;
 

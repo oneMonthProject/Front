@@ -20,7 +20,8 @@ export async function GET(
     } else if (params.slug === 'detail') {
         const {searchParams} = new URL(req.url);
         const projectId = searchParams.get('projectId');
-        res = await authApi(`/api/project/${projectId}`, {method});
+        const userId = searchParams.get("userId");
+        res = await authApi(`/api/project/${projectId}/${userId}`, {method});
     } else {
         throw Error('Unknown Api Route');
     }
