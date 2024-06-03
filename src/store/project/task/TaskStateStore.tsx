@@ -1,7 +1,7 @@
 import {atom, DefaultValue, selector, selectorFamily} from "recoil";
-import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
 import {TaskContentDetails, TaskForm, TaskModifyForm} from "@/app/project/@task/_utils/type";
 import _ from "lodash";
+import {v4} from "uuid";
 
 
 export type TaskModalState = {
@@ -58,7 +58,7 @@ export const taskContentDetailSelector = selector<TaskContentDetails>({
 
         const contentDetailArray = modalForm.contentDetail.split("&");
         for (const item of contentDetailArray) {
-            contentDetailMap.set(uuidv4(), item);
+            contentDetailMap.set(v4(), item);
         }
 
         return contentDetailMap;

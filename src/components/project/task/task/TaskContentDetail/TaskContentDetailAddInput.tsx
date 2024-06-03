@@ -4,12 +4,12 @@ import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {useSetRecoilState} from "recoil";
 import {taskContentDetailFieldSelector} from "@/store/project/task/TaskStateStore";
 import TaskContentAddButton from "@/components/project/task/task/TaskContentDetail/TaskContentAddButton";
-import {uuidv4} from "@mswjs/interceptors/lib/utils/uuid";
+import {v4} from "uuid";
 
 function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>}) {
     const [value, setValue] = useState('');
     const [placeholder, setPlaceholder] = useState('할 일 입력');
-    const idForEdit = useRef(uuidv4());
+    const idForEdit = useRef(v4());
     const setTaskContentDetailField = useSetRecoilState(taskContentDetailFieldSelector(idForEdit.current));
 
     // e75f0b4e-281e-4bf5-a3da-67d22cd4a133
