@@ -4,10 +4,10 @@ on:
     branches: [ "main" ]
 jobs:
   build:
-    runs-on: [self-hosted,Linux,X64,trustcrewsrunner]
+    runs-on: [self-hosted,Linux,X64,trustcrews240603this]
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [20.x]
     steps:
       - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
