@@ -20,12 +20,10 @@ jobs:
       - name: Cache next.js build output
         uses: actions/cache@v4
         with:
-          path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
-          key:  ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          path: /.next/cache
+          key:  ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}
           restore-keys: |
-             ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
+             ${{ runner.os }}-nextjs-
 
       - run: npm ci --legacy-peer-deps
 
