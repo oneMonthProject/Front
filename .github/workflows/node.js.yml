@@ -1,9 +1,10 @@
 on:
   push:
     branches: [ "main" ]
+
 jobs:
   build:
-    runs-on: [self-hosted,Linux,X64,trustcrews240603this]
+    runs-on: ubuntu-latest
     strategy:
       matrix:
         node-version: [20.x]
@@ -11,7 +12,7 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v3
 
-      - name: Use Node.js ${{ matrix.node-version }}
+      - name: Set up Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
@@ -21,21 +22,63 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ matrix.node-version }}
           restore-keys: |
-            ${{ runner.os }}-node-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-
 
       - name: Cache next.js build output
         uses: actions/cache@v4
         with:
           path: .next/cache
-          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}-${{ matrix.node-version }}
           restore-keys: |
-            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
-            ${{ runner.os }}-nextjs-
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ matrix.node-version }}-
+            ${{ runner.os }}-nextjs-${{ matrix.node-version }}-
 
       - run: npm ci --legacy-peer-deps
 
       - run: npm run build --if-present
 
-      - run: pm2 restart "trustcrews-front"
+      - name: Archive production artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: nextjs-build
+          path: |
+            .next
+            package.json
+            package-lock.json
+
+  deploy:
+    runs-on: self-hosted
+    needs: build
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+
+      - name: Download production artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: nextjs-build
+          path: .
+
+      - name: Set up Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+
+      - name: Cache dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}-${{ matrix.node-version }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-
+
+      - name: Install dependencies
+        run: npm ci --legacy-peer-deps
+
+      - name: Restart application with PM2
+        run: pm2 restart "trustcrews-front"
+        env:
+          PM2_HOME: ~/.pm2
