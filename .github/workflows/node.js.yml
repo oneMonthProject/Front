@@ -17,6 +17,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
+          cache-dependency-path: |
+            '**/package.json'
+            '**/pacakge-lock.json'
 
       - name: Install Dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
