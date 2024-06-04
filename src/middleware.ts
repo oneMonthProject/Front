@@ -44,7 +44,6 @@ export async function middleware(request: NextRequest) {
     return response;
 }
 
-// See "Matching Paths" below to learn more
 export const config = {
     matcher: "/api/:path*",
 };
