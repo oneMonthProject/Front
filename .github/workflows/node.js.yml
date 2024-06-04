@@ -9,21 +9,21 @@ jobs:
       matrix:
         node-version: [20.x]
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout source code
+        uses: actions/checkout@v3
 
-      - name: Cache dependencies
+      - name: Cache node modules
+        uses: actions/cache@v3
         id: cache-deps
-        uses: actions/setup-node@v3
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-          cache-dependency-path: |
-            ~/.npm
-            ${{ github.workspace }}/.next/cache
+          path: node_modules
+          key: npm-packages-${{ hashFiles('**/package-lock.json') }}
 
       - name: Install Dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
         run: npm ci --legacy-peer-deps
 
-      - run: npm run build --if-present
+      - name: Build
+        run: npm run build --if-present
+
       - run: pm2 restart "trustcrews-front"
