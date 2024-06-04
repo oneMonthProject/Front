@@ -12,8 +12,6 @@ function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAc
     const idForEdit = useRef(v4());
     const setTaskContentDetailField = useSetRecoilState(taskContentDetailFieldSelector(idForEdit.current));
 
-    // e75f0b4e-281e-4bf5-a3da-67d22cd4a133
-
     function onClickAddButtonHandler() {
         setTaskContentDetailField(value);
         setValue("");

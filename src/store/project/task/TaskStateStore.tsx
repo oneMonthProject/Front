@@ -64,7 +64,6 @@ export const taskContentDetailSelector = selector<TaskContentDetails>({
         return contentDetailMap;
     },
     set: ({get, set}, newValue) => {
-        // 뭐가 바뀌나....
         if (!(newValue instanceof DefaultValue)) {
             const modalState = get(taskModalState);
             const form = get(taskModalState).form!;
