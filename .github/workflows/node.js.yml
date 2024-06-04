@@ -18,8 +18,8 @@ jobs:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
           cache-dependency-path: |
-            '**/package.json'
-            '**/package-lock.json'
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
 
       - name: Install Dependencies
         if: steps.cache-deps.outputs.cache-hit != 'true'
