@@ -29,7 +29,6 @@ const authApi = returnFetch({
       return requestArgs;
     },
     response: async (response, requestArgs) => {
-      console.log("response.status", response.status);
       if (response.status !== 401) {
         return response;
       }
