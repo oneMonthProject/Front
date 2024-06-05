@@ -24,7 +24,7 @@ export async function authRequest(method: HTTP_METHOD, url: string, data?: Recor
     };
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
     console.log("env:: ", process.env.NODE_ENV);
-    console.log("production:: ", process.env.NODE_ENV);
+    console.log("production:: ", process.env.NEXT_PUBLIC_PRODUCTION);
 
     const res = await fetch(`${publicURL}${url}`, requestInit);
     return res.json();
