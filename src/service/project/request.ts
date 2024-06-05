@@ -6,6 +6,7 @@ export const headers = {
     'Content-Type': 'application/json'
 };
 
+
 export async function request(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
     const requestInit: RequestInit = {
         headers, method
@@ -19,7 +20,7 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
 
 export async function authRequest(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
     const requestInit: RequestInit = {
-        headers, method, credentials:'include'
+        headers, method, credentials: 'include'
     };
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
 
