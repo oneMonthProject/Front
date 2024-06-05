@@ -15,3 +15,14 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
     const res = await fetch(`${publicURL}${url}`, requestInit);
     return res.json();
 }
+
+
+export async function authRequest(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
+    const requestInit: RequestInit = {
+        headers, method, credentials:'include'
+    };
+    if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
+
+    const res = await fetch(`${publicURL}${url}`, requestInit);
+    return res.json();
+}

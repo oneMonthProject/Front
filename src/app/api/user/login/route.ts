@@ -5,10 +5,11 @@ import { getRefreshToken } from "@/utils/common";
 
 export async function POST(req: NextRequest) {
   const loginRequest = await req.json();
+
   const res = await publicApi("/api/user/login/public", {
     method: "POST",
     body: JSON.stringify(loginRequest),
-    credentials: "include",
+    credentials: req.credentials,
   });
 
   if (res.ok) {

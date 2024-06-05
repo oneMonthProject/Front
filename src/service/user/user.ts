@@ -21,7 +21,7 @@ export const getSimpleUser = async () => {
         const response = await fetch(`${publicURL}/api/user/simple`);
         return response.json();
     }catch(e: unknown){
-        console.log("error: ",(e as Error).message);
+        console.log("Failed to getSimpleUser: ",(e as Error).message);
     }
 
 };
