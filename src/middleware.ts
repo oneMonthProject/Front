@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
         const timeStr = new Date(time).toISOString();
 
         const reqLogData = `[REQUEST] ${timeStr}  ${request.method}: ${request.url}`;
-        console.log(request.body ? reqLogData + `data: ${request.body}` : reqLogData);
+        console.log(reqLogData);
 
         // Response
         const response = NextResponse.next();

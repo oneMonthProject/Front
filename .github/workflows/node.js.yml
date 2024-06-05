@@ -4,7 +4,6 @@ on:
 jobs:
   build:
     runs-on: [self-hosted,Linux,X64,trustcrews240603this]
-    environment: dev
     strategy:
       matrix:
         node-version: [20.x]
