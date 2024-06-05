@@ -17,8 +17,13 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const getSimpleUser = async () => {
-    const response = await fetch(`${publicURL}/api/user/simple`);
-    return response.json();
+    try{
+        const response = await fetch(`${publicURL}/api/user/simple`);
+        return response.json();
+    }catch(e: unknown){
+        console.log("error: ",(e as Error).message);
+    }
+
 };
 
 export const getUserIfo = async () => {
