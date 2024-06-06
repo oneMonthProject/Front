@@ -30,12 +30,14 @@ export async function POST(req: NextRequest) {
 }
 
 export async function OPTIONS(request: Request) {
+  console.log("OPTIONS:::: ", request.headers.get("origin"));
   const allowedOrigins = (process.env?.ALLOWED_ORIGIN || "").split(",");
+  const origin = request.headers.get('origin')
 
   return new NextResponse(null, {
     status: 204,
     headers: {
-      'Access-Control-Allow-Origin': allowedOrigins.join(","),
+      'Access-Control-Allow-Origin': origin || "*",
       'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
       'Access-Control-Allow-Headers': '*'
     }
