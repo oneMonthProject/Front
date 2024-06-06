@@ -29,6 +29,14 @@ export async function authRequest(method: HTTP_METHOD, url: string, data?: Recor
 
     try{
         const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, requestInit);
+        const headers = res.headers;
+        console.log("res::: ", headers.get("Access-Control-Allow-Origin"));
+        console.log("res::: ", headers.get("Access-Control-Allow-Methods"));
+        console.log("res::: ", headers.get("Access-Control-Allow-Headers"));
+        console.log("res.status: ", res.status);
+        console.log("res.statusText: ", res.statusText);
+        console.log("res.type: ", res.type);
+        console.log("res.redirected: ", res.redirected);
         return res.json();
     }catch(e:unknown){
         console.log("ERROR::::: ", (e as Error).message);

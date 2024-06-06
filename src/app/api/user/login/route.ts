@@ -30,16 +30,21 @@ export async function POST(req: NextRequest) {
 }
 
 export async function OPTIONS(request: Request) {
-  console.log("OPTIONS:::: ", request.headers.get("origin"));
   const allowedOrigins = (process.env?.ALLOWED_ORIGIN || "").split(",");
   const origin = request.headers.get('origin')
+  console.log("OPTIONS req Origin:::: ", origin);
+
+  const exposedHeaders = (process.env?.EXPOSED_HEADERS || "").split(",");
+  const maxAge = process.env?.MAX_AGE && parseInt(process.env?.MAX_AGE) || undefined;
 
   return new NextResponse(null, {
     status: 204,
     headers: {
       'Access-Control-Allow-Origin': origin || "*",
       'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
-      'Access-Control-Allow-Headers': '*'
+      'Access-Control-Allow-Headers': '*',
+      "Access-Control-Expose-Headers": exposedHeaders.join(","),
+      "Access-Control-Max-Age": maxAge?.toString() ?? ""
     }
   })
 }
