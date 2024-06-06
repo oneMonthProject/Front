@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
 
         response.headers.set("Access-Control-Allow-Credentials", corsOptions.credentials.toString());
         response.headers.set("Access-Control-Allow-Methods", corsOptions.allowedMethods.join(","));
-        response.headers.set("Access-Control-Allow-Headers", corsOptions.allowedHeaders.join(","));
+        response.headers.set("Access-Control-Allow-Headers", "*");
         response.headers.set("Access-Control-Expose-Headers", corsOptions.exposedHeaders.join(","));
         response.headers.set("Access-Control-Max-Age", corsOptions.maxAge?.toString() ?? "");
 
