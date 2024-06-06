@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
   const res = await publicApi("/api/user/login/public", {
     method: "POST",
     body: JSON.stringify(loginRequest),
-    credentials: req.credentials,
+    credentials: "include",
   });
 
   if (res.ok) {
