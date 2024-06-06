@@ -31,9 +31,9 @@ export async function middleware(request: NextRequest) {
         console.log("requestMoted: ", request.method);
 
         if(request.method === 'OPTIONS'){
-            console.log("methods;:: ", request.headers.get(("Access-Control-Request-Method")));
-            console.log("headers;:: ", request.headers.get(("Access-Control-Request-Headers")));
-            console.log("origin;:: ", request.headers.get(("Origin")));
+            console.log("methods;:: ", request.headers.get("Access-Control-Request-Method"));
+            console.log("headers;:: ", request.headers.get("Access-Control-Request-Headers"));
+            console.log("origin;:: ", request.headers.get("Origin"));
         }
 
         const reqLogData = `[REQUEST] ${timeStr}  ${request.method}: ${request.url}`;
