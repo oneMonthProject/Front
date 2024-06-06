@@ -30,9 +30,15 @@ export async function middleware(request: NextRequest) {
 
         console.log("requestMoted: ", request.method);
 
-        if(request.method === 'OPTIONS'){
+        if(request.method === 'OPTIONS' && request.url.includes("/api/user/login")){
             console.log("methods;:: ", request.headers.get("Access-Control-Request-Method"));
             console.log("headers;:: ", request.headers.get("Access-Control-Request-Headers"));
+            console.log("origin;:: ", request.headers.get("Origin"));
+        }
+
+        if(request.method === 'POST' && request.url.includes("/api/user/login")){
+            console.log("ContentType;:: ", request.headers.get("Content-Type"));
+            console.log("contenttype;:: ", request.headers.get("content-type"));
             console.log("origin;:: ", request.headers.get("Origin"));
         }
 
