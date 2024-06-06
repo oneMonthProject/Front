@@ -27,6 +27,13 @@ export async function authRequest(method: HTTP_METHOD, url: string, data?: Recor
     console.log("publicURL:: ", process.env.NEXT_PUBLIC_URL);
     console.log("publicURL2:: ", publicURL);
 
-    const res = await fetch(`${publicURL}${url}`, requestInit);
-    return res.json();
+    try{
+        const res = await fetch(`${publicURL}${url}`, requestInit);
+        return res.json();
+    }catch(e:unknown){
+        console.log("ERROR::::: ", (e as Error).message);
+        console.log("ERROR STACk::::: ", (e as Error).stack);
+        console.log("ERROR CAUSE::::: ", (e as Error).cause);
+    }
+
 }
