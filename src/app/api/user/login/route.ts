@@ -28,3 +28,16 @@ export async function POST(req: NextRequest) {
   const data = await res.json();
   return NextResponse.json(data);
 }
+
+export async function OPTIONS(request: Request) {
+  const allowedOrigins = (process.env?.ALLOWED_ORIGIN || "").split(",");
+
+  return new NextResponse(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': allowedOrigins.join(","),
+      'Access-Control-Allow-Methods': 'GET,OPTIONS,PATCH,DELETE,POST,PUT',
+      'Access-Control-Allow-Headers': '*'
+    }
+  })
+}
