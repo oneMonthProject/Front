@@ -28,7 +28,7 @@ export async function authRequest(method: HTTP_METHOD, url: string, data?: Recor
     console.log("publicURL2:: ", publicURL);
 
     try{
-        const res = await fetch(`${publicURL}${url}`, requestInit);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_URL}${url}`, requestInit);
         return res.json();
     }catch(e:unknown){
         console.log("ERROR::::: ", (e as Error).message);
