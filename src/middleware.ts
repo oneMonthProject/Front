@@ -28,6 +28,14 @@ export async function middleware(request: NextRequest) {
         const time = Date.now();
         const timeStr = new Date(time).toISOString();
 
+        console.log("requestMoted: ", request.method);
+
+        if(request.method === 'OPTIONS'){
+            console.log("methods;:: ", request.headers.get(("Access-Control-Request-Method")));
+            console.log("headers;:: ", request.headers.get(("Access-Control-Request-Headers")));
+            console.log("origin;:: ", request.headers.get(("Origin")));
+        }
+
         const reqLogData = `[REQUEST] ${timeStr}  ${request.method}: ${request.url}`;
         console.log(reqLogData);
 
