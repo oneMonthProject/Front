@@ -20,7 +20,7 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
 
 export async function authRequest(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
     const requestInit: RequestInit = {
-        headers, method, credentials: 'include'
+        headers, method
     };
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
     console.log("env:: ", process.env.NODE_ENV);
