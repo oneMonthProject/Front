@@ -30,8 +30,6 @@ const publicApi = returnFetch({
         resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${response.statusText}`);
       }
 
-      console.log("requestArgs1:: ", requestArgs[1])
-
       resLogger.i(`${requestArgs[1]!.method || 'GET'}: ${response.status} ${requestArgs[0]}`)
       return response;
     },

@@ -48,11 +48,6 @@ function LoginForm() {
 
         login(email, password)
             .then(async (response) => {
-                if(response.status !== 200) {
-                    console.log("response: ", response);
-                    return;
-                }
-
                 const {data: userId, result, message} = response;
 
                 if (isEqual(result, "success")) {
