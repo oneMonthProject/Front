@@ -26,7 +26,6 @@ const publicApi = returnFetch({
     },
     response: async (response, requestArgs) => {
       if (response.status !== 200) {
-        // 만료 안된경우 요청에 대한 원래 응답 반환
         resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${response.statusText}`);
       }
 
