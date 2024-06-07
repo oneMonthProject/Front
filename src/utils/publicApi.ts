@@ -21,7 +21,7 @@ const publicApi = returnFetch({
         };
       }
 
-      reqLogger.i(`${requestArgs[1]!.method}: ${requestArgs[0]}`);
+      reqLogger.i(`${requestArgs[1]!.method || 'GET'}: ${requestArgs[0]}`);
       return requestArgs;
     },
     response: async (response, requestArgs) => {
@@ -30,7 +30,9 @@ const publicApi = returnFetch({
         resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${response.statusText}`);
       }
 
-      resLogger.i(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]}`)
+      console.log("requestArgs1:: ", requestArgs[1])
+
+      resLogger.i(`${requestArgs[1]!.method || 'GET'}: ${response.status} ${requestArgs[0]}`)
       return response;
     },
   },

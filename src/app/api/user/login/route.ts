@@ -4,7 +4,6 @@ import { cookies } from "next/headers";
 import { getRefreshToken } from "@/utils/common";
 
 export async function POST(req: NextRequest) {
-  console.log("POST api:: ", req);
   const loginRequest = await req.json();
 
   const res = await publicApi("/api/user/login/public", {
