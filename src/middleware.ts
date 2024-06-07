@@ -32,6 +32,7 @@ export async function middleware(request: NextRequest) {
 
         // Response
         const response = NextResponse.next();
+        console.log("response:: ", response);
 
         // CORS setting
         const origin = request.headers.get('origin') ?? '';
