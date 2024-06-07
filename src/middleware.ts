@@ -31,7 +31,7 @@ export async function middleware(request: NextRequest) {
             ...(isAllowedOrigin && {'Access-Control-Allow-Origin': origin}),
             "Access-Control-Allow-Credentials": corsOptions.credentials.toString(),
             "Access-Control-Allow-Methods": corsOptions.allowedMethods.join(","),
-            "Access-Control-Allow-Headers": "*",
+            "Access-Control-Allow-Headers": corsOptions.allowedHeaders.join(","),
             "Access-Control-Expose-Headers": corsOptions.exposedHeaders.join(","),
             "Access-Control-Max-Age": corsOptions.maxAge?.toString() ?? ""
         }
