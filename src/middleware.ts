@@ -46,6 +46,8 @@ export async function middleware(request: NextRequest) {
         response.headers.set("Access-Control-Expose-Headers", corsOptions.exposedHeaders.join(","));
         response.headers.set("Access-Control-Max-Age", corsOptions.maxAge?.toString() ?? "");
 
+        console.log("response after set:: ", response);
+
         // Return
         return response;
     }catch(e){
