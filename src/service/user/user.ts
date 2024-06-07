@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {authRequest, request} from "@/service/project/request";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
@@ -17,18 +17,11 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const getSimpleUser = async () => {
-    try{
-        const response = await fetch(`${publicURL}/api/user/simple`);
-        return response.json();
-    }catch(e: unknown){
-        console.log("Failed to getSimpleUser: ",(e as Error).message);
-    }
-
+    return await authRequest('GET', '/api/user/simple')
 };
 
 export const getUserIfo = async () => {
-    const response = await fetch(`${publicURL}/api/user`);
-    return response.json();
+    return await authRequest('GET',`${publicURL}/api/user`);
 };
 
 export const updateUser = async (
