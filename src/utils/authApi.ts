@@ -57,7 +57,6 @@ const authApi = returnFetch({
                 });
 
                 if (tokenResponse.ok) {
-                    resLogger.i(`TOKEN-REFRESHED: ${requestArgs[0]}`);
                     const {headers} = tokenResponse;
                     const accessToken = headers.get("Authorization");
                     const setCookieHeader = headers.get("Set-Cookie");
@@ -68,7 +67,7 @@ const authApi = returnFetch({
                         cookieStore.set("Access", accessToken, options);
                         cookieStore.set("Refresh", token, options);
 
-                        console.log("complete the reissue of cookies..!");
+                        resLogger.i(`TOKEN-REFRESH-SUCCESS: ${requestArgs[0]}`);
                     }
                 } else {
                     resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
