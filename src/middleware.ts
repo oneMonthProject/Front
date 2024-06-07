@@ -22,12 +22,6 @@ const corsOptions: {
 
 
 export async function middleware(request: NextRequest) {
-    // Logging
-    // const time = Date.now();
-    // const timeStr = new Date(time).toISOString();
-    // const reqLogData = `[REQUEST] ${timeStr}  ${request.method}: ${request.url}`;
-    // console.log(reqLogData);
-
     const origin = request.headers.get('origin') ?? '';
     const isAllowedOrigin = corsOptions.allowedOrigins.includes('*') || corsOptions.allowedOrigins.includes(origin);
 
