@@ -25,6 +25,8 @@ export const projectInfoQuery = selectorFamily<ProjectInfo | null, string | null
             userId = paramObj.userId;
         }
 
+        if(projectId === null || userId === null) return null;
+
         const res = await getMyProjectDetail(BigInt(projectId!), BigInt(userId!));
         if (res.message !== 'success') throw Error();
 
