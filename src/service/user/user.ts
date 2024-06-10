@@ -17,11 +17,11 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const getSimpleUser = async () => {
-    return await authRequest('GET', '/api/user/simple')
+    return await request('GET', '/api/user/simple')
 };
 
 export const getUserIfo = async () => {
-    return await authRequest('GET',`${publicURL}/api/user`);
+    return await request('GET',`${publicURL}/api/user`);
 };
 
 export const updateUser = async (
