@@ -3,12 +3,8 @@ import {JSONReplaceBigInt} from "@/utils/common";
 
 export const publicURL = process.env.NEXT_PUBLIC_URL;
 export const headers = {
-    'Content-Type': 'application/json',
-    'Origin': 'http://3.35.111.141',
-    'Access-Control-Request-Method': 'POST',
-    'Access-Control-Request-Headers': 'Content-Type'
+    'Content-Type': 'application/json'
 };
-
 
 export async function request(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
     const requestInit: RequestInit = {
