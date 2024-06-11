@@ -75,14 +75,10 @@ const authApi = returnFetch({
                     }
                         break;
                     case '401': {
-                        const res = await fetch(`${baseURL}/api/user/logout`, {method: "POST"});
-
-                        if (res.ok) {
-                            const cookieStore = cookies();
-                            cookieStore.delete("user_id");
-                            cookieStore.delete("Access");
-                            cookieStore.delete("Refresh");
-                        }
+                        const cookieStore = cookies();
+                        cookieStore.delete("user_id");
+                        cookieStore.delete("Access");
+                        cookieStore.delete("Refresh");
 
                         return new Response(null, {status: 302, headers: {'Location': '/'}});
                     }
