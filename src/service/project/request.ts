@@ -13,6 +13,10 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
 
     const res = await fetch(`${publicURL}${url}`, requestInit);
+    if(res.status === 302){
+        window.location.href = res.headers.get("Location") as string;
+        return;
+    }
     return res.json();
 }
 

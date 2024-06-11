@@ -56,22 +56,39 @@ const authApi = returnFetch({
                     credentials: "include",
                 });
 
-                if (tokenResponse.ok) {
-                    const {headers} = tokenResponse;
-                    const accessToken = headers.get("Authorization");
-                    const setCookieHeader = headers.get("Set-Cookie");
+                const reissueResponse = tokenResponse.status.toString();
+                switch (reissueResponse) {
+                    case '200':
+                    case '204': {
+                        const {headers} = tokenResponse;
+                        const accessToken = headers.get("Authorization");
+                        const setCookieHeader = headers.get("Set-Cookie");
 
-                    if (accessToken && setCookieHeader) {
-                        const {token, options} = getRefreshToken(setCookieHeader);
+                        if (accessToken && setCookieHeader) {
+                            const {token, options} = getRefreshToken(setCookieHeader);
 
-                        cookieStore.set("Access", accessToken, options);
-                        cookieStore.set("Refresh", token, options);
+                            cookieStore.set("Access", accessToken, options);
+                            cookieStore.set("Refresh", token, options);
 
-                        resLogger.i(`TOKEN-REFRESH-SUCCESS: ${requestArgs[0]}`);
+                            resLogger.i(`TOKEN-REFRESH-SUCCESS: ${requestArgs[0]}`);
+                        }
                     }
-                } else {
-                    resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
-                    throw Error(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
+                        break;
+                    case '401': {
+                        const res = await authApi("/api/user/logout", {method: "POST"});
+
+                        if (res.ok) {
+                            const cookieStore = cookies();
+                            cookieStore.delete("user_id");
+                            cookieStore.delete("Access");
+                            cookieStore.delete("Refresh");
+                        }
+
+                        return new Response(null, {status: 302, headers: {'Location': '/'}});
+                    }
+                    default:
+                        resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
+                        throw Error(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
                 }
             } else {
                 const target = !userId && !refreshToken
