@@ -75,7 +75,7 @@ const authApi = returnFetch({
                     }
                         break;
                     case '401': {
-                        const res = await authApi("/api/user/logout", {method: "POST"});
+                        const res = await fetch(`${baseURL}/api/user/logout`, {method: "POST"});
 
                         if (res.ok) {
                             const cookieStore = cookies();
