@@ -11,7 +11,7 @@ export default function useLogout() {
     const router = useRouter();
     const resetActiveTab = useResetRecoilState(activeTabState);
     const resetUserIdState = useResetRecoilState(userStateStore)
-    const {setInfoSnackbar, setSuccessSnackbar, setErrorSnackbar} = useSnackbar();
+    const {setInfoSnackbar, setErrorSnackbar} = useSnackbar();
     const {mutate} = useMutation({
         mutationFn: logoutAPI,
         onSuccess: (res) => {
@@ -23,15 +23,15 @@ export default function useLogout() {
                 router.push("/");
                 router.refresh();
 
-                setSuccessSnackbar(message);
-            }
-
-            if(isEqual(result, "redirect")){
-                resetUserIdState();
-                router.push(data);
-                router.refresh();
                 setInfoSnackbar(message);
             }
+
+            // if(isEqual(result, "redirect")){
+            //     resetUserIdState();
+            //     router.push(data);
+            //     router.refresh();
+            //     setInfoSnackbar(message);
+            // }
 
             if(isEqual(result, "error")) {
                 setErrorSnackbar(message);

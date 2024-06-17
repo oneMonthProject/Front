@@ -12,7 +12,7 @@ import LoginNav from "@/components/header/User/LoginNav";
 
 function UserMenu() {
     const isDesktop = useMediaQuery({query: '(min-width: 376px)'});
-    const {data, isFetching, isError, error} = useQuery<ResponseBody<UserBasicInfo>, Error>(
+    const {data, isFetching} = useQuery<ResponseBody<UserBasicInfo>, Error>(
         {
             queryKey: ['simpleUserInfo'],
             queryFn: getSimpleUser
@@ -22,7 +22,8 @@ function UserMenu() {
     if (isFetching) return <UserMenuSkeleton/>;
 
     const userBasicInfo = data?.data;
-    if (isError || (!isFetching && !userBasicInfo)) return <LoginNav/>;
+    console.log("userBasicInfo: ", userBasicInfo);
+    // if (isError || (!isFetching && !userBasicInfo)) return <LoginNav/>;
 
     const {nickname, profileImgSrc} = userBasicInfo!;
 

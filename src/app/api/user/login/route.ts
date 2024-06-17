@@ -1,30 +1,36 @@
 import publicApi from "@/utils/publicApi";
-import { NextRequest, NextResponse } from "next/server";
-import { cookies } from "next/headers";
-import { getRefreshToken } from "@/utils/common";
+import {NextRequest, NextResponse} from "next/server";
+import {cookies} from "next/headers";
+import {getRefreshToken} from "@/utils/common";
 
 export async function POST(req: NextRequest) {
-  const loginRequest = await req.json();
+    const loginRequest = await req.json();
 
-  const res = await publicApi("/api/user/login/public", {
-    method: "POST",
-    body: JSON.stringify(loginRequest),
-    credentials: "include",
-  });
+    const res = await publicApi("/api/user/login/public", {
+        method: "POST",
+        body: JSON.stringify(loginRequest),
+        credentials: "include",
+    });
 
-  if (res.ok) {
-    const { headers } = res;
-    const accessToken = headers.get("Authorization");
-    const setCookieHeader = headers.get("Set-Cookie");
+    let resData = {
+        data: null,
+        result: "error",
+        message: "error"
+    };
 
-    if (accessToken && setCookieHeader) {
-      const { token, options } = getRefreshToken(setCookieHeader);
+    if (res.ok) {
+        const {headers} = res;
+        const accessToken = headers.get("Authorization");
+        const setCookieHeader = headers.get("Set-Cookie");
 
       const cookieStore = cookies();
-      cookieStore.set("Access", accessToken, options);
-      cookieStore.set("Refresh", token, options);
+        if (accessToken && setCookieHeader) {
+            const {token, options} = getRefreshToken(setCookieHeader);
+            cookieStore.set("Access", accessToken, options);
+            cookieStore.set("Refresh", token, options);
+        }
+        resData = await res.json();
+        cookieStore.set("user_id", resData.data!);
     }
-  }
-  const data = await res.json();
-  return NextResponse.json(data);
+    return NextResponse.json(resData);
 }

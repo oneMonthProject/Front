@@ -4,15 +4,16 @@ import Input from "@/components/ui/form/Input";
 import PasswordInput from "@/components/ui/form/PasswordInput";
 import FormButton from "@/components/ui/form/FormButton";
 import {login} from "@/service/user/login";
-import {setCookie} from "cookies-next";
 import {useRouter} from "next/navigation";
 import {useSetRecoilState} from "recoil";
 import {isValidEmail} from "@/utils/common";
 import {isEqual} from "lodash";
 import {snackbarState} from "@/store/CommonStateStore";
 import {useQueryClient} from "@tanstack/react-query";
+import {userStateStore} from "@/store/user/UserStateStore";
 
 function LoginForm() {
+    const setUserIdState = useSetRecoilState(userStateStore);
     const router = useRouter();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
@@ -51,7 +52,7 @@ function LoginForm() {
                 const {data: userId, result, message} = response;
 
                 if (isEqual(result, "success")) {
-                    setCookie("user_id", userId);
+                    setUserIdState(userId);
                     const invalidateUserInfo = queryClient.invalidateQueries({queryKey: ['simpleUserInfo']});
                     const invalidateMyProjectList = queryClient.invalidateQueries({queryKey: ['myProjectList']});
                     const invalidateProjectNotice = queryClient.invalidateQueries({queryKey: ['userProjectNotice']});

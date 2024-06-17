@@ -73,16 +73,16 @@ const authApi = returnFetch({
 
                             resLogger.i(`TOKEN-REFRESH-SUCCESS: ${requestArgs[0]}`);
                         }
-                    }
                         break;
-                    case '401': {
-                        const cookieStore = cookies();
-                        cookieStore.delete("user_id");
-                        cookieStore.delete("Access");
-                        cookieStore.delete("Refresh");
-
-                        return response;
                     }
+                    // case '401': {
+                    //     const cookieStore = cookies();
+                    //     cookieStore.delete("user_id");
+                    //     cookieStore.delete("Access");
+                    //     cookieStore.delete("Refresh");
+                    //
+                    //     return response;
+                    // }
                     default:
                         resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
                         throw Error(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
