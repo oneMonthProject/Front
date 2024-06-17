@@ -19,5 +19,4 @@ export const PAGE_RANGE = {
     DEFAULT: 5
 } as const;
 
-
-
+export const PROCESS_ERR = "프로세스 수행중 문제가 발생했습니다. 잠시후 다시 시도해주세요.";

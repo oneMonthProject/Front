@@ -48,7 +48,6 @@ function LoginForm() {
 
         login(email, password)
             .then(async (response) => {
-                console.log("LoginForm response::: ", response);
                 const {data: userId, result, message} = response;
 
                 if (isEqual(result, "success")) {

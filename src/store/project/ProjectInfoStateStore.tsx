@@ -1,7 +1,8 @@
-import {atom, atomFamily, noWait, selector, selectorFamily} from "recoil";
+import {atom, atomFamily, selectorFamily} from "recoil";
 import {getMyProjectDetail} from "@/service/project/project";
-import {ProjectInfo} from "@/utils/type";
+import {ProjectInfo, ProjectTaskAuth, ResponseBody} from "@/utils/type";
 import {userStateStore} from "@/store/user/UserStateStore";
+import {createResBody} from "@/utils/common";
 
 
 export const projectIdState = atom<string | null>({
@@ -11,7 +12,7 @@ export const projectIdState = atom<string | null>({
 
 export type ProjectInfoParamType = { projectId: string, userId: string };
 
-export const projectInfoQuery = selectorFamily<ProjectInfo | null, string | null>({
+export const projectInfoQuery = selectorFamily<ResponseBody<ProjectInfo | null>, string | null>({
     key: 'projectInfoQuery',
     get: (param: string | null) => async ({get}) => {
         let projectId;
@@ -20,23 +21,30 @@ export const projectInfoQuery = selectorFamily<ProjectInfo | null, string | null
             projectId = get(projectIdState);
             userId = get(userStateStore);
         } else {
-            const paramObj:ProjectInfoParamType = JSON.parse(param);
+            const paramObj: ProjectInfoParamType = JSON.parse(param);
             projectId = paramObj.projectId;
             userId = paramObj.userId;
         }
 
-        if(projectId === null || userId === null) return null;
+        if (projectId === null || userId === null) return createResBody<null>(
+            null, "error", "[PROJECT_INFO] Invalid Parameter Error"
+        );
 
-        const res = await getMyProjectDetail(BigInt(projectId!), BigInt(userId!));
-        if (res.message !== 'success') throw Error();
 
-        return res.data;
+        try {
+            return await getMyProjectDetail(BigInt(projectId), BigInt(userId));
+        } catch (e: unknown) {
+            return createResBody<null>(
+                null, "error", `[PROJECT_INFO] Server Error: ${(e as Error).message} - ${(e as Error).stack}`
+            );
+        }
+
     }
 });
 
-export const projectInfoState = atomFamily<ProjectInfo | null, string | null>({
+export const projectInfoState = atomFamily<ResponseBody<ProjectInfo | null>, string | null>({
     key: 'projectInfoState',
-    default: selectorFamily<ProjectInfo | null, string | null>({
+    default: selectorFamily<ResponseBody<ProjectInfo | null>, string | null>({
         key: 'projectInfoSelector',
         get: (param: string | null) => ({get}) => {
             return get(projectInfoQuery(param));
@@ -47,13 +55,11 @@ export const projectInfoState = atomFamily<ProjectInfo | null, string | null>({
 /**
  * 프로젝트 상세정보 auth selector
  */
-export const projectTaskAuthSelector = selectorFamily({
+export const projectTaskAuthSelector = selectorFamily<ResponseBody<ProjectTaskAuth | null>, string | null>({
     key: 'projectTaskAuthSelector',
     get: (param: string | null) => ({get}) => {
-        const projectInfo = get(projectInfoState(param));
-        if (!projectInfo) return;
-        const {authMap} = projectInfo;
-        return authMap;
+        const res: ResponseBody<ProjectInfo | null> = get(projectInfoState(param));
+        return {data: res.data?.authMap || null, result: res.result, message: res.message};
     }
 });
 

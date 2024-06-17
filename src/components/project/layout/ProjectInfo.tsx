@@ -6,9 +6,9 @@ import {useRecoilValueLoadable, useResetRecoilState} from "recoil";
 import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
 import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
 
-function ProjectInfo({projectId, userId}: { projectId: string, userId:string}) {
+function ProjectInfo({projectId, userId}: { projectId: string, userId: string }) {
     const stateParam = JSON.stringify({projectId, userId});
-    const {state, contents: projectInfo} = useRecoilValueLoadable(projectInfoState(stateParam));
+    const {state, contents} = useRecoilValueLoadable(projectInfoState(stateParam));
 
     const resetProjectInfo = useResetRecoilState(projectInfoState(stateParam)); // 프로젝트 상세 global projectInfo 세팅
     useEffect(() => {
@@ -16,9 +16,9 @@ function ProjectInfo({projectId, userId}: { projectId: string, userId:string}) {
         return () => resetProjectInfo();
     }, [resetProjectInfo]);
 
-    if (state === 'loading') return <ProjectInfoSkeleton/>;
+    if (state === 'loading' || contents.result !== "success") return <ProjectInfoSkeleton/>;
 
-    const {name, subject, trustGrade, startDate, endDate} = projectInfo!;
+    const {name, subject, trustGrade, startDate, endDate} = contents.data;
 
     return (
         <section

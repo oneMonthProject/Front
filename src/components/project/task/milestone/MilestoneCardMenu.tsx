@@ -13,7 +13,7 @@ interface MilestoneCardMenuProps {
 }
 
 function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandler}: MilestoneCardMenuProps) {
-     const authMap = useRecoilValue(projectTaskAuthSelector(null));
+     const contents = useRecoilValue(projectTaskAuthSelector(null));
 
     const milestoneMenus = [
         {
@@ -29,7 +29,7 @@ function MilestoneCardMenu({milestoneId, onEditClickHandler, onDeleteClickHandle
     ]
 
     return (
-        authMap?.milestoneAuth ?
+        contents?.data?.milestoneAuth ?
             (
                 <Menu as="div" className="self-start flex-shrink-0 pr-2 text-center">
                     {/*<Menu as="div" className="relative inline-block text-center">*/}

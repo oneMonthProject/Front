@@ -1,4 +1,4 @@
-import {authRequest, request} from "@/service/project/request";
+import {request} from "@/service/project/request";
 
 export const login = async (email: string, password: string) => {
   const loginRequest = { email, password };

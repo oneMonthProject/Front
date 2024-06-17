@@ -12,7 +12,9 @@ function Milestones({projectId}: { projectId: string }) {
         milestoneList,
         activeMilestoneIndex: initActiveMilestoneIndex,
         activeMilestoneId: initActiveMilestoneId,
-        isMilestoneFetching
+        isMilestoneFetching,
+        isError,
+        error
     } = useMilestones(projectId);
 
 

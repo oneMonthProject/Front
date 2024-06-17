@@ -1,4 +1,4 @@
-import {authRequest, request} from "@/service/project/request";
+import {request} from "@/service/project/request";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 

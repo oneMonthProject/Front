@@ -1,6 +1,6 @@
 'use client';
 import React, {useState} from 'react';
-import {PageResponseBody} from "@/utils/type";
+import {PageResponseBody, ProjectTaskAuth, ResponseBody} from "@/utils/type";
 import NoticeItem from "@/components/project/notice/NoticeItem";
 import {useQuery} from "@tanstack/react-query";
 import {getProjectNoticeByMenu} from "@/service/project/notice";
@@ -20,10 +20,10 @@ function NoticeList() {
     const projectId = useRecoilValue(projectIdState);
 
     // 알림 확인 & 컨펌 관련 권한
-    const {state: authState, contents: authMap} = useRecoilValueLoadable(projectTaskAuthSelector(null));
+    const {state: authState, contents: authContents} = useRecoilValueLoadable<ResponseBody<ProjectTaskAuth | null>>(projectTaskAuthSelector(null));
 
     // 5초마다 백그라운드에서 알림 목록 refetch
-    const {data, isFetching} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
+    const {data, isFetching:isFetchingNotice} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
         queryKey: ['noticeList', projectId, pageIndex, activeNoticeMenu],
         queryFn: () => getProjectNoticeByMenu(BigInt(projectId!), pageIndex, ITEM_COUNT.LIST_SM, activeNoticeMenu),
         refetchInterval: 60000,
@@ -33,11 +33,13 @@ function NoticeList() {
     const noticeList = data?.data.content || [];
     const totalCount = data?.data.totalPages || 0;
 
+    const isFetching = isFetchingNotice || authState === 'loading'
+
     return (
         <>
             <div className='tablet:h-[300px]'>
                 {
-                    isFetching || authState === 'loading'
+                    isFetching || (!isFetching && authContents.result !== "success")
                         ?
                         (
                             <div className='flex w-full h-full'>
@@ -55,7 +57,7 @@ function NoticeList() {
                                             <NoticeItem
                                                 item={item}
                                                 key={item.alertId}
-                                                isAuthorized={authMap.milestoneAuth}
+                                                isAuthorized={authContents.data.milestoneAuth}
                                             />)
                                         )
                                     }

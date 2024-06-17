@@ -7,7 +7,7 @@ import React from "react";
 
 
 export const useMilestones = (projectId: string) => {
-    const {data, isFetching} = useQuery<ResponseBody<MilestoneInfo[]>, Error, ResponseBody<MilestoneInfo[]>>({
+    const {data, isFetching, isError, error} = useQuery<ResponseBody<MilestoneInfo[]>, Error, ResponseBody<MilestoneInfo[]>>({
         queryKey: ['milestoneList', projectId],
         queryFn: () => getProjectMilestones(projectId),
     });
@@ -19,7 +19,9 @@ export const useMilestones = (projectId: string) => {
         milestoneList: [],
         activeMilestone: null,
         activeMilestoneId: null,
-        activeMilestoneIndex: null
+        activeMilestoneIndex: null,
+        isError,
+        error
     };
 
     const activeMilestone = milestoneList.find(v => v.progressStatus === '진행중') || milestoneList[0];
@@ -31,7 +33,9 @@ export const useMilestones = (projectId: string) => {
         milestoneList,
         activeMilestone,
         activeMilestoneId,
-        activeMilestoneIndex
+        activeMilestoneIndex,
+        isError,
+        error
     };
 }
 

@@ -6,7 +6,7 @@ import {convertStringToDate, sortByStartDate, throwErrorIfInvalid} from "@/utils
  * 프로젝트 마일스톤 목록 조회
  * @param projectId
  */
-export async function getProjectMilestones(projectId: string):Promise<ResponseBody<MilestoneInfo[]>> {
+export async function getProjectMilestones(projectId: string) {
     const res = await request('GET', `/api/project/milestone?projectId=${projectId}`);
 
     res.data = sortByStartDate(res.data, 'asc').map((v, index) => {
