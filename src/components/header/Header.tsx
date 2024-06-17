@@ -1,17 +1,11 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
 import logo from '../../../public/images/logo.png';
 import Link from "next/link";
 import RegisterNav from "@/components/header/RegisterNav";
-import {hasCookie} from 'cookies-next';
-import {UserMenu} from "@/components/header/UserMenu";
-import useClientMount from "@/hooks/useClientMount";
+import User from "./User/User";
 
 function Header() {
-    const mounted = useClientMount();
-
     return (
         <header className='my-2'>
             <nav>
@@ -24,15 +18,7 @@ function Header() {
                     <li className='tablet:mx-5 mobile:mx-2 tablet:text-[20px] text-black100 font-semibold tablet:ml-auto mobile:ml-auto'>
                         <RegisterNav/>
                     </li>
-                    {
-                        mounted && hasCookie("user_id") ? (
-                                <UserMenu/>
-                        ) : (
-                            <li className='tablet:mx-5 mobile:mx-2 tablet:text-[20px] mobile:text-[16px] text-black100 font-semibold'>
-                                <Link href='/login'>로그인</Link>
-                            </li>
-                        )
-                    }
+                    <User/>
                 </ul>
             </nav>
         </header>

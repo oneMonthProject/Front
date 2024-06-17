@@ -2,32 +2,29 @@
 import React from 'react';
 import {useMediaQuery} from "react-responsive";
 import {ResponseBody, UserBasicInfo} from "@/utils/type";
-import {useQuery} from '@tanstack/react-query';
 import Avatar from '@/components/ui/Avatar';
-import {getSimpleUser} from '@/service/user/user';
-import UserMenuDropdown from "@/components/header/UserMenu/UserMenuDropdown";
-import AvatarSkeleton from "@/components/ui/skeleton/AvatarSkeleton";
-import Skeleton from "@/components/ui/skeleton/Skeleton";
+import UserMenuDropdown from "@/components/header/User/UserMenuDropdown";
+import {useQuery} from "@tanstack/react-query";
+import {getSimpleUser} from "@/service/user/user";
+import UserMenuSkeleton from "@/components/ui/skeleton/header/UserMenuSkeleton";
+import LoginNav from "@/components/header/User/LoginNav";
 
 
 function UserMenu() {
     const isDesktop = useMediaQuery({query: '(min-width: 376px)'});
-    const {data, isFetching, isError} = useQuery<ResponseBody<UserBasicInfo>, Error>(
+    const {data, isFetching, isError, error} = useQuery<ResponseBody<UserBasicInfo>, Error>(
         {
             queryKey: ['simpleUserInfo'],
             queryFn: getSimpleUser
         }
     );
 
-    if (isFetching) return (
-        <div className='flex space-x-1'>
-            <AvatarSkeleton size="2xs" className='mobile:hidden'/>
-            <Skeleton sizeClassName="w-[110px] h-[24px] mobile:w-[60px]"/>
-        </div>
-    );
+    if (isFetching) return <UserMenuSkeleton/>;
 
-    const {nickname, profileImgSrc} = data!.data;
+    const userBasicInfo = data?.data;
+    if (isError || (!isFetching && !userBasicInfo)) return <LoginNav/>;
 
+    const {nickname, profileImgSrc} = userBasicInfo!;
 
     return (
         <ul className='flex items-center'>
