@@ -25,7 +25,7 @@ function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: s
                 </div>
                 <div className="mb-6 text-end space-x-2 px-3 mobile:px-0">
                     <ProjectSettingFormResetButton/>
-                    <ProjectSettingFormSaveButton projectId={projectId}/>
+                    <ProjectSettingFormSaveButton />
                 </div>
                 <ProjectFinish projectId={projectId}/>
             </div>

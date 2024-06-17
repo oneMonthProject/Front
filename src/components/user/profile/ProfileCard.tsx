@@ -22,7 +22,7 @@ function ProfileCard() {
         techStacks,
         intro,
         projectHistoryTotalCount
-    } = data!.data;
+    } = data!.data!;
 
     return (
         <div className='rounded-lg border-2 border-gray-200 bg-white mt-3 mobile:mt-2 px-2'>

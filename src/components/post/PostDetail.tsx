@@ -17,7 +17,7 @@ const PostDetail = ({postId}: { postId: string }) => {
 
     if (isFetching) return <PostSkeleton/>;
 
-    const {board, project} = data!.data;
+    const {board, project} = data!.data!;
 
     return (
         <div className="p-5 mobile:p-1 m-auto">

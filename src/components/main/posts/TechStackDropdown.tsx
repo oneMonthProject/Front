@@ -38,7 +38,7 @@ const TechStackDropdown = () => {
     }, []);
 
 
-    const {data: categoryResponse, isPending: isPendingCategory, isFetching: isFetchingCategory} = useQuery<ResponseBody<TechStackCategory[]>, Error>({
+    const {data: categoryResponse, isPending: isPendingCategory} = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
         queryFn: () => getTechStackCategoryList()
     });
@@ -70,7 +70,7 @@ const TechStackDropdown = () => {
                 </div>
                 <BsChevronDown className="w-4 h-4 text-grey800"/>
             </div>
-            {openDropdown && <TechStackDropdownList categories={categoryResponse!.data} items={techStackResponse!.data}/>}
+            {openDropdown && <TechStackDropdownList categories={categoryResponse!.data!} items={techStackResponse!.data!}/>}
         </div>
     );
 };

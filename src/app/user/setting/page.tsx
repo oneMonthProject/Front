@@ -10,7 +10,7 @@ function UserSettingPage() {
 
     return (
         <div className="flex flex-col items-center justify-center min-h-[calc(100vh-200px)]">
-            {isFetching ? <ProfileFormSkeleton/> : <ProfileForm profileInfo={data!.data}/>}
+            {isFetching || (!isFetching && data!.data === null) ? <ProfileFormSkeleton/> : <ProfileForm profileInfo={data!.data!}/>}
         </div>
     )
 }

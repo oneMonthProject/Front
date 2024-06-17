@@ -26,7 +26,7 @@ function NoticeItemRecruitInfo({applicantId}: { applicantId:DataId }) {
         techStacks,
         trustGrade: {trustGradeName},
         trustScore
-    } = data!.data;
+    } = data!.data!;
 
     return (
         <section className='tablet:max-w-[400px] mx-auto pt-5 flex-col items-center border-t border-b border-grey300 '>

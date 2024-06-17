@@ -19,7 +19,7 @@ function ProfileSection({projectMemberId}:{projectMemberId:string}) {
 
     if(isFetching) return <ProfileSectionSkeleton/>;
 
-    const {user, position, status, projectMemberAuth} = data!.data;
+    const {user, position, status, projectMemberAuth} = data!.data!;
 
     return (
         <div
@@ -31,7 +31,7 @@ function ProfileSection({projectMemberId}:{projectMemberId:string}) {
                         {user.nickname}
                     </li>
                 </ul>
-                <CrewOutButton projectMemberInfo={data!.data}/>
+                <CrewOutButton projectMemberInfo={data!.data!}/>
             </section>
             <section
                 className='mobile:w-full tablet:h-[200px] mobile:h-[180px] flex flex-col flex-wrap justify-between p-6 mobile:p-4 bg-ground100 rounded-lg'>

@@ -9,5 +9,5 @@ export default function useProjectCrewList(projectId:string) {
         queryFn: () => getProjectCrewList({projectId})
     });
 
-    return {crewList: res?.data.projectMembers || [], isFetching};
+    return {crewList: res?.data?.projectMembers || [], isFetching};
 }
