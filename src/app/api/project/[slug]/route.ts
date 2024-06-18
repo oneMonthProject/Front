@@ -1,5 +1,6 @@
 import authApi from "@/utils/authApi";
 import {NextRequest, NextResponse} from "next/server";
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 /**
  * 내 프로젝트 목록/상세 조회
@@ -26,18 +27,6 @@ export async function GET(
         throw Error('Unknown Api Route');
     }
 
-    if (res.ok) {
-        const data = await res.json();
-        return NextResponse.json(data);
-    } else {
-        if (res.status === 401) {
-            req.cookies.delete("user_id");
-            req.cookies.delete("Access");
-            req.cookies.delete("Refresh");
-
-            return new NextResponse(null, {status: 401});
-        }
-        return res;
-    }
+    return authApiResponse(req, res);
 }
 

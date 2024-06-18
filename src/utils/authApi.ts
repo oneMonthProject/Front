@@ -80,7 +80,7 @@ const authApi = returnFetch({
                         cookieStore.delete("Access");
                         cookieStore.delete("Refresh");
 
-                        return new NextResponse(null, {status:401});
+                        return new Response(null, {status:401});
                     }
                     default:
                         resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
@@ -94,7 +94,7 @@ const authApi = returnFetch({
                 cookieStore.delete("user_id");
                 cookieStore.delete("Access");
                 cookieStore.delete("Refresh");
-                return new NextResponse(null, {status:401});
+                return new Response(null, {status:401});
             }
 
             return await authApi(...requestArgs);

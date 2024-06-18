@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 
 /**
@@ -27,20 +28,7 @@ export async function GET(
         res = await authApi(`${requestNoticeUrl}/${params.slug}?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method})
     }
 
-    if (res.ok) {
-        const data = await res.json();
-        return NextResponse.json(data);
-    } else {
-        if (res.status === 401) {
-            req.cookies.delete("user_id");
-            req.cookies.delete("Access");
-            req.cookies.delete("Refresh");
-
-            return new NextResponse(null, {status: 401});
-        }
-
-        return res;
-    }
+    return authApiResponse(req, res);
 }
 
 /**

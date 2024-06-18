@@ -1,6 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -20,20 +21,7 @@ export async function GET(req: NextRequest) {
         `/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
-    if (res.ok) {
-        const data = await res.json();
-        return NextResponse.json(data);
-    } else {
-        if (res.status === 401) {
-            req.cookies.delete("user_id");
-            req.cookies.delete("Access");
-            req.cookies.delete("Refresh");
-
-            return new NextResponse(null, {status: 401});
-        }
-
-        return res;
-    }
+    return authApiResponse(req, res);
 }
 
 /**
