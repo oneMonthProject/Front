@@ -1,7 +1,6 @@
 import authApi from "@/utils/authApi";
 import {NextRequest, NextResponse} from "next/server";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {cookies} from "next/headers";
 import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
@@ -16,8 +15,6 @@ export async function GET(req: NextRequest) {
     const projectId = searchParams.get('projectId');
 
     const res = await authApi(`/api/milestone/project/${projectId}`, {method: 'GET'});
-    console.log("milestoneroute, res: ", res.status);
-    console.log("milestoneroute, res: ", res.ok);
 
     return authApiResponse(req, res);
 }

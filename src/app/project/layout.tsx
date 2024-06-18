@@ -2,6 +2,8 @@ import React from 'react';
 import BackNav from "@/components/ui/BackNav";
 import ProjectNavTabContents from "@/components/project/layout/ProjectNavTabContents";
 
+export const revalidate = 0;
+
 function ProjectLayout(
     props: {
         children: React.ReactNode
