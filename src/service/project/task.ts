@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {PageResponseBody} from "@/utils/type";
 import {TasksReqParam} from "@/hooks/useTasks";
 import {TaskAddForm, TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
@@ -18,7 +18,7 @@ export async function getTaskList(tasksReqParam: TasksReqParam): Promise<PageRes
         itemsPerPage: itemCount
     } = tasksReqParam;
 
-    return await request(
+    return await requestWithAuth(
         'GET',
         `/api/project/task?milestoneId=${milestoneId}&projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );

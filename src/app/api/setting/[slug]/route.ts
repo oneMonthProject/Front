@@ -18,6 +18,18 @@ export async function GET(
     throw Error("Unknown Api Route");
   }
 
-  const data = await res.json();
-  return NextResponse.json(data);
+  if (res.ok) {
+    const data = await res.json();
+    return NextResponse.json(data);
+  } else {
+    if (res.status === 401) {
+      _.cookies.delete("user_id");
+      _.cookies.delete("Access");
+      _.cookies.delete("Refresh");
+
+      return new NextResponse(null, {status: 401});
+    }
+
+    return res;
+  }
 }

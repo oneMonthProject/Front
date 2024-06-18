@@ -15,6 +15,10 @@ function User() {
        if(userIdState === null && hasCookie("user_id")){
            setUserIdState(getCookie("user_id") as string);
        }
+
+       if(userIdState !== null && !hasCookie("user_id")){
+           setUserIdState(null);
+       }
     },[userIdState, setUserIdState]);
 
     return (mounted && userIdState !== null) ? <UserMenu /> : <LoginNav/>;

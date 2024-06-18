@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {NoticeCreateForm, PageResponseBody} from "@/utils/type";
 import {Notice, ProjectNoticeKey} from "@/app/project/@notice/_utils/type";
 import {PROJECT_NOTICE} from "@/app/project/@notice/_utils/constant";
@@ -28,7 +28,7 @@ export async function getProjectNoticeByMenu(
     noticeMenu: ProjectNoticeKey
 ): Promise<PageResponseBody<Notice[]>> {
     const noticeRequestUrl = `/api/project/notice${PROJECT_NOTICE[noticeMenu].path}`;
-    return await request('GET',
+    return await requestWithAuth('GET',
         `${noticeRequestUrl}?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
 

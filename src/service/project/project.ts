@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {ProjectInfo, ResponseBody} from "@/utils/type";
 import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
 import {createFalsyResBody, throwErrorIfInvalid} from "@/utils/common";
@@ -19,7 +19,7 @@ export async function getMyProjectList(pageIndex: number, itemCount: number) {
  * @param userId
  */
 export async function getMyProjectDetail(projectId: string | bigint, userId: string | bigint): Promise<ResponseBody<ProjectInfo>> {
-    return await request('GET', `/api/project/detail?projectId=${projectId}&userId=${userId}`)
+    return await requestWithAuth('GET', `/api/project/detail?projectId=${projectId}&userId=${userId}`)
 }
 
 /**

@@ -20,9 +20,20 @@ export async function GET(req: NextRequest) {
         `/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
-    const data = await res.json();
+    if (res.ok) {
+        const data = await res.json();
+        return NextResponse.json(data);
+    } else {
+        if (res.status === 401) {
+            req.cookies.delete("user_id");
+            req.cookies.delete("Access");
+            req.cookies.delete("Refresh");
 
-    return NextResponse.json(data);
+            return new NextResponse(null, {status: 401});
+        }
+
+        return res;
+    }
 }
 
 /**

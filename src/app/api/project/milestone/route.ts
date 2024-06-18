@@ -1,6 +1,7 @@
 import authApi from "@/utils/authApi";
 import {NextRequest, NextResponse} from "next/server";
 import {JSONReplaceBigInt} from "@/utils/common";
+import {cookies} from "next/headers";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -14,9 +15,23 @@ export async function GET(req: NextRequest) {
     const projectId = searchParams.get('projectId');
 
     const res = await authApi(`/api/milestone/project/${projectId}`, {method: 'GET'});
-    const data = await res.json();
+    console.log("milestoneroute, res: ", res.status);
+    console.log("milestoneroute, res: ", res.ok);
 
-    return NextResponse.json(data);
+    if (res.ok) {
+        const data = await res.json();
+        return NextResponse.json(data);
+    } else {
+        if (res.status === 401) {
+            req.cookies.delete("user_id");
+            req.cookies.delete("Access");
+            req.cookies.delete("Refresh");
+
+            return new NextResponse(null, {status: 401});
+        }
+
+        return res;
+    }
 }
 
 /**

@@ -1,5 +1,5 @@
 import {MilestoneInfo, ResponseBody} from "@/utils/type";
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {convertStringToDate, sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
 /**
@@ -7,7 +7,7 @@ import {convertStringToDate, sortByStartDate, throwErrorIfInvalid} from "@/utils
  * @param projectId
  */
 export async function getProjectMilestones(projectId: string) {
-    const res = await request('GET', `/api/project/milestone?projectId=${projectId}`);
+    const res = await requestWithAuth('GET', `/api/project/milestone?projectId=${projectId}`);
 
     res.data = sortByStartDate(res.data, 'asc').map((v, index) => {
         return {

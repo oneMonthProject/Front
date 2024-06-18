@@ -27,8 +27,20 @@ export async function GET(
         res = await authApi(`${requestNoticeUrl}/${params.slug}?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method})
     }
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    if (res.ok) {
+        const data = await res.json();
+        return NextResponse.json(data);
+    } else {
+        if (res.status === 401) {
+            req.cookies.delete("user_id");
+            req.cookies.delete("Access");
+            req.cookies.delete("Refresh");
+
+            return new NextResponse(null, {status: 401});
+        }
+
+        return res;
+    }
 }
 
 /**

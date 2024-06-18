@@ -23,7 +23,7 @@ function UserMenu() {
 
     const userBasicInfo = data?.data;
     console.log("userBasicInfo: ", userBasicInfo);
-    // if (isError || (!isFetching && !userBasicInfo)) return <LoginNav/>;
+    if (!isFetching && !userBasicInfo) return <LoginNav/>;
 
     const {nickname, profileImgSrc} = userBasicInfo!;
 

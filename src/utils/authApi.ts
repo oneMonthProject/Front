@@ -3,7 +3,7 @@ import returnFetch from "return-fetch";
 import {cookies} from "next/headers";
 import {getRefreshToken} from "./common";
 import Logger from "@/utils/logger";
-import {redirect} from "next/navigation";
+import {NextResponse} from "next/server";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -75,14 +75,13 @@ const authApi = returnFetch({
                         }
                         break;
                     }
-                    // case '401': {
-                    //     const cookieStore = cookies();
-                    //     cookieStore.delete("user_id");
-                    //     cookieStore.delete("Access");
-                    //     cookieStore.delete("Refresh");
-                    //
-                    //     return response;
-                    // }
+                    case '401': {
+                        cookieStore.delete("user_id");
+                        cookieStore.delete("Access");
+                        cookieStore.delete("Refresh");
+
+                        return new NextResponse(null, {status:401});
+                    }
                     default:
                         resLogger.e(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
                         throw Error(`TOKEN-REFRESH-FAIL: Server Error(${tokenResponse.status}) - ${tokenResponse.statusText}`);
@@ -92,13 +91,10 @@ const authApi = returnFetch({
                     ? 'user_id And RefreshToken' : (!userId ? 'user_id' : 'RefreshToken');
 
                 resLogger.e(`TOKEN-REFRESH-FAIL: Failed To Get ${target} From Cookies`);
-                // const cookieStore = cookies();
-                // cookieStore.delete("user_id");
-                // cookieStore.delete("Access");
-                // cookieStore.delete("Refresh");
-                //
-                // redirect("/api/user/logout");
-                throw Error(`TOKEN-REFRESH-FAIL: Failed To Get ${target} From Cookies`);
+                cookieStore.delete("user_id");
+                cookieStore.delete("Access");
+                cookieStore.delete("Refresh");
+                return new NextResponse(null, {status:401});
             }
 
             return await authApi(...requestArgs);
