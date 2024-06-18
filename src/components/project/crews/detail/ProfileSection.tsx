@@ -14,7 +14,8 @@ import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detai
 function ProfileSection({projectMemberId}:{projectMemberId:string}) {
     const {data, isFetching} = useQuery<ResponseBody<ProjectMemberProfile>, Error>({
         queryKey: ['crewDetail', projectMemberId],
-        queryFn: () => getCrewDetail(projectMemberId)
+        queryFn: () => getCrewDetail(projectMemberId),
+        staleTime: 0
     });
 
     if(isFetching) return <ProfileSectionSkeleton/>;

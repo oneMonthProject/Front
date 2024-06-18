@@ -66,7 +66,8 @@ function UserHistory() {
     const [pageNumber, setPageNumber] = useState(0);
     const {data, isFetching} = useQuery<PageResponseBody<UserProjectHistory[]>, Error>({
         queryKey: ['userHistory', pageNumber],
-        queryFn: () => getUserProjectHistory(pageNumber)
+        queryFn: () => getUserProjectHistory(pageNumber),
+        staleTime: 0
     });
 
     if(isFetching) return <UserHistorySkeleton/>;

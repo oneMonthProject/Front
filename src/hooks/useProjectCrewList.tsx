@@ -6,7 +6,8 @@ import {getProjectCrewList} from "@/service/project/crews";
 export default function useProjectCrewList(projectId:string) {
     const {data:res, isFetching} = useQuery<ResponseBody<Record<'projectMembers', ProjectMember[]>>, Error>({
         queryKey: ['crewList', projectId],
-        queryFn: () => getProjectCrewList({projectId})
+        queryFn: () => getProjectCrewList({projectId}),
+        staleTime: 0
     });
 
     return {crewList: res?.data?.projectMembers || [], isFetching};

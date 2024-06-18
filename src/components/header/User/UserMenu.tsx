@@ -15,7 +15,8 @@ function UserMenu() {
     const {data, isFetching} = useQuery<ResponseBody<UserBasicInfo>, Error>(
         {
             queryKey: ['simpleUserInfo'],
-            queryFn: getSimpleUser
+            queryFn: getSimpleUser,
+            staleTime: 0
         }
     );
 

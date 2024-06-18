@@ -7,9 +7,15 @@ import React from "react";
 
 
 export const useMilestones = (projectId: string) => {
-    const {data, isFetching, isError, error} = useQuery<ResponseBody<MilestoneInfo[]>, Error, ResponseBody<MilestoneInfo[]>>({
+    const {
+        data,
+        isFetching,
+        isError,
+        error
+    } = useQuery<ResponseBody<MilestoneInfo[]>, Error, ResponseBody<MilestoneInfo[]>>({
         queryKey: ['milestoneList', projectId],
         queryFn: () => getProjectMilestones(projectId),
+        staleTime: 0
     });
 
     const milestoneList = data?.data || [];

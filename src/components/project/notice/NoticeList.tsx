@@ -20,12 +20,19 @@ function NoticeList() {
     const projectId = useRecoilValue(projectIdState);
 
     // 알림 확인 & 컨펌 관련 권한
-    const {state: authState, contents: authContents} = useRecoilValueLoadable<ResponseBody<ProjectTaskAuth | null>>(projectTaskAuthSelector(null));
+    const {
+        state: authState,
+        contents: authContents
+    } = useRecoilValueLoadable<ResponseBody<ProjectTaskAuth | null>>(projectTaskAuthSelector(null));
 
     // 5초마다 백그라운드에서 알림 목록 refetch
-    const {data, isFetching:isFetchingNotice} = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
+    const {
+        data,
+        isFetching: isFetchingNotice
+    } = useQuery<Promise<PageResponseBody<Notice[]>>, Error, PageResponseBody<Notice[]>>({
         queryKey: ['noticeList', projectId, pageIndex, activeNoticeMenu],
         queryFn: () => getProjectNoticeByMenu(BigInt(projectId!), pageIndex, ITEM_COUNT.LIST_SM, activeNoticeMenu),
+        staleTime: 0,
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });

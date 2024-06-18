@@ -23,7 +23,8 @@ function useTasks({projectId, milestoneId, itemsPerPage, pageNumber = 0}: TasksR
             projectId,
             pageNumber,
             itemsPerPage
-        })
+        }),
+        staleTime: 0
     });
 
     return {

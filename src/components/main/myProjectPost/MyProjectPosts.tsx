@@ -15,7 +15,8 @@ function MyProjectPosts() {
 
     const {data, isFetching} = useQuery<Promise<PageResponseBody<ProjectPost[]>>, Error, PageResponseBody<ProjectPost[]>>({
         queryKey: ['myProjectList', pageNumber],
-        queryFn: () => getMyProjectList(pageNumber, 8)
+        queryFn: () => getMyProjectList(pageNumber, 8),
+        staleTime: 0
     });
 
     if(isFetching) return <PostListSkeleton itemCount={8}/>;

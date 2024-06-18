@@ -21,7 +21,8 @@ function CrewTaskHistory({projectMemberId}:{projectMemberId:string}) {
 
     const {data, isFetching} = useQuery<PageResponseBody<CrewTaskHistory[]>, Error>({
         queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_COUNT.LIST_SM],
-        queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT)
+        queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT),
+        staleTime: 0
     });
 
     if (isFetching) return <CrewTaskHistorySkeleton/>;
