@@ -16,7 +16,8 @@ export default function useGradeListByUser() {
     } = useQuery<Promise<ResponseBody<TrustGradeItem[]>>, Error, ResponseBody<TrustGradeItem[]>>({
         queryKey: ['trustGradeListByUser'],
         queryFn: () => getTrustGradeListByUser(),
-        staleTime: 0
+        staleTime: 0,
+        retry: false
     });
 
     if (isError) setSnackbar({show: true, type: 'ERROR', content: '프로젝트 신뢰등급을 불러올 수 없습니다'});

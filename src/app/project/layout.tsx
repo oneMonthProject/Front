@@ -2,8 +2,6 @@ import React from 'react';
 import BackNav from "@/components/ui/BackNav";
 import ProjectNavTabContents from "@/components/project/layout/ProjectNavTabContents";
 
-// Todo - 홈 버튼, 상단 프로젝트 정보, 업무/크루정보/알림/투표 nav탭 // 후에 projectid 받아서 렌더링해야함.
-
 function ProjectLayout(
     props: {
         children: React.ReactNode

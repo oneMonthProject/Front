@@ -33,6 +33,7 @@ function NoticeList() {
         queryKey: ['noticeList', projectId, pageIndex, activeNoticeMenu],
         queryFn: () => getProjectNoticeByMenu(BigInt(projectId!), pageIndex, ITEM_COUNT.LIST_SM, activeNoticeMenu),
         staleTime: 0,
+        retry: false,
         refetchInterval: 60000,
         refetchIntervalInBackground: true
     });

@@ -13,7 +13,8 @@ function NoticeItemRecruitInfo({applicantId}: { applicantId:DataId }) {
     const {data, isFetching} = useQuery<ResponseBody<ProfileInfo>, Error>({
         queryKey: ['userInfoById', applicantId],
         queryFn: () => getUserInfoByUserId(applicantId),
-        staleTime: 0
+        staleTime: 0,
+        retry: false
     });
 
     if(isFetching) return <NoticeItemRecruitInfoSkeleton/>;

@@ -17,34 +17,34 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const getSimpleUser = async () => {
-    return await requestWithAuth('GET', '/api/user/simple')
+    return await requestWithAuth('GET', '/api/user/simple');
 };
 
 export const getUserIfo = async () => {
-    return await request('GET',`${publicURL}/api/user`);
+    return await request('GET',`/api/user`);
 };
 
 export const updateUser = async (
-  updateData: updateUserInfo,
-  file: File | null
+    updateData: updateUserInfo,
+    file: File | null
 ) => {
-  const formData = new FormData();
-  formData.append(
-    "updateRequest",
-    new Blob([JSON.stringify(updateData)], {
-      type: "application/json",
-    })
-  );
+    const formData = new FormData();
+    formData.append(
+        "updateRequest",
+        new Blob([JSON.stringify(updateData)], {
+            type: "application/json",
+        })
+    );
 
-  if (file) {
-    formData.append("file", file);
-  }
+    if (file) {
+        formData.append("file", file);
+    }
 
-  const response = await fetch(`${publicURL}/api/user`, {
-    method: "PUT",
-    body: formData,
-  });
-  return response.json();
+    const response = await fetch(`${publicURL}/api/user`, {
+        method: "PUT",
+        body: formData,
+    });
+    return response.json();
 };
 
 export const getUserProjectHistory = async (pageNumber: number) => {
@@ -60,8 +60,8 @@ export const getTrustGradeListByUser = async () => {
 };
 
 export const deleteProfileImage = async () => {
-  const response = await fetch(`${publicURL}/api/user/profile-img`, { method: "DELETE" });
-  return response.json();
+    const response = await fetch(`${publicURL}/api/user/profile-img`, {method: "DELETE"});
+    return response.json();
 };
 
 /**

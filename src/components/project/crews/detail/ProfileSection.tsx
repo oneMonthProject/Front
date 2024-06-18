@@ -15,7 +15,8 @@ function ProfileSection({projectMemberId}:{projectMemberId:string}) {
     const {data, isFetching} = useQuery<ResponseBody<ProjectMemberProfile>, Error>({
         queryKey: ['crewDetail', projectMemberId],
         queryFn: () => getCrewDetail(projectMemberId),
-        staleTime: 0
+        staleTime: 0,
+        retry: false
     });
 
     if(isFetching) return <ProfileSectionSkeleton/>;

@@ -15,7 +15,8 @@ export const useMilestones = (projectId: string) => {
     } = useQuery<ResponseBody<MilestoneInfo[]>, Error, ResponseBody<MilestoneInfo[]>>({
         queryKey: ['milestoneList', projectId],
         queryFn: () => getProjectMilestones(projectId),
-        staleTime: 0
+        staleTime: 0,
+        retry: false
     });
 
     const milestoneList = data?.data || [];

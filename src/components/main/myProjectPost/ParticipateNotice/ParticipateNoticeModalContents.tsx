@@ -27,6 +27,8 @@ function ParticipateNoticeModalContents() {
     const {data, fetchNextPage} = useSuspenseInfiniteQuery<PageResponseBody<UserProjectNotice[]>>({
         queryKey: ['userProjectNotice'],
         queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT.LIST_SM),
+        staleTime: 0,
+        retry: false,
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             const nextPage = parseInt(lastPageParam as string, 10) + 1;
