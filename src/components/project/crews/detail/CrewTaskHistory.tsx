@@ -23,7 +23,7 @@ function CrewTaskHistory({projectMemberId}:{projectMemberId:string}) {
         queryKey: ['crewTaskHistory', projectMemberId, pageIndex, ITEM_COUNT.LIST_SM],
         queryFn: () => getCrewTaskHistory(projectMemberId, pageIndex, PAGE_RANGE.DEFAULT),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     if (isFetching) return <CrewTaskHistorySkeleton/>;

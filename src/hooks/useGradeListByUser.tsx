@@ -17,7 +17,7 @@ export default function useGradeListByUser() {
         queryKey: ['trustGradeListByUser'],
         queryFn: () => getTrustGradeListByUser(),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     if (isError) setSnackbar({show: true, type: 'ERROR', content: '프로젝트 신뢰등급을 불러올 수 없습니다'});

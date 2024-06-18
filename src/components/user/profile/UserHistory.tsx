@@ -68,7 +68,7 @@ function UserHistory() {
         queryKey: ['userHistory', pageNumber],
         queryFn: () => getUserProjectHistory(pageNumber),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     if(isFetching) return <UserHistorySkeleton/>;

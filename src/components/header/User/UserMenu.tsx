@@ -17,7 +17,7 @@ function UserMenu() {
             queryKey: ['simpleUserInfo'],
             queryFn: getSimpleUser,
             staleTime: 0,
-            retry: false
+            // retry: false
         }
     );
 

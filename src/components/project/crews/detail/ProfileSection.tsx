@@ -16,7 +16,7 @@ function ProfileSection({projectMemberId}:{projectMemberId:string}) {
         queryKey: ['crewDetail', projectMemberId],
         queryFn: () => getCrewDetail(projectMemberId),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     if(isFetching) return <ProfileSectionSkeleton/>;

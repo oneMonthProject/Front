@@ -16,7 +16,7 @@ export const useMilestones = (projectId: string) => {
         queryKey: ['milestoneList', projectId],
         queryFn: () => getProjectMilestones(projectId),
         staleTime: 0,
-        retry: false
+        // // retry: false
     });
 
     const milestoneList = data?.data || [];

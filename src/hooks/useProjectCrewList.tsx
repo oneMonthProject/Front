@@ -8,7 +8,7 @@ export default function useProjectCrewList(projectId:string) {
         queryKey: ['crewList', projectId],
         queryFn: () => getProjectCrewList({projectId}),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     return {crewList: res?.data?.projectMembers || [], isFetching};

@@ -25,7 +25,7 @@ function useTasks({projectId, milestoneId, itemsPerPage, pageNumber = 0}: TasksR
             itemsPerPage
         }),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     return {

@@ -14,7 +14,7 @@ function NoticeItemRecruitInfo({applicantId}: { applicantId:DataId }) {
         queryKey: ['userInfoById', applicantId],
         queryFn: () => getUserInfoByUserId(applicantId),
         staleTime: 0,
-        retry: false
+        // retry: false
     });
 
     if(isFetching) return <NoticeItemRecruitInfoSkeleton/>;
