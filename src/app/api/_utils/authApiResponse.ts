@@ -5,6 +5,10 @@ export async function authApiResponse(req: NextRequest, res: Response) {
         const data = await res.json();
         return NextResponse.json(data);
     } else {
-        return res;
+        if(res.status === 401){
+            return NextResponse.redirect(`${process.env.NEXT_PUBLIC_URL}/login`);
+        }else{
+            return res;
+        }
     }
 }

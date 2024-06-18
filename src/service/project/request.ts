@@ -23,10 +23,11 @@ export async function requestWithAuth(method: HTTP_METHOD, url: string, data?: R
 
     const res = await fetch(`${publicURL}${url}`, requestInit);
 
-    if (res.status === 401) {
+    if (res.status === 307) {
         if (confirm("로그인이 만료되었습니다.")) {
-            window.location.reload();
+            window.location.href = res.headers.get("Location") as string;
         }
+        return;
     } else {
         return res.json();
     }
