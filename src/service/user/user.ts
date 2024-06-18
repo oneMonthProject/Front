@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
@@ -17,7 +17,7 @@ export const checkNickname = async (nickname: string) => {
 };
 
 export const getSimpleUser = async () => {
-    return await request('GET', '/api/user/simple')
+    return await requestWithAuth('GET', '/api/user/simple')
 };
 
 export const getUserIfo = async () => {
