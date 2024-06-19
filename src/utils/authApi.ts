@@ -19,13 +19,13 @@ const authApi = returnFetch({
             // access token 만료검사 요청
             if (requestArgs[1] && accessToken) {
                 const headers = new Headers(requestArgs[1].headers);
-                const contentType = headers.get("Content-Type");
-                const args = {...headers, "Content-Type": contentType ? contentType : "application/json"};
 
-                requestArgs[1].headers = {
-                    ...args,
-                    Authorization: `Bearer ${accessToken.value}`,
-                };
+                if (!headers.get("Content-Type")) {
+                    headers.set("Content-Type", "application/json");
+                }
+
+                headers.set("Authorization", `Bearer ${accessToken.value}`);
+                requestArgs[1].headers = headers;
             }
 
             reqLogger.i(`${requestArgs[1]!.method}: ${requestArgs[0]}`);
