@@ -11,7 +11,7 @@ import {PROJECT_NOTICE} from "@/app/project/@notice/_utils/constant";
  * @param noticeCreateForm
  */
 export async function createProjectTaskNotice(noticeCreateForm: NoticeCreateForm) {
-    return await request('POST', '/api/project/notice/task', {...noticeCreateForm});
+    return await requestWithAuth('POST', '/api/project/notice/task', {...noticeCreateForm});
 }
 
 /**
@@ -37,11 +37,11 @@ export async function getProjectNoticeByMenu(
  * @param projectMemberId
  */
 export async function createProjectCrewOutNotice(projectMemberId: string | bigint) {
-    return await request('POST', `/api/project/notice/crewOut`, {projectMemberId});
+    return await requestWithAuth('POST', `/api/project/notice/crewOut`, {projectMemberId});
 }
 
 export async function createProjectCrewForceOutNotice(projectMemberId: string | bigint){
-    return await request('POST', `/api/project/notice/force-crewOut`, {projectMemberId});
+    return await requestWithAuth('POST', `/api/project/notice/force-crewOut`, {projectMemberId});
 }
 
 

@@ -1,4 +1,4 @@
-import {request, requestWithAuth} from "@/service/project/request";
+import {requestWithAuth} from "@/service/project/request";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
@@ -21,7 +21,7 @@ export const getSimpleUser = async () => {
 };
 
 export const getUserIfo = async () => {
-    return await request('GET',`/api/user`);
+    return await requestWithAuth('GET', `/api/user`);
 };
 
 export const updateUser = async (
@@ -40,28 +40,22 @@ export const updateUser = async (
         formData.append("file", file);
     }
 
-    const response = await fetch(`${publicURL}/api/user`, {
+    return await requestWithAuth('PUT', '/api/user', {
         method: "PUT",
         body: formData,
     });
-    return response.json();
 };
 
 export const getUserProjectHistory = async (pageNumber: number) => {
-  const response = await fetch(
-    `${publicURL}/api/user/history?pageNumber=${pageNumber}`
-  );
-  return response.json();
+    return await requestWithAuth('GET', `/api/user/history?pageNumber=${pageNumber}`)
 };
 
 export const getTrustGradeListByUser = async () => {
-  const response = await fetch(`${publicURL}/api/user/trust-grade`);
-  return response.json();
+    return await requestWithAuth('GET', '/api/user/trust-grade');
 };
 
 export const deleteProfileImage = async () => {
-    const response = await fetch(`${publicURL}/api/user/profile-img`, {method: "DELETE"});
-    return response.json();
+    return await requestWithAuth('DELETE', '/api/user/profile-img');
 };
 
 /**
@@ -69,5 +63,5 @@ export const deleteProfileImage = async () => {
  * @param userId
  */
 export const getUserInfoByUserId = async (userId: string | bigint) => {
-  return request('GET',`/api/user/general?userId=${userId}`);
+    return await requestWithAuth('GET', `/api/user/general?userId=${userId}`);
 }

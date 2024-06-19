@@ -1,4 +1,4 @@
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {PointTypeValue} from "@/app/project/@notice/_utils/type";
 
 /**
@@ -7,9 +7,9 @@ import {PointTypeValue} from "@/app/project/@notice/_utils/type";
  * @param scoreTypeId
  */
 export async function confirmTaskNotice(alertId: string | bigint, scoreTypeId: PointTypeValue) {
-    const confirmRes = await request('POST', '/api/project/confirm/work', {alertId, scoreTypeId});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/work', {alertId, scoreTypeId});
     if (confirmRes.result === 'success') {
-        return await request('PATCH', '/api/project/notice', {alertId});
+        return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
         return confirmRes;
     }
@@ -22,9 +22,9 @@ export async function confirmTaskNotice(alertId: string | bigint, scoreTypeId: P
  * @param confirmResult
  */
 export async function confirmRecruitNotice(projectId: string | bigint, alertId: string | bigint, confirmResult: boolean) {
-    const confirmRes = await request('POST', '/api/project/confirm/recruit', {projectId, alertId, confirmResult});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/recruit', {projectId, alertId, confirmResult});
     if (confirmRes.result === 'success') {
-        return await request('PATCH', '/api/project/notice', {alertId});
+        return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
         return confirmRes;
     }
@@ -35,7 +35,7 @@ export async function confirmRecruitNotice(projectId: string | bigint, alertId: 
  * @param alertId
  */
 export async function confirmCrewAddNotice(alertId: string | bigint) {
-    return await request('PATCH', '/api/project/notice', {alertId});
+    return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
 }
 
 /**
@@ -44,9 +44,9 @@ export async function confirmCrewAddNotice(alertId: string | bigint) {
  * @param withdrawConfirm
  */
 export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdrawConfirm: boolean) {
-    const confirmRes = await request('POST', '/api/project/confirm/withdraw', {alertId, withdrawConfirm});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/withdraw', {alertId, withdrawConfirm});
     if (confirmRes.result === 'success') {
-        return await request('PATCH', '/api/project/notice', {alertId});
+        return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
         return confirmRes;
     }
@@ -58,9 +58,9 @@ export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdr
  * @param alertId
  */
 export async function confirmCrewForceWithdrawNotice(projectMemberId: string | bigint, alertId: string | bigint){
-    const confirmRes = await request('POST', '/api/project/confirm/force-withdrawal', {projectMemberId});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/force-withdrawal', {projectMemberId});
     if (confirmRes.result === 'success') {
-        return await request('PATCH', '/api/project/notice', {alertId});
+        return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
         return confirmRes;
     }

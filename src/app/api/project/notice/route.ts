@@ -1,7 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
-
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 
 
@@ -15,6 +14,5 @@ export async function PATCH(req:NextRequest){
 
     const res = await authApi(`/api/alert/${alertId}/status`, {method:'PATCH'});
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    return authApiResponse(req, res);
 }

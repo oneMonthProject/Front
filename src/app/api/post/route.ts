@@ -1,6 +1,8 @@
 import authApi from "@/utils/authApi";
 import publicApi from "@/utils/publicApi";
 import { NextRequest, NextResponse } from "next/server";
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import {JSONReplaceBigInt} from "@/utils/common";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
@@ -18,13 +20,12 @@ export async function GET(req: NextRequest) {
  * @constructor
  */
 export async function POST(req: NextRequest) {
-  const {createData} = await req.json();
+  const {board, project} = await req.json();
 
   const res = await authApi("/api/board", {
     method: "POST",
-    body: JSON.stringify(createData),
+    body: JSONReplaceBigInt({board, project}),
   });
-  const data = await res.json();
 
-  return NextResponse.json(data);
+  return authApiResponse(req, res);
 }

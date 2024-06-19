@@ -21,9 +21,11 @@ export async function GET(
     case 'trust-grade':
       res = await authApi("/api/trust-grade/me");
       break;
-    case 'nickname':
+    case 'nickname':{
       res = await publicApi(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
-      break;
+      const data = await res.json();
+      return NextResponse.json(data);
+    }
     case 'general':
       res = await authApi(`/api/user/${searchParams.get('userId')}`);
       break;
@@ -31,12 +33,11 @@ export async function GET(
       throw new Error('Unknown User API');
   }
 
-
   return authApiResponse(req, res);
 }
 
 export async function DELETE(
-  _: NextRequest,
+    req: NextRequest,
   { params }: { params: { slug: string } }
 ) {
   let res: Response;
@@ -46,6 +47,5 @@ export async function DELETE(
     throw Error("Unknown Api Route");
   }
 
-  const data = await res.json();
-  return NextResponse.json(data);
+  return authApiResponse(req, res);
 }

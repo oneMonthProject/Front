@@ -20,6 +20,7 @@ export async function requestWithAuth(method: HTTP_METHOD, url: string, data?: R
         headers, method, cache: 'no-store'
     }
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
+    console.log("requestInit.body:: ", requestInit.body);
 
     const res = await fetch(`${publicURL}${url}`, requestInit);
 

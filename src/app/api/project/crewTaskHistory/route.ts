@@ -1,5 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/utils/authApi";
+import {authApiResponse} from "@/app/api/_utils/authApiResponse";
 
 /**
  * 프로젝트 크루 업무 이력 조회
@@ -14,6 +15,5 @@ export async function GET(req:NextRequest){
 
     const res = await authApi(`api/projectmember/${projectMemberId}/works?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    return authApiResponse(req, res);
 }

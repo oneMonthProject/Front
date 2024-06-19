@@ -1,6 +1,6 @@
 import {PositionItem, TechStackWithCategory} from "@/utils/type";
 import _, {isEqual} from "lodash";
-import {request} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {CreatePostForm} from "@/app/register/_utils/type";
 import {throwErrorIfInvalid} from "@/utils/common";
 
@@ -71,9 +71,9 @@ export const createPost = async (createData: CreatePostForm) => {
     throwErrorIfInvalid(_.isEmpty(technologyIds), "관심 스택을 선택해주세요.");
 
 
-    return await request('POST', `/api/post`, {createData});
+    return await requestWithAuth('POST', `/api/post`, createData);
 };
 
 export const changeRecruitmentStatus = async (boardId: bigint) => {
-    return await request('PATCH', `/api/post/recruitment-status?boardId=${boardId}`);
+    return await requestWithAuth('PATCH', `/api/post/recruitment-status?boardId=${boardId}`);
 };

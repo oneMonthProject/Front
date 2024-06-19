@@ -1,4 +1,4 @@
-import {request, requestWithAuth} from "@/service/project/request";
+import {requestWithAuth} from "@/service/project/request";
 
 /**
  * 프로젝트 크루 목록 조회
@@ -13,7 +13,7 @@ export async function getProjectCrewList({projectId}: { projectId: string | bigi
  * @param projectMemberId
  */
 export async function getCrewDetail(projectMemberId: string | bigint) {
-    return await request('GET', `/api/project/crews/detail?projectMemberId=${projectMemberId}`);
+    return await requestWithAuth('GET', `/api/project/crews/detail?projectMemberId=${projectMemberId}`);
 }
 
 /**
@@ -21,7 +21,7 @@ export async function getCrewDetail(projectMemberId: string | bigint) {
  * @param projectMemberId
  */
 export async function getCrewTaskHistory(projectMemberId: string | bigint, pageIndex: number, itemCount: number) {
-    return await request(
+    return await requestWithAuth(
         'GET',
         `/api/project/crewTaskHistory?projectMemberId=${projectMemberId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );

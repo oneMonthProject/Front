@@ -62,7 +62,7 @@ export async function POST(
             res = await authApi(`/api/projectmember/${projectMemberId}/withdraw`, {method});
             break;
         }
-        case 'force-crewOut':{
+        case 'force-crewOut': {
             const {projectMemberId} = await req.json();
             res = await authApi(`/api/projectmember/${projectMemberId}/force-withdrawal`, {method});
             break;
@@ -71,7 +71,6 @@ export async function POST(
             throw new Error(`Unknown Notice API: /api/project/notice/${params.slug}`);
     }
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    return authApiResponse(req, res);
 }
 

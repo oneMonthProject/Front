@@ -35,7 +35,7 @@ export async function createTask(task: TaskAddForm) {
     if (!task.endDate) throw Error('시작 날짜를 입력해주세요');
     if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
 
-    return await request('POST', '/api/project/task', {task});
+    return await requestWithAuth('POST', '/api/project/task', {task});
 
 }
 
@@ -51,7 +51,7 @@ export async function updateTask(task: TaskModifyForm) {
     if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
     if (!task.progressStatus) throw Error('업무 진행상태를 입력해주세요');
 
-    return await request('PATCH', '/api/project/task', {task});
+    return await requestWithAuth('PATCH', '/api/project/task', {task});
 }
 
 
@@ -60,5 +60,5 @@ export async function updateTask(task: TaskModifyForm) {
  * @param workId
  */
 export async function deleteTask(workId: bigint) {
-    return await request('DELETE', '/api/project/task', {workId});
+    return await requestWithAuth('DELETE', '/api/project/task', {workId});
 }

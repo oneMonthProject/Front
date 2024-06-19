@@ -20,6 +20,5 @@ export async function PUT(req: NextRequest) {
     body: formData,
   });
 
-  const data = await res.json();
-  return NextResponse.json(data);
+  return authApiResponse(req, res);
 }

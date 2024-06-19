@@ -19,5 +19,7 @@ export async function GET(
         throw Error("Unknown Api Route");
     }
 
-    return authApiResponse(req, res);
+    const data = await res.json();
+    return NextResponse.json(data);
+
 }

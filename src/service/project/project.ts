@@ -9,7 +9,7 @@ import _ from "lodash";
  * 프로젝트 목록 조회
  */
 export async function getMyProjectList(pageIndex: number, itemCount: number) {
-    return await request('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`);
+    return await requestWithAuth('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
 
 
@@ -47,7 +47,7 @@ export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
 
     if (erroredResult) return erroredResult;
 
-    return await request('PUT', `/api/project`, {projectInfo: {...projectInfo, trustGradeId: BigInt(trustGradeId!)}});
+    return await requestWithAuth('PUT', `/api/project`, {projectInfo: {...projectInfo, trustGradeId: BigInt(trustGradeId!)}});
 }
 
 /**
@@ -55,5 +55,5 @@ export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
  * @param projectId
  */
 export async function endProject(projectId: string | bigint) {
-    return await request('POST', '/api/project', {projectId});
+    return await requestWithAuth('POST', '/api/project', {projectId});
 }

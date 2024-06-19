@@ -34,8 +34,7 @@ export async function POST(req: NextRequest) {
             body: JSONReplaceBigInt({content, startDate, endDate})
         });
 
-    const data = await res.json();
-    return NextResponse.json(data);
+    return authApiResponse(req, res);
 }
 
 /**
