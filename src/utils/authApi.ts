@@ -3,7 +3,6 @@ import returnFetch from "return-fetch";
 import {cookies} from "next/headers";
 import {getRefreshToken} from "./common";
 import Logger from "@/utils/logger";
-import {NextResponse} from "next/server";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -21,9 +20,7 @@ const authApi = returnFetch({
             if (requestArgs[1] && accessToken) {
                 const headers = new Headers(requestArgs[1].headers);
                 const contentType = headers.get("Content-Type");
-                const args = contentType
-                    ? {...headers}
-                    : {"Content-Type": "application/json"};
+                const args = {...headers, "Content-Type": contentType ? contentType : "application/json"};
 
                 requestArgs[1].headers = {
                     ...args,
@@ -37,6 +34,11 @@ const authApi = returnFetch({
         response: async (response, requestArgs) => {
             if (response.status !== 401) {
                 // 만료 안된경우 요청에 대한 원래 응답 반환
+                if (response.status !== 200 && response.status !== 204) {
+                    const copied = response.clone();
+                    const data = await copied.json();
+                    resLogger.i(`${requestArgs[1]!.method} ${response.status}: ${requestArgs[0]} - ${data.error}`);
+                }
                 resLogger.i(`${requestArgs[1]!.method} ${response.status}:  ${requestArgs[0]}`);
                 return response;
             }
