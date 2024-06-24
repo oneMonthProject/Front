@@ -1,7 +1,8 @@
 import authApi from "@/app/api/_requestor/authApi";
 import {NextRequest, NextResponse} from "next/server";
-import {JSONReplaceBigInt} from "@/utils/common";
+import {JSONReplaceBigInt, sortByStartDate} from "@/utils/common";
 import {authApiResponse} from "@/app/api/authApiResponse";
+import {MilestoneInfo, ResponseBody} from "@/utils/type";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -15,8 +16,21 @@ export async function GET(req: NextRequest) {
     const projectId = searchParams.get('projectId');
 
     const res = await authApi(`/api/milestone/project/${projectId}`, {method: 'GET'});
+    const resBody: ResponseBody<MilestoneInfo[]> = await res.json();
 
-    return authApiResponse(req, res);
+    const sorted = {
+        ...resBody,
+        data: resBody.data ? sortByStartDate(resBody.data!, 'asc')
+            .map((v, index) => ({...v, index})) : []
+    }
+
+    const returnRes = new NextResponse(JSONReplaceBigInt(sorted), {
+        status: res.status,
+        headers: res.headers,
+        statusText: res.statusText
+    })
+
+    return authApiResponse(req, returnRes);
 }
 
 /**

@@ -1,7 +1,7 @@
 import {requestWithAuth} from "@/service/project/request";
-import {PageResponseBody, ProjectInfo, ProjectPost, ResponseBody} from "@/utils/type";
+import {ProjectInfo, ResponseBody} from "@/utils/type";
 import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
-import {createFalsyResBody, sortByStartDate} from "@/utils/common";
+import {createFalsyResBody} from "@/utils/common";
 import _ from "lodash";
 
 
@@ -9,17 +9,7 @@ import _ from "lodash";
  * 프로젝트 목록 조회
  */
 export async function getMyProjectList(pageIndex: number, itemCount: number) {
-    const res:PageResponseBody<ProjectPost[]> = await requestWithAuth('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`);
-
-    const result:PageResponseBody<ProjectPost[]> = {
-        ... res,
-        data:{
-            totalPages: res.data.totalPages,
-            content: sortByStartDate(res.data.content, "desc")
-        },
-    };
-
-    return result;
+    return await requestWithAuth('GET', `/api/project/list?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
 
 
