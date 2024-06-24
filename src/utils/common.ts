@@ -188,9 +188,6 @@ export function getRandomBigInt() {
     return randomBigInt;
 }
 
-export function convertStringToDate(date: string, dateForm: 'yyyy-MM-dd') {
-    return format(new Date(date), dateForm);
-}
 
 /**
  * startDate 기준 데이터 배열 정렬

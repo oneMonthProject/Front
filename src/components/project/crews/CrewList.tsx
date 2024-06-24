@@ -6,7 +6,6 @@ import Link from "next/link";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import useProjectCrewList from "@/hooks/useProjectCrewList";
 import {ProjectMember} from "@/utils/type";
-import {convertStringToDate} from "@/utils/common";
 import {useRecoilValue} from "recoil";
 import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
@@ -18,7 +17,6 @@ export default function CrewList() {
         <ul role="list">
             {data.crewList.map(
                 ({
-                     lastWorkDate,
                      position: {name},
                      projectMemberAuth: {projectMemberAuthName},
                      user: {userId, nickname, profileImgSrc},
@@ -42,14 +40,6 @@ export default function CrewList() {
                                         <li><ProjectRoleBadge text={projectMemberAuthName} size='sm'/></li>
                                     </ul>
                                 </div>
-                                {
-                                    lastWorkDate &&
-                                    <div
-                                        className='tablet:ml-auto mobile:mr-auto flex items-center space-x-1 mobile:text-sm text-grey800'>
-                                        <span>마지막 작업 : </span>
-                                        <span>{convertStringToDate(lastWorkDate, 'yyyy-MM-dd')}</span>
-                                    </div>
-                                }
                             </Link>
                         </li>
                     )

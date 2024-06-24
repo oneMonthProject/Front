@@ -1,6 +1,6 @@
 import {MilestoneInfo} from "@/utils/type";
 import {requestWithAuth} from "@/service/project/request";
-import {convertStringToDate, sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
+import {sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
 /**
  * 프로젝트 마일스톤 목록 조회
@@ -12,10 +12,6 @@ export async function getProjectMilestones(projectId: string) {
     res.data = sortByStartDate(res.data, 'asc').map((v, index) => {
         return {
             ...v,
-            createDate: convertStringToDate(v.createDate as string, 'yyyy-MM-dd'),
-            startDate: convertStringToDate(v.startDate as string, 'yyyy-MM-dd'),
-            endDate: convertStringToDate(v.endDate as string, 'yyyy-MM-dd'),
-            updateDate: convertStringToDate(v.updateDate as string, 'yyyy-MM-dd'),
             index: index
         }
     });
