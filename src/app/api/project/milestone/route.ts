@@ -1,7 +1,7 @@
-import authApi from "@/utils/authApi";
+import authApi from "@/app/api/_requestor/authApi";
 import {NextRequest, NextResponse} from "next/server";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import {authApiResponse} from "@/app/api/authApiResponse";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 

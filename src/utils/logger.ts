@@ -23,6 +23,6 @@ export default class Logger {
     }
 
     public e(arg:string | Error){
-        console.log(`[${this.marker}] ${this.createTimestamp()} ERROR:: ${typeof arg === 'string' ? arg: arg.message}`);
+        console.log(`[${this.marker}] ${this.createTimestamp()} ERROR ${typeof arg === 'string' ? arg: arg.message}`);
     }
 }

@@ -10,7 +10,7 @@ function ProjectInfo({projectId, userId}: { projectId: string, userId: string })
     const stateParam = JSON.stringify({projectId, userId});
     const {state, contents} = useRecoilValueLoadable(projectInfoState(stateParam));
 
-    const resetProjectInfo = useResetRecoilState(projectInfoState(stateParam)); // 프로젝트 상세 global projectInfo 세팅
+    const resetProjectInfo = useResetRecoilState(projectInfoState(stateParam));
     useEffect(() => {
         // 프로젝트 상세 페이지 벗어나면 프로젝트 정보 초기화
         return () => resetProjectInfo();

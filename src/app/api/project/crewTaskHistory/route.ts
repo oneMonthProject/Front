@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/utils/authApi";
-import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import authApi from "@/app/api/_requestor/authApi";
+import {authApiResponse} from "@/app/api/authApiResponse";
 
 /**
  * 프로젝트 크루 업무 이력 조회

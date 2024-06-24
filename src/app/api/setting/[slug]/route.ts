@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import publicApi from "@/utils/publicApi";
-import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import {authApiResponse} from "@/app/api/authApiResponse";
 
 export async function GET(
     req: NextRequest,

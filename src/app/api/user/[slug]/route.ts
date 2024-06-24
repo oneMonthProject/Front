@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import authApi from "@/utils/authApi";
+import authApi from "@/app/api/_requestor/authApi";
 import publicApi from "@/utils/publicApi";
-import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import {authApiResponse} from "@/app/api/authApiResponse";
 
 export async function GET(
   req: NextRequest,

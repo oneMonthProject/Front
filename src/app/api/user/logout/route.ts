@@ -1,4 +1,4 @@
-import authApi from "@/utils/authApi";
+import authApi from "@/app/api/_requestor/authApi";
 import { NextResponse } from "next/server";
 import { cookies } from "next/headers";
 

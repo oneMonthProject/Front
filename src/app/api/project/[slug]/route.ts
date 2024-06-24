@@ -1,6 +1,6 @@
-import authApi from "@/utils/authApi";
+import authApi from "@/app/api/_requestor/authApi";
 import {NextRequest, NextResponse} from "next/server";
-import {authApiResponse} from "@/app/api/_utils/authApiResponse";
+import {authApiResponse} from "@/app/api/authApiResponse";
 
 /**
  * 내 프로젝트 목록/상세 조회
