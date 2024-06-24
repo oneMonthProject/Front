@@ -5,7 +5,6 @@ import {useQuery} from "@tanstack/react-query";
 import {getMyProjectList} from "@/service/project/project";
 import {PageResponseBody, ProjectPost} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
-import {sortByStartDate} from "@/utils/common";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 import PostListSkeleton from "@/components/main/PostListSkeleton";
 
@@ -36,7 +35,7 @@ function MyProjectPosts() {
                             <ul
                                 className="grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-0 mobile:bg-grey200">
                                 {
-                                    sortByStartDate(projectPosts, 'desc').map(v => (
+                                    projectPosts.map(v => (
                                         <li
                                             key={v.projectId}
                                             className="flex-col w-[280px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2">
