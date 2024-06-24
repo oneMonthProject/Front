@@ -10,6 +10,8 @@ export default (phase, {defaultConfig}) => {
                 use: ["@svgr/webpack"]
             });
 
+            config.devtool = 'source-map';
+
             return config;
         },
         images: {
