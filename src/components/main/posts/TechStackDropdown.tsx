@@ -38,21 +38,21 @@ const TechStackDropdown = () => {
     }, []);
 
 
-    const {data: categoryResponse, isPending: isPendingCategory} = useQuery<ResponseBody<TechStackCategory[]>, Error>({
+    const {data: categoryResponse, isLoading: isLoadingCategory} = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
         queryFn: () => getTechStackCategoryList()
     });
 
     const {
         data: techStackResponse,
-        isPending: isPendingTechStack
+        isLoading: isLoadingTechStack
     } = useQuery<ResponseBody<TechStackWithCategory[]>, Error>({
         queryKey: ['techStackListWithCategory'],
         queryFn: () => getTechStackListWithCategory()
     });
 
 
-    if(isPendingTechStack || isPendingCategory) return (
+    if(isLoadingTechStack || isLoadingCategory) return (
         <div className="px-4 flex justify-between w-[150px] h-[40px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer bg-gray-300 animate-pulse">
             <div className="text-base text-grey800 mobile:text-sm block truncate">
                 {"기술스택"}

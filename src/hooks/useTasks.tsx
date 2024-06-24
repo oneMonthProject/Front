@@ -15,7 +15,7 @@ function useTasks({projectId, milestoneId, itemsPerPage, pageNumber = 0}: TasksR
 
     const {
         data: res,
-        isFetching
+        isLoading
     } = useQuery<Promise<PageResponseBody<TaskItem[]>>, Error, PageResponseBody<TaskItem[]>>({
         queryKey: ['taskList', milestoneId, projectId, pageNumber, itemsPerPage],
         queryFn: () => getTaskList({
@@ -31,7 +31,7 @@ function useTasks({projectId, milestoneId, itemsPerPage, pageNumber = 0}: TasksR
     return {
         taskList: res?.data.content || [],
         totalPages: res?.data.totalPages || 0,
-        isTasksFetching: isFetching,
+        isTasksLoading: isLoading,
     }
 }
 

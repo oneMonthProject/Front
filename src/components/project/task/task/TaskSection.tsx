@@ -10,11 +10,11 @@ function TaskSection({projectId}: { projectId: string }) {
     const {
         activeMilestone: initActiveMilestone,
         activeMilestoneId: initActiveMilestoneId,
-        isMilestoneFetching,
+        isMilestoneLoading,
         milestoneList
     } = useMilestones(projectId);
 
-    if (isMilestoneFetching) return <TaskSectionSkeleton/>;
+    if (isMilestoneLoading) return <TaskSectionSkeleton/>;
 
     return milestoneList.length > 0
         ? (

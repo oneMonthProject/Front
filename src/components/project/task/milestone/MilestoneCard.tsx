@@ -40,7 +40,7 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProp
 
     const queryClient = useQueryClient();
 
-    const {mutate: deleteMilestone, isPending} = useMutation({
+    const {mutate: deleteMilestone} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
         onSuccess: async (res) => {
             if (res.message !== 'success') {

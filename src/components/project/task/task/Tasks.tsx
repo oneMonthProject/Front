@@ -20,7 +20,7 @@ function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigi
     const {
         taskList,
         totalPages,
-        isTasksFetching
+        isTasksLoading
     } = useTasks({
         projectId,
         milestoneId: activeMilestoneId,
@@ -33,7 +33,7 @@ function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigi
     }
 
 
-    return isTasksFetching
+    return isTasksLoading
         ? <TasksSkeleton itemCount={ITEM_COUNT.CARDS_SM}/>
         : (
             <div className='w-full mt-4 flex flex-col items-center'>

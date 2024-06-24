@@ -17,7 +17,7 @@ const PostList = () => {
     const searchValue = useRecoilValue(postSearchValue);
     const [pageNumber, setPageNumber] = useState(0);
 
-    const {data, isPending} = useQuery<PageResponseBody<PostCardInfo[]>, Error, PageResponseBody<PostCardInfo[]>>({
+    const {data, isLoading} = useQuery<PageResponseBody<PostCardInfo[]>, Error, PageResponseBody<PostCardInfo[]>>({
         queryKey: ['postList', selectedTechStacks, selectedPosition, searchValue, pageNumber],
         queryFn: () => getPostList({
             techStacks: selectedTechStacks,
@@ -27,7 +27,7 @@ const PostList = () => {
         })
     });
 
-    if(isPending) return <PostListSkeleton itemCount={8} />
+    if(isLoading) return <PostListSkeleton itemCount={8} />
 
     const {content: infos, totalPages} = data!.data;
 
