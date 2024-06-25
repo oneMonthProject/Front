@@ -27,7 +27,7 @@ const PostList = () => {
         })
     });
 
-    if(isFetching) return <PostListSkeleton itemCount={8} />
+    if(isFetching) return <PostListSkeleton itemCount={8} />;
 
     const infos = data?.data.content || [];
     const totalPages = data?.data.totalPages || 0;
