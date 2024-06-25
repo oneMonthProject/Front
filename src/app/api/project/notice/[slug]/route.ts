@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 
 /**
@@ -28,7 +28,7 @@ export async function GET(
         res = await authApi(`${requestNoticeUrl}/${params.slug}?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method})
     }
 
-    return authApiResponse(req, res);
+    return apiResponse(req, res);
 }
 
 /**
@@ -71,6 +71,6 @@ export async function POST(
             throw new Error(`Unknown Notice API: /api/project/notice/${params.slug}`);
     }
 
-    return authApiResponse(req, res);
+    return apiResponse(req, res);
 }
 

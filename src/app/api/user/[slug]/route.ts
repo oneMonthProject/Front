@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
-import publicApi from "@/utils/publicApi";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import publicApi from "@/app/api/_requestor/publicApi";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function GET(
   req: NextRequest,
@@ -23,8 +23,7 @@ export async function GET(
       break;
     case 'nickname':{
       res = await publicApi(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
-      const data = await res.json();
-      return NextResponse.json(data);
+      break;
     }
     case 'general':
       res = await authApi(`/api/user/${searchParams.get('userId')}`);
@@ -33,7 +32,7 @@ export async function GET(
       throw new Error('Unknown User API');
   }
 
-  return authApiResponse(req, res);
+  return apiResponse(req, res);
 }
 
 export async function DELETE(
@@ -47,5 +46,5 @@ export async function DELETE(
     throw Error("Unknown Api Route");
   }
 
-  return authApiResponse(req, res);
+  return apiResponse(req, res);
 }

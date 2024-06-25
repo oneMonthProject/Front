@@ -13,8 +13,6 @@ function Milestones({projectId}: { projectId: string }) {
         activeMilestoneIndex: initActiveMilestoneIndex,
         activeMilestoneId: initActiveMilestoneId,
         isMilestoneLoading,
-        isError,
-        error
     } = useMilestones(projectId);
 
 

@@ -1,5 +1,6 @@
-import publicApi from "@/utils/publicApi";
+import publicApi from "@/app/api/_requestor/publicApi";
 import { NextRequest, NextResponse } from "next/server";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function POST(req: NextRequest) {
   const signUpRequest = await req.json();
@@ -8,6 +9,5 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify(signUpRequest),
   });
 
-  const data = await res.json();
-  return NextResponse.json(data);
+  return apiResponse(req, res);
 }

@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function POST(
     req: NextRequest) {
@@ -15,5 +15,5 @@ export async function POST(
         body: JSON.stringify(requestData)
     });
 
-    return authApiResponse(req, res);
+    return apiResponse(req, res);
 }

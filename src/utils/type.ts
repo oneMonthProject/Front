@@ -2,6 +2,7 @@ import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/Mil
 import {CREW_STATUS} from "@/utils/constant";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
+import {ErrorHandle} from "@/app/api/_requestor/returnFetchWrapper";
 
 export type DropDownItem = {
     name: string;
@@ -150,7 +151,8 @@ export interface PostCardInfo {
 export type ResponseBody<T> = {
     result: string;
     message: string;
-    data: T | null
+    data: T | null;
+    errorHandle? : ErrorHandle;
 }
 
 export type Paged<T> = {

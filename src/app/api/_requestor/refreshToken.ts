@@ -1,6 +1,7 @@
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
 import {baseURL, reqLogger, resLogger} from "@/app/api/_requestor/common";
+import {HttpStatusCode} from "axios";
 
 export async function refreshToken(): Promise<void> {
     const cookieStore = cookies();
@@ -23,8 +24,9 @@ export async function refreshToken(): Promise<void> {
         credentials: "include",
     });
 
+    // 리프레쉬 토큰 재발급 실패한 경우
     if (!tokenResponse.ok) {
-        throw new Error(`Token refresh failed with status ${tokenResponse.status}`);
+        throw new Error(tokenResponse.status.toString());
     }
 
     const {headers} = tokenResponse;

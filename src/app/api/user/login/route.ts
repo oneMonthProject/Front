@@ -1,7 +1,8 @@
-import publicApi from "@/utils/publicApi";
-import {NextRequest, NextResponse} from "next/server";
+import publicApi from "@/app/api/_requestor/publicApi";
+import {NextRequest} from "next/server";
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function POST(req: NextRequest) {
     const loginRequest = await req.json();
@@ -11,12 +12,6 @@ export async function POST(req: NextRequest) {
         body: JSON.stringify(loginRequest),
         credentials: "include",
     });
-
-    let resData = {
-        data: null,
-        result: "error",
-        message: "error"
-    };
 
     if (res.ok) {
         const {headers} = res;
@@ -29,8 +24,11 @@ export async function POST(req: NextRequest) {
             cookieStore.set("Access", accessToken, options);
             cookieStore.set("Refresh", token, options);
         }
-        resData = await res.json();
+
+        const copiedRes = res.clone();
+        const resData = await copiedRes.json();
         cookieStore.set("user_id", resData.data!);
     }
-    return NextResponse.json(resData);
+
+    return apiResponse(req, res);
 }

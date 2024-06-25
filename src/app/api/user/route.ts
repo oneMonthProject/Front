@@ -1,13 +1,13 @@
 import authApi from "@/app/api/_requestor/authApi";
 import { NextRequest, NextResponse } from "next/server";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function GET(req:NextRequest) {
   const res = await authApi("/api/user/me", {
     method: "GET",
   });
 
-  return authApiResponse(req, res);
+  return apiResponse(req, res);
 }
 
 export async function PUT(req: NextRequest) {
@@ -20,5 +20,5 @@ export async function PUT(req: NextRequest) {
     body: formData,
   });
 
-  return authApiResponse(req, res);
+  return apiResponse(req, res);
 }

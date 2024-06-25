@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 
 export async function GET(req:NextRequest){
     const {searchParams} = new URL(req.url);
@@ -9,5 +9,5 @@ export async function GET(req:NextRequest){
 
     const res = await authApi(`/api/alert/supported-projects?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method: 'GET'});
 
-    return authApiResponse(req, res)
+    return apiResponse(req, res)
 }

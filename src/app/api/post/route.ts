@@ -1,7 +1,7 @@
 import authApi from "@/app/api/_requestor/authApi";
-import publicApi from "@/utils/publicApi";
+import publicApi from "@/app/api/_requestor/publicApi";
 import { NextRequest, NextResponse } from "next/server";
-import {authApiResponse} from "@/app/api/authApiResponse";
+import {apiResponse} from "@/app/api/_requestor/apiResponse";
 import {JSONReplaceBigInt} from "@/utils/common";
 
 export async function GET(req: NextRequest) {
@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
   const res = await publicApi(`/api/board/${postId}/public`);
   const data = await res.json();
 
-  return NextResponse.json(data);
+  return apiResponse(req, res);
 }
 
 /**
@@ -27,5 +27,5 @@ export async function POST(req: NextRequest) {
     body: JSONReplaceBigInt({board, project}),
   });
 
-  return authApiResponse(req, res);
+  return apiResponse(req, res);
 }
