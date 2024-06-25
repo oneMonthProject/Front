@@ -35,7 +35,7 @@ const PostList = () => {
     return (
         <section className="mt-6 mobile:mt-2">
             {
-                data && data.data.content.length > 0 ? (
+                infos.length > 0 ? (
                     <>
                         <ul className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-0 mobile:bg-grey200'>
                             {
