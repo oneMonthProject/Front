@@ -29,12 +29,13 @@ const PostList = () => {
 
     if(isLoading) return <PostListSkeleton itemCount={8} />
 
-    const {content: infos, totalPages} = data!.data;
+    const infos = data?.data.content || [];
+    const totalPages = data?.data.totalPages || 0;
 
     return (
         <section className="mt-6 mobile:mt-2">
             {
-                infos.length > 0 ? (
+                data && data.data.content.length > 0 ? (
                     <>
                         <ul className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-0 mobile:bg-grey200'>
                             {
