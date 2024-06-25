@@ -6,14 +6,19 @@ import {useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 
 export function usePositionList() {
-  const setSnackBar = useSetRecoilState(snackbarState);
+    const setSnackBar = useSetRecoilState(snackbarState);
 
-  const { data, isFetching, isError } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error,ResponseBody<PositionItem[]>>({
-    queryKey: ['positions'],
-    queryFn: () => getPositionListAPI()
-  });
+    const {
+        data,
+        isFetching,
+        isError
+    } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
+        queryKey: ['positions'],
+        queryFn: () => getPositionListAPI(),
+        refetchOnMount: 'always'
+    });
 
- if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
+    if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
 
-  return {data:data?.data || [], isFetching, isError};
+    return {data: data?.data || [], isFetching, isError};
 }
