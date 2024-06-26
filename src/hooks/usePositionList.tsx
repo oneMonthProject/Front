@@ -15,7 +15,7 @@ export function usePositionList() {
     } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
-        refetchOnMount: 'always'
+        // refetchOnMount: 'always'
     });
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
