@@ -17,6 +17,14 @@ function makeQueryClient() {
 
 let browserQueryClient: QueryClient | undefined = undefined
 
+const ReactQueryDevtoolsProduction = React.lazy(() =>
+    import('@tanstack/react-query-devtools/build/modern/production.js').then(
+        (d) => ({
+            default: d.ReactQueryDevtools,
+        }),
+    ),
+)
+
 function getQueryClient() {
     if (typeof window === 'undefined') {
         return makeQueryClient()
@@ -27,13 +35,26 @@ function getQueryClient() {
 }
 
 function Providers({children}: { children: ReactNode}) {
+    const [showDevtools, setShowDevtools] = React.useState(false);
     const queryClient = getQueryClient()
+
+    React.useEffect(() => {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        window.toggleDevtools = () => setShowDevtools((old) => !old)
+    }, [])
+
 
     return (
         <RecoilRoot>
             <QueryClientProvider client={queryClient}>
                     {children}
-                <ReactQueryDevtools/>
+                <ReactQueryDevtools initialIsOpen/>
+                {showDevtools && (
+                    <React.Suspense fallback={null}>
+                        <ReactQueryDevtoolsProduction />
+                    </React.Suspense>
+                )}
             </QueryClientProvider>
         </RecoilRoot>
     );
