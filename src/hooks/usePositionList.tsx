@@ -11,12 +11,19 @@ export function usePositionList() {
     const {
         data,
         isFetching,
-        isError
+        isError,
+        isStale,
+        isFetchedAfterMount,
+        isRefetching
     } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
         // refetchOnMount: 'always'
     });
+
+    console.log("isStale: ", isStale);
+    console.log("isRefetching: ", isRefetching);
+    console.log("isFetchedAfterMount: ", isFetchedAfterMount);
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
 
