@@ -20,7 +20,7 @@ export function usePositionList() {
     } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
-        // refetchOnMount: 'always'
+        refetchOnMount: 'always'
     });
 
     console.log("position dataUpdateAt: ", dataUpdatedAt)
