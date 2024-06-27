@@ -38,18 +38,44 @@ const TechStackDropdown = () => {
     }, []);
 
 
-    const {data: categoryResponse, isLoading: isLoadingCategory} = useQuery<ResponseBody<TechStackCategory[]>, Error>({
+    const {
+        data: categoryResponse,
+        isLoading: isLoadingCategory,
+        isStale:_isStale,
+        isFetchedAfterMount: _isFetchedAfterMount,
+        isRefetching: _isRefetching,
+        isPending: _isPending,
+        dataUpdatedAt: _dataUpdatedAt
+    } = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
         queryFn: () => getTechStackCategoryList()
     });
 
+    console.log("techStackCategoryList dataUpdateAt: ", _dataUpdatedAt);
+    console.log("techStackCategoryList isPending: ", _isPending);
+    console.log("techStackCategoryList: ", _isStale);
+    console.log("techStackCategoryList isRefetching: ", _isRefetching);
+    console.log("techStackCategoryList isFetchedAfterMount: ", _isFetchedAfterMount);
+
+
     const {
         data: techStackResponse,
-        isLoading: isLoadingTechStack
+        isLoading: isLoadingTechStack,
+        isStale,
+        isFetchedAfterMount,
+        isRefetching,
+        isPending,
+        dataUpdatedAt
     } = useQuery<ResponseBody<TechStackWithCategory[]>, Error>({
         queryKey: ['techStackListWithCategory'],
         queryFn: () => getTechStackListWithCategory()
     });
+
+    console.log("techStackListWithCategory dataUpdateAt: ", dataUpdatedAt);
+    console.log("techStackListWithCategory isPending: ", isPending);
+    console.log("techStackListWithCategory: ", isStale);
+    console.log("techStackListWithCategory isRefetching: ", isRefetching);
+    console.log("techStackListWithCategory isFetchedAfterMount: ", isFetchedAfterMount);
 
 
     if(isLoadingTechStack || isLoadingCategory) return (

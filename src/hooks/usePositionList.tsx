@@ -15,17 +15,19 @@ export function usePositionList() {
         isStale,
         isFetchedAfterMount,
         isRefetching,
-        isPending
+        isPending,
+        dataUpdatedAt
     } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
         // refetchOnMount: 'always'
     });
 
-    console.log("isPending: ", isPending);
-    console.log("isStale: ", isStale);
-    console.log("isRefetching: ", isRefetching);
-    console.log("isFetchedAfterMount: ", isFetchedAfterMount);
+    console.log("position dataUpdateAt: ", dataUpdatedAt)
+    console.log("position isPending: ", isPending);
+    console.log("positionisStale: ", isStale);
+    console.log("position isRefetching: ", isRefetching);
+    console.log("position isFetchedAfterMount: ", isFetchedAfterMount);
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
 
