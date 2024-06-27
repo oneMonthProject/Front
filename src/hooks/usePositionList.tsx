@@ -17,10 +17,9 @@ export function usePositionList() {
         isRefetching,
         isPending,
         dataUpdatedAt
-    } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
+    } = useQuery<ResponseBody<PositionItem[]>, Error>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
-        refetchOnMount: 'always'
     });
 
     console.log("position dataUpdateAt: ", dataUpdatedAt)
