@@ -1,7 +1,15 @@
 import "server-only";
 import {cookies} from "next/headers";
 import {refreshToken} from "@/app/api/_requestor/refreshToken";
-import {baseURL, CONSTANT, getCookieValue, reqLogger, resLogger} from "@/app/api/_requestor/common";
+import {
+    baseURL,
+    CONSTANT,
+    getCookieValue,
+    HttpStatusCodeType,
+    httpStatusText,
+    reqLogger,
+    resLogger
+} from "@/app/api/_requestor/common";
 import {
     addToRetryRequests,
     addToRevalidatingUsers,
@@ -26,7 +34,6 @@ const authApi = returnFetchWrapper({
                 headers.set("Authorization", `Bearer ${accessToken}`);
                 requestArgs[1].headers = headers;
             }
-
             reqLogger.i(`${requestArgs[1]!.method}: ${requestArgs[0]}`);
             return requestArgs;
         },
@@ -35,11 +42,21 @@ const authApi = returnFetchWrapper({
             if (response.status !== 401) {
 
                 if (!response.ok) {
-                    response.headers.set('X-Error-Handle', 'retry')
-
                     const copied = response.clone();
                     const data = await copied.json();
-                    resLogger.i(`${requestInit.method} ${response.status}: ${requestArgs[0]} - ${data.error}`);
+                    resLogger.i(`${requestInit.method} ${response.status}: ${requestArgs[0]} - ${data.message}`);
+
+                    const resBody = {
+                        status: response.status,
+                        error: httpStatusText(response.status as HttpStatusCodeType),
+                        message: data.message
+                    }
+
+                    return new Response(JSON.stringify(resBody), {
+                        status: response.status,
+                        headers: {...response.headers, 'X-Error-Handle': 'retry'},
+                        statusText: response.statusText
+                    })
                 }
 
                 resLogger.i(`${requestInit.method} ${response.status}:  ${requestArgs[0]}`);
@@ -53,10 +70,10 @@ const authApi = returnFetchWrapper({
             const retryOriginalRequest = new Promise<Response>((resolve, reject) => {
                 addToRetryRequests(userId, async (error: Error | null) => {
                         if (error) {
-                            let response:CustomResponse;
+                            let response: CustomResponse;
 
                             // 리프레쉬 토큰 만료된 경우
-                            if(error.message === HttpStatusCode.Unauthorized.toString()){
+                            if (error.message === HttpStatusCode.Unauthorized.toString()) {
                                 const status = HttpStatusCode.Unauthorized
                                 const resBody = {
                                     status,
@@ -68,7 +85,7 @@ const authApi = returnFetchWrapper({
                                     status,
                                     headers: {'X-Error-Handle': 'errorPage'}
                                 });
-                            }else{ // 기타 서버 에러
+                            } else { // 기타 서버 에러
                                 const status = HttpStatusCode.InternalServerError
                                 const resBody = {
                                     status,

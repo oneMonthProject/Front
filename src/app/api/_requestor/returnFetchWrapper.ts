@@ -31,6 +31,7 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
             if (!headers.get("Content-Type")) {
                 headers.set("Content-Type", "application/json");
             }
+            requestInit!.headers = headers;
         }
 
         try {
@@ -40,6 +41,7 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
             const status = HttpStatusCode.InternalServerError;
             const resBody = {status, error: "Internal Server Error", message};
 
+            console.error(e);
             return new CustomResponse(JSON.stringify(resBody), {
                 status,
                 headers: {'X-Error-Handle': 'retry'}
