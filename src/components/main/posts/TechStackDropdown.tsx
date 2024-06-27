@@ -47,7 +47,8 @@ const TechStackDropdown = () => {
         isPending: _isPending,
         dataUpdatedAt: _dataUpdatedAt,
         isError:_isError,
-        isSuccess: _isSuccess
+        isSuccess: _isSuccess,
+        isFetching: isFetchingCategory
     } = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
         queryFn: () => getTechStackCategoryList()
@@ -60,6 +61,7 @@ const TechStackDropdown = () => {
     console.log("techStackCategoryList isFetchedAfterMount: ", _isFetchedAfterMount);
     console.log("techStackCategoryList _isError: ", _isError);
     console.log("techStackCategoryList _isSuccess: ", _isSuccess);
+    console.log("techStackCategoryList isFetching: ", isFetchingCategory);
 
 
     const {
@@ -71,7 +73,8 @@ const TechStackDropdown = () => {
         isPending,
         dataUpdatedAt,
         isSuccess,
-        isError
+        isError,
+        isFetching: isFetchingTechStack
     } = useQuery<ResponseBody<TechStackWithCategory[]>, Error>({
         queryKey: ['techStackListWithCategory'],
         queryFn: () => getTechStackListWithCategory()
@@ -84,9 +87,10 @@ const TechStackDropdown = () => {
     console.log("techStackListWithCategory isFetchedAfterMount: ", isFetchedAfterMount);
     console.log("techStackListWithCategory isError: ", isError);
     console.log("techStackListWithCategory isSuccess: ", isSuccess);
+    console.log("techStackListWithCategory isFetching: ", isFetchingTechStack);
 
 
-    if(isLoadingTechStack || isLoadingCategory) return (
+    if(isFetchingTechStack || isFetchingCategory) return (
         <div className="px-4 flex justify-between w-[150px] h-[40px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer bg-gray-300 animate-pulse">
             <div className="text-base text-grey800 mobile:text-sm block truncate">
                 {"기술스택"}
