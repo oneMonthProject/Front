@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   const postId = searchParams.get("postId");
 
   const res = await publicApi(`/api/board/${postId}/public`);
-  const data = await res.json();
 
   return apiResponse(req, res);
 }
