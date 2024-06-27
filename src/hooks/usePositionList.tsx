@@ -14,13 +14,15 @@ export function usePositionList() {
         isError,
         isStale,
         isFetchedAfterMount,
-        isRefetching
+        isRefetching,
+        isPending
     } = useQuery<Promise<ResponseBody<PositionItem[]>>, Error, ResponseBody<PositionItem[]>>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
         // refetchOnMount: 'always'
     });
 
+    console.log("isPending: ", isPending);
     console.log("isStale: ", isStale);
     console.log("isRefetching: ", isRefetching);
     console.log("isFetchedAfterMount: ", isFetchedAfterMount);
