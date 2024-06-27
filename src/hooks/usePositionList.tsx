@@ -16,7 +16,8 @@ export function usePositionList() {
         isFetchedAfterMount,
         isRefetching,
         isPending,
-        dataUpdatedAt
+        dataUpdatedAt,
+        isSuccess,
     } = useQuery<ResponseBody<PositionItem[]>, Error>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
@@ -27,6 +28,8 @@ export function usePositionList() {
     console.log("positionisStale: ", isStale);
     console.log("position isRefetching: ", isRefetching);
     console.log("position isFetchedAfterMount: ", isFetchedAfterMount);
+    console.log("position isError: ", isError);
+    console.log("position isSuccess: ", isSuccess);
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
 
