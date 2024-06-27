@@ -1,4 +1,4 @@
-import {PositionItem, TechStackWithCategory} from "@/utils/type";
+import {PositionItem, PostDetailInfo, ResponseBody, TechStackWithCategory} from "@/utils/type";
 import _, {isEqual} from "lodash";
 import {request, requestWithAuth} from "@/service/project/request";
 import {CreatePostForm} from "@/app/register/_utils/type";
@@ -34,7 +34,7 @@ export const getPostList = async (params: SearchParams = {techStacks: [], positi
     return await request('GET', `/api/post/search?${queryParams}`);
 };
 
-export const getPost = async (postId: bigint) => {
+export const getPost = async (postId: bigint):Promise<ResponseBody<PostDetailInfo>> => {
     return await request('GET', `/api/post?postId=${postId}`);
 };
 

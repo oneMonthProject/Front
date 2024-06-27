@@ -1,5 +1,5 @@
 import React from 'react';
-import TrustGradeSelect from "@/components/post/register/TrustGradeSelect";
+import TrustGradeSelect from "@/components/postDetail/register/TrustGradeSelect";
 import {useRecoilState} from "recoil";
 import {projectFieldSelector} from "@/store/register/RegisterPostStateStore";
 import {TrustGradeNameType as Name, TrustGradeValueType as Value,} from "@/app/project/@setting/_utils/type";

@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import TrustGradeSelect from "@/components/post/register/TrustGradeSelect";
+import TrustGradeSelect from "@/components/postDetail/register/TrustGradeSelect";
 import {SelectItem} from "@/utils/type";
 import {useRecoilState} from "recoil";
 import {projectInfoFieldSelector, ProjectSettingField} from "@/store/project/setting/ProjectSettingFormStateStore";

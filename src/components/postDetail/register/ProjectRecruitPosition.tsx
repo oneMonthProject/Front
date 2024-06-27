@@ -1,5 +1,5 @@
 import React from 'react';
-import MultiPositionSelect from "@/components/post/register/MultiPositionSelect";
+import MultiPositionSelect from "@/components/postDetail/register/MultiPositionSelect";
 import {useRecoilState} from "recoil";
 import {postFieldSelector} from "@/store/register/RegisterPostStateStore";
 

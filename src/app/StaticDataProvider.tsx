@@ -15,28 +15,20 @@ async function StaticDataProvider({children}: { children: React.ReactNode }) {
         queryFn: getPositionListAPI
     });
 
-    console.log("prefetch positions: ", positions);
-
     const techs = queryClient.prefetchQuery({
         queryKey: ['techStackCategoryList'],
         queryFn: getTechStackCategoryList
     });
-
-    console.log("prefetch techStackCategoryList: ", techs);
 
     const techResponse = queryClient.prefetchQuery({
         queryKey: ['techStackListWithCategory'],
         queryFn: getTechStackListWithCategory
     })
 
-    console.log("prefetch techStackListWithCategory: ", techResponse);
-
     const techStacks = queryClient.prefetchQuery({
         queryKey:['techStacks'],
         queryFn: getTechStackListAPI
     })
-
-    console.log("prefetch techStacks: ", techStacks);
 
     await Promise.all([positions, techs, techResponse, techStacks]);
 

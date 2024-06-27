@@ -1,7 +1,7 @@
 import AvatarSkeleton from "@/components/ui/skeleton/AvatarSkeleton";
 import Skeleton from "@/components/ui/skeleton/Skeleton";
 
-const PostSkeleton = () => {
+const PostDetailSkeleton = () => {
   return (
     <div className="p-5 mobile:p-1 m-auto">
       <div className="flex-col">
@@ -61,4 +61,4 @@ const PostSkeleton = () => {
   );
 }
 
-export default PostSkeleton;
+export default PostDetailSkeleton;

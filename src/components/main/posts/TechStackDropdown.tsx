@@ -1,7 +1,9 @@
+'use client';
+
 import React, {useEffect, useRef, useState} from "react";
 import {useRecoilValue} from "recoil";
 import {BsChevronDown} from "@react-icons/all-files/bs/BsChevronDown";
-import TechStackDropdownList from "./TechStackDropdownList";
+import TechStackDropdownList from "../../ui/dropdown/TechStackDropdownList";
 import {useQuery} from "@tanstack/react-query";
 import {ResponseBody, TechStackCategory, TechStackWithCategory} from "@/utils/type";
 import {getTechStackCategoryList, getTechStackListWithCategory} from "@/service/setting";
@@ -40,54 +42,20 @@ const TechStackDropdown = () => {
 
     const {
         data: categoryResponse,
-        isLoading: isLoadingCategory,
-        isStale:_isStale,
-        isFetchedAfterMount: _isFetchedAfterMount,
-        isRefetching: _isRefetching,
-        isPending: _isPending,
-        dataUpdatedAt: _dataUpdatedAt,
-        isError:_isError,
-        isSuccess: _isSuccess,
         isFetching: isFetchingCategory
     } = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
         queryFn: () => getTechStackCategoryList()
     });
 
-    console.log("techStackCategoryList dataUpdateAt: ", _dataUpdatedAt);
-    console.log("techStackCategoryList isPending: ", _isPending);
-    console.log("techStackCategoryList: ", _isStale);
-    console.log("techStackCategoryList isRefetching: ", _isRefetching);
-    console.log("techStackCategoryList isFetchedAfterMount: ", _isFetchedAfterMount);
-    console.log("techStackCategoryList _isError: ", _isError);
-    console.log("techStackCategoryList _isSuccess: ", _isSuccess);
-    console.log("techStackCategoryList isFetching: ", isFetchingCategory);
-
 
     const {
         data: techStackResponse,
-        isLoading: isLoadingTechStack,
-        isStale,
-        isFetchedAfterMount,
-        isRefetching,
-        isPending,
-        dataUpdatedAt,
-        isSuccess,
-        isError,
         isFetching: isFetchingTechStack
     } = useQuery<ResponseBody<TechStackWithCategory[]>, Error>({
         queryKey: ['techStackListWithCategory'],
         queryFn: () => getTechStackListWithCategory()
     });
-
-    console.log("techStackListWithCategory dataUpdateAt: ", dataUpdatedAt);
-    console.log("techStackListWithCategory isPending: ", isPending);
-    console.log("techStackListWithCategory: ", isStale);
-    console.log("techStackListWithCategory isRefetching: ", isRefetching);
-    console.log("techStackListWithCategory isFetchedAfterMount: ", isFetchedAfterMount);
-    console.log("techStackListWithCategory isError: ", isError);
-    console.log("techStackListWithCategory isSuccess: ", isSuccess);
-    console.log("techStackListWithCategory isFetching: ", isFetchingTechStack);
 
 
     if(isFetchingTechStack || isFetchingCategory) return (
