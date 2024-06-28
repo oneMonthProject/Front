@@ -1,6 +1,6 @@
 import "server-only";
 import returnFetch, {ReturnFetchDefaultOptions} from "return-fetch";
-import {HttpStatusCode} from "axios";
+import {HttpStatusCodes} from "@/app/api/_requestor/common";
 
 
 export type ErrorHandle = 'retry' | 'snackbar' | 'errorPage';
@@ -38,8 +38,8 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
             return await fetch(url, {...requestInit});
         } catch (e) {
             const message = (e as Error).message;
-            const status = HttpStatusCode.InternalServerError;
-            const resBody = {status, error: "Internal Server Error", message};
+            const status = HttpStatusCodes["Internal Server Error"];
+            const resBody = {status, error: HttpStatusCodes[status], message};
 
             console.error(e);
             return new CustomResponse(JSON.stringify(resBody), {

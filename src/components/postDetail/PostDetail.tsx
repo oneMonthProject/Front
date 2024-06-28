@@ -13,10 +13,8 @@ import JoinProject from "@/components/postDetail/joinProject/JoinProject";
 const PostDetail = ({postId}: { postId: string }) => {
     const {
         data,
-        error,
         isRefetching,
         isLoading,
-        isError,
         isSuccess
     } = useQuery<ResponseBody<PostDetailInfo>, Error, ResponseBody<PostDetailInfo>>({
         queryKey: ['postInfo', postId],
@@ -24,8 +22,6 @@ const PostDetail = ({postId}: { postId: string }) => {
     });
 
     if (isRefetching || isLoading) return <PostDetailSkeleton/>;
-
-    // if (isError) throw error;
 
     if (isSuccess) {
         const postDetail = data.data;

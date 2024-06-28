@@ -1,15 +1,7 @@
 import "server-only";
 import {cookies} from "next/headers";
 import {refreshToken} from "@/app/api/_requestor/refreshToken";
-import {
-    baseURL,
-    CONSTANT,
-    getCookieValue,
-    HttpStatusCodeType,
-    httpStatusText,
-    reqLogger,
-    resLogger
-} from "@/app/api/_requestor/common";
+import {baseURL, CONSTANT, getCookieValue, HttpStatusCodes, reqLogger, resLogger} from "@/app/api/_requestor/common";
 import {
     addToRetryRequests,
     addToRevalidatingUsers,
@@ -18,7 +10,6 @@ import {
     processRetryRequests
 } from "@/app/api/_requestor/refreshQueue";
 import {CustomResponse, returnFetchWrapper} from "@/app/api/_requestor/returnFetchWrapper";
-import {HttpStatusCode} from "axios";
 
 const authApi = returnFetchWrapper({
     baseUrl: baseURL,
@@ -39,7 +30,7 @@ const authApi = returnFetchWrapper({
         },
         response: async (response, requestArgs) => {
             const requestInit = requestArgs[1]!;
-            if (response.status !== 401) {
+            if (response.status !== HttpStatusCodes['Unauthorized']) {
 
                 if (!response.ok) {
                     const copied = response.clone();
@@ -48,7 +39,7 @@ const authApi = returnFetchWrapper({
 
                     const resBody = {
                         status: response.status,
-                        error: httpStatusText(response.status as HttpStatusCodeType),
+                        error: HttpStatusCodes[response.status],
                         message: data.message
                     }
 
@@ -73,8 +64,8 @@ const authApi = returnFetchWrapper({
                             let response: CustomResponse;
 
                             // 리프레쉬 토큰 만료된 경우
-                            if (error.message === HttpStatusCode.Unauthorized.toString()) {
-                                const status = HttpStatusCode.Unauthorized
+                            if (error.message === HttpStatusCodes['Unauthorized'].toString()) {
+                                const status = HttpStatusCodes['Unauthorized'];
                                 const resBody = {
                                     status,
                                     error: 'Not Authorized',
@@ -86,10 +77,10 @@ const authApi = returnFetchWrapper({
                                     headers: {'X-Error-Handle': 'errorPage'}
                                 });
                             } else { // 기타 서버 에러
-                                const status = HttpStatusCode.InternalServerError
+                                const status = HttpStatusCodes['Internal Server Error'];
                                 const resBody = {
                                     status,
-                                    error: 'Internal Server Error',
+                                    error: HttpStatusCodes[status],
                                     message: '프로세스 수행중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
                                 }
 
@@ -109,10 +100,10 @@ const authApi = returnFetchWrapper({
                                 const retryResponse = await authApi(...requestArgs);
                                 resolve(retryResponse);
                             } catch (retryError) {
-                                const status = HttpStatusCode.InternalServerError
+                                const status = HttpStatusCodes['Internal Server Error'];
                                 const resBody = {
                                     status,
-                                    error: 'Internal Server Error',
+                                    error: HttpStatusCodes[status],
                                     message: '프로세스 수행중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
                                 }
 
