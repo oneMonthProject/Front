@@ -5,7 +5,6 @@ import {usePositionList} from "@/hooks/usePositionList";
 import PositionDropdownList from "@/components/ui/dropdown/PositionDropdownList";
 import {useRecoilState} from "recoil";
 import {selectedPositionState} from "@/store/post/PostStateStore";
-import Skeleton from "@/components/ui/skeleton/Skeleton";
 
 function PositionFilter() {
     const [selectedPosition, setSelectedPosition] = useRecoilState(selectedPositionState);
