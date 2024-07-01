@@ -68,7 +68,7 @@ const authApi = returnFetchWrapper({
                                 const status = HttpStatusCodes['Unauthorized'];
                                 const resBody = {
                                     status,
-                                    error: 'Not Authorized',
+                                    error: HttpStatusCodes[status],
                                     message: '로그인 시간이 만료되었습니다. 다시 로그인 해주세요.'
                                 }
 
