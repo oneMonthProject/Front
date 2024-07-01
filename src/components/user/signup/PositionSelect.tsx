@@ -14,7 +14,7 @@ const PositionSelect = ({positionId, setPosition, required}: PositionSelectProps
 
     if (isFetching) return <SelectSkeleton label='직무' placeholder='직무를 선택해주세요'/>;
 
-    const positionList: SelectItem<string, PositionId | null>[] = data.map(
+    const positionList: SelectItem<string, PositionId | null>[] = data!.data!.map(
         ({positionId, positionName}) => ({name: positionName, value: positionId})
     );
     positionList.unshift({name: '직무', value: null})

@@ -15,7 +15,7 @@ const MultiPositionSelect = ({positions, setPositions, required}: MultiPositionS
 
     if (isFetching) return <SelectSkeleton label="모집 분야" placeholder="모집 분야를 선택해주세요."/>;
 
-    const positionList: SelectItem<string, bigint>[] = data.map(
+    const positionList: SelectItem<string, bigint>[] = data!.data!.map(
         ({positionId, positionName}) => ({name: positionName, value: positionId})
     );
 
