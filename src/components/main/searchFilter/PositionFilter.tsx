@@ -33,7 +33,7 @@ function PositionFilter() {
                 <BsChevronDown className="w-4 h-4 text-grey800"/>
             </div>
             {openDropdown && (
-                <PositionDropdownList positionItems={positions} onChangeValue={setSelectedPosition}/>
+                <PositionDropdownList positionItems={positions!.data!} onChangeValue={setSelectedPosition}/>
             )}
         </div>
     );
