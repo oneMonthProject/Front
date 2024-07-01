@@ -20,5 +20,5 @@ export function usePositionList() {
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});
 
-    return {data: data?.data || [], isFetching, isError};
+    return {data, isFetching, isError};
 }
