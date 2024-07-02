@@ -1,14 +1,10 @@
 'use client';
 import React from 'react';
 import Link from "next/link";
-import {useRecoilState, useRecoilValue} from "recoil";
+import {useRecoilState} from "recoil";
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {PROJECT_MENU} from "@/app/project/_utils/constant";
-import {userStateStore} from "@/store/user/UserStateStore";
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
+import {classNames} from "@/utils/common";
 
 
 export default function ProjectNavTab({projectId, userId}: { projectId: string, userId:string}) {

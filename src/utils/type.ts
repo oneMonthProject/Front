@@ -333,3 +333,15 @@ export interface UserProjectNotice {
 export type DataId = string | bigint;
 
 export type ArrayValue<T> = T extends () => IterableIterator<infer U> ? U : never;
+
+export type ButtonTheme =
+    | "primary"
+    | "primary-hollow"
+    | "disabled"
+    | "disabled-hollow"
+    | "cancel"
+    | "black"
+    | "black-hollow"
+    | "danger";
+
+export type ButtonSize = "sm" | "md" | "lg" | "xl";

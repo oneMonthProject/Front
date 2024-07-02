@@ -1,6 +1,6 @@
 import React from 'react';
-import {classNames} from "@/utils/common";
-import {ButtonProps, makeButtonSize} from "@/components/ui/Button";
+import {classNames, makeButtonSize} from "@/utils/common";
+import {ButtonProps} from "@/components/ui/Button";
 
 function ButtonStyleSkeleton({size = 'md', children, ...props}: ButtonProps) {
     const {textSize, px, py} = makeButtonSize(size);

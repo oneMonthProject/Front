@@ -5,11 +5,7 @@ import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectN
 import Select from "@/components/ui/selector/Select";
 import {PROJECT_NOTICE} from "@/app/project/@notice/_utils/constant";
 import {ProjectNoticeKey} from "@/app/project/@notice/_utils/type";
-
-
-function classNames(...classes: string[]) {
-    return classes.filter(Boolean).join(' ')
-}
+import {classNames} from "@/utils/common";
 
 
 export default function NoticeNavTab() {

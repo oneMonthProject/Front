@@ -3,16 +3,12 @@ import { InputHTMLAttributes } from "react";
 import { useSetRecoilState } from "recoil";
 import { checkNickname } from "@/service/user/user";
 import { isEqual } from "lodash";
-import { isValidNickname } from "@/utils/common";
+import {classNames, isValidNickname} from "@/utils/common";
 import { snackbarState } from "@/store/CommonStateStore";
 
 interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   required?: boolean;
   setCheck: (value: boolean) => void;
-}
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ')
 }
 
 function NicknameField({ value, defaultValue, disabled = false, required = false, setCheck, ...props }: InputProps) {
