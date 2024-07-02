@@ -21,69 +21,32 @@ export const getCookieValue = (cookieName: CookieName) => {
     return cookie?.value || '';
 }
 
-
-export enum HttpStatusCodes {
-    'Continue'= 100,
-    'Switching Protocols'= 101,
-    'Processing'= 102,
-    'OK'= 200,
-    'Created'= 201,
-    'Accepted'= 202,
-    'Non-Authoritative Information'= 203,
-    'No Content'= 204,
-    'Reset Content'= 205,
-    'Partial Content'= 206,
-    'Multi-Status'= 207,
-    'Already Reported'= 208,
-    'IM Used'= 226,
-    'Multiple Choices'= 300,
-    'Moved Permanently'= 301,
-    'Found'= 302,
-    'See Other'= 303,
-    'Not Modified'= 304,
-    'Use Proxy'= 305,
-    'Temporary Redirect'= 307,
-    'Permanent Redirect'= 308,
-    'Bad Request'= 400,
-    'Unauthorized'= 401,
-    'Payment Required'= 402,
-    'Forbidden'= 403,
-    'Not Found'= 404,
-    'Method Not Allowed'= 405,
-    'Not Acceptable'= 406,
-    'Proxy Authentication Required'= 407,
-    'Request Timeout'= 408,
-    'Conflict'= 409,
-    'Gone'= 410,
-    'Length Required'= 411,
-    'Precondition Failed'= 412,
-    'Payload Too Large'= 413,
-    'URI Too Long'= 414,
-    'Unsupported Media Type'= 415,
-    'Range Not Satisfiable'= 416,
-    'Expectation Failed'= 417,
-    'I\'m a teapot'= 418,
-    'Misdirected Request'= 421,
-    'Unprocessable Entity'= 422,
-    'Locked'= 423,
-    'Failed Dependency'= 424,
-    'Too Early'= 425,
-    'Upgrade Required'= 426,
-    'Precondition Required'= 428,
-    'Too Many Requests'= 429,
-    'Request Header Fields Too Large'= 431,
-    'Unavailable For Legal Reasons'= 451,
-    'Internal Server Error'= 500,
-    'Not Implemented'= 501,
-    'Bad Gateway'= 502,
-    'Service Unavailable'= 503,
-    'Gateway Timeout'= 504,
-    'HTTP Version Not Supported'= 505,
-    'Variant Also Negotiates'= 506,
-    'Insufficient Storage'= 507,
-    'Loop Detected'= 508,
-    'Not Extended'= 510,
-    'Network Authentication Required'= 511
+export const deleteCookieValue = (cookieName: CookieName) => {
+    const cookieStore = cookies();
+    cookieStore.delete(cookieName);
 }
 
+const HttpStatus = {
+    OK: { code: 200, text: "OK" },
+    CREATED: { code: 201, text: "Created" },
+    ACCEPTED: { code: 202, text: "Accepted" },
+    NO_CONTENT: { code: 204, text: "No Content" },
+    BAD_REQUEST: { code: 400, text: "Bad Request" },
+    UNAUTHORIZED: { code: 401, text: "Unauthorized" },
+    FORBIDDEN: { code: 403, text: "Forbidden" },
+    NOT_FOUND: { code: 404, text: "Not Found" },
+    INTERNAL_SERVER_ERROR: { code: 500, text: "Internal Server Error" },
+    NOT_IMPLEMENTED: { code: 501, text: "Not Implemented" },
+    BAD_GATEWAY: { code: 502, text: "Bad Gateway" },
+    SERVICE_UNAVAILABLE: { code: 503, text: "Service Unavailable" },
+    GATEWAY_TIMEOUT: { code: 504, text: "Gateway Timeout" },
+} as const;
+
+export const getHttpStatusCode = (httpStatus: keyof typeof HttpStatus) => {
+    return HttpStatus[httpStatus].code;
+}
+
+export const getHttpStatusText = (statusCode: number) => {
+    return Object.values(HttpStatus).find(({code}) => code === statusCode);
+}
 
