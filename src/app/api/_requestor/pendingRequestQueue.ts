@@ -1,6 +1,6 @@
 import {CustomResponse} from "@/app/api/_requestor/type";
 
-export type PendingRequest = (error: Error | null) => Promise<CustomResponse>;
+export type PendingRequest = (error: Error | null) => Promise<void>;
 export const pendingRequests: Map<string, PendingRequest[]> = new Map<string, PendingRequest[]>();
 export const addToPendingRequest = (userId: string, request: PendingRequest) => {
     const queue = pendingRequests.get(userId);

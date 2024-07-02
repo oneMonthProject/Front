@@ -25,8 +25,8 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
 
             try {
                 return await fetch(url, {...requestInit});
-            } catch (e) {
-                return createErrorResponse(e);
+            } catch (e: unknown) {
+                return createErrorResponse(e as Error);
             }
         } else {
             return new Promise((resolve) => {
@@ -47,8 +47,8 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
 
                         try {
                             response = await fetch(url, {...requestInit});
-                        } catch (e) {
-                            response = createErrorResponse(e);
+                        } catch (e:unknown) {
+                            response = createErrorResponse(e as Error);
                         }
                     }
                     resolve(response);

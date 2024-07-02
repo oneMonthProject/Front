@@ -8,6 +8,7 @@ export type StyledLinkProps = LinkProps & {
     size?: ButtonSize;
     theme?: ButtonTheme;
     children?: React.ReactNode;
+    className?: string
 };
 
 function StyledLink({size = "md", theme = "primary", children, ...props}: StyledLinkProps) {
@@ -18,7 +19,7 @@ function StyledLink({size = "md", theme = "primary", children, ...props}: Styled
         <Link
             {...props}
             className={classNames(
-                props.className || ''
+                props.className ? props.className : ''
                 , textSize, px, py, bgColor, textColor, ring
                 , `rounded-full font-semibold ${textColor} shadow-sm`)}
         >
