@@ -57,7 +57,7 @@ function LoginForm() {
                     const invalidateMyProjectList = queryClient.invalidateQueries({queryKey: ['myProjectList']});
                     const invalidateProjectNotice = queryClient.invalidateQueries({queryKey: ['userProjectNotice']});
                     await Promise.all([invalidateMyProjectList, invalidateProjectNotice, invalidateUserInfo]);
-                    router.back();
+                    router.replace("/");
                     router.refresh();
 
                     setSnackbar({show: true, type: "INFO", content: message});
