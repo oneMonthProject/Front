@@ -1,11 +1,31 @@
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
-import {baseURL, reqLogger, resLogger} from "@/app/api/_requestor/common";
+import {
+    baseURL,
+    CONSTANT,
+    deleteCookieValue,
+    getCookieValue,
+    getHttpStatusCode,
+    reqLogger,
+    resLogger
+} from "@/app/api/_requestor/common";
+
+const userRefToken: Map<string, string> = new Map();
+const getUserRefToken = (userId:string) => userRefToken.get(userId);
+
+const setUserRefToken = (userId:string, token:string) => userRefToken.set(userId, token);
+
+const deleteUserRefToken = (userId:string) => userRefToken.delete(userId);
 
 export async function refreshToken(): Promise<void> {
-    const cookieStore = cookies();
-    const userId = cookieStore.get("user_id");
-    const refreshToken = cookieStore.get("Refresh");
+
+    const userId = getCookieValue(CONSTANT.USER_ID);
+    let refreshToken = getUserRefToken(userId);
+
+    if(refreshToken === undefined){
+       refreshToken = getCookieValue(CONSTANT.REF_TOKEN);
+       setUserRefToken(userId, refreshToken);
+    }
 
     if (!userId || !refreshToken) {
         throw new Error("No user ID or refresh token available");
@@ -13,31 +33,52 @@ export async function refreshToken(): Promise<void> {
 
     reqLogger.i(`TOKEN-TRY-REFRESH`);
 
-    const tokenResponse = await fetch(`${baseURL}/api/user/token-reissue`, {
+    const requestURL = `${baseURL}/api/user/token-reissue`;
+
+    const tokenResponse = await fetch(requestURL, {
         method: "POST",
-        body: JSON.stringify({userId: userId.value}),
+        body: JSON.stringify({userId}),
         headers: {
             "Content-Type": "application/json",
-            Cookie: `Refresh=${refreshToken.value}`,
+            Cookie: `Refresh=${refreshToken}`,
         },
         credentials: "include",
     });
 
-    // 리프레쉬 토큰 재발급 실패한 경우
+    // 토큰 재발급 실패
     if (!tokenResponse.ok) {
+        if (tokenResponse.status === getHttpStatusCode('UNAUTHORIZED')) {
+            // 리프레쉬 토큰 만료
+            deleteCookieValue(CONSTANT.ACS_TOKEN);
+            deleteCookieValue(CONSTANT.USER_ID);
+            deleteCookieValue(CONSTANT.REF_TOKEN);
+            deleteUserRefToken(userId);
+            resLogger.i(`TOKEN-REFRESH-EXPIRED`);
+        }else{
+            // 기타 서버 에러
+            const copied = tokenResponse.clone();
+            const data = await copied.json();
+            resLogger.i(`POST ${tokenResponse.status}: ${requestURL} - ${data.message}`);
+        }
+
         throw new Error(tokenResponse.status.toString());
     }
 
+    // 토큰 재발급 성공
     const {headers} = tokenResponse;
     const accessToken = headers.get("Authorization");
     const setCookieHeader = headers.get("Set-Cookie");
 
-    if (accessToken && setCookieHeader) {
+    if (accessToken && setCookieHeader) { // 액세스 & 리프레쉬 토큰 세팅
         const {token, options} = getRefreshToken(setCookieHeader);
-        cookieStore.set("Access", accessToken, options);
-        cookieStore.set("Refresh", token, options);
+        const cookieStore = cookies();
+        cookieStore.set(CONSTANT.ACS_TOKEN, accessToken, options);
+        cookieStore.set(CONSTANT.REF_TOKEN, token, options);
+        setUserRefToken(userId, cookieStore.get(CONSTANT.REF_TOKEN)!.value);
         resLogger.i(`TOKEN-REFRESH-SUCCESS`);
     } else {
-        throw new Error("Token refresh response did not contain necessary headers");
+        const message = "Token refresh response did not contain necessary headers"
+        console.error(message);
+        throw new Error(message);
     }
 }

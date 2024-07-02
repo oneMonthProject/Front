@@ -1,11 +1,11 @@
 import Logger from "@/utils/logger";
 import {baseURL} from "@/app/api/_requestor/common";
-import {returnFetchWrapper} from "@/app/api/_requestor/returnFetchWrapper";
+import {returnFetchPublicWrapper} from "@/app/api/_requestor/returnFetchPublicWrapper";
 
 const reqLogger = new Logger('PUBL_BACK_REQ');
 const resLogger = new Logger('PUBL_BACK_RES');
 
-const publicApi = returnFetchWrapper({
+const publicApi = returnFetchPublicWrapper({
     baseUrl: baseURL,
     interceptors: {
         request: async (requestArgs) => {
@@ -14,10 +14,13 @@ const publicApi = returnFetchWrapper({
         },
         response: async (response, requestArgs) => {
             if (response.status !== 200) {
-                resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${response.statusText}`);
+                const copied = response.clone();
+                const data = await copied.json();
+                resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${data.message}`);
+            } else {
+                resLogger.i(`${requestArgs[1]!.method || 'GET'}: ${response.status} ${requestArgs[0]}`)
             }
 
-            resLogger.i(`${requestArgs[1]!.method || 'GET'}: ${response.status} ${requestArgs[0]}`)
             return response;
         },
     },

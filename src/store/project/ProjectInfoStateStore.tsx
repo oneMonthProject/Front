@@ -30,15 +30,7 @@ export const projectInfoQuery = selectorFamily<ResponseBody<ProjectInfo | null>,
             null, "error", "[PROJECT_INFO] Invalid Parameter Error"
         );
 
-
-        try {
-            return await getMyProjectDetail(BigInt(projectId), BigInt(userId));
-        } catch (e: unknown) {
-            return createResBody<null>(
-                null, "error", `[PROJECT_INFO] Server Error: ${(e as Error).message} - ${(e as Error).stack}`
-            );
-        }
-
+        return await getMyProjectDetail(BigInt(projectId), BigInt(userId));
     }
 });
 

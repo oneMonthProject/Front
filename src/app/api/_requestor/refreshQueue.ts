@@ -37,7 +37,7 @@ export function deleteFromRetryRequests(userId: string) {
 }
 
 // 사용자의 재요청 처리큐 수행
-export function processRetryRequests(userId: string, error: Error | null): void {
+export function processRetryRequests(userId: string, error: Error | null){
     const queue = retryRequests.get(userId)!;
     queue.forEach(callback => {
         callback(error);

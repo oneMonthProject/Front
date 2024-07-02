@@ -1,7 +1,6 @@
 import "server-only";
-import {cookies} from "next/headers";
 import {refreshToken} from "@/app/api/_requestor/refreshToken";
-import {baseURL, CONSTANT, getCookieValue, HttpStatusCodes, reqLogger, resLogger} from "@/app/api/_requestor/common";
+import {baseURL, CONSTANT, getCookieValue, getHttpStatusCode, reqLogger, resLogger} from "@/app/api/_requestor/common";
 import {
     addToRetryRequests,
     addToRevalidatingUsers,
@@ -9,7 +8,10 @@ import {
     isRevalidatingUser,
     processRetryRequests
 } from "@/app/api/_requestor/refreshQueue";
-import {CustomResponse, returnFetchWrapper} from "@/app/api/_requestor/returnFetchWrapper";
+import {returnFetchWrapper} from "@/app/api/_requestor/returnFetchWrapper";
+import {processPendingRequest} from "@/app/api/_requestor/pendingRequestQueue";
+
+
 
 const authApi = returnFetchWrapper({
     baseUrl: baseURL,
@@ -17,7 +19,9 @@ const authApi = returnFetchWrapper({
         request: async (requestArgs) => {
             const accessToken = getCookieValue(CONSTANT.ACS_TOKEN);
             if (!accessToken) {
-                throw new Error('Interceptor Error: No Access Token, Please Retry');
+                const message = 'Interceptor Error: No Access Token, Please Retry'
+                console.error(message)
+                throw new Error(message);
             }
 
             if (requestArgs[1] && accessToken) {
@@ -25,107 +29,60 @@ const authApi = returnFetchWrapper({
                 headers.set("Authorization", `Bearer ${accessToken}`);
                 requestArgs[1].headers = headers;
             }
+
             reqLogger.i(`${requestArgs[1]!.method}: ${requestArgs[0]}`);
             return requestArgs;
         },
         response: async (response, requestArgs) => {
-            const requestInit = requestArgs[1]!;
-            if (response.status !== HttpStatusCodes['Unauthorized']) {
 
+            const requestInit = requestArgs[1]!;
+
+            // 토큰 만료 x
+            if (response.status !== getHttpStatusCode('UNAUTHORIZED')) {
                 if (!response.ok) {
+                    // 기타 서버 에러
                     const copied = response.clone();
                     const data = await copied.json();
                     resLogger.i(`${requestInit.method} ${response.status}: ${requestArgs[0]} - ${data.message}`);
-
-                    const resBody = {
-                        status: response.status,
-                        error: HttpStatusCodes[response.status],
-                        message: data.message
-                    }
-
-                    return new Response(JSON.stringify(resBody), {
-                        status: response.status,
-                        headers: {...response.headers, 'X-Error-Handle': 'retry'},
-                        statusText: response.statusText
-                    })
+                    throw new Error(response.status.toString());
                 }
 
+                // 성공 응답
                 resLogger.i(`${requestInit.method} ${response.status}:  ${requestArgs[0]}`);
-
-
                 return response;
             }
 
+            // 토큰 재발급 callback
             const userId = getCookieValue(CONSTANT.USER_ID);
-
             const retryOriginalRequest = new Promise<Response>((resolve, reject) => {
                 addToRetryRequests(userId, async (error: Error | null) => {
                         if (error) {
-                            let response: CustomResponse;
-
-                            // 리프레쉬 토큰 만료된 경우
-                            if (error.message === HttpStatusCodes['Unauthorized'].toString()) {
-                                const status = HttpStatusCodes['Unauthorized'];
-                                const resBody = {
-                                    status,
-                                    error: HttpStatusCodes[status],
-                                    message: '로그인 시간이 만료되었습니다. 다시 로그인 해주세요.'
-                                }
-
-                                response = new CustomResponse(JSON.stringify(resBody), {
-                                    status,
-                                    headers: {'X-Error-Handle': 'errorPage'}
-                                });
-                            } else { // 기타 서버 에러
-                                const status = HttpStatusCodes['Internal Server Error'];
-                                const resBody = {
-                                    status,
-                                    error: HttpStatusCodes[status],
-                                    message: '프로세스 수행중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
-                                }
-
-                                response = new CustomResponse(JSON.stringify(resBody), {
-                                    status,
-                                    headers: {'X-Error-Handle': 'errorPage'}
-                                });
-                            }
-
-                            resolve(response);
+                            // 토큰 재발급 실패한 경우 reject
+                            reject(error);
                         } else {
-                            try {
-                                const newAccessToken = cookies().get("Access");
-                                const headers = new Headers(requestInit.headers);
-                                headers.set("Authorization", `Bearer ${newAccessToken?.value}`);
-                                requestInit.headers = headers;
-                                const retryResponse = await authApi(...requestArgs);
-                                resolve(retryResponse);
-                            } catch (retryError) {
-                                const status = HttpStatusCodes['Internal Server Error'];
-                                const resBody = {
-                                    status,
-                                    error: HttpStatusCodes[status],
-                                    message: '프로세스 수행중 에러가 발생했습니다. 잠시 후 다시 시도해주세요.'
-                                }
-
-                                response = new CustomResponse(JSON.stringify(resBody), {
-                                    status,
-                                    headers: {'X-Error-Handle': 'errorPage'}
-                                });
-
-                                resolve(response);
-                            }
+                            // 토큰 재발급 성공하면 원래 요청 재시도
+                            const newAccessToken = getCookieValue(CONSTANT.ACS_TOKEN);
+                            const headers = new Headers(requestInit.headers);
+                            headers.set("Authorization", `Bearer ${newAccessToken}`);
+                            requestInit.headers = headers;
+                            const retryResponse = await authApi(...requestArgs);
+                            resolve(retryResponse);
                         }
                     }
                 )
             });
 
+            // 계정당 최초 토큰 재발급 요청 1개만 수행
             if (!isRevalidatingUser(userId)) {
                 addToRevalidatingUsers(userId);
                 try {
                     await refreshToken();
+                    // 재발급 요청 완료되면 계정의 대기중인 모든 요청 수행
                     processRetryRequests(userId, null);
+                    processPendingRequest(userId, null);
                 } catch (refreshError: unknown) {
                     processRetryRequests(userId, refreshError as Error);
+                    processPendingRequest(userId, refreshError as Error);
                 } finally {
                     deleteFromRevalidatingUsers(userId)
                 }

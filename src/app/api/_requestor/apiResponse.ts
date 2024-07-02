@@ -1,7 +1,7 @@
 import 'server-only';
 import {NextRequest, NextResponse} from "next/server";
 import {ResponseBody} from "@/utils/type";
-import {CustomResponse, ErrorHandle} from "@/app/api/_requestor/returnFetchWrapper";
+import {CustomResponse, ErrorHandle} from "@/app/api/_requestor/type";
 
 
 export async function apiResponse(req: NextRequest, res: CustomResponse) {
