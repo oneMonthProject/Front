@@ -12,11 +12,11 @@ function Milestones({projectId}: { projectId: string }) {
         milestoneList,
         activeMilestoneIndex: initActiveMilestoneIndex,
         activeMilestoneId: initActiveMilestoneId,
-        isMilestoneLoading,
+        isMilestoneFetching,
     } = useMilestones(projectId);
 
 
-    if (isMilestoneLoading) return <MilestoneListSkeleton/>;
+    if (isMilestoneFetching) return <MilestoneListSkeleton/>;
 
     return milestoneList!.length < 1
         ? (
