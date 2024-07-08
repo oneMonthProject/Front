@@ -10,15 +10,13 @@ export default (phase, {defaultConfig}) => {
                 use: ["@svgr/webpack"]
             });
 
-            // config.devtool = 'source-map';
-
             return config;
         },
         images: {
             remotePatterns: [
                 {
                     protocol: 'https',
-                    hostname: 'projectmatch-bucket.s3.ap-northeast-2.amazonaws.com'
+                    hostname: 'project-match-bucket.s3.ap-northeast-2.amazonaws.com'
                 }
             ]
         },
