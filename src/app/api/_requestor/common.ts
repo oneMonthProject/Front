@@ -28,19 +28,19 @@ export const deleteCookieValue = (cookieName: CookieName) => {
 }
 
 const HttpStatus = {
-    OK: { code: 200, text: "OK" },
-    CREATED: { code: 201, text: "Created" },
-    ACCEPTED: { code: 202, text: "Accepted" },
-    NO_CONTENT: { code: 204, text: "No Content" },
-    BAD_REQUEST: { code: 400, text: "Bad Request" },
-    UNAUTHORIZED: { code: 401, text: "Unauthorized" },
-    FORBIDDEN: { code: 403, text: "Forbidden" },
-    NOT_FOUND: { code: 404, text: "Not Found" },
-    INTERNAL_SERVER_ERROR: { code: 500, text: "Internal Server Error" },
-    NOT_IMPLEMENTED: { code: 501, text: "Not Implemented" },
-    BAD_GATEWAY: { code: 502, text: "Bad Gateway" },
-    SERVICE_UNAVAILABLE: { code: 503, text: "Service Unavailable" },
-    GATEWAY_TIMEOUT: { code: 504, text: "Gateway Timeout" },
+    OK: {code: 200, text: "OK"},
+    CREATED: {code: 201, text: "Created"},
+    ACCEPTED: {code: 202, text: "Accepted"},
+    NO_CONTENT: {code: 204, text: "No Content"},
+    BAD_REQUEST: {code: 400, text: "Bad Request"},
+    UNAUTHORIZED: {code: 401, text: "Unauthorized"},
+    FORBIDDEN: {code: 403, text: "Forbidden"},
+    NOT_FOUND: {code: 404, text: "Not Found"},
+    INTERNAL_SERVER_ERROR: {code: 500, text: "Internal Server Error"},
+    NOT_IMPLEMENTED: {code: 501, text: "Not Implemented"},
+    BAD_GATEWAY: {code: 502, text: "Bad Gateway"},
+    SERVICE_UNAVAILABLE: {code: 503, text: "Service Unavailable"},
+    GATEWAY_TIMEOUT: {code: 504, text: "Gateway Timeout"},
 } as const;
 
 export const getHttpStatusCode = (httpStatus: keyof typeof HttpStatus) => {
@@ -51,9 +51,9 @@ export const getHttpStatusText = (statusCode: number) => {
     return Object.values(HttpStatus).find(({code}) => code === statusCode);
 }
 
-export const createErrorResponse = (error: Error) => {
+export const createErrorResponse = (errorMessage: string) => {
     let response: CustomResponse;
-    if (error.message === getHttpStatusCode('UNAUTHORIZED').toString()) {
+    if (errorMessage === getHttpStatusCode('UNAUTHORIZED').toString()) {
         const status = getHttpStatusCode('UNAUTHORIZED');
         const resBody = {status, error: getHttpStatusText(status), message: '로그인이 만료되었습니다. 다시 로그인해주세요.'};
         response = new CustomResponse(JSON.stringify(resBody), {
@@ -68,5 +68,22 @@ export const createErrorResponse = (error: Error) => {
             headers: {'X-Error-Handle': 'retry'}
         });
     }
+
     return response;
+}
+
+export const commonHeaders = (requestInit: RequestInit) => {
+    const headers = new Headers(requestInit?.headers);
+
+    if (!headers.get("Content-Type") && !(requestInit.body instanceof Blob)) {
+        headers.set("Content-Type", "application/json");
+    }
+
+    return headers;
+}
+
+export const isHttpStatusCode = (arg:string | number) => {
+    const httpStatusCodes = Object.values(HttpStatus).map(({code}) => code) as number[];
+    const el = typeof arg === 'string' ? parseInt(arg, 10) : arg;
+    return httpStatusCodes.includes(el);
 }

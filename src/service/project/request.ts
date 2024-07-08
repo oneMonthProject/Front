@@ -3,7 +3,7 @@ import {JSONReplaceBigInt} from "@/utils/common";
 import {ResponseBody} from "@/utils/type";
 
 export const publicURL = process.env.NEXT_PUBLIC_URL;
-export const headers = {
+export const headers: HeadersInit = {
     'Content-Type': 'application/json'
 };
 

@@ -1,8 +1,9 @@
 import {requestWithAuth} from "@/service/project/request";
+import {ResponseBody} from "@/utils/type";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
-export interface updateUserInfo {
+export interface UpdateUserInfo {
     nickname: string;
     positionId: bigint;
     techStackIds: bigint[];
@@ -25,25 +26,42 @@ export const getUserIfo = async () => {
 };
 
 export const updateUser = async (
-    updateData: updateUserInfo,
+    updateData: UpdateUserInfo,
     file: File | null
 ) => {
     const formData = new FormData();
-    formData.append(
-        "updateRequest",
-        new Blob([JSON.stringify(updateData)], {
+    formData.set(
+        "updateRequestDto",
+        new Blob([ JSON.stringify(updateData, (k, v) => (typeof v === 'bigint' ? Number(v) : v))], {
             type: "application/json",
-        })
+        }),
     );
 
     if (file) {
-        formData.append("file", file);
+        formData.set("file", file);
     }
 
-    return await requestWithAuth('PUT', '/api/user', {
-        method: "PUT",
-        body: formData,
+    const res = await fetch(`${publicURL}/api/user`, {
+        method:'PUT',
+        cache: 'no-cache',
+        body: formData
     });
+
+    if (res.ok) {
+        return res.json();
+    } else {
+        const data: ResponseBody<null> = await res.json();
+        console.log("Data::: ",data);
+        const errorHandle = data.errorHandle!;
+
+        if (errorHandle === 'errorPage') {
+            const path = res.headers.get('X-Error-Handle-Page') as string;
+            window.location.replace(path);
+        }
+
+        // retry, toast 인 경우는 useQuery단에서 처리
+        return data;
+    }
 };
 
 export const getUserProjectHistory = async (pageNumber: number) => {

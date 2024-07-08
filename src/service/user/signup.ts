@@ -1,6 +1,7 @@
 import {isValidEmail, isValidNickname, isValidPassword, throwErrorIfInvalid} from "@/utils/common";
 import {PositionId, TechStackValueType} from "@/utils/type";
 import _ from "lodash";
+import {request} from "@/service/project/request";
 
 const publicURL = process.env.NEXT_PUBLIC_URL;
 
@@ -40,15 +41,7 @@ export const signUp = async (signUpRequest: SignUpRequest) => {
     throwErrorIfInvalid(_.isNull(positionId), "직무를 선택해주세요.");
     throwErrorIfInvalid(_.isEmpty(techStackIds), "관심 스택을 선택해주세요.");
 
-
     const reqData = {email, password, nickname, positionId, techStackIds, intro};
-    const response = await fetch(`${publicURL}/api/user/signup`, {
-        method: "POST",
-        body: JSON.stringify(reqData),
-        headers: {
-            "Content-Type": "application/json",
-        },
-    });
 
-    return response.json();
+    return await request('POST','/api/user/signup', reqData)
 };

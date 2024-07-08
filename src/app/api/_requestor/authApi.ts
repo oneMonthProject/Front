@@ -1,6 +1,14 @@
 import "server-only";
 import {refreshToken} from "@/app/api/_requestor/refreshToken";
-import {baseURL, CONSTANT, getCookieValue, getHttpStatusCode, reqLogger, resLogger} from "@/app/api/_requestor/common";
+import {
+    baseURL,
+    CONSTANT,
+    createErrorResponse,
+    getCookieValue,
+    getHttpStatusCode,
+    reqLogger,
+    resLogger
+} from "@/app/api/_requestor/common";
 import {
     addToRetryRequests,
     addToRevalidatingUsers,
@@ -10,7 +18,6 @@ import {
 } from "@/app/api/_requestor/refreshQueue";
 import {returnFetchWrapper} from "@/app/api/_requestor/returnFetchWrapper";
 import {processPendingRequest} from "@/app/api/_requestor/pendingRequestQueue";
-
 
 
 const authApi = returnFetchWrapper({
@@ -24,17 +31,25 @@ const authApi = returnFetchWrapper({
                 throw new Error(message);
             }
 
+            // 액세스 토큰 세팅
             if (requestArgs[1] && accessToken) {
                 const headers = new Headers(requestArgs[1].headers);
                 headers.set("Authorization", `Bearer ${accessToken}`);
                 requestArgs[1].headers = headers;
             }
 
+            // body가 FormData일 경우 fetch시 자동으로 Content-Type 설정하도록
+            if (requestArgs[1]!.body instanceof FormData) {
+                const headers = new Headers(requestArgs[1]!.headers);
+                headers.delete('Content-Type');
+                requestArgs[1]!.headers = headers;
+            }
+
             reqLogger.i(`${requestArgs[1]!.method}: ${requestArgs[0]}`);
+
             return requestArgs;
         },
         response: async (response, requestArgs) => {
-
             const requestInit = requestArgs[1]!;
 
             // 토큰 만료 x
@@ -44,7 +59,7 @@ const authApi = returnFetchWrapper({
                     const copied = response.clone();
                     const data = await copied.json();
                     resLogger.i(`${requestInit.method} ${response.status}: ${requestArgs[0]} - ${data.message}`);
-                    throw new Error(response.status.toString());
+                    return createErrorResponse(response.status.toString())
                 }
 
                 // 성공 응답
@@ -64,6 +79,12 @@ const authApi = returnFetchWrapper({
                             const newAccessToken = getCookieValue(CONSTANT.ACS_TOKEN);
                             const headers = new Headers(requestInit.headers);
                             headers.set("Authorization", `Bearer ${newAccessToken}`);
+
+                            // body가 FormData일 경우 fetch시 자동으로 Content-Type 설정하도록
+                            if(requestArgs[1]!.body instanceof FormData){
+                                headers.delete('Content-Type');
+                            }
+
                             requestInit.headers = headers;
                             const retryResponse = await authApi(...requestArgs);
                             resolve(retryResponse);

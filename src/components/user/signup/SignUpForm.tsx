@@ -46,7 +46,7 @@ function SignUpForm() {
                 setSnackbar({show: true, type: "INFO", content: message});
                 router.push("/");
             } else {
-                setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 오류가 발셍했습니다'});
+                setSnackbar({show: true, type: 'ERROR', content: '프로세스 수행중 오류가 발생했습니다'});
             }
         } catch (e: unknown) {
             setSnackbar({show: true, type: "ERROR", content: (e as Error).message});

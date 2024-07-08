@@ -11,7 +11,7 @@ import {changeImageUrl, isValidNickname} from "@/utils/common";
 import {
     deleteProfileImage as deleteProfileImageAPI,
     updateUser as updateUserAPI,
-    updateUserInfo
+    UpdateUserInfo
 } from "@/service/user/user";
 import {useSetRecoilState} from "recoil";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
@@ -45,7 +45,7 @@ function ProfileForm({profileInfo}: { profileInfo: ProfileInfo }) {
     const queryClient = useQueryClient();
 
     const {mutate: updateUser} = useMutation({
-        mutationFn: (updateData: updateUserInfo) => updateUserAPI(updateData, selectedImage),
+        mutationFn: (updateData: UpdateUserInfo) => updateUserAPI(updateData, selectedImage),
         onSuccess: (data) => {
             const {message, result} = data;
             if (isEqual(result, "success")) {
@@ -105,7 +105,7 @@ function ProfileForm({profileInfo}: { profileInfo: ProfileInfo }) {
 
     const updateUserInfo = () => {
         if (position) {
-            const updateData = {nickname, positionId, techStackIds, intro: selfIntroduction} as updateUserInfo;
+            const updateData = {nickname, positionId, techStackIds, intro: selfIntroduction} as UpdateUserInfo;
             updateUser(updateData);
         }
     }
