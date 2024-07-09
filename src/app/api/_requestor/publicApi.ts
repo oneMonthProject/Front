@@ -1,5 +1,5 @@
 import Logger from "@/utils/logger";
-import {baseURL} from "@/app/api/_requestor/common";
+import {baseURL, createErrorResponse} from "@/app/api/_requestor/common";
 import {returnFetchPublicWrapper} from "@/app/api/_requestor/returnFetchPublicWrapper";
 
 const reqLogger = new Logger('PUBL_BACK_REQ');
@@ -16,7 +16,8 @@ const publicApi = returnFetchPublicWrapper({
             if (response.status !== 200) {
                 const copied = response.clone();
                 const data = await copied.json();
-                resLogger.e(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${data.message}`);
+                resLogger.i(`${requestArgs[1]!.method}: ${response.status} ${requestArgs[0]} - ${data.message}`);
+                return createErrorResponse(response.status.toString());
             } else {
                 resLogger.i(`${requestArgs[1]!.method || 'GET'}: ${response.status} ${requestArgs[0]}`)
             }
