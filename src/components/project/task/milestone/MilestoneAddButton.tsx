@@ -21,8 +21,9 @@ function MilestoneAddButton({projectId, userId}: { projectId: string, userId: st
         contents
     } = useRecoilValueLoadable<ResponseBody<ProjectTaskAuth | null>>(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
 
-    if (authState === 'loading' || (authState === "hasValue" && contents.result !== "success")) return <MilestoneAddButtonSkeleton/>;
-    // if (authState === 'loading') return <MilestoneAddButtonSkeleton/>;
+    if (authState === 'loading' || authState === "hasError") return <MilestoneAddButtonSkeleton/>;
+
+    if(!contents.data) return null;
 
     const {milestoneAuth} = contents.data;
 

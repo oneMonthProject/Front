@@ -2,7 +2,7 @@ import publicApi from "@/app/api/_requestor/publicApi";
 import {NextRequest} from "next/server";
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 export async function POST(req: NextRequest) {
     const loginRequest = await req.json();
@@ -30,5 +30,5 @@ export async function POST(req: NextRequest) {
         cookieStore.set("user_id", resData.data!);
     }
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }

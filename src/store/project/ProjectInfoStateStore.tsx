@@ -2,7 +2,6 @@ import {atom, atomFamily, selectorFamily} from "recoil";
 import {getMyProjectDetail} from "@/service/project/project";
 import {ProjectInfo, ProjectTaskAuth, ResponseBody} from "@/utils/type";
 import {userStateStore} from "@/store/user/UserStateStore";
-import {createResBody} from "@/utils/common";
 
 
 export const projectIdState = atom<string | null>({
@@ -26,11 +25,7 @@ export const projectInfoQuery = selectorFamily<ResponseBody<ProjectInfo | null>,
             userId = paramObj.userId;
         }
 
-        if (projectId === null || userId === null) return createResBody<null>(
-            null, "error", "[PROJECT_INFO] Invalid Parameter Error"
-        );
-
-        return await getMyProjectDetail(BigInt(projectId), BigInt(userId));
+        return await getMyProjectDetail(projectId, userId);
     }
 });
 

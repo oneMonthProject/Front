@@ -1,6 +1,6 @@
 import publicApi from "@/app/api/_requestor/publicApi";
 import { NextRequest, NextResponse } from "next/server";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 export async function POST(req: NextRequest) {
   const signUpRequest = await req.json();
@@ -9,5 +9,5 @@ export async function POST(req: NextRequest) {
     body: JSON.stringify(signUpRequest),
   });
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }

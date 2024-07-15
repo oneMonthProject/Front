@@ -1,13 +1,19 @@
 import {MilestoneInfo} from "@/utils/type";
 import {requestWithAuth} from "@/service/project/request";
-import {throwErrorIfInvalid} from "@/utils/common";
+import {sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
 /**
  * 프로젝트 마일스톤 목록 조회
  * @param projectId
  */
 export async function getProjectMilestones(projectId: string) {
-    return await requestWithAuth('GET', `/api/project/milestone?projectId=${projectId}`);
+    const resBody = await requestWithAuth('GET', `/api/project/milestone?projectId=${projectId}`);
+
+    return {
+        ...resBody,
+        data: resBody.data ? sortByStartDate(resBody.data!, 'asc')
+            .map((v, index) => ({...v, index})) : []
+    };
 }
 
 /**

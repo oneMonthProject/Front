@@ -7,7 +7,7 @@ type NavigatorProps = HTMLAttributes<HTMLDivElement> & {
 
 function Navigator({children, ...props}: NavigatorProps) {
     return (
-        <div className={classNames('flex-col space-x-1', props.className ? props.className : '')}>
+        <div className={classNames('min-h-[80px] flex items-center space-x-2', props.className ? props.className : '')}>
             {children}
         </div>
     );

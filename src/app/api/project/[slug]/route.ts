@@ -1,8 +1,6 @@
 import authApi from "@/app/api/_requestor/authApi";
-import {NextRequest, NextResponse} from "next/server";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
-import {PageResponseBody, ProjectPost} from "@/utils/type";
-import {JSONReplaceBigInt, sortByStartDate} from "@/utils/common";
+import {NextRequest} from "next/server";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 /**
  * 내 프로젝트 목록/상세 조회
@@ -19,31 +17,13 @@ export async function GET(
         const pageIndex = searchParams.get('pageIndex');
         const itemCount = searchParams.get('itemCount');
         const res = await authApi(`/api/project/me/participating?pageIndex=${pageIndex}&itemCount=${itemCount}`, {method});
-
-        const resBody: PageResponseBody<ProjectPost[]> = await res.json();
-
-        const sortedResBody = {
-            ...resBody,
-            data: {
-                totalPages: resBody.data.totalPages,
-                content: resBody.data.content ? sortByStartDate(resBody.data.content, 'desc') : []
-            }
-        }
-
-        const returnRes = new NextResponse(JSONReplaceBigInt(sortedResBody), {
-            status: res.status,
-            headers: res.headers,
-            statusText: res.statusText
-        });
-
-        return apiResponse(req, returnRes);
-
+        return routeResponseHandler(req, res);
     } else if (params.slug === 'detail') {
         const {searchParams} = new URL(req.url);
         const projectId = searchParams.get('projectId');
         const userId = searchParams.get("userId");
         const res = await authApi(`/api/project/${projectId}/${userId}`, {method});
-        return apiResponse(req, res);
+        return routeResponseHandler(req, res);
     } else {
         throw Error('Unknown Api Route');
     }

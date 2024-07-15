@@ -1,14 +1,9 @@
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
-import {
-    baseURL,
-    CONSTANT,
-    deleteCookieValue,
-    getCookieValue,
-    getHttpStatusCode,
-    reqLogger,
-    resLogger
-} from "@/app/api/_requestor/common";
+import {baseURL} from "@/app/api/_requestor/httpStatus";
+import {COOKIE, deleteCookieValue, getCookieValue} from "@/app/api/_requestor/cookieUtils";
+import {reqLogger, resLogger} from "@/app/api/_requestor/apiLogger";
+import {getResErrorMessage} from "@/app/api/_requestor/responseUtils";
 
 const userRefToken: Map<string, string> = new Map();
 const getUserRefToken = (userId:string) => userRefToken.get(userId);
@@ -19,11 +14,11 @@ const deleteUserRefToken = (userId:string) => userRefToken.delete(userId);
 
 export async function refreshToken(): Promise<void> {
 
-    const userId = getCookieValue(CONSTANT.USER_ID);
+    const userId = getCookieValue(COOKIE.USER_ID);
     let refreshToken = getUserRefToken(userId);
 
     if(refreshToken === undefined){
-       refreshToken = getCookieValue(CONSTANT.REF_TOKEN);
+       refreshToken = getCookieValue(COOKIE.REF_TOKEN);
        setUserRefToken(userId, refreshToken);
     }
 
@@ -47,21 +42,15 @@ export async function refreshToken(): Promise<void> {
 
     // 토큰 재발급 실패
     if (!tokenResponse.ok) {
-        if (tokenResponse.status === getHttpStatusCode('UNAUTHORIZED')) {
-            // 리프레쉬 토큰 만료
-            deleteCookieValue(CONSTANT.ACS_TOKEN);
-            deleteCookieValue(CONSTANT.USER_ID);
-            deleteCookieValue(CONSTANT.REF_TOKEN);
-            deleteUserRefToken(userId);
-            resLogger.i(`TOKEN-REFRESH-EXPIRED`);
-        }else{
-            // 기타 서버 에러
-            const copied = tokenResponse.clone();
-            const data = await copied.json();
-            resLogger.i(`POST ${tokenResponse.status}: ${requestURL} - ${data.message}`);
-        }
+        deleteCookieValue(COOKIE.ACS_TOKEN);
+        deleteCookieValue(COOKIE.USER_ID);
+        deleteCookieValue(COOKIE.REF_TOKEN);
+        deleteUserRefToken(userId);
 
-        throw new Error(tokenResponse.status.toString());
+        const errorMessage = await getResErrorMessage(tokenResponse);
+        console.log("errorMessage::::: ", errorMessage);
+        resLogger.i(`POST ${tokenResponse.status}: ${requestURL} - ${errorMessage}`);
+        throw new Error(errorMessage);
     }
 
     // 토큰 재발급 성공
@@ -72,9 +61,9 @@ export async function refreshToken(): Promise<void> {
     if (accessToken && setCookieHeader) { // 액세스 & 리프레쉬 토큰 세팅
         const {token, options} = getRefreshToken(setCookieHeader);
         const cookieStore = cookies();
-        cookieStore.set(CONSTANT.ACS_TOKEN, accessToken, options);
-        cookieStore.set(CONSTANT.REF_TOKEN, token, options);
-        setUserRefToken(userId, cookieStore.get(CONSTANT.REF_TOKEN)!.value);
+        cookieStore.set(COOKIE.ACS_TOKEN, accessToken, options);
+        cookieStore.set(COOKIE.REF_TOKEN, token, options);
+        setUserRefToken(userId, cookieStore.get(COOKIE.REF_TOKEN)!.value);
         resLogger.i(`TOKEN-REFRESH-SUCCESS`);
     } else {
         const message = "Token refresh response did not contain necessary headers"

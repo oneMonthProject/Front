@@ -1,7 +1,7 @@
 import authApi from "@/app/api/_requestor/authApi";
 import publicApi from "@/app/api/_requestor/publicApi";
-import { NextRequest, NextResponse } from "next/server";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {NextRequest} from "next/server";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 import {JSONReplaceBigInt} from "@/utils/common";
 
 export async function GET(req: NextRequest) {
@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
 
   const res = await publicApi(`/api/board/${postId}/public`);
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }
 
 /**
@@ -26,5 +26,5 @@ export async function POST(req: NextRequest) {
     body: JSONReplaceBigInt({board, project}),
   });
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }

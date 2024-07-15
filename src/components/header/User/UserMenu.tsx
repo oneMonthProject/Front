@@ -7,11 +7,11 @@ import UserMenuDropdown from "@/components/header/User/UserMenuDropdown";
 import {useQuery} from "@tanstack/react-query";
 import {getSimpleUser} from "@/service/user/user";
 import UserMenuSkeleton from "@/components/ui/skeleton/header/UserMenuSkeleton";
-import LoginNav from "@/components/header/User/LoginNav";
+import RegisterNav from "@/components/header/RegisterNav";
 
 
 function UserMenu() {
-    const isDesktop = useMediaQuery({query: '(min-width: 376px)'});
+    const isDesktop = useMediaQuery({query: '(min-width: 1280px)'});
     const {data, isLoading} = useQuery<ResponseBody<UserBasicInfo>, Error>(
         {
             queryKey: ['simpleUserInfo'],
@@ -21,15 +21,17 @@ function UserMenu() {
         }
     );
 
-    if (isLoading) return <UserMenuSkeleton/>;
+    if (isLoading || (!isLoading && !(data?.data))) return <UserMenuSkeleton/>;
 
     const userBasicInfo = data?.data;
-    if (!userBasicInfo) return <LoginNav/>;
 
     const {nickname, profileImgSrc} = userBasicInfo!;
 
     return (
         <ul className='flex items-center'>
+            <li className='mx-4 tablet:text-[18px] mobile:text-[14px] text-black100 font-semibold'>
+                <RegisterNav/>
+            </li>
             <li className='flex items-center mx-2'>
                 <Avatar size="2xs" alt="사용자" src={profileImgSrc}/>
                 {

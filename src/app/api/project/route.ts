@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -18,7 +18,7 @@ export async function PUT(req: NextRequest) {
         body: JSONReplaceBigInt(projectInfo)
     })
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -31,5 +31,5 @@ export async function POST(req:NextRequest){
 
     const res = await authApi(`${baseURL}/api/project/${projectId}/end`,{method:'POST'});
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }

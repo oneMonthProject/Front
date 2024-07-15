@@ -1,9 +1,5 @@
-const publicURL = process.env.NEXT_PUBLIC_URL;
+import {requestWithAuth} from "@/service/project/request";
 
 export const logout = async () => {
-  const response = await fetch(`${publicURL}/api/user/logout`, {
-    method: "POST",
-  });
-
-  return response.json();
+  return await requestWithAuth('POST', '/api/user/logout');
 };

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
 import publicApi from "@/app/api/_requestor/publicApi";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 export async function GET(
   req: NextRequest,
@@ -32,7 +32,7 @@ export async function GET(
       throw new Error('Unknown User API');
   }
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }
 
 export async function DELETE(
@@ -46,5 +46,5 @@ export async function DELETE(
     throw Error("Unknown Api Route");
   }
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }

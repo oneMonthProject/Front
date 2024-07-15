@@ -1,8 +1,7 @@
 import authApi from "@/app/api/_requestor/authApi";
-import {NextRequest, NextResponse} from "next/server";
-import {JSONReplaceBigInt, sortByStartDate} from "@/utils/common";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
-import {MilestoneInfo, ResponseBody} from "@/utils/type";
+import {NextRequest} from "next/server";
+import {JSONReplaceBigInt} from "@/utils/common";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -16,21 +15,8 @@ export async function GET(req: NextRequest) {
     const projectId = searchParams.get('projectId');
 
     const res = await authApi(`/api/milestone/project/${projectId}`, {method: 'GET'});
-    const resBody: ResponseBody<MilestoneInfo[]> = await res.json();
 
-    const sorted = {
-        ...resBody,
-        data: resBody.data ? sortByStartDate(resBody.data!, 'asc')
-            .map((v, index) => ({...v, index})) : []
-    }
-
-    const returnRes = new NextResponse(JSONReplaceBigInt(sorted), {
-        status: res.status,
-        headers: res.headers,
-        statusText: res.statusText
-    })
-
-    return apiResponse(req, returnRes);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -48,7 +34,7 @@ export async function POST(req: NextRequest) {
             body: JSONReplaceBigInt({content, startDate, endDate})
         });
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -69,7 +55,7 @@ export async function PATCH(req: NextRequest) {
         }
     );
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -85,5 +71,5 @@ export async function DELETE(request: NextRequest) {
         {method: 'DELETE'}
     );
 
-    return apiResponse(request, res);
+    return routeResponseHandler(request, res);
 }

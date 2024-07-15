@@ -21,8 +21,8 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
         const errorHandle = data.errorHandle!;
 
         if (errorHandle === 'errorPage') {
-            const path = res.headers.get('X-Error-Handle-Page') as string;
-            window.location.replace(path);
+            const errorRoute = res.headers.get('X-Error-Handle-Page') as string;
+            window.location.replace(errorRoute);
         }
 
         // retry, toast 인 경우는 useQuery단에서 처리
@@ -45,8 +45,8 @@ export async function requestWithAuth(method: HTTP_METHOD, url: string, data?: R
         const errorHandle = data.errorHandle!;
 
         if (errorHandle === 'errorPage') {
-            const path = res.headers.get('X-Error-Handle-Page') as string;
-            window.location.replace(path);
+            const errorRoute = res.headers.get('X-Error-Handle-Page') as string;
+            window.location.replace(errorRoute);
         }
 
         // retry, toast 인 경우는 useQuery단에서 처리

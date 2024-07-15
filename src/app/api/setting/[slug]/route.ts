@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
 import publicApi from "@/app/api/_requestor/publicApi";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 export async function GET(
     req: NextRequest,
@@ -19,6 +19,6 @@ export async function GET(
         throw Error("Unknown Api Route");
     }
 
-   return apiResponse(req, res);
+   return routeResponseHandler(req, res);
 
 }

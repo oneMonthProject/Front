@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
 import authApi from "@/app/api/_requestor/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
         `/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
             })
         });
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -80,7 +80,7 @@ export async function PATCH(req: NextRequest) {
         }
     );
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }
 
 /**
@@ -98,5 +98,5 @@ export async function DELETE(req: NextRequest) {
         }
     )
 
-    return apiResponse(req, res);
+    return routeResponseHandler(req, res);
 }

@@ -52,6 +52,7 @@ function ProfileForm({profileInfo}: { profileInfo: ProfileInfo }) {
                 setSnackbar({show: true, type: "SUCCESS", content: message});
                 queryClient.invalidateQueries({queryKey: ['profileInfo']});
                 queryClient.invalidateQueries({queryKey: ['simpleUserInfo']});
+                queryClient.invalidateQueries({queryKey: ['postList']});
             } else {
                 setSnackbar({show: true, type: "ERROR", content: '프로세스 수행중 에러가 발생했습니다.'});
             }

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import publicApi from "@/app/api/_requestor/publicApi";
 import authApi from "@/app/api/_requestor/authApi";
-import {apiResponse} from "@/app/api/_requestor/apiResponse";
+import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
 
 export async function GET(
   req: NextRequest,
@@ -15,7 +15,7 @@ export async function GET(
     throw Error("Unknown Api Route");
   }
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }
 
 export async function PATCH(
@@ -33,5 +33,5 @@ export async function PATCH(
     throw Error("Unknown Api Route");
   }
 
-  return apiResponse(req, res);
+  return routeResponseHandler(req, res);
 }

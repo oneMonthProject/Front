@@ -3,6 +3,7 @@ import {CREW_STATUS} from "@/utils/constant";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 import {ErrorHandle} from "@/app/api/_requestor/type";
+import {HttpStatusType} from "@/app/api/_requestor/httpStatus";
 
 export type DropDownItem = {
     name: string;
@@ -148,12 +149,16 @@ export interface PostCardInfo {
     updateDate: string;
 }
 
+export type ResponseResult = 'success' | 'fail';
+
 export type ResponseBody<T> = {
-    result: string;
+    result: ResponseResult;
     message: string;
     data: T | null;
     errorHandle? : ErrorHandle;
 }
+
+
 
 export type Paged<T> = {
     content: T,
@@ -161,9 +166,9 @@ export type Paged<T> = {
 }
 
 export type PageResponseBody<T> = {
-    result: string;
+    result: ResponseResult;
     message: string;
-    data: Paged<T>
+    data: Paged<T> | null
 }
 
 export interface TrustGrade {

@@ -4,7 +4,7 @@ import {
     MilestoneInfo,
     PositionItem,
     ProjectPost,
-    ResponseBody,
+    ResponseBody, ResponseResult,
     SelectItem,
     TechStackItem
 } from "./type";
@@ -299,20 +299,6 @@ export function numStrToBigInt(data: string) {
 
 export function throwErrorIfInvalid(flag: boolean, message: string) {
     if (flag) throw Error(message);
-}
-
-export function createFalsyResBody(flag:boolean, message: string){
-    if(flag) return {
-        data:null,
-        result:"error",
-        message:message
-    };
-    return null;
-}
-
-export function createResBody<DataType>(data:DataType, result:string, message:string){
-    const resBody:ResponseBody<DataType> = {data, result, message};
-    return resBody;
 }
 
 export function changeImageUrl(imgSrc: string | null = null) {

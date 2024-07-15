@@ -14,7 +14,9 @@ export const deleteFromPendingRequest = (userId: string) => {
     pendingRequests.delete(userId);
 }
 export const processPendingRequest = (userId: string, error: Error | null) => {
-    const queue = pendingRequests.get(userId)!;
-    queue.forEach((callback) => callback(error));
-    deleteFromPendingRequest(userId);
+    const queue = pendingRequests.get(userId);
+    if (queue) {
+        queue.forEach((callback) => callback(error));
+        deleteFromPendingRequest(userId);
+    }
 }
