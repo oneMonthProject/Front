@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import authApi from "@/app/api/_interceptor/authApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 /**
  * 프로젝트 멤버 목록/상세 조회
@@ -26,6 +26,6 @@ export async function GET(
         throw Error('Unknown Api Route');
     }
 
-   return routeResponseHandler(req, res);
+   return routeResponse(req, res);
 }
 

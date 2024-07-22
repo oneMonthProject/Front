@@ -1,13 +1,4 @@
-import {
-    ButtonSize,
-    ButtonTheme,
-    MilestoneInfo,
-    PositionItem,
-    ProjectPost,
-    ResponseBody, ResponseResult,
-    SelectItem,
-    TechStackItem
-} from "./type";
+import {ButtonSize, ButtonTheme, MilestoneInfo, PositionItem, ProjectPost, SelectItem, TechStackItem} from "./type";
 import _, {camelCase} from "lodash";
 import {ReactNode} from "react";
 

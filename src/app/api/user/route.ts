@@ -1,13 +1,13 @@
-import authApi from "@/app/api/_requestor/authApi";
+import authApi from "@/app/api/_interceptor/authApi";
 import {NextRequest} from "next/server";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function GET(req: NextRequest) {
     const res = await authApi("/api/user/me", {
         method: "GET",
     });
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }
 
 export async function PUT(req: NextRequest) {
@@ -18,5 +18,5 @@ export async function PUT(req: NextRequest) {
         body: formData
     });
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }

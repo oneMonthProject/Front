@@ -8,14 +8,17 @@ import useProjectCrewList from "@/hooks/useProjectCrewList";
 import {ProjectMember} from "@/utils/type";
 import {useRecoilValue} from "recoil";
 import {projectIdState} from "@/store/project/ProjectInfoStateStore";
+import CrewListSkeleton from "@/components/ui/skeleton/project/crews/CrewListSkeleton";
 
 export default function CrewList() {
     const projectId = useRecoilValue(projectIdState)!;
-    const data = useProjectCrewList(projectId);
+    const {crewList, isFetching} = useProjectCrewList(projectId);
+
+    if(isFetching) return <CrewListSkeleton/>
 
     return (
-        <ul role="list">
-            {data.crewList.map(
+        <ul role="list" className='min-h-[350px]'>
+            {crewList.map(
                 ({
                      position: {name},
                      projectMemberAuth: {projectMemberAuthName},
@@ -23,7 +26,7 @@ export default function CrewList() {
                      projectMemberId
                  }: ProjectMember) => {
                     return (
-                        <li key={userId} className="flex items-center gap-x-6 my-2 py-5 cursor-pointer hover:bg-grey000 shadow-md">
+                        <li key={userId} className="flex items-center gap-x-6 py-5 cursor-pointer hover:bg-grey000 border-b border-grey300">
                             <Link
                                 href={{
                                     pathname: `/projectCrewDetail`,

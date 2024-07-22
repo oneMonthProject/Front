@@ -1,4 +1,5 @@
 // 쿠키 관련 util
+import 'server-only';
 import {cookies} from "next/headers";
 
 // 상수

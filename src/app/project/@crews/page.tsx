@@ -4,7 +4,7 @@ import CrewListSkeleton from "@/components/ui/skeleton/project/crews/CrewListSke
 
 function CrewsPage() {
     return (
-        <section className='w-full pc:w-[90%] mobile:max-h-[400px] mr-auto  mobile:overflow-y-scroll'>
+        <section className='w-full pc:w-[90%] mobile:max-h-[400px] mx-auto  mobile:overflow-y-scroll'>
             <Suspense fallback={<CrewListSkeleton/>}>
                 <CrewList/>
             </Suspense>

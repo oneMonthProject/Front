@@ -1,13 +1,13 @@
-import publicApi from "@/app/api/_requestor/publicApi";
+import index from "@/app/api/_interceptor/publicApi";
 import {NextRequest} from "next/server";
 import {cookies} from "next/headers";
 import {getRefreshToken} from "@/utils/common";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function POST(req: NextRequest) {
     const loginRequest = await req.json();
 
-    const res = await publicApi("/api/user/login/public", {
+    const res = await index("/api/user/login/public", {
         method: "POST",
         body: JSON.stringify(loginRequest),
         credentials: "include",
@@ -30,5 +30,5 @@ export async function POST(req: NextRequest) {
         cookieStore.set("user_id", resData.data!);
     }
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }

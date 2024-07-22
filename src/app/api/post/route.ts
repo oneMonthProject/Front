@@ -1,16 +1,16 @@
-import authApi from "@/app/api/_requestor/authApi";
-import publicApi from "@/app/api/_requestor/publicApi";
+import authApi from "@/app/api/_interceptor/authApi";
+import index from "@/app/api/_interceptor/publicApi";
 import {NextRequest} from "next/server";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 import {JSONReplaceBigInt} from "@/utils/common";
 
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const postId = searchParams.get("postId");
 
-  const res = await publicApi(`/api/board/${postId}/public`);
+  const res = await index(`/api/board/${postId}/public`);
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }
 
 /**
@@ -26,5 +26,5 @@ export async function POST(req: NextRequest) {
     body: JSONReplaceBigInt({board, project}),
   });
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }

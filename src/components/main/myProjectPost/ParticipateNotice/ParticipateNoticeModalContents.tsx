@@ -28,11 +28,10 @@ function ParticipateNoticeModalContents() {
         queryKey: ['userProjectNotice'],
         queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT.LIST_SM),
         staleTime: 0,
-        // retry: false,
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             const nextPage = parseInt(lastPageParam as string, 10) + 1;
-            if (nextPage * ITEM_COUNT.LIST_SM > lastPage.data.totalPages) return false;
+            if (!lastPage.data || nextPage * ITEM_COUNT.LIST_SM > lastPage.data.totalPages) return false;
             return nextPage;
         }
     });
@@ -52,20 +51,22 @@ function ParticipateNoticeModalContents() {
 
     const noticeList: FormattedUserProjectNotice[] = [];
     data.pages.forEach((v) => {
-        const itemsPerPage = v.data.content;
-        itemsPerPage.forEach(v => {
-            noticeList.push({
-                alertId: v.alertId,
-                projectId: v.project.projectId,
-                projectName: v.project.projectName,
-                positionId: v.position.positionId,
-                positionName: v.position.positionName,
-                supportResult: v.supportResult
-            });
-        })
+        if (v.data) {
+            const itemsPerPage = v.data.content;
+            itemsPerPage.forEach(v => {
+                noticeList.push({
+                    alertId: v.alertId,
+                    projectId: v.project.projectId,
+                    projectName: v.project.projectName,
+                    positionId: v.position.positionId,
+                    positionName: v.position.positionName,
+                    supportResult: v.supportResult
+                });
+            })
+        }
     });
 
-    const totalItemCount = data.pages[0].data.totalPages;
+    const totalItemCount = data.pages[0].data ? data.pages[0].data.totalPages : 0;
     const totalPageCount = Math.ceil(totalItemCount / ITEM_COUNT.LIST_SM);
     const isEndPage = data.pageParams.length === totalPageCount;
 

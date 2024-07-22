@@ -1,7 +1,7 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
+import authApi from "@/app/api/_interceptor/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 /**
  * 프로젝트 알림 컨펌
@@ -37,5 +37,5 @@ export async function POST(req: NextRequest, {params}: { params: { slug: string 
             throw new Error(`Unknown Notice Confirm Api: /api/project/confirm/${params.slug}`);
     }
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }

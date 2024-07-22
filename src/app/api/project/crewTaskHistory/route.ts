@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import authApi from "@/app/api/_interceptor/authApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 /**
  * 프로젝트 크루 업무 이력 조회
@@ -15,5 +15,5 @@ export async function GET(req:NextRequest){
 
     const res = await authApi(`api/projectmember/${projectMemberId}/works?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }

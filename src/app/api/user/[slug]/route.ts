@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
-import publicApi from "@/app/api/_requestor/publicApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import authApi from "@/app/api/_interceptor/authApi";
+import index from "@/app/api/_interceptor/publicApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function GET(
   req: NextRequest,
@@ -22,7 +22,7 @@ export async function GET(
       res = await authApi("/api/trust-grade/me");
       break;
     case 'nickname':{
-      res = await publicApi(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
+      res = await index(`/api/user/check-nickname/${searchParams.get("nickname")}/public`);
       break;
     }
     case 'general':
@@ -32,7 +32,7 @@ export async function GET(
       throw new Error('Unknown User API');
   }
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }
 
 export async function DELETE(
@@ -46,5 +46,5 @@ export async function DELETE(
     throw Error("Unknown Api Route");
   }
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }

@@ -2,9 +2,10 @@ import React from 'react';
 import Navigator from "@/components/ui/error/Navigator";
 import StyledLink from "@/components/ui/StyledLink";
 import ErrorPageContainer from "@/components/ui/error/ErrorPageContainer";
-import {ErrorMessageType, ErrorResponseMessage} from "@/app/api/_requestor/responseUtils";
 import ErrorMessage from "@/components/ui/error/ErrorMessage";
-import {HttpStatus} from "@/app/api/_requestor/httpStatus";
+import {HttpStatus} from "@/app/api/_interceptor/utils/httpStatus";
+import {CustomInterceptorErrorCode} from "@/app/api/_interceptor/error/constants";
+import {errorResponseMessage} from "@/app/api/_interceptor/error/utils";
 
 function Page(
     {
@@ -12,10 +13,10 @@ function Page(
         searchParams
     }: {
         params: { slug: string }
-        searchParams: { 'error': ErrorMessageType }
+        searchParams: { 'error': CustomInterceptorErrorCode}
     }) {
 
-    const errorMessage = ErrorResponseMessage[searchParams.error];
+    const errorMessage = errorResponseMessage(searchParams.error);
     const status = parseInt(params.slug, 10);
 
     return (

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import publicApi from "@/app/api/_requestor/publicApi";
-import authApi from "@/app/api/_requestor/authApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import index from "@/app/api/_interceptor/publicApi";
+import authApi from "@/app/api/_interceptor/authApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function GET(
   req: NextRequest,
@@ -10,12 +10,12 @@ export async function GET(
   let res: Response;
   if (params.slug === "search") {
     const queryParams = req.nextUrl.search;
-    res = await publicApi(`/api/board/search/public${queryParams}`);
+    res = await index(`/api/board/search/public${queryParams}`);
   } else {
     throw Error("Unknown Api Route");
   }
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }
 
 export async function PATCH(
@@ -33,5 +33,5 @@ export async function PATCH(
     throw Error("Unknown Api Route");
   }
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }

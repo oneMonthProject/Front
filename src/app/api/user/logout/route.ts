@@ -1,7 +1,7 @@
-import authApi from "@/app/api/_requestor/authApi";
+import authApi from "@/app/api/_interceptor/authApi";
 import {NextRequest, NextResponse} from "next/server";
 import { cookies } from "next/headers";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function POST(req:NextRequest) {
   const res = await authApi("/api/user/logout", { method: "POST" });
@@ -13,5 +13,5 @@ export async function POST(req:NextRequest) {
     cookieStore.delete("Refresh");
   }
 
-  return routeResponseHandler(req, res);
+  return routeResponse(req, res);
 }

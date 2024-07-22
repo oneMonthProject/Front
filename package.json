@@ -30,7 +30,6 @@
     "eslint-plugin-postcss-modules": "^2.0.0",
     "lodash": "^4.17.21",
     "next": "^14.0.1",
-    "node-fetch": "^2.6.7",
     "postcss": "^8.4.31",
     "postcss-import": "^15.1.0",
     "react": "^18",

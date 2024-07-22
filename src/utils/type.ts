@@ -2,8 +2,7 @@ import {MilestoneStatusCode, MilestoneStatusName} from "@/store/project/task/Mil
 import {CREW_STATUS} from "@/utils/constant";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
-import {ErrorHandle} from "@/app/api/_requestor/type";
-import {HttpStatusType} from "@/app/api/_requestor/httpStatus";
+import {ErrorHandle} from "@/app/api/_interceptor/error/utils";
 
 export type DropDownItem = {
     name: string;
@@ -155,10 +154,8 @@ export type ResponseBody<T> = {
     result: ResponseResult;
     message: string;
     data: T | null;
-    errorHandle? : ErrorHandle;
+    errorHandle?: ErrorHandle;
 }
-
-
 
 export type Paged<T> = {
     content: T,
@@ -168,7 +165,7 @@ export type Paged<T> = {
 export type PageResponseBody<T> = {
     result: ResponseResult;
     message: string;
-    data: Paged<T> | null
+    data: T extends null ? null : Paged<T>;
 }
 
 export interface TrustGrade {

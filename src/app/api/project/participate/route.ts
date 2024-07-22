@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import authApi from "@/app/api/_interceptor/authApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 export async function POST(
     req: NextRequest) {
@@ -15,5 +15,5 @@ export async function POST(
         body: JSON.stringify(requestData)
     });
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }

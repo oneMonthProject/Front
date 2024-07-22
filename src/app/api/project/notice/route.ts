@@ -1,6 +1,6 @@
 import {NextRequest, NextResponse} from "next/server";
-import authApi from "@/app/api/_requestor/authApi";
-import {routeResponseHandler} from "@/app/api/_requestor/routeResponseHandler";
+import authApi from "@/app/api/_interceptor/authApi";
+import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
 
 
@@ -14,5 +14,5 @@ export async function PATCH(req:NextRequest){
 
     const res = await authApi(`/api/alert/${alertId}/status`, {method:'PATCH'});
 
-    return routeResponseHandler(req, res);
+    return routeResponse(req, res);
 }
