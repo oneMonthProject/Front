@@ -8,6 +8,9 @@ import {
 } from "@/app/api/_interceptor/error/constants";
 import {CustomInterceptorError, GatewayError} from "@/app/api/_interceptor/error/classes";
 
+export type ErrorHandle = 'retry' | 'snackbar' | 'errorPage';
+export type ErrorHandlePage = `/error/${typeof HttpStatus[keyof typeof HttpStatus]}?error=${CustomInterceptorErrorCode}`;
+
 export const isResponseNotOKCode = (arg: string): arg is ResponseNotOKCode => {
     return ResponseNotOKMessage[arg as ResponseNotOKCode] !== undefined;
 }
@@ -22,8 +25,6 @@ export const isCustomInterceptorError = (arg: Error): arg is CustomInterceptorEr
     return code && isCustomInterceptorErrorCode(code);
 }
 
-export type ErrorHandle = 'retry' | 'snackbar' | 'errorPage';
-export type ErrorHandlePage = `/error/${typeof HttpStatus[keyof typeof HttpStatus]}?error=${CustomInterceptorErrorCode}`;
 /**
  * 커스텀 에러 Response 헤더의 errorHandle
  * @param errorCode

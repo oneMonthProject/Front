@@ -2,11 +2,24 @@ import React from 'react';
 import ProfileSection from "@/components/project/crews/detail/ProfileSection";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
 import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
+import BackNav from "@/components/ui/BackNav";
 
-function CrewDetailPage({searchParams: {projectMemberId}}: { searchParams: { projectMemberId: string } }) {
+function CrewDetailPage({
+                            searchParams: {
+                                projectMemberId,
+                                projectId,
+                                userId
+                            }
+                        }: { searchParams: { projectMemberId: string; projectId: string, userId: string } }) {
     return (
         <>
-            <section className='tablet:py-3 border-b-2 border-gray-200'>
+            <section className='w-fit tablet:translate-x-[-50%] mobile:translate-x-[-20%]'>
+                <BackNav to={{
+                    pathname: '/project',
+                    query: {projectId, userId}
+                }}/>
+            </section>
+            <section className='pc:min-h-[280px] tablet:py-3 border-b-2 border-gray-200'>
                 <ProfileSection projectMemberId={projectMemberId}/>
             </section>
             <section className='mt-12'>

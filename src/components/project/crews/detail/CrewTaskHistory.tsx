@@ -32,7 +32,7 @@ function CrewTaskHistory({projectMemberId}:{projectMemberId:string}) {
 
     return (
         <>
-            <div className="h-[280px] flow-root tablet:mt-10 mobile:mt-8 mb-8 mx-2">
+            <div className="max-h-[280px] flow-root tablet:mt-10 mobile:mt-8 mb-8 mx-2">
                 {
                     taskHistory.length > 0
                         ? (

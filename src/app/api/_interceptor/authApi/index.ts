@@ -29,7 +29,6 @@ const authApi = returnFetchWrapper({
                 headers.set("Authorization", `Bearer ${accessToken}`);
                 requestInit.headers = headers;
 
-                // body가 FormData일 경우 fetch시 자동으로 Content-Type 설정하도록
                 if (requestInit.body instanceof FormData) {
                     const headers = new Headers(requestArgs[1]!.headers);
                     headers.delete('Content-Type');
@@ -53,13 +52,11 @@ const authApi = returnFetchWrapper({
 
             const errorCode = await getErrorCodeFromResponse(response);
 
-            // 실패 응답
             if (errorCode !== 'EXPIRED_TOKEN' && errorCode !== 'REFRESH_TOKEN_NOT_FOUND') {
                 resLogger.i(`${requestInit.method} ${response.status}:  ${requestArgs[0]} - ${errorCode}`);
                 throw new ResponseError(errorCode);
             }
 
-            // 토큰 재발급 응답
             const userId = getCookieValue(COOKIE.USER_ID);
             const retryOriginalRequest = new Promise<Response>((resolve, reject) => {
                 addToRetryRequests(userId, async (error: Error | null) => {
@@ -87,8 +84,7 @@ const authApi = returnFetchWrapper({
                 )
             });
 
-            // 계정당 최초 토큰 재발급 요청 1개만 수행
-            if (!isRevalidatingUser(userId)) {
+            if (!isRevalidatingUser(userId)) {  // 계정당 최초 토큰 재발급 요청 1개만 수행
                 addToRevalidatingUsers(userId);
                 try {
                     await refreshToken();

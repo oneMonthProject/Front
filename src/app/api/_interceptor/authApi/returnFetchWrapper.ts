@@ -27,7 +27,6 @@ export const returnFetchWrapper = (args?: ReturnFetchDefaultOptions) => {
             return new Promise((resolve) => {
                 addToPendingRequest(userId, async (error: Error | null) => {
                     let response: Response;
-
                     if (error) {
                         response = await createErrorResponse((error as Error));
                     } else {
