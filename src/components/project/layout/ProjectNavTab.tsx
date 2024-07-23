@@ -1,7 +1,7 @@
 'use client';
-import React from 'react';
+import React, {useEffect} from 'react';
 import Link from "next/link";
-import {useRecoilState} from "recoil";
+import {useRecoilState, useResetRecoilState} from "recoil";
 import {projectActiveNavState} from "@/store/project/ProjectNavTabStateStore";
 import {PROJECT_MENU} from "@/app/project/_utils/constant";
 import {classNames} from "@/utils/common";
@@ -9,7 +9,11 @@ import {classNames} from "@/utils/common";
 
 export default function ProjectNavTab({projectId, userId}: { projectId: string, userId:string}) {
     const [activeTabName, setActiveTabName] = useRecoilState(projectActiveNavState);
+    const resetActiveTabName = useResetRecoilState(projectActiveNavState);
 
+    useEffect(() => {
+        return () => resetActiveTabName();
+    },[resetActiveTabName]);
 
     return activeTabName && (
         <div className='tablet:my-[3.9rem] mobile:my-[3rem]'>
