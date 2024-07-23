@@ -19,7 +19,6 @@ function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: s
                     <div className="w-[380px] mobile:w-full space-y-5 mobile:space-y-3 mobile:mx-auto">
                         <ProjectName/>
                         <ProjectSubject/>
-                        <ProjectTrustGrade/>
                     </div>
                     <ProjectDate/>
                 </div>
