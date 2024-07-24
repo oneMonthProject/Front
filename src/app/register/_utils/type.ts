@@ -19,7 +19,6 @@ export type RecruitCountName = RecruitCount['name'];
 export type CreateProject = {
     name: string;
     subject: string;
-    trustGradeId: TrustGradeValueType;
     crewNumber: RecruitCountValue;
     startDate: string;
     endDate: string;

@@ -4,19 +4,19 @@ export const TRUST_GRADE = [
         value:null
     },
     {
-        name:'1등급',
+        name:'level1',
         value:1
     },
     {
-        name:'2등급',
+        name:'level2',
         value:2,
     },
     {
-        name:'3등급',
+        name:'level3',
         value:3
     },
     {
-        name:'4등급',
+        name:'level4',
         value:4
     }
 ] as const;

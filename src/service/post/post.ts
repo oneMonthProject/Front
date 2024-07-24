@@ -46,7 +46,6 @@ export const createPost = async (createData: CreatePostForm) => {
                 name,
                 crewNumber,
                 subject,
-                trustGradeId,
                 endDate,
                 startDate
             },
@@ -65,7 +64,6 @@ export const createPost = async (createData: CreatePostForm) => {
     throwErrorIfInvalid(_.isEqual("", startDate), "시작 날짜를 선택해주세요.");
     throwErrorIfInvalid(_.isEqual("", endDate), "종료 날짜를 선택해주세요.");
     throwErrorIfInvalid(_.isEqual("", subject), "프로젝트 주제를 입력해주세요.");
-    throwErrorIfInvalid(_.isNull(trustGradeId), "프로젝트 신뢰등급을 선택해주세요.");
     throwErrorIfInvalid(_.isNull(crewNumber), "모집 인원을 선택해주세요.");
     throwErrorIfInvalid(_.isEmpty(positionIds), "모집 분야를 선택해주세요.");
     throwErrorIfInvalid(_.isEmpty(technologyIds), "관심 스택을 선택해주세요.");
