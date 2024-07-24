@@ -11,7 +11,7 @@ interface InfoProps {
 }
 
 const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
-  const { name: projectName, subject, trustGrade, startDate, endDate, crewNumber, technologyStacks } = projectInfo;
+  const { name: projectName, subject, startDate, endDate, crewNumber, technologyStacks } = projectInfo;
 
   return (
     <div className="px-2 mobile:px-0">
@@ -31,12 +31,6 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
         <div className="flex gap-5 h-10 items-center">
           <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">종료 예정</div>
           <div>{endDate}</div>
-        </div>
-        <div className="flex gap-5 h-10 items-center">
-          <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">프로젝트 등급</div>
-          <div>
-            <TrustGradeBadge size="xs" text={trustGrade.name} />
-          </div>
         </div>
         <div className="flex gap-5 h-10 items-center">
           <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">사용 스택</div>

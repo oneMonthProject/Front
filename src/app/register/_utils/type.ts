@@ -1,4 +1,3 @@
-import {TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 import {ArrayValue, PositionId, TechStackValueType} from "@/utils/type";
 import {recruitmentCountList} from "@/app/register/_utils/constant";
 

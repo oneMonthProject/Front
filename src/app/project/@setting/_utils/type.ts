@@ -9,7 +9,6 @@ export type ProjectSettingForm = {
     projectId: bigint;
     projectName: string;
     subject: string;
-    trustGradeId: TrustGradeValueType
     startDate: string;
     endDate: string;
 }

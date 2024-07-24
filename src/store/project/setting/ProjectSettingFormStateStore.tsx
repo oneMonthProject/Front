@@ -17,7 +17,6 @@ export const projectSettingFormState = atom<ResponseBody<ProjectSettingForm | nu
                 projectId,
                 name: projectName,
                 subject,
-                trustGrade: {name: trustGradeName},
                 startDate,
                 endDate
             } = res.data;
@@ -26,7 +25,6 @@ export const projectSettingFormState = atom<ResponseBody<ProjectSettingForm | nu
                 projectId,
                 projectName,
                 subject,
-                trustGradeId: Object.values(TG).find(({name}) => trustGradeName === name)?.value || null,
                 startDate,
                 endDate
             }
@@ -51,7 +49,10 @@ export const projectInfoFieldSelector = selectorFamily({
         if (newValue instanceof DefaultValue) return;
 
         const projectSettingForm = get(projectSettingFormState)!;
-        set(projectSettingFormState, {...projectSettingForm, [param]: newValue});
+        const data = projectSettingForm.data!;
+        const updatedData = {...data, [param]: newValue};
+        const result = {...projectSettingForm, data:updatedData};
+        set(projectSettingFormState, result);
     }
 })
 

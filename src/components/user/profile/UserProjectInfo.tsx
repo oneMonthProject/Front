@@ -1,10 +1,11 @@
 'use client';
 import TrustGradeBadge from '@/components/ui/badge/TrustGradeBadge';
 import React from 'react';
+import {TrustGradeNameType} from "@/app/project/@setting/_utils/type";
 
 interface UserProjectInfoProps {
   count: number;
-  grade: string;
+  grade: TrustGradeNameType;
   score: number;
 }
 
@@ -17,7 +18,11 @@ function UserProjectInfo({ count, grade, score }: UserProjectInfoProps) {
       </div>
       <div className='space-y-1 text-sm mobile:text-xs'>
         <p className='text-grey500'>신뢰등급</p>
-        <TrustGradeBadge size='xs' text={grade} />
+        <TrustGradeBadge
+            badgeStyle='text'
+            text={grade}
+            className='leading-loose'
+        />
       </div>
       <div className='space-y-1 border-l-2 pl-2 text-sm mobile:text-xs'>
         <p className='text-grey500 '>신뢰점수</p>

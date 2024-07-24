@@ -34,8 +34,6 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
                 <span className="inline-block mr-3 font-bold text-xl">
                         {name}
                     </span>
-                <span className='sr-only'>프로젝트 신뢰등급:</span>
-                <TrustGradeBadge size="xs" text={trustGrade.name}/>
             </div>
             <div className="my-2 flex items-center text-base text-gray-600 font-medium">
                 <span className='basis-[50px] text-gray-500 font-semibold'>기간</span>

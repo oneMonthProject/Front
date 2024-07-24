@@ -53,7 +53,6 @@ export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
         authMap: {milestoneAuth},
         projectName,
         subject,
-        trustGradeId,
         startDate,
         endDate
     } = projectInfo;
@@ -62,7 +61,6 @@ export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
     if(!milestoneAuth) errorMessage = '프로젝트 수정 권한이 없습니다.';
     if(_.isEmpty(projectName)) errorMessage = '프로젝트 이름을 입력해주세요';
     if(_.isEmpty(subject)) errorMessage = '프로젝트 주제를 입력해주세요';
-    if(_.isNull(trustGradeId)) errorMessage = '프로젝트 신뢰등급을 선택해주세요';
     if(_.isEmpty(startDate)) errorMessage = '시작날짜를 선택해주세요';
     if(_.isEmpty(endDate)) errorMessage = '종료날짜를 선택해주세요';
 
@@ -78,8 +76,7 @@ export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
 
     return await requestWithAuth('PUT', `/api/project`, {
         projectInfo: {
-            ...projectInfo,
-            trustGradeId: BigInt(trustGradeId!)
+            ...projectInfo
         }
     });
 }

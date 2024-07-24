@@ -9,11 +9,10 @@ import {classNames} from "@/utils/common";
 
 interface TrustBradeBadgeProps extends BadgeProps, HTMLAttributes<SVGElement> {
     text: TrustGradeNameType;
+    badgeStyle?: 'emo' | 'text'
 }
 
-function TrustGradeBadge({text, ...props}: TrustBradeBadgeProps) {
-    const isDesktop = useMediaQuery({query: '(min-width: 1280px)'});
-
+function TrustGradeBadge({text, badgeStyle = 'emo', ...props}: TrustBradeBadgeProps) {
     let textColor = "";
 
     switch (text) {
@@ -31,16 +30,25 @@ function TrustGradeBadge({text, ...props}: TrustBradeBadgeProps) {
             break;
     }
 
-    const size = isDesktop ? 22 : 18;
-
     return (
         <>
-            <span className='sr-only'>프로젝트 신뢰 등급: {text}</span>
-            <FaRegSmile
-                className={
-                    classNames(`rounded-full ${textColor}`, props.className ? props.className : '')
-                }
-                size={size}/>
+            <span className='sr-only'>T-level: {text}</span>
+            {
+                badgeStyle === 'text'
+                    ?
+                    <span
+                        className={classNames(`font-semibold ${textColor}`, props.className ? props.className : '')}>
+                            {text}
+                    </span>
+                    :
+                    <FaRegSmile
+                        className={
+                            classNames(`${textColor}`, props.className ? props.className : '')}
+                        size={16}
+                    />
+            }
+
+
         </>
     );
 }

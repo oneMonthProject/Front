@@ -29,7 +29,6 @@ export const createProjectStateStore = atom<CreateProject>({
     default:{
         name: '',
         subject: '',
-        trustGradeId: null,
         crewNumber: null,
         startDate: '',
         endDate: '',

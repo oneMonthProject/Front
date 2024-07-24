@@ -3,7 +3,6 @@
 import React from 'react';
 import ProjectName from "@/components/project/setting/ProjectName";
 import ProjectSubject from "@/components/project/setting/ProjectSubject";
-import ProjectTrustGrade from "@/components/project/setting/ProjectTrustGrade";
 import ProjectDate from "@/components/project/setting/ProjectDate";
 import ProjectSettingFormResetButton from "@/components/project/setting/ProjectSettingFormResetButton";
 import ProjectSettingFormSaveButton from "@/components/project/setting/ProjectSettingFormSaveButton";

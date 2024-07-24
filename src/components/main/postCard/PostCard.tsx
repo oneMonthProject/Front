@@ -10,18 +10,18 @@ import {format} from "date-fns";
 import {FaPlusCircle} from "@react-icons/all-files/fa/FaPlusCircle";
 
 const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
-    const {boardId, boardTitle, project, boardPositions, boardPageView, user: {profileImgSrc, nickname}} = postInfo;
+    const {boardId, boardTitle, project, boardPositions, boardPageView, user: {profileImgSrc, nickname, trustGrade}} = postInfo;
 
     const profileImgUrl = profileImgSrc?.replace("projectmatch-user-image.s3.ap-northeast-2.amazonaws.com", "projectmatch-bucket.s3.ap-northeast-2.amazonaws.com")
         || null;
 
-    const {name: projectName, trustGrade, startDate, endDate, subject, technologyStacks} = project;
+    const {name: projectName, startDate, endDate, subject, technologyStacks} = project;
 
     return (
         <article className='p-4'>
             <Link href={`/post?postId=${boardId}`}>
                 <div className="flex items-center justify-start  truncate mb-1">
-                    <TrustGradeBadge size="xs" text={trustGrade.name} className='mr-3'/>
+
                     <span className='text-xl font-bold'>
                     {boardTitle}
                     </span>
@@ -110,9 +110,14 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                     </div>
                 }
                 <div className="flex items-center pt-3 px-1 justify-between">
-                    <div className="flex">
+                    <div className="flex items-center">
                         <Avatar size="2xs" alt="사용자" src={profileImgUrl}/>
-                        <div className="ml-2 text-sm self-center">{nickname}</div>
+                        <div className="flex items-center ml-2 text-sm">
+                            <span className='leading-none self-end'>
+                            {nickname}
+                            </span>
+                            <TrustGradeBadge size="xs" text={trustGrade.name} className='ml-1'/>
+                        </div>
                     </div>
                     <div className="flex">
                         <BsEyeFill className="w-4 h-4 self-center text-grey500"/>
