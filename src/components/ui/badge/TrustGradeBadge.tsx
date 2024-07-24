@@ -1,42 +1,46 @@
 "use client";
-import React from "react";
-import {makeBadgeColor, makeBadgeSize} from "@/utils/common";
+import React, {HTMLAttributes} from "react";
 import {BadgeProps} from "@/utils/type";
+import {FaRegSmile} from "@react-icons/all-files/fa/FaRegSmile";
+import {TrustGradeNameType} from "@/app/project/@setting/_utils/type";
+import {useMediaQuery} from "react-responsive";
+import {classNames} from "@/utils/common";
 
 
-function TrustGradeBadge({size = '', text = ''}: BadgeProps) {
-    // 사이즈
-    const {textSize, px, py} = makeBadgeSize(size);
+interface TrustBradeBadgeProps extends BadgeProps, HTMLAttributes<SVGElement> {
+    text: TrustGradeNameType;
+}
 
-    let badgeColor = "";
+function TrustGradeBadge({text, ...props}: TrustBradeBadgeProps) {
+    const isDesktop = useMediaQuery({query: '(min-width: 1280px)'});
+
+    let textColor = "";
+
     switch (text) {
-        case '1등급':
-            badgeColor = 'red';
+        case "level1":
+            textColor = "text-level1";
             break;
-        case '2등급':
-            badgeColor = 'yellow';
+        case "level2":
+            textColor = "text-level2";
             break;
-        case '3등급':
-            badgeColor = 'green';
+        case "level3":
+            textColor = "text-level3";
             break;
-        case '4등급':
-            badgeColor = 'blue';
+        case "level4":
+            textColor = "text-level4";
             break;
-        default:
-            throw Error('Unknown trust grade');
     }
 
-    // 색상
-    const {bgColor, textColor, ringColor} = makeBadgeColor(badgeColor);
+    const size = isDesktop ? 22 : 18;
 
     return (
         <>
-            <span className='sr-only'>{text}</span>
-            <span
-                aria-hidden={true}
-                className={`inline-flex items-center rounded-full ${bgColor} ${px} ${py} ${textSize} font-medium ${textColor} ring-1 ring-inset ${ringColor}`}>
-                {text}
-            </span>
+            <span className='sr-only'>프로젝트 신뢰 등급: {text}</span>
+            <FaRegSmile
+                className={
+                    classNames(`rounded-full ${textColor}`, props.className ? props.className : '')
+                }
+                size={size}/>
         </>
     );
 }

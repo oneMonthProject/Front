@@ -20,7 +20,12 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
     return (
         <article className='p-4'>
             <Link href={`/post?postId=${boardId}`}>
-                <div className="text-xl font-bold truncate mb-1">{boardTitle}</div>
+                <div className="flex items-center justify-start  truncate mb-1">
+                    <TrustGradeBadge size="xs" text={trustGrade.name} className='mr-3'/>
+                    <span className='text-xl font-bold'>
+                    {boardTitle}
+                    </span>
+                </div>
                 <div className="mt-4 mb-2 flex items-center text-base text-gray-600 font-medium">
                     <span className='basis-[50px] text-gray-500 font-semibold'>기간</span>
                     <span className='sr-only'>시작날짜:</span>
@@ -39,8 +44,6 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                     <span className="inline-block max-w-[100px] mr-3 font-bold text-lg truncate">
                         {projectName}
                     </span>
-                    <span className='sr-only'>프로젝트 신뢰등급:</span>
-                    <TrustGradeBadge size="xs" text={trustGrade.name}/>
                 </div>
                 <div className="relative my-2 flex items-start">
                     <span className='basis-[50px] text-base text-gray-500 font-semibold'>주제</span>

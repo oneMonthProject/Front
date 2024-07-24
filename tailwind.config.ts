@@ -8,6 +8,10 @@ export default {
             colors: {
                 primary: "#008A74",
                 secondary: "#005345",
+                level4: "#1DD7F9",
+                level3: "#23E3B1",
+                level2: "#8BE524",
+                level1: "#F8C009",
 
                 none: "transparent",
                 white: "#ffffff",

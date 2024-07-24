@@ -69,7 +69,6 @@ export function makeBadgeColor(color: string) {
             ringColor = "ring-purple-700/10";
             break;
         default:
-            // todo - error 던지기?
             bgColor = "bg-red-50";
             textColor = "text-red-700";
             ringColor = "ring-red-600/10";
