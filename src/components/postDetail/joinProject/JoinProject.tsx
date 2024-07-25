@@ -8,6 +8,7 @@ import {useRecoilValue, useSetRecoilState} from "recoil";
 import {confirmModalState} from "@/store/CommonStateStore";
 import {selectRecruitPositionState} from "@/store/postDetail/PostDetailStateStore";
 import RecruitPositionDropdown from "@/components/postDetail/joinProject/RecruitPositionDropdown";
+import {isEqual} from "lodash";
 
 function JoinProject({projectId, boardInfo}: { projectId: bigint, boardInfo: PostInfo }) {
     const recruitPosition = useRecoilValue(selectRecruitPositionState);
@@ -39,6 +40,9 @@ function JoinProject({projectId, boardInfo}: { projectId: bigint, boardInfo: Pos
             onClickConfirmHandler: () => joinProject({projectId, positionId: recruitPosition.positionId})
         });
     }
+
+    const isRecruiter = isEqual(currentUserId?.toString(), boardInfo.user.userId.toString());
+    if (isRecruiter) return null;
 
 
     return (
