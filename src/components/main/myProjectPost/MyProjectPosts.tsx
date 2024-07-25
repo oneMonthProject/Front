@@ -13,7 +13,7 @@ function MyProjectPosts() {
     const [pageNumber, setPageNumber] = useState(0);
 
     function onChangePageHandler(pageNumber: number) {
-        setPageNumber(pageNumber);
+        setPageNumber(pageNumber - 1);
     }
 
     const {
@@ -35,6 +35,7 @@ function MyProjectPosts() {
     )
 
     const projectPosts = data.data.content;
+    const totalCount = data.data.totalPages;
 
     return (
         <section className='my-10'>
@@ -53,7 +54,7 @@ function MyProjectPosts() {
             <CommonPagination
                 activePage={pageNumber}
                 itemsCountPerPage={ITEM_COUNT.CARDS}
-                totalItemsCount={projectPosts.length}
+                totalItemsCount={totalCount}
                 pageRangeDisplayed={PAGE_RANGE.DEFAULT}
                 onChangePageHandler={onChangePageHandler}
             />
