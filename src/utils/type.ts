@@ -3,6 +3,7 @@ import {CREW_STATUS} from "@/utils/constant";
 import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 import {ErrorHandle} from "@/app/api/_interceptor/error/utils";
+import {ProjectApplyStatusCode} from "@/service/project/apply";
 
 export type DropDownItem = {
     name: string;
@@ -347,3 +348,10 @@ export type ButtonTheme =
     | "danger";
 
 export type ButtonSize = "sm" | "md" | "lg" | "xl";
+
+export type ConstantDto<T> = {
+    code: T;
+    name: string;
+}
+
+export type StatusCode = ProjectApplyStatusCode | string;

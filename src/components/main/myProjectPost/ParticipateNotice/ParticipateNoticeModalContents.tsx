@@ -1,14 +1,13 @@
 'use client';
 
-import React, {Suspense, useRef} from 'react';
+import React, {useRef} from 'react';
 import {useSuspenseInfiniteQuery} from "@tanstack/react-query";
-import {getUserProjectNotice as getUserProjectNoticeAPI} from "@/service/user/userNotice";
-import {PageResponseBody, UserProjectNotice} from "@/utils/type";
-import {FormattedUserProjectNotice} from "@/store/UserNoticeModalStateStore";
+import {PageResponseBody} from "@/utils/type";
 import ParticipateNotice from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNotice";
 import Loader from "@/components/ui/Loader";
 import useIntersectionObserver from "@/hooks/useIntersectionObserver";
 import {ITEM_COUNT} from "@/utils/constant";
+import {getMyProjectApplies, ProjectApplyDto} from "@/service/project/apply";
 
 
 function ParticipateNoticeModalContents() {
@@ -16,7 +15,7 @@ function ParticipateNoticeModalContents() {
     const rootRef = useRef<HTMLUListElement | null>(null);
 
     const getUserProjectNotice = async (pageIndex: number, ITEM_COUNT: number) => {
-        const res = await getUserProjectNoticeAPI(pageIndex, ITEM_COUNT);
+        const res = await getMyProjectApplies(pageIndex, ITEM_COUNT);
         if (res.result !== 'success') {
             throw new Error('프로젝트 지원 현황 조회에 실패했습니다.');
         }
@@ -24,7 +23,7 @@ function ParticipateNoticeModalContents() {
         return res;
     }
 
-    const {data, fetchNextPage} = useSuspenseInfiniteQuery<PageResponseBody<UserProjectNotice[]>>({
+    const {data, fetchNextPage} = useSuspenseInfiniteQuery<PageResponseBody<ProjectApplyDto[]>>({
         queryKey: ['userProjectNotice'],
         queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT.LIST_SM),
         staleTime: 0,
@@ -49,20 +48,11 @@ function ParticipateNoticeModalContents() {
         onIntersectHandler: onIntersect
     });
 
-    const noticeList: FormattedUserProjectNotice[] = [];
+    const noticeList: ProjectApplyDto[] = [];
     data.pages.forEach((v) => {
         if (v.data) {
             const itemsPerPage = v.data.content;
-            itemsPerPage.forEach(v => {
-                noticeList.push({
-                    alertId: v.alertId,
-                    projectId: v.project.projectId,
-                    projectName: v.project.projectName,
-                    positionId: v.position.positionId,
-                    positionName: v.position.positionName,
-                    supportResult: v.supportResult
-                });
-            })
+            itemsPerPage.forEach(v => noticeList.push(v))
         }
     });
 
@@ -81,12 +71,9 @@ function ParticipateNoticeModalContents() {
                     noticeList.map(v => {
                         return (
                             <li
-                                key={v.alertId}
+                                key={v.project_apply_id}
                                 className="flex items-center justify-between gap-x-6 w-full px-2 py-5">
-                                <ParticipateNotice
-                                    key={v.alertId}
-                                    participateNotice={v}
-                                />
+                                <ParticipateNotice participateNotice={v}/>
                             </li>
                         )
                     })
@@ -102,7 +89,7 @@ function ParticipateNoticeModalContents() {
                     isEndPage
                         ?
                         <li className='flex items-center justify-center w-full h-[100px] text-lg text-center text-gray-600/80'>
-                            <div>데이터가 더 이상 존재하지 않습니다</div>
+                            <div>데이터가 더 이상 존재하지 않습니다.</div>
                         </li>
                         :
                         <li ref={bottomRef} className='flex items-center w-full h-[80px]'>
