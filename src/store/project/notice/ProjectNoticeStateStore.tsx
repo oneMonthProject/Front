@@ -1,6 +1,7 @@
 import {atom, selector, selectorFamily} from "recoil";
-import {Notice, ProjectNoticeTypesKey, RecruitPermit, TaskScore} from "@/app/project/@notice/_utils/type";
+import {Notice, RecruitPermit, TaskScore} from "@/app/project/@notice/_utils/type";
 import {CrewWithdrawConfirm} from "@/app/project/@notice/_utils/constant";
+import {AlertMenu} from "@/service/project/alert/type";
 
 
 /**
@@ -41,7 +42,7 @@ export const projectNoticeTaskScoreState = atom<TaskScore>({
 // 알림 confirm시 필요한 데이터 select
 export const projectConfirmDataSelector = selectorFamily({
     key: 'projectConfirmDataSelector',
-    get: (param: ProjectNoticeTypesKey) => ({get}) => {
+    get: (param: AlertMenu) => ({get}) => {
         if (param === 'WORK') {
             return get(projectNoticeTaskScoreState);
         }

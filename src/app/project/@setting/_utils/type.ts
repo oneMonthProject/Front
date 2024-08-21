@@ -1,5 +1,5 @@
 import {TRUST_GRADE} from "@/app/project/@setting/_utils/constant";
-import {ArrayValue, ProjectTaskAuth} from "@/utils/type";
+import {ArrayValue, ProjectAuthMap} from "@/utils/type";
 
 export type TrustGradeSelectType = ArrayValue<typeof TRUST_GRADE.values>;
 export type TrustGradeNameType = TrustGradeSelectType['name'];
@@ -17,5 +17,5 @@ export type ProjectSettingFormKey = keyof ProjectSettingForm;
 export type ProjectSettingFormValue = ProjectSettingForm[ProjectSettingFormKey];
 
 export type ProjectInfoUpdateReq = ProjectSettingForm & {
-    authMap: ProjectTaskAuth;
+    authMap: ProjectAuthMap;
 }

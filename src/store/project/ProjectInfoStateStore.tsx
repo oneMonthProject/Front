@@ -1,6 +1,6 @@
 import {atom, atomFamily, selectorFamily} from "recoil";
 import {getMyProjectDetail} from "@/service/project/project";
-import {ProjectInfo, ProjectTaskAuth, ResponseBody} from "@/utils/type";
+import {ProjectInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
 import {userStateStore} from "@/store/user/UserStateStore";
 
 
@@ -44,7 +44,7 @@ export const projectInfoState = atomFamily<ResponseBody<ProjectInfo | null>, str
 /**
  * 프로젝트 상세정보 auth selector
  */
-export const projectTaskAuthSelector = selectorFamily<ResponseBody<ProjectTaskAuth | null>, string | null>({
+export const projectTaskAuthSelector = selectorFamily<ResponseBody<ProjectAuthMap | null>, string | null>({
     key: 'projectTaskAuthSelector',
     get: (param: string | null) => ({get}) => {
         const res: ResponseBody<ProjectInfo | null> = get(projectInfoState(param));

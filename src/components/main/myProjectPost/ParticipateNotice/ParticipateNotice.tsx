@@ -3,7 +3,6 @@
 import React from 'react';
 import ProjectApplyStatusBadge from "@/components/ui/badge/ProjectApplyStatusBadge";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
-import Link from "next/link";
 import {ProjectApplyDto} from "@/service/project/apply";
 
 interface ParticipateNoticeProps {
@@ -29,16 +28,6 @@ function ParticipateNotice({
             </div>
             <div className="flex flex-none items-center">
                 <ProjectApplyStatusBadge status={status} size='sm'/>
-                {
-                    status.code === "PAS1003" &&
-                    <Link
-                    href={`/project?projectId=${project_id}`}
-                    className="hidden rounded-md  px-2.5 py-1.5 text-sm font-medium text-white
-                     shadow-sm bg-primary sm:block"
-                >
-                    프로젝트 가기<span className="sr-only">, {project_name}</span>
-                </Link>
-                }
             </div>
         </div>
     );

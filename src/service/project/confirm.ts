@@ -22,7 +22,11 @@ export async function confirmTaskNotice(alertId: string | bigint, scoreTypeId: P
  * @param confirmResult
  */
 export async function confirmRecruitNotice(projectId: string | bigint, alertId: string | bigint, confirmResult: boolean) {
-    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/recruit', {projectId, alertId, confirmResult});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/recruit', {
+        projectId,
+        alertId,
+        confirmResult
+    });
     if (confirmRes.result === 'success') {
         return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
@@ -54,11 +58,12 @@ export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdr
 
 /**
  * 크루 강제탈퇴 신청 알림 confirm
- * @param projectMemberId
+ * @param projectId
+ * @param targetUserId
  * @param alertId
  */
-export async function confirmCrewForceWithdrawNotice(projectMemberId: string | bigint, alertId: string | bigint){
-    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/force-withdrawal', {projectMemberId});
+export async function confirmCrewForceWithdrawNotice(projectId: string | bigint, targetUserId: string | bigint, alertId: string | bigint) {
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/force-withdrawal', {projectId, targetUserId});
     if (confirmRes.result === 'success') {
         return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {

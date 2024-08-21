@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useRef} from 'react';
-import {useSuspenseInfiniteQuery} from "@tanstack/react-query";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import {PageResponseBody} from "@/utils/type";
 import ParticipateNotice from "@/components/main/myProjectPost/ParticipateNotice/ParticipateNotice";
 import Loader from "@/components/ui/Loader";
@@ -23,14 +23,14 @@ function ParticipateNoticeModalContents() {
         return res;
     }
 
-    const {data, fetchNextPage} = useSuspenseInfiniteQuery<PageResponseBody<ProjectApplyDto[]>>({
+    const {data, fetchNextPage, isPending} = useInfiniteQuery<PageResponseBody<ProjectApplyDto[]>>({
         queryKey: ['userProjectNotice'],
         queryFn: ({pageParam}) => getUserProjectNotice(pageParam as number, ITEM_COUNT.LIST_SM),
         staleTime: 0,
         initialPageParam: 0,
         getNextPageParam: (lastPage, allPages, lastPageParam) => {
             const nextPage = parseInt(lastPageParam as string, 10) + 1;
-            if (!lastPage.data || nextPage * ITEM_COUNT.LIST_SM > lastPage.data.totalPages) return false;
+            if (!lastPage.data || nextPage * ITEM_COUNT.LIST_SM > lastPage.data.totalPages) return null;
             return nextPage;
         }
     });
@@ -48,17 +48,23 @@ function ParticipateNoticeModalContents() {
         onIntersectHandler: onIntersect
     });
 
+    if (isPending) return (
+        <div className='flex mobile:w-[350px] tablet:w-[480px] min-h-[300px]'>
+            <Loader size='md'/>
+        </div>
+    )
+
     const noticeList: ProjectApplyDto[] = [];
-    data.pages.forEach((v) => {
+    data!.pages.forEach((v) => {
         if (v.data) {
             const itemsPerPage = v.data.content;
             itemsPerPage.forEach(v => noticeList.push(v))
         }
     });
 
-    const totalItemCount = data.pages[0].data ? data.pages[0].data.totalPages : 0;
+    const totalItemCount = data!.pages[0].data ? data!.pages[0].data.totalPages : 0;
     const totalPageCount = Math.ceil(totalItemCount / ITEM_COUNT.LIST_SM);
-    const isEndPage = data.pageParams.length === totalPageCount;
+    const isEndPage = data!.pageParams.length >= totalPageCount;
 
     return (
         <ul
@@ -92,7 +98,7 @@ function ParticipateNoticeModalContents() {
                             <div>데이터가 더 이상 존재하지 않습니다.</div>
                         </li>
                         :
-                        <li ref={bottomRef} className='flex items-center w-full h-[80px]'>
+                        <li ref={bottomRef} className='border border-red flex items-center w-full h-[80px]'>
                             <Loader size='sm'/>
                         </li>
                 )

@@ -1,18 +1,13 @@
 import {DataId, Position} from "@/utils/type";
-import {PROJECT_NOTICE, PROJECT_NOTICE_TYPES, TaskPointOptions} from "@/app/project/@notice/_utils/constant";
-
-/**
- * 프로젝트 알림
- */
-export type ProjectNoticeKey = keyof typeof PROJECT_NOTICE;
-export type ProjectNoticeTypesKey = keyof typeof PROJECT_NOTICE_TYPES;
+import {TaskPointOptions} from "@/app/project/@notice/_utils/constant";
+import {AlertMenu} from "@/service/project/alert/type";
 
 
 /**
  * 프로젝트 알림 기본데이터
  */
 export type Notice = {
-    type: ProjectNoticeTypesKey;
+    type: AlertMenu;
     alertId: DataId;
     checkUserId: DataId;
     sendUserId: DataId;
@@ -39,6 +34,4 @@ export type TaskScore = {
 export type RecruitPermit = {
     isPermit: boolean | null
 }
-
-
 

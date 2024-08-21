@@ -4,6 +4,7 @@ import {PointTypeKey} from "@/app/project/@notice/_utils/type";
 import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_utils/type";
 import {ErrorHandle} from "@/app/api/_interceptor/error/utils";
 import {ProjectApplyStatusCode} from "@/service/project/apply";
+import {VoteStatusCode} from "@/service/project/alert/type";
 
 export type DropDownItem = {
     name: string;
@@ -232,12 +233,13 @@ export interface Project {
     updateDate: string;
     status: string;
     crewNumber: number;
-    authMap: ProjectTaskAuth
+    authMap: ProjectAuthMap
 }
 
-export type ProjectTaskAuth = {
+export type ProjectAuthMap = {
     milestoneAuth: boolean;
     workAuth: boolean;
+    voteAuth: boolean;
 }
 
 export interface ProjectInfo extends Project {
@@ -354,4 +356,4 @@ export type ConstantDto<T> = {
     name: string;
 }
 
-export type StatusCode = ProjectApplyStatusCode | string;
+export type StatusCode = ProjectApplyStatusCode | VoteStatusCode | string;

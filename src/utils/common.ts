@@ -77,6 +77,11 @@ export function makeBadgeColor(color: string) {
             textColor = "text-purple-700";
             ringColor = "ring-purple-700/10";
             break;
+        case "slate":
+            bgColor = "bg-slate-50";
+            textColor = "text-slate-600";
+            ringColor = "ring-slate-700/20";
+            break;
         default:
             bgColor = "bg-red-50";
             textColor = "text-red-700";

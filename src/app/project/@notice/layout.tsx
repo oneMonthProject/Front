@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import NoticeNavTab from "@/components/project/notice/NoticeNavTab";
+import NoticeNavTab from "@/components/project/alert/NoticeNavTab";
 
 function NoticeLayout({children}:{children:ReactNode}) {
     return (

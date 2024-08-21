@@ -3,6 +3,7 @@ import ProfileSection from "@/components/project/crews/detail/ProfileSection";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
 import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
 import BackNav from "@/components/ui/BackNav";
+import FwCreateModal from "@/components/project/crews/detail/modal/FWCreateModal";
 
 function CrewDetailPage({
                             searchParams: {
@@ -29,6 +30,7 @@ function CrewDetailPage({
                 </div>
                 <CrewTaskHistory projectMemberId={projectMemberId}/>
             </section>
+            <FwCreateModal/>
         </>
     );
 }

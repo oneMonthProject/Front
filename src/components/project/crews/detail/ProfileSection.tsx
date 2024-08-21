@@ -4,24 +4,27 @@ import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import {useQuery} from "@tanstack/react-query";
-import {ProjectMemberProfile, ResponseBody} from "@/utils/type";
+import {ProjectAuthMap, ProjectMemberProfile, ResponseBody} from "@/utils/type";
 import {getCrewDetail} from "@/service/project/crews";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
 import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detail/ProfileSectionSkeleton";
+import {useRecoilValueLoadable} from "recoil";
+import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import useProjectMember from "@/hooks/useProjectMember";
+import {numStrToBigInt} from "@/utils/common";
+import {getCookie} from "cookies-next";
+import CrewFwButton from "@/components/project/crews/detail/CrewFWButton";
 
 
-function ProfileSection({projectMemberId}:{projectMemberId:string}) {
-    const {data, isFetching} = useQuery<ResponseBody<ProjectMemberProfile>, Error>({
-        queryKey: ['crewDetail', projectMemberId],
-        queryFn: () => getCrewDetail(projectMemberId),
-        staleTime: 0,
-        // retry: false
-    });
+function ProfileSection({projectMemberId}: { projectMemberId: string }) {
+    const {projectMemberInfo, isFetching} = useProjectMember(projectMemberId);
 
-    if(isFetching) return <ProfileSectionSkeleton/>;
+    if (isFetching) return <ProfileSectionSkeleton/>;
 
-    const {user, position, status, projectMemberAuth} = data!.data!;
+    const {user, position, status, projectMemberAuth} = projectMemberInfo!;
+
+    const isMemberCurrentUser = getCookie('user_id') === user.userId.toString();
 
     return (
         <div
@@ -33,7 +36,12 @@ function ProfileSection({projectMemberId}:{projectMemberId:string}) {
                         {user.nickname}
                     </li>
                 </ul>
-                <CrewOutButton projectMemberInfo={data!.data!}/>
+                {
+                    isMemberCurrentUser
+                        ? <CrewOutButton projectMemberInfo={projectMemberInfo!}/>
+                        : <CrewFwButton projectMemberInfo={projectMemberInfo!}/>
+                }
+
             </section>
             <section
                 className='mobile:w-full tablet:h-[200px] mobile:h-[180px] flex flex-col flex-wrap justify-between p-6 mobile:p-4 bg-ground100 rounded-lg'>

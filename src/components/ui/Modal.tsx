@@ -73,7 +73,7 @@ function Modal({isOpen, close, title, onClickConfirmHandler, children, isUpdatin
                             {/* Start modal header */}
                             <div
                                 className='pt-4 px-4 pb-[.25rem] relative w-full flex items-center border-b border-grey200'>
-                                <h3 className='mobile:text-2xl tablet:text-[1.75rem] text-black100 font-semibold w-full'>
+                                <h3 className='mobile:text-2xl tablet:text-[1.75rem] text-black100 font-semibold max-w-[90%]'>
                                     {title}
                                 </h3>
                                 <div className="absolute top-3 right-3">

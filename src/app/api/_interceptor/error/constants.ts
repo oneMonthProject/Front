@@ -31,6 +31,10 @@ export const ResponseNotOKMessage = {
     // FORBIDDEN
     ACCESS_DENIED: {text: '요청한 정보에 대한 접근 권한이 없습니다.', status: HttpStatus.FORBIDDEN},
     NO_PERMISSION_TO_EDIT_OR_DELETE: {text: '요청한 정보를 수정/삭제할 권한이 없습니다.', status: HttpStatus.FORBIDDEN},
+    PARTICIPATE_NOT_ALLOWED: {text: '강제 탈퇴 멤버는 프로젝트에 참가할 수 없습니다.', status: HttpStatus.FORBIDDEN},
+    VOTE_NOT_ALLOWED: {text: '투표 권한이 없습니다', status: HttpStatus.FORBIDDEN},
+    VOTE_NOT_ALLOWED_YET: {text: '프로젝트 참여 3일 후 부터 투표에 참가할 수 있습니다.', status: HttpStatus.FORBIDDEN},
+    VOTE_TARGET_NOT_ALLOWED: {text: '투표 대상자는 투표에 참여할 수 없습니다.', status: HttpStatus.FORBIDDEN},
 
     // NOT_FOUND
     NOT_FOUND_USER: {text: '존재하지 않는 사용자 입니다.', status: HttpStatus.NOT_FOUND},
@@ -41,9 +45,14 @@ export const ResponseNotOKMessage = {
     IN_USE_EMAIL: {text: '이미 존재하는 이메일주소 입니다.', status: HttpStatus.CONFLICT},
     IN_USE_NICKNAME: {text: '이미 존재하는 닉네임 입니다.', status: HttpStatus.CONFLICT},
     IN_USE_OAUTH_USER: {text: '이미 존재하는 사용자 입니다.', status: HttpStatus.CONFLICT},
+    PARTICIPATE_DUPLICATE: {text: '이미 지원중인 프로젝트 입니다.', status: HttpStatus.CONFLICT},
+    PARTICIPATE_EXIST: {text: '이미 참여중인 프로젝트 입니다.', status: HttpStatus.CONFLICT},
+    VOTE_DUPLICATE: {text: '이미 투표를 완료했습니다.', status: HttpStatus.CONFLICT},
 
     // INTERNAL_SERVER_ERROR
     INTERNAL_SERVER_ERROR: {text: '프로세스 수행 중 오류가 발생했습니다.', status: HttpStatus.INTERNAL_SERVER_ERROR},
+    VOTE_EXIST_FW: {text: '강제탈퇴 투표는 동시에 1개 이상 진행할 수 없습니다.', status: HttpStatus.INTERNAL_SERVER_ERROR},
+    VOTE_INSUFF_VOTERS: {text: '강제탈퇴 투표는 탈퇴 대상자를 제외한 최소 2명의 투표자가 필요합니다.', status: HttpStatus.INTERNAL_SERVER_ERROR}
 } as const;
 export type ResponseNotOKCode = keyof typeof ResponseNotOKMessage;
 export type CustomInterceptorErrorCode = GatewayErrorCode | ResponseNotOKCode;

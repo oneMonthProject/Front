@@ -1,6 +1,8 @@
 'use client';
 
 import {MutableRefObject, useEffect} from "react";
+import {useRecoilState} from "recoil";
+import {userNoticeModalStateStore} from "@/store/UserNoticeModalStateStore";
 
 interface IntersectObserverProps {
     target: MutableRefObject<HTMLElement | null>
@@ -21,7 +23,6 @@ export default function useIntersectionObserver(
 
     useEffect(() => {
         let observer: IntersectionObserver;
-
         if ((target && target.current) && (root && root.current)) {
             observer = new IntersectionObserver(onIntersectHandler, {
                 root: root.current, rootMargin, threshold
@@ -29,6 +30,7 @@ export default function useIntersectionObserver(
 
             observer.observe(target.current);
         }
+
     }, [root, onIntersectHandler, target, rootMargin, threshold])
 
 }

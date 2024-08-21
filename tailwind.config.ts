@@ -70,6 +70,31 @@ export default {
                         maxWidth: "1200px",
                     },
                     margin: "0 auto",
+                },
+                '.alertList': {
+                    [`@media (min-width:${tablet})`]: {
+                        height: "300px",
+                    },
+                    '& > ul': {
+                        [`@media (max-width:${mobile.max})`]: {
+                            maxHeight: "23rem",
+                            overflowY: "auto"
+                        },
+                        '& > * + *': {
+                            'border-top-width': '1px',
+                            'border-top-style': 'solid',
+                            'border-top-color': '#e8e8e8'
+                        }
+                    }
+                },
+                ".alertModal_contents":{
+                    [`@media (min-width:${tablet})`]: {
+                        width: "450px",
+                        minHeight: "300px"
+                    },
+                    overflowY:"visible",
+                    flexDirection: 'column',
+                    margin:'0 auto'
                 }
             });
             addComponents({
@@ -127,7 +152,7 @@ export default {
                         height: '21px',
                         'stroke-dasharray': '16.1 86.12',
                         'stroke-dashoffset': '102.22'
-                    }
+                    },
 
                 },
 

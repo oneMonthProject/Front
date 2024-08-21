@@ -1,7 +1,8 @@
 import {atom} from "recoil";
-import {ProjectNoticeKey} from "@/app/project/@notice/_utils/type";
+import {AlertType} from "@/service/project/alert/constant";
+import {AlertMenu} from "@/service/project/alert/type";
 
-export const projectNoticeActiveMenuStateStore = atom<ProjectNoticeKey>({
-    key:'projectNoticeActiveMenuState',
-    default:'ALL'
+export const projectNoticeActiveMenuStateStore = atom<AlertMenu>({
+    key: 'projectNoticeActiveMenuState',
+    default: AlertType.PRA3001
 });

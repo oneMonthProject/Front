@@ -34,7 +34,18 @@ export const errorHandleMethod = (errorCode: string): ErrorHandle => {
         if (errorCode === 'AUTHENTICATION_FAIL' ||
             errorCode === 'IN_USE_NICKNAME' ||
             errorCode === 'IN_USE_EMAIL' ||
-            errorCode === 'IN_USE_OAUTH_USER') {
+            errorCode === 'IN_USE_OAUTH_USER'||
+            errorCode === 'PARTICIPATE_DUPLICATE' ||
+            errorCode === 'PARTICIPATE_NOT_ALLOWED' ||
+            errorCode === "PARTICIPATE_EXIST" ||
+            errorCode === "VOTE_EXIST_FW" ||
+            errorCode === "VOTE_INSUFF_VOTERS" ||
+            errorCode === "VOTE_DUPLICATE" ||
+            errorCode === "VOTE_NOT_ALLOWED" ||
+            errorCode === "VOTE_TARGET_NOT_ALLOWED" ||
+            errorCode === "VOTE_NOT_ALLOWED_YET"
+
+        ) {
             return 'snackbar';
         }
     }

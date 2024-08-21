@@ -34,3 +34,12 @@ export type ProjectApplyDto = {
 export async function getMyProjectApplies(pageIndex: number, itemCount: number): Promise<PageResponseBody<ProjectApplyDto[]>> {
     return await requestWithAuth('GET', `/api/project/apply?pageIndex=${pageIndex}&itemCount=${itemCount}`);
 }
+
+//  const getUserProjectNotice = async (pageIndex: number, ITEM_COUNT: number) => {
+//         const res = await getMyProjectApplies(pageIndex, ITEM_COUNT);
+//         if (res.result !== 'success') {
+//             throw new Error('프로젝트 지원 현황 조회에 실패했습니다.');
+//         }
+//
+//         return res;
+//     }

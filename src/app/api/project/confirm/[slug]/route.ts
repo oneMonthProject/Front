@@ -31,7 +31,7 @@ export async function POST(req: NextRequest, {params}: { params: { slug: string 
             res = await authApi(`/api/projectmember/withdraw/confirm`, {method, body: JSONReplaceBigInt(reqData)});
             break;
         case 'force-withdrawal':
-            res = await authApi(`/api/projectmember/${JSONReplaceBigInt(reqData.projectMemberId)}/force-withdrawal/confirm`);
+            res = await authApi(`/api/projectmember/${JSONReplaceBigInt(reqData.projectId)}/${JSONReplaceBigInt(reqData.targetUserId)}/force-withdrawal/confirm`, {method});
             break;
         default:
             throw new Error(`Unknown Notice Confirm Api: /api/project/confirm/${params.slug}`);

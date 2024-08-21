@@ -16,7 +16,7 @@ export default function useJoinProject(){
         onSuccess: async (data) => {
             const { message, result } = data;
             if (isEqual(result, "success")) {
-                setSuccessSnackbar(message);
+                setSuccessSnackbar("프로젝트에 지원했습니다.");
                 resetModalState();
             } else {
                 setErrorSnackbar(message);

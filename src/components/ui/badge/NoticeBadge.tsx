@@ -1,18 +1,32 @@
 import React from 'react';
 import {makeBadgeColor, makeBadgeSize} from "@/utils/common";
-import {PROJECT_NOTICE, PROJECT_NOTICE_TYPES} from "@/app/project/@notice/_utils/constant";
-import {ProjectNoticeTypesKey} from "@/app/project/@notice/_utils/type";
+import {AlertMenu} from "@/service/project/alert/type";
 
 interface NoticeBadgeProps {
     size: string;
-    noticeType: ProjectNoticeTypesKey
+    noticeType: AlertMenu
 }
 
 function NoticeBadge({size = '', noticeType}: NoticeBadgeProps) {
     const {textSize, px, py} = makeBadgeSize(size);
 
-    const noticeGroupName = PROJECT_NOTICE_TYPES[noticeType]['group'];
-    const color = PROJECT_NOTICE[noticeGroupName].color;
+    let color;
+    switch (noticeType.name) {
+        case "업무":
+            color = "green";
+            break;
+        case "크루":
+            color = "blue";
+            break;
+        case "강제탈퇴":
+            color = "red";
+            break;
+        case "모집":
+            color = "yellow";
+            break;
+        default:
+            color = "yellow";
+    }
 
     const {bgColor, textColor, ringColor} = makeBadgeColor(color);
 
@@ -21,7 +35,7 @@ function NoticeBadge({size = '', noticeType}: NoticeBadgeProps) {
       <span
           className={`inline-flex items-center rounded-full ${bgColor} ${px} ${py} ${textSize} font-medium ${textColor} ring-1 ring-inset ${ringColor}`}
       >
-        {noticeGroupName}
+        {noticeType.name}
       </span>
         </>
     );

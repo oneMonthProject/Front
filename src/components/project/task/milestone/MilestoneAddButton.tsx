@@ -4,7 +4,7 @@ import React from 'react';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
-import {MilestoneInfo, ProjectTaskAuth, ResponseBody} from "@/utils/type";
+import {MilestoneInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
 import {useRecoilValueLoadable, useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
@@ -19,7 +19,7 @@ function MilestoneAddButton({projectId, userId}: { projectId: string, userId: st
     const {
         state: authState,
         contents
-    } = useRecoilValueLoadable<ResponseBody<ProjectTaskAuth | null>>(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
+    } = useRecoilValueLoadable<ResponseBody<ProjectAuthMap | null>>(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
 
     if (authState === 'loading' || authState === "hasError") return <MilestoneAddButtonSkeleton/>;
 

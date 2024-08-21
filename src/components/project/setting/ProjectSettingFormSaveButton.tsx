@@ -3,7 +3,7 @@
 import React from 'react';
 import Button from "@/components/ui/Button";
 import {ProjectInfoUpdateReq, ProjectSettingForm} from "@/app/project/@setting/_utils/type";
-import {ProjectTaskAuth, ResponseBody} from "@/utils/type";
+import {ProjectAuthMap, ResponseBody} from "@/utils/type";
 import {updateProjectInfo as updateProjectInfoAPI} from "@/service/project/project";
 import {useRecoilValue, useRecoilValueLoadable} from "recoil";
 import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
@@ -12,7 +12,7 @@ import useSnackbar from "@/hooks/useSnackbar";
 import {useRouter} from "next/navigation";
 import {userStateStore} from "@/store/user/UserStateStore";
 
-const updateProjectInfo = async (projectSettingForm: ProjectSettingForm, authMap: ProjectTaskAuth, callbackFn: (res: ResponseBody<null>) => void) => {
+const updateProjectInfo = async (projectSettingForm: ProjectSettingForm, authMap: ProjectAuthMap, callbackFn: (res: ResponseBody<null>) => void) => {
     if (confirm("프로젝트 정보를 수정하시겠습니까?")) {
         const projectInfo: ProjectInfoUpdateReq = {
             ...projectSettingForm,
