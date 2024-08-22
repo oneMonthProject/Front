@@ -30,6 +30,12 @@ function Page(
                     <StyledLink href='/'>홈으로</StyledLink>
                 </Navigator>
             }
+            {
+                status === HttpStatus.FORBIDDEN &&
+                <Navigator>
+                    <StyledLink href='/'>홈으로</StyledLink>
+                </Navigator>
+            }
         </ErrorPageContainer>
     );
 }

@@ -34,9 +34,7 @@ export const projectInfoState = atomFamily<ResponseBody<ProjectInfo | null>, str
     default: selectorFamily<ResponseBody<ProjectInfo | null>, string | null>({
         key: 'projectInfoSelector',
         get: (param: string | null) => ({get}) => {
-            const data = get(projectInfoQuery(param));
-            console.log("data:::: ",data);
-            return data;
+            return get(projectInfoQuery(param));
         }
     })
 });

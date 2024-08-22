@@ -35,6 +35,7 @@ export const ResponseNotOKMessage = {
     VOTE_NOT_ALLOWED: {text: '투표 권한이 없습니다', status: HttpStatus.FORBIDDEN},
     VOTE_NOT_ALLOWED_YET: {text: '프로젝트 참여 3일 후 부터 투표에 참가할 수 있습니다.', status: HttpStatus.FORBIDDEN},
     VOTE_TARGET_NOT_ALLOWED: {text: '투표 대상자는 투표에 참여할 수 없습니다.', status: HttpStatus.FORBIDDEN},
+    ACCESS_NOT_ALLOWED: {text: '프로젝트 접근 권한이 없습니다', status: HttpStatus.FORBIDDEN},
 
     // NOT_FOUND
     NOT_FOUND_USER: {text: '존재하지 않는 사용자 입니다.', status: HttpStatus.NOT_FOUND},

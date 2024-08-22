@@ -49,6 +49,14 @@ export type VAlertFWData = {
     createDate: string;
 }
 
+export type AlertCrewData = {
+    alertId: bigint;
+    projectId: bigint;
+    aleretType: typeof AlertType.PRA2001;
+    contents: string;
+    createDate: string;
+}
+
 export type VAlertFWDetailData = VoteData & {
     reason: FWReasonType;
     fwMemberAuth: {
@@ -66,6 +74,6 @@ export type VAlertFWDetailData = VoteData & {
     fwUserNickname: string;
 }
 
-export type AlertData = Notice | VAlertRecruitData | VAlertFWData;
+export type AlertData = Notice | VAlertRecruitData | VAlertFWData | AlertCrewData;
 export type AlertMenuCode = Exclude<keyof typeof AlertType, "PRA1001">;
 export type AlertMenu = typeof AlertType[AlertMenuCode];

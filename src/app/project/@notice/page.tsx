@@ -9,6 +9,7 @@ import VAlertRecruitList from "@/components/project/alert/vote/recruit/list/VAle
 import VAlertFWList from "@/components/project/alert/vote/fwithdraw/list/VAlertFWList";
 import VAlertFwModal from "@/components/project/alert/vote/fwithdraw/modal/VAlertFWModal";
 import VAlertRecruitModal from "@/components/project/alert/vote/recruit/modal/VAlertRecruitModal";
+import AlertCrewList from "@/components/project/alert/crew/list/AlertCrewList";
 
 
 function NoticePage() {
@@ -19,6 +20,7 @@ function NoticePage() {
             {activeNoticeMenu.name === "업무" && <TaskAlertList/>}
             {activeNoticeMenu.name === "모집" && <VAlertRecruitList/>}
             {activeNoticeMenu.name === "강제탈퇴" && <VAlertFWList/>}
+            {activeNoticeMenu.name === "크루" && <AlertCrewList/>}
             <NoticeModal/>
             <VAlertFwModal/>
             <VAlertRecruitModal/>

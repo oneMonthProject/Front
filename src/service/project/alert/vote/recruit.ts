@@ -9,7 +9,7 @@ import {ResponseBody} from "@/utils/type";
  * @param applyId
  * @param voteId
  */
-export const getVAlertRecruitDetail = async(alertId: bigint, applyId: bigint, voteId:bigint):Promise<ResponseBody<VAlertRecruitDetailData>> => {
+export const getVAlertRecruitDetail = async (alertId: bigint, applyId: bigint, voteId: bigint): Promise<ResponseBody<VAlertRecruitDetailData>> => {
     const reqUrl = `/api/project/alert/vote/recruit/detail?alertId=${alertId}&applyId=${applyId}&voteId=${voteId}`;
     return await requestWithAuth("GET", reqUrl);
 }
@@ -36,5 +36,7 @@ export async function getProjectNoticeByMenu(
             return await requestWithAuth(method, '/api/project/alert/vote/recruit' + reqParam);
         case "강제탈퇴":
             return await requestWithAuth(method, '/api/project/alert/vote/fwithdraw' + reqParam);
+        case "크루":
+            return await requestWithAuth(method, '/api/project/alert/crew' + reqParam);
     }
 }
