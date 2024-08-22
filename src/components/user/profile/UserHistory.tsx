@@ -49,13 +49,13 @@ const getIconByStatus = (status: ProjectHistoryStatus) => {
 const getHistoryStatusText = (status: ProjectHistoryStatus) => {
     switch (status) {
         case "PARTICIPATING":
-            return "프로젝트에 참여 하였습니다."
+            return "프로젝트에 참여했습니다."
         case "FINISH":
-            return "프로젝트를 완료 하였습니다."
+            return "프로젝트를 완료했습니다."
         case "WITHDRAWAL":
-            return "프로젝트를 탈퇴 하셨습니다."
+            return "프로젝트를 탈퇴했습니다."
         case "FORCED_WITHDRAWAL":
-            return "프로젝트에서 강제탈퇴 당하셨습니다."
+            return "프로젝트를 강제탈퇴했습니다."
         default:
             return ""
     }
