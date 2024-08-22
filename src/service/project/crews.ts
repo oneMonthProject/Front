@@ -26,3 +26,12 @@ export async function getCrewTaskHistory(projectMemberId: string | bigint, pageI
         `/api/project/crewTaskHistory?projectMemberId=${projectMemberId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );
 }
+
+/**
+ * 프로젝트 탈퇴
+ * @param projectId
+ * @param wMemberId
+ */
+export async function withdrawProject(projectId: bigint, wMemberId: bigint) {
+    return await requestWithAuth('POST', `/api/project/crews/withdraw`, {projectId, wMemberId});
+}

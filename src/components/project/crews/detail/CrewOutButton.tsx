@@ -2,24 +2,27 @@
 
 import React from 'react';
 import Button from "@/components/ui/Button";
-import {createProjectCrewOutNotice} from "@/service/project/notice";
 import {useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 import {ProjectMemberProfile} from "@/utils/type";
 import {useQueryClient} from "@tanstack/react-query";
+import {withdrawProject} from "@/service/project/crews";
+import {useRouter} from "next/navigation";
 
 function CrewOutButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberProfile }) {
-    const {projectMemberAuth, projectMemberId} = projectMemberInfo;
+    const {projectMemberAuth, projectMemberId, projectId} = projectMemberInfo;
     const setSnackBar = useSetRecoilState(snackbarState);
+    const router = useRouter();
 
     const queryClient = useQueryClient();
 
     const onClickCrewOutHandler = async () => {
-        if (confirm("프로젝트 탈퇴 신청을 하시겠습니까?")) {
-            const res = await createProjectCrewOutNotice(projectMemberId);
+        if (confirm("프로젝트를 탈퇴하시겠습니까?")) {
+            const res = await withdrawProject(projectId, projectMemberId);
             if (res.result === 'success') {
                 await queryClient.invalidateQueries({queryKey: ['noticeList']});
-                setSnackBar({show: true, type: 'SUCCESS', content: '프로젝트 탈퇴 신청 알림이 발송되었습니다.'});
+                setSnackBar({show: true, type: 'SUCCESS', content: '프로젝트를 탈퇴했습니다.'});
+                router.replace("/");
             } else {
                 setSnackBar({show: true, type: 'ERROR', content: res.message});
             }
