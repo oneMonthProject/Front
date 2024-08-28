@@ -1,18 +1,18 @@
 'use client';
 import {useRecoilState} from "recoil";
 import React from "react";
-import {projectNoticeActiveMenuStateStore} from "@/store/project/notice/ProjectNoticeNavTabStateStore";
+import {projectNoticeActiveMenuStateStore} from "@/store/project/alert/AlertNavTabStateStore";
 import Select from "@/components/ui/selector/Select";
 import {classNames} from "@/utils/common";
 import {AlertType} from "@/service/project/alert/constant";
 import {AlertMenu} from "@/service/project/alert/type";
 
 
-export default function NoticeNavTab() {
+export default function AlertNavTab() {
     const [{code:activeCode, name:activeName}, setActiveNoticeMenu] = useRecoilState(projectNoticeActiveMenuStateStore);
 
-    const noticeMenuList = Object.values(AlertType)
-        .filter((v) => v.code !== "PRA1001")
+    const alertNavTabList = Object.values(AlertType)
+        .filter((v) => v.code !== "PRA1001" && v.code !== "PRA3001")
         .reverse();
 
     return (
@@ -21,7 +21,7 @@ export default function NoticeNavTab() {
             <ul role="list"
                 className="mobile:hidden tablet:-mx-2 tablet:space-y-1">
                 {
-                    noticeMenuList.map((v) =>
+                    alertNavTabList.map((v) =>
                         <li key={v.code}>
                             <div
                                 className={classNames(v.code === activeCode ? 'bg-gray-50 text-primary' : 'text-gray-700 hover:text-primary hover:bg-gray-50',
@@ -37,7 +37,7 @@ export default function NoticeNavTab() {
             </ul>
             <div className='mobile:block hidden'>
                 <Select
-                    items={noticeMenuList
+                    items={alertNavTabList
                         .map((v) => ({
                             name: v.name,
                             value: v.code

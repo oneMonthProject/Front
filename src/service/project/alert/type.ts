@@ -75,5 +75,5 @@ export type VAlertFWDetailData = VoteData & {
 }
 
 export type AlertData = Notice | VAlertRecruitData | VAlertFWData | AlertCrewData;
-export type AlertMenuCode = Exclude<keyof typeof AlertType, "PRA1001">;
+export type AlertMenuCode = Exclude<keyof typeof AlertType, "PRA1001" | "PRA3001">;
 export type AlertMenu = typeof AlertType[AlertMenuCode];
