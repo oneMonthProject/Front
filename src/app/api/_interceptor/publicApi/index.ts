@@ -4,7 +4,7 @@ import {getErrorCodeFromResponse} from "@/app/api/_interceptor/error/utils";
 import {reqPLogger, resPLogger} from "@/app/api/_interceptor/utils/logger";
 import {baseURL} from "@/app/api/_interceptor/utils/baseURL";
 
-const index = returnFetchPublicWrapper({
+const publicApi = returnFetchPublicWrapper({
     baseUrl: baseURL,
     interceptors: {
         request: async (requestArgs) => {
@@ -24,4 +24,4 @@ const index = returnFetchPublicWrapper({
     },
 });
 
-export default index;
+export default publicApi;

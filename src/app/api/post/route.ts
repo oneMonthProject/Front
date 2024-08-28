@@ -1,5 +1,5 @@
 import authApi from "@/app/api/_interceptor/authApi";
-import index from "@/app/api/_interceptor/publicApi";
+import publicApi from "@/app/api/_interceptor/publicApi";
 import {NextRequest} from "next/server";
 import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 import {JSONReplaceBigInt} from "@/utils/common";
@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const postId = searchParams.get("postId");
 
-  const res = await index(`/api/board/${postId}/public`);
+  const res = await publicApi(`/api/board/${postId}/public`);
 
   return routeResponse(req, res);
 }
