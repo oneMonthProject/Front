@@ -4,7 +4,7 @@ import {useRecoilState} from "recoil";
 import Input from '@/components/ui/form/Input';
 import CalendarInput from '@/components/ui/form/CalendarInput';
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import MilestoneStatusSelector from "@/components/project/task/milestone/MilestoneStatusSelector";
+import MilestoneStatusSelector from "@/components/project/work/milestone/MilestoneStatusSelector";
 
 
 function MilestoneModalContent() {

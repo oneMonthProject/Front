@@ -4,8 +4,8 @@ import React, {useRef, useState} from 'react';
 import {useRecoilState, useSetRecoilState} from "recoil";
 import {taskContentDetailFieldSelector, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
 import TaskContentCancelDeleteButton
-    from "@/components/project/task/task/TaskContentDetail/TaskContentCancelDeleteButton";
-import TaskContentEditFinishButton from "@/components/project/task/task/TaskContentDetail/TaskContentEditFinishButton";
+    from "@/components/project/work/work/TaskContentDetail/TaskContentCancelDeleteButton";
+import TaskContentEditFinishButton from "@/components/project/work/work/TaskContentDetail/TaskContentEditFinishButton";
 import {TaskContentDetails} from "@/app/project/@task/_utils/type";
 
 

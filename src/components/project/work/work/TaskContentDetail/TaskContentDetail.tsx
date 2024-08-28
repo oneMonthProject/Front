@@ -2,13 +2,13 @@
 
 import React, {useState} from 'react';
 import {RiAddLine} from "@react-icons/all-files/ri/RiAddLine";
-import TaskContentDetailAddInput from "@/components/project/task/task/TaskContentDetail/TaskContentDetailAddInput";
-import TaskContentDetailInput from "@/components/project/task/task/TaskContentDetail/TaskContentDetailInput";
+import TaskContentDetailAddInput from "@/components/project/work/work/TaskContentDetail/TaskContentDetailAddInput";
+import TaskContentDetailInput from "@/components/project/work/work/TaskContentDetail/TaskContentDetailInput";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
 import _ from "lodash";
 import ToggleTaskContentDetailAddInput
-    from "@/components/project/task/task/TaskContentDetail/ToggleTaskContentDetailAddInput";
+    from "@/components/project/work/work/TaskContentDetail/ToggleTaskContentDetailAddInput";
 
 function TaskContentDetail() {
     const taskContentDetailMap = useRecoilValue(taskContentDetailSelector);

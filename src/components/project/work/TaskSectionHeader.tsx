@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import TaskAddButton from "@/components/project/task/task/TaskAddButton";
+import TaskAddButton from "@/components/project/work/work/TaskAddButton";
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
 import {MilestoneInfo} from "@/utils/type";
 import {useRecoilValue} from "recoil";

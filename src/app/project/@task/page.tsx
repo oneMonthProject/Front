@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import MilestoneModal from '@/components/project/task/milestone/MilestoneModal';
-import TaskModal from '@/components/project/task/task/TaskModal';
-import Milestones from "@/components/project/task/milestone/Milestones";
-import MilestoneAddButton from "@/components/project/task/milestone/MilestoneAddButton";
-import TaskSection from "@/components/project/task/task/TaskSection";
+import MilestoneModal from '@/components/project/work/milestone/MilestoneModal';
+import TaskModal from '@/components/project/work/work/TaskModal';
+import Milestones from "@/components/project/work/milestone/Milestones";
+import MilestoneAddButton from "@/components/project/work/milestone/MilestoneAddButton";
+import TaskSection from "@/components/project/work/work/TaskSection";
 
 function TaskPage({searchParams: {projectId, userId}}: { searchParams: { projectId: string, userId: string } }) {
 

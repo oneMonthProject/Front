@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import Tasks from "@/components/project/task/task/Tasks";
-import TaskSectionHeader from "@/components/project/task/TaskSectionHeader";
+import Tasks from "@/components/project/work/work/Tasks";
+import TaskSectionHeader from "@/components/project/work/TaskSectionHeader";
 import {useMilestones} from "@/hooks/useMilestones";
 import {TaskSectionSkeleton} from "@/components/ui/skeleton/project/task";
 

@@ -1,9 +1,10 @@
 'use client';
 import React from 'react';
 import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
-import TaskCardMenu from "@/components/project/task/task/TaskCardMenu";
+import TaskCardMenu from "@/components/project/work/work/TaskCardMenu";
 import {useMediaQuery} from "react-responsive";
 import {TaskItem} from "@/app/project/@task/_utils/type";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 interface TaskCardProps {
     item: TaskItem;
@@ -29,9 +30,12 @@ function TaskCard({item}: TaskCardProps) {
             <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg">
                 <div className="w-full flex items-center px-4 py-3 mobile:px-6 bg-ground100">
                     <div className='pc:text-[1.3rem] font-semibold text-greyDarkBlue'>{content}</div>
-                    <div className='ml-auto self-border border-black'>
-                        <TaskCardMenu taskItem={item}/>
-                    </div>
+                    {
+                        progressStatus !== TASK_STATUS.PS003.name &&
+                        <div className='ml-auto self-border border-black'>
+                            <TaskCardMenu taskItem={item}/>
+                        </div>
+                    }
                 </div>
                 <div className="w-[330px] flex flex-col space-y-5 px-4 py-5 mobile:p-6">
                     <div className='flex items-center'>

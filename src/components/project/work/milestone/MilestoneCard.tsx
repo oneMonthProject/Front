@@ -1,7 +1,7 @@
 'use client';
 import React, {MouseEvent} from 'react';
 import {MilestoneInfo} from "@/utils/type";
-import MilestoneCardMenu from "@/components/project/task/milestone/MilestoneCardMenu";
+import MilestoneCardMenu from "@/components/project/work/milestone/MilestoneCardMenu";
 import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,

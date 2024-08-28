@@ -6,11 +6,11 @@ import {taskModalState} from "@/store/project/task/TaskStateStore";
 import {createPortal} from "react-dom";
 import useUpdateTask from "@/hooks/useUpdateTask";
 import useCreateTask from "@/hooks/useCreateTask";
-import TaskContent from "@/components/project/task/task/form/TaskContent";
-import TaskProgressStatus from "@/components/project/task/task/form/TaskProgressStatus";
-import TaskDate from "@/components/project/task/task/form/TaskDate";
-import TaskAssignedCrew from "@/components/project/task/task/form/TaskAssignedCrew";
-import TaskUpdatedBy from "@/components/project/task/task/form/TaskUpdatedBy";
+import TaskContent from "@/components/project/work/work/form/TaskContent";
+import TaskProgressStatus from "@/components/project/work/work/form/TaskProgressStatus";
+import TaskDate from "@/components/project/work/work/form/TaskDate";
+import TaskAssignedCrew from "@/components/project/work/work/form/TaskAssignedCrew";
+import TaskUpdatedBy from "@/components/project/work/work/form/TaskUpdatedBy";
 import TaskContentDetail from "./TaskContentDetail/TaskContentDetail";
 
 

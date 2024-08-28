@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useState} from 'react';
-import TaskCard from "@/components/project/task/task/TaskCard";
+import TaskCard from "@/components/project/work/work/TaskCard";
 import {DataId} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import useTasks from "@/hooks/useTasks";

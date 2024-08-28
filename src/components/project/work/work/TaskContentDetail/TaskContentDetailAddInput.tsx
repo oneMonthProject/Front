@@ -3,7 +3,7 @@
 import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {useSetRecoilState} from "recoil";
 import {taskContentDetailFieldSelector} from "@/store/project/task/TaskStateStore";
-import TaskContentAddButton from "@/components/project/task/task/TaskContentDetail/TaskContentAddButton";
+import TaskContentAddButton from "@/components/project/work/work/TaskContentDetail/TaskContentAddButton";
 import {v4} from "uuid";
 
 function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>}) {

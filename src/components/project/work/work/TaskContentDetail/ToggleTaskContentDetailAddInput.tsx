@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {RiAddLine} from "@react-icons/all-files/ri/RiAddLine";
-import TaskContentDetailAddInput from "@/components/project/task/task/TaskContentDetail/TaskContentDetailAddInput";
+import TaskContentDetailAddInput from "@/components/project/work/work/TaskContentDetail/TaskContentDetailAddInput";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
 import {MAX_TASK_CONTENT_DETAIL} from "@/app/project/@task/_utils/constant";
