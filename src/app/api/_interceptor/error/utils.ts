@@ -101,6 +101,7 @@ export const isErrorWithCauseCode = (arg: Error): arg is ErrorWithCauseCode => {
 }
 
 export const extractErrorCode = (error: Error): CustomInterceptorErrorCode => {
+    console.error(error.cause);
     if (isCustomInterceptorError(error)) {
         return error.code;
     } else if (isErrorWithCauseCode(error)) {
