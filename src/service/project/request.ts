@@ -48,8 +48,10 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
 
     try {
         const res = await fetch(`${publicURL}${url}`, requestInit);
+        console.log("res:: ", res);
         return await handleResponse(res);
     } catch (e: unknown) {
+        console.error((e as Error));
         handleError(e as Error);
     }
 
