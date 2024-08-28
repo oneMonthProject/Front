@@ -25,7 +25,7 @@ export async function GET(
         const res = await authApi(`/api/project/${projectId}/${userId}`, {method});
         return routeResponse(req, res);
     } else {
-        throw Error('Unknown Api Route');
+        throw Error(`Unknown Api Route : ${req.url}`);
     }
 
 

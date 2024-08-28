@@ -26,7 +26,7 @@ function ParticipateNoticeModal() {
 
             window.scrollTo(0, parseInt(scrollY || '0') * -1);
         }
-    }, [isOpen]);
+    }, [isOpen, queryClient]);
 
     return (
         <>
