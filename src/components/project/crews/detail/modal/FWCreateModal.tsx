@@ -1,12 +1,11 @@
 'use client';
 
 import React, {useEffect, useState} from 'react';
-import {useRecoilValue, useRecoilValueLoadable, useResetRecoilState} from "recoil";
-import {crewFWModalStateStore} from "@/store/project/crewFWModal/CrewFWModalStateStore";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {crewFWModalStateStore} from "@/store/project/alert/modal/CrewFWModalStateStore";
 import {createPortal} from "react-dom";
 import Modal from "@/components/ui/Modal";
 import FWCreateModalContents from "@/components/project/crews/detail/modal/FWCreateModalContents";
-import {projectIdState, projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 import {createFWAlert} from "@/service/project/alert/vote/fwithdraw";
 import useSnackbar from "@/hooks/useSnackbar";
 

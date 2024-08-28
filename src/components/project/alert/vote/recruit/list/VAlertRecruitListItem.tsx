@@ -4,7 +4,7 @@ import NoticeBadge from "@/components/ui/badge/NoticeBadge";
 import {AlertType} from "@/service/project/alert/constant";
 import VoteStatusBadge from "@/components/ui/badge/VoteStatusBadge";
 import {useSetRecoilState} from "recoil";
-import {vAlertRecruitModalState} from "@/store/project/alert/vote/VAlertModalStateStore";
+import {vAlertRecruitModalState} from "@/store/project/alert/modal/VAlertModalStateStore";
 
 type VAlertRecruitListItemProps = {
     data: VAlertRecruitData;

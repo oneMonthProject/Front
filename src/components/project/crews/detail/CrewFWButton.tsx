@@ -1,9 +1,8 @@
 import React from 'react';
 import Button from "@/components/ui/Button";
-import {useRecoilState, useRecoilValue, useRecoilValueLoadable, useSetRecoilState} from "recoil";
-import {CrewFWModalState, crewFWModalStateStore} from "@/store/project/crewFWModal/CrewFWModalStateStore";
-import {ProjectMember, ProjectMemberProfile} from "@/utils/type";
-import {VAlertFWCreateData} from "@/service/project/alert/type";
+import {useRecoilState, useRecoilValueLoadable} from "recoil";
+import {CrewFWModalState, crewFWModalStateStore} from "@/store/project/alert/modal/CrewFWModalStateStore";
+import {ProjectMemberProfile} from "@/utils/type";
 import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 
 function CrewFwButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberProfile }) {

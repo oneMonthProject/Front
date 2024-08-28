@@ -1,7 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {useRecoilState, useRecoilValue, useResetRecoilState} from "recoil";
-import {projectNoticeModalStateSelector} from "@/store/project/notice/ProjectNoticeStateStore";
-import {vAlertFWModalState} from "@/store/project/alert/vote/VAlertModalStateStore";
+import {useRecoilValue, useResetRecoilState} from "recoil";
+import {vAlertFWModalState} from "@/store/project/alert/modal/VAlertModalStateStore";
 import {createPortal} from "react-dom";
 import Modal from "@/components/ui/Modal";
 import VAlertFWModalContents from "@/components/project/alert/vote/fwithdraw/modal/VAlertFWModalContents";

@@ -4,5 +4,5 @@ import {AlertMenu} from "@/service/project/alert/type";
 
 export const projectNoticeActiveMenuStateStore = atom<AlertMenu>({
     key: 'projectNoticeActiveMenuState',
-    default: AlertType.PRA3001
+    default: AlertType.PRA2001
 });

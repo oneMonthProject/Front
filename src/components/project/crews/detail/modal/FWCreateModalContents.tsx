@@ -1,8 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {FWReason} from "@/service/project/alert/constant";
 import {useSetRecoilState} from "recoil";
-import {createFWAlert} from "@/service/project/alert/vote/fwithdraw";
-import {crewFWModalStateStore} from "@/store/project/crewFWModal/CrewFWModalStateStore";
+import {crewFWModalStateStore} from "@/store/project/alert/modal/CrewFWModalStateStore";
 import {FWReasonCode} from "@/service/project/alert/type";
 
 function FwCreateModalContents() {
