@@ -10,7 +10,7 @@ import {TaskAddForm, TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/
  * @param pageIndex
  * @param itemCount
  */
-export async function getTaskList(tasksReqParam: TasksReqParam): Promise<PageResponseBody<TaskItem[]>> {
+export async function getTaskList(tasksReqParam: TasksReqParam) {
     const {
         milestoneId,
         projectId,
@@ -18,10 +18,35 @@ export async function getTaskList(tasksReqParam: TasksReqParam): Promise<PageRes
         itemsPerPage: itemCount
     } = tasksReqParam;
 
-    return await requestWithAuth(
+    const res: PageResponseBody<TaskItem[]> = await requestWithAuth(
         'GET',
-        `/api/project/task?milestoneId=${milestoneId}&projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
+        `/api/project/work?milestoneId=${milestoneId}&projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`
     );
+
+    const today = new Date();
+    today.setHours(0,0,0,0);
+    const updated = res.data.content.map((v) => {
+        if(v.progressStatus === "완료"){
+            return v;
+        }else{
+            const startDate = v.startDate;
+            const y = parseInt(startDate.substring(0,4), 10);
+            const m = parseInt(startDate.substring(4,6), 10) - 1;
+            const d = parseInt(startDate.substring(6,8), 10);
+            const date = new Date(y,m,d);
+
+            if(date.getTime > today.getTime) {
+                return {...v, progressStatus: "시작전"}
+            }else{
+                return {...v, progressStatus: "진행중"}
+            }
+        }
+    });
+
+    return {
+        ...res,
+        content: updated
+    }
 }
 
 /**
@@ -35,7 +60,7 @@ export async function createTask(task: TaskAddForm) {
     if (!task.endDate) throw Error('시작 날짜를 입력해주세요');
     if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
 
-    return await requestWithAuth('POST', '/api/project/task', {task});
+    return await requestWithAuth('POST', '/api/project/work', {task});
 
 }
 
@@ -51,7 +76,7 @@ export async function updateTask(task: TaskModifyForm) {
     if (!task.contentDetail) throw Error('할 일을 입력해주세요.');
     if (!task.progressStatus) throw Error('업무 진행상태를 입력해주세요');
 
-    return await requestWithAuth('PATCH', '/api/project/task', {task});
+    return await requestWithAuth('PATCH', '/api/project/work', {task});
 }
 
 
@@ -60,5 +85,5 @@ export async function updateTask(task: TaskModifyForm) {
  * @param workId
  */
 export async function deleteTask(workId: bigint) {
-    return await requestWithAuth('DELETE', '/api/project/task', {workId});
+    return await requestWithAuth('DELETE', '/api/project/work', {workId});
 }

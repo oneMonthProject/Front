@@ -1,9 +1,8 @@
-import {NextRequest, NextResponse} from "next/server";
+import {NextRequest} from "next/server";
 import authApi from "@/app/api/_interceptor/authApi";
 import {JSONReplaceBigInt} from "@/utils/common";
 import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 
-const baseURL = process.env.NEXT_PUBLIC_BACKEND;
 
 /**
  * 프로젝트 (특정 마일스톤 내) 업무 조회
@@ -18,7 +17,7 @@ export async function GET(req: NextRequest) {
     const itemCount = searchParams.get('itemCount');
 
     const res = await authApi(
-        `/api/work/project/${projectId}/milestone/${milestoneId}?pageIndex=${pageIndex}&itemCount=${itemCount}`,
+        `/api/project/work?projectId=${projectId}&milestoneId=${milestoneId}&pageIndex=${pageIndex}&itemCount=${itemCount}`,
         {method: 'GET'})
 
     return routeResponse(req, res);
@@ -32,10 +31,12 @@ export async function GET(req: NextRequest) {
 export async function POST(req: NextRequest) {
     const {task: {projectId, milestoneId, content, startDate, endDate, assignedUser, contentDetail}} = await req.json();
     const res = await authApi(
-        `${baseURL}/api/work/project/${projectId}/milestone/${milestoneId}`,
+        `/api/project/work`,
         {
             method: 'POST',
             body: JSONReplaceBigInt({
+                projectId,
+                milestoneId,
                 content,
                 startDate,
                 endDate,
@@ -66,7 +67,7 @@ export async function PATCH(req: NextRequest) {
     } = await req.json();
 
     const res = await authApi(
-        `${baseURL}/api/work/${workId}`,
+        `/api/project/work/${workId}`,
         {
             method: 'PATCH',
             body: JSONReplaceBigInt({
@@ -92,7 +93,7 @@ export async function DELETE(req: NextRequest) {
     const {workId} = await req.json();
 
     const res = await authApi(
-        `${baseURL}/api/work/${workId}`,
+        `/api/project/work/${workId}`,
         {
             method: 'DELETE'
         }
