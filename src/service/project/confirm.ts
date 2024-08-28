@@ -1,18 +1,20 @@
-import {request, requestWithAuth} from "@/service/project/request";
-import {PointTypeValue} from "@/app/project/@notice/_utils/type";
+import {requestWithAuth} from "@/service/project/request";
+
+
+type WorkCompleteRequestDto = {
+    userId: bigint;
+    projectId: bigint;
+    milestoneId: bigint;
+    workId: bigint;
+    content: string
+}
 
 /**
  * 업무 알림 confirm
- * @param alertId
- * @param scoreTypeId
+ * @param reqData
  */
-export async function confirmTaskNotice(alertId: string | bigint, scoreTypeId: PointTypeValue) {
-    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/work', {alertId, scoreTypeId});
-    if (confirmRes.result === 'success') {
-        return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
-    } else {
-        return confirmRes;
-    }
+export async function workComplete(reqData: WorkCompleteRequestDto) {
+    return await requestWithAuth("POST", "/api/project/work/complete", reqData);
 }
 
 /**
@@ -63,7 +65,10 @@ export async function confirmCrewWithdrawNotice(alertId: string | bigint, withdr
  * @param alertId
  */
 export async function confirmCrewForceWithdrawNotice(projectId: string | bigint, targetUserId: string | bigint, alertId: string | bigint) {
-    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/force-withdrawal', {projectId, targetUserId});
+    const confirmRes = await requestWithAuth('POST', '/api/project/confirm/force-withdrawal', {
+        projectId,
+        targetUserId
+    });
     if (confirmRes.result === 'success') {
         return await requestWithAuth('PATCH', '/api/project/notice', {alertId});
     } else {
