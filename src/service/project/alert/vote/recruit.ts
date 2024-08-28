@@ -30,8 +30,6 @@ export async function getProjectNoticeByMenu(
     const reqParam = `?projectId=${projectId}&pageIndex=${pageIndex}&itemCount=${itemCount}`;
     const method = "GET";
     switch (noticeMenu.name) {
-        case "업무":
-            return await requestWithAuth(method, '/api/project/notice/works' + reqParam);
         case "모집":
             return await requestWithAuth(method, '/api/project/alert/vote/recruit' + reqParam);
         case "강제탈퇴":

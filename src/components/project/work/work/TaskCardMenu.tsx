@@ -33,10 +33,7 @@ function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
      * 업무 삭제 click
      */
     function onClickDeleteCardHandler() {
-        const confirmContent = progressStatus === TS.EXPIRED.name || progressStatus === TS.FINISH.name
-            ? "완료 및 만료된 업무 삭제시 업무 완료/만료 알림도 함께 삭제됩니다. \r\n 업무를 삭제하시겠습니까?"
-            : "업무를 삭제하시겠습니까?"
-        if (confirm(confirmContent)) {
+        if (confirm("업무를 삭제하시겠습니까?")) {
             deleteTask(workId);
         }
     }

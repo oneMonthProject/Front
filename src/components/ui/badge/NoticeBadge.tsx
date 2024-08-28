@@ -12,9 +12,6 @@ function NoticeBadge({size = '', noticeType}: NoticeBadgeProps) {
 
     let color;
     switch (noticeType.name) {
-        case "업무":
-            color = "green";
-            break;
         case "크루":
             color = "blue";
             break;
