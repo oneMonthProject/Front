@@ -16,7 +16,7 @@ function TaskProgressStatus() {
             <div
                 className='flex w-[350px] mobile:w-[220px] h-[42px] mobile:h-[38px] space-x-3 ml-auto items-center'>
                 {
-                    progressStatusCode === TASK_STATUS.PS001.value || progressStatusCode === TASK_STATUS.PS003.value
+                    progressStatusCode === TASK_STATUS.PS001.value
                         ? <TaskStatusBadge size='sm' text={progressStatus}/>
                         : <TaskStatusSelector/>
                 }

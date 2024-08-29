@@ -1,15 +1,21 @@
 'use client';
 
 import React, {useRef, useState} from 'react';
-import {useRecoilState, useSetRecoilState} from "recoil";
-import {taskContentDetailFieldSelector, taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
+import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
+import {
+    taskContentDetailFieldSelector,
+    taskContentDetailSelector,
+    taskProgressModFieldSelector
+} from "@/store/project/task/TaskStateStore";
 import TaskContentCancelDeleteButton
     from "@/components/project/work/work/TaskContentDetail/TaskContentCancelDeleteButton";
 import TaskContentEditFinishButton from "@/components/project/work/work/TaskContentDetail/TaskContentEditFinishButton";
 import {TaskContentDetails} from "@/app/project/@task/_utils/type";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 
 function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
+    const {progressStatusCode} = useRecoilValue(taskProgressModFieldSelector);
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [placeholder, setPlaceholder] = useState('할 일 입력');
     const [taskContentDetailField, setTaskContentDetailField] =
@@ -66,19 +72,20 @@ function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
                 <div className={`relative ml-1 min-h-[2.3rem] mobile:min-h-[2rem] ${value === "" && 'min-w-[6.8rem]'}`}>
                     <div className='relative flex items-center space-x-1 z-10'>
                         <div
-                            className='w-[320px] mobile:w-[210px] h-full whitespace-nowrap text-transparent'>{value}</div>
+                            className={`w-[320px] mobile:w-[210px] h-full whitespace-nowrap text-transparent`}>
+                            {value}
+                        </div>
                     </div>
                     <input
                         ref={inputRef}
                         type="text"
                         placeholder={placeholder}
                         className={`w-[320px] mobile:w-full h-full absolute top-0 left-0 z-10 appearance-none border-none focus:border-transparent 
-                            focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'}`}
+                            focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'} ${progressStatusCode === TASK_STATUS.PS003.value && 'text-gray-400'} `}
                         onChange={(e) => {
                             if (e.target.value === "") {
                                 setPlaceholder('할 일 입력');
                             }
-                            console.log("value:: ", e.target.value);
                             setValue(e.target.value);
                         }}
                         value={value}

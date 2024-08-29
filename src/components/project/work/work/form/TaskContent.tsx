@@ -1,11 +1,13 @@
 'use client';
 import React from 'react';
 import Input from "@/components/ui/form/Input";
-import {useRecoilState} from "recoil";
-import {TaskField, taskModalFieldSelector} from "@/store/project/task/TaskStateStore";
+import {useRecoilState, useRecoilValue} from "recoil";
+import {TaskField, taskModalFieldSelector, taskProgressModFieldSelector} from "@/store/project/task/TaskStateStore";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 function TaskContent() {
     const [content, setContent] = useRecoilState(taskModalFieldSelector("content"));
+    const {progressStatusCode} = useRecoilValue(taskProgressModFieldSelector)
 
     return (
         <div className='flex space-x-10'>
@@ -17,6 +19,7 @@ function TaskContent() {
                     value={content as TaskField<'content'>}
                     onChange={(e) => setContent(e.target.value)}
                     maxLength={20}
+                    disabled={progressStatusCode === TASK_STATUS.PS003.value}
                 />
             </div>
         </div>

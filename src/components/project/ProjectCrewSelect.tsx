@@ -34,7 +34,7 @@ function getSelectedCrew(
     return {name: selectedCrew.user.nickname, value: selectedCrew.projectMemberId}
 }
 
-function ProjectCrewSelect() {
+function ProjectCrewSelect({disabled}: { disabled: boolean }) {
     const [assignedUser, setAssignedUser] = useRecoilState(taskModalFieldSelector('assignedUser'));
     const projectId = useRecoilValue(projectIdState)!;
     const {crewList, isFetching} = useProjectCrewList(projectId);
@@ -54,12 +54,13 @@ function ProjectCrewSelect() {
                 setAssignedUser(updatedAssignedUser);
             }}
             by={compareItems}
+            disabled={disabled}
         >
             {({open}) => (
-                <div className="relative w-full tablet:w-[200px] ">
+                <div className="relative w-full tablet:w-[200px]">
                     <Listbox.Button
                         className="w-full mobile:text-sm cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-                              <span className={classNames(selectedCrew ? '' : 'text-greyUnselect', 'block truncate')}>
+                              <span className={classNames(selectedCrew ? '' : 'text-greyUnselect', 'block truncate', `${disabled && 'text-gray-700/60'}`)}>
                                 {selectedCrew.name}
                               </span>
                         <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
