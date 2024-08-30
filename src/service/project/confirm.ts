@@ -1,7 +1,7 @@
 import {requestWithAuth} from "@/service/project/request";
 
 
-type WorkCompleteRequestDto = {
+export type WorkCompleteRequestDto = {
     userId: bigint;
     projectId: bigint;
     milestoneId: bigint;

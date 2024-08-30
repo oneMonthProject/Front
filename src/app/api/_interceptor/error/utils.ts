@@ -43,8 +43,8 @@ export const errorHandleMethod = (errorCode: string): ErrorHandle => {
             errorCode === "VOTE_DUPLICATE" ||
             errorCode === "VOTE_NOT_ALLOWED" ||
             errorCode === "VOTE_TARGET_NOT_ALLOWED" ||
-            errorCode === "VOTE_NOT_ALLOWED_YET"
-
+            errorCode === "VOTE_NOT_ALLOWED_YET" ||
+            errorCode === "NO_PERMISSION_TO_TASK"
         ) {
             return 'snackbar';
         }

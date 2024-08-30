@@ -1,5 +1,5 @@
 'use client';
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useRecoilValue, useResetRecoilState} from "recoil";
 import Modal from "@/components/ui/Modal";
 import {taskModalState} from "@/store/project/task/TaskStateStore";
@@ -12,14 +12,18 @@ import TaskDate from "@/components/project/work/work/form/TaskDate";
 import TaskAssignedCrew from "@/components/project/work/work/form/TaskAssignedCrew";
 import TaskUpdatedBy from "@/components/project/work/work/form/TaskUpdatedBy";
 import TaskContentDetail from "./TaskContentDetail/TaskContentDetail";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
+import useCompleteTask from "@/hooks/useCompleteTask";
 
 
 function TaskModal() {
     const {isOpen, form} = useRecoilValue(taskModalState);
+    const initialPSRef = useRef(form?.progressStatus);
     const resetCurrentForm = useResetRecoilState(taskModalState);
     const {updateTask, isUpdating} = useUpdateTask();
     const {createTask, isCreating} = useCreateTask();
-    const isPending = isUpdating || isCreating;
+    const {completeTask, isUpdating: isCompleting} = useCompleteTask();
+    const isPending = isUpdating || isCreating || isCompleting;
 
     const [portalElement, setPortalElement] = useState<Element | null>(null);
 
@@ -37,10 +41,22 @@ function TaskModal() {
         }
     }, [isOpen]);
 
-    function onClickConfirmHandler(){
-        if(form?.type === 'add'){
+
+    function onClickConfirmHandler() {
+        if (initialPSRef.current !== form?.progressStatus && form?.progressStatus === TASK_STATUS.PS003.name) {
+            completeTask({
+                userId: form.assignedUser!.projectMemberId,
+                projectId: form.projectId,
+                milestoneId: form.milestoneId,
+                workId: form.workId,
+                content: `${form.content} 완료`
+            });
+            return;
+        }
+
+        if (form?.type === 'add') {
             createTask(form);
-        }else{
+        } else {
             updateTask(form!);
         }
     }
