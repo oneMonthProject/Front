@@ -25,13 +25,13 @@ export async function GET(req: NextRequest) {
  * @constructor
  */
 export async function POST(req: NextRequest) {
-    const {projectId, content, startDate, endDate} = await req.json();
+    const {projectId, content, startDate, endDate, authMap} = await req.json();
 
     const res = await authApi(
-        `/api/milestone/project/${projectId}`,
+        `/api/milestone`,
         {
             method: 'POST',
-            body: JSONReplaceBigInt({content, startDate, endDate})
+            body: JSONReplaceBigInt({projectId, content, startDate, endDate, authMap})
         });
 
     return routeResponse(req, res);
@@ -64,11 +64,11 @@ export async function PATCH(req: NextRequest) {
  * @constructor
  */
 export async function DELETE(request: NextRequest) {
-    const {milestoneId} = await request.json();
+    const reqData = await request.json();
 
     const res = await authApi(
-        `${baseURL}/api/milestone/${milestoneId}`,
-        {method: 'DELETE'}
+        `/api/milestone`,
+        {method: 'DELETE', body: JSONReplaceBigInt(reqData)}
     );
 
     return routeResponse(request, res);

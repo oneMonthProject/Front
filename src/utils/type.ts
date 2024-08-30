@@ -69,6 +69,7 @@ export interface MilestoneInfo {
     progressStatus: MilestoneStatusName | '';
     progressStatusCode?: MilestoneStatusCode | '';
     index?: number;
+    authMap?: ProjectAuthMap;
 }
 
 export interface TrustGradeItem {

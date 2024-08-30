@@ -1,4 +1,4 @@
-import {MilestoneInfo} from "@/utils/type";
+import {MilestoneInfo, ProjectAuthMap} from "@/utils/type";
 import {requestWithAuth} from "@/service/project/request";
 import {sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
@@ -27,12 +27,12 @@ export async function createMilestone<T extends MilestoneInfo>(
     }: {
         milestoneInfo: T
     }) {
-    const {content, startDate, endDate, projectId} = milestoneInfo;
+    const {content, startDate, endDate, projectId, authMap} = milestoneInfo;
 
     throwErrorIfInvalid(!content, "마일스톤 내용을 입력해 주세요");
     throwErrorIfInvalid(!startDate, "시작날짜를 선택해 주세요");
     throwErrorIfInvalid(!endDate, "종료날짜를 선택해 주세요");
-    const reqData = {projectId, content, startDate, endDate};
+    const reqData = {projectId, content, startDate, endDate, authMap};
 
     return await requestWithAuth('POST', `/api/project/milestone`, reqData);
 }
@@ -54,10 +54,15 @@ export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: 
     return await requestWithAuth('PATCH', `/api/project/milestone`, reqData);
 }
 
+export type DeleteMilestoneReqData = {
+    milestoneId: bigint;
+    projectId: bigint;
+    authMap: ProjectAuthMap;
+}
 /**
  * 마일스톤 삭제
  * @param milestoneId
  */
-export async function deleteMilestone(milestoneId: bigint) {
-    return await requestWithAuth('DELETE', `/api/project/milestone`, {milestoneId});
+export async function deleteMilestone(reqData: DeleteMilestoneReqData) {
+    return await requestWithAuth('DELETE', `/api/project/milestone`, reqData);
 }

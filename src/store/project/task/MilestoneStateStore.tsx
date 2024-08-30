@@ -1,5 +1,5 @@
 import {atom, selector} from "recoil";
-import {MilestoneInfo, ModalState} from "@/utils/type";
+import {MilestoneInfo, ModalState, ProjectAuthMap} from "@/utils/type";
 
 export type MilestoneStatusName = '시작전' | '진행중' | '완료' | '만료';
 export type MilestoneStatusCode = 'PS001' | 'PS002' | 'PS003' | 'PS004';
@@ -72,6 +72,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
     progressStatusCode: MilestoneStatusCode | '';
     projectId: bigint | string;
     index?: number;
+    authMap: ProjectAuthMap;
 
     constructor(type: 'add' | 'modify', milestoneInfo: MilestoneInfo) {
         const {
@@ -84,6 +85,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
             , progressStatus
             , projectId
             , index
+            , authMap
         } = milestoneInfo;
 
         this.type = type;
@@ -97,6 +99,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
         this.progressStatusCode = getMilestoneStatus(progressStatus)?.value || '';
         this.projectId = projectId;
         this.index = index;
+        this.authMap = authMap;
 
     }
 

@@ -12,7 +12,6 @@ import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 import {MilestoneAddButtonSkeleton} from "@/components/ui/skeleton/project/task";
 
 function MilestoneAddButton({projectId, userId}: { projectId: string, userId: string }) {
-    const setSnackBar = useSetRecoilState(snackbarState);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
     const stateParam = JSON.stringify({projectId, userId});
@@ -21,30 +20,23 @@ function MilestoneAddButton({projectId, userId}: { projectId: string, userId: st
         contents
     } = useRecoilValueLoadable<ResponseBody<ProjectAuthMap | null>>(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
 
-    if (authState === 'loading' || authState === "hasError") return <MilestoneAddButtonSkeleton/>;
-
-    if(!contents.data) return null;
-
-    const {milestoneAuth} = contents.data;
+    if (authState === 'loading') return <MilestoneAddButtonSkeleton/>;
 
     const onClickHandler = () => {
-        if (milestoneAuth) {
-            const today = getTodayString();
-            const addMilestoneForm: MilestoneInfo = {
-                content: "",
-                createDate: today,
-                mileStoneId: 0n,
-                progressStatus: "",
-                projectId: projectId,
-                startDate: '',
-                endDate: '',
-                updateDate: today,
-            }
-
-            setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
-        } else {
-            setSnackBar({show: true, type: 'INFO', content: '마일스톤 생성 권한이 없습니다.'});
+        const today = getTodayString();
+        const addMilestoneForm: MilestoneInfo = {
+            content: "",
+            createDate: today,
+            mileStoneId: 0n,
+            progressStatus: "",
+            projectId: projectId,
+            startDate: '',
+            endDate: '',
+            updateDate: today,
+            authMap: contents.data
         }
+
+        setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
 
     }
 

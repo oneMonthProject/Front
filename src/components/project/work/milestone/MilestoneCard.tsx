@@ -1,8 +1,8 @@
 'use client';
 import React, {MouseEvent} from 'react';
-import {MilestoneInfo} from "@/utils/type";
+import {MilestoneInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/work/milestone/MilestoneCardMenu";
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilValue, useRecoilValueLoadable, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,
     MilestoneModalForm,
@@ -13,14 +13,18 @@ import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
+import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {numStrToBigInt} from "@/utils/common";
 
 type MilestoneCardProps = {
     milestoneInfo: MilestoneInfo;
     initActiveMilestoneId: string | bigint | null;
+    authMap: ProjectAuthMap;
 }
 
-function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProps) {
+function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: MilestoneCardProps) {
     const {
+        projectId,
         mileStoneId,
         content,
         startDate,
@@ -30,7 +34,7 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProp
 
     const setSnackBar = useSetRecoilState(snackbarState);
 
-    const {activeMilestoneId:updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
+    const {activeMilestoneId: updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
     const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActiveMilestoneId;
 
     const setActiveMilestone = useSetRecoilState(milestoneActiveStateStore);
@@ -41,7 +45,11 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProp
     const queryClient = useQueryClient();
 
     const {mutate: deleteMilestone} = useMutation({
-        mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI(mileStoneId),
+        mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI({
+            projectId: numStrToBigInt(projectId as string),
+            milestoneId: mileStoneId,
+            authMap
+        }),
         onSuccess: async (res) => {
             if (res.message !== 'success') {
                 setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
@@ -75,7 +83,9 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId}: MilestoneCardProp
     }
 
     async function onDeleteClickHandler() {
-        await deleteMilestone(mileStoneId);
+        if (confirm("마일스톤과 관련 업무를 삭제하시겠습니까?")) {
+            await deleteMilestone(mileStoneId);
+        }
     }
 
 
