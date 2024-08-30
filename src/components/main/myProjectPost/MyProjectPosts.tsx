@@ -52,7 +52,7 @@ function MyProjectPosts() {
                 }
             </ul>
             <CommonPagination
-                activePage={pageNumber}
+                activePage={pageNumber + 1}
                 itemsCountPerPage={ITEM_COUNT.CARDS}
                 totalItemsCount={totalCount}
                 pageRangeDisplayed={PAGE_RANGE.DEFAULT}
