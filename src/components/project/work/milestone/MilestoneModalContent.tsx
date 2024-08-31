@@ -50,16 +50,6 @@ function MilestoneModalContent() {
                         />
                     </div>
                 </div>
-                {
-                    currentForm?.type === 'modify' && (
-                        <div className='max-w-[360px] flex '>
-                            <label className="text-gray-700 font-semibold self-center">진행상태</label>
-                            <div className='min-w-[280px] h-[42px] mobile:h-[38px] ml-auto flex justify-start'>
-                                <MilestoneStatusSelector/>
-                            </div>
-                        </div>
-                    )
-                }
                 {currentForm?.type === 'modify' && (
                     <div className='max-w-[360px] flex'>
                         <label className="text-gray-700 font-semibold self-center">업데이트</label>

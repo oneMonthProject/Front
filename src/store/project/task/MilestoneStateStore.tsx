@@ -99,7 +99,7 @@ export class MilestoneModalForm implements MilestoneModalFormState {
         this.progressStatusCode = getMilestoneStatus(progressStatus)?.value || '';
         this.projectId = projectId;
         this.index = index;
-        this.authMap = authMap;
+        this.authMap = authMap!;
 
     }
 
