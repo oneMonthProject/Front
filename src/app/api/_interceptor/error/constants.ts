@@ -54,7 +54,11 @@ export const ResponseNotOKMessage = {
     // INTERNAL_SERVER_ERROR
     INTERNAL_SERVER_ERROR: {text: '프로세스 수행 중 오류가 발생했습니다.', status: HttpStatus.INTERNAL_SERVER_ERROR},
     VOTE_EXIST_FW: {text: '강제탈퇴 투표는 동시에 1개 이상 진행할 수 없습니다.', status: HttpStatus.INTERNAL_SERVER_ERROR},
-    VOTE_INSUFF_VOTERS: {text: '강제탈퇴 투표는 탈퇴 대상자를 제외한 최소 2명의 투표자가 필요합니다.', status: HttpStatus.INTERNAL_SERVER_ERROR}
+    VOTE_INSUFF_VOTERS: {text: '강제탈퇴 투표는 탈퇴 대상자를 제외한 최소 2명의 투표자가 필요합니다.', status: HttpStatus.INTERNAL_SERVER_ERROR},
+
+    // BAD_REQUEST
+    CREATE_EXCEEDED_MS:{text:'프로젝트당 최대 마일스톤 갯수는 10개입니다.', status: HttpStatus.BAD_REQUEST},
+    CREATE_EXCEEDED_WORK:{text:'마일스톤당 최대 업무 갯수는 100개입니다.', status: HttpStatus.BAD_REQUEST},
 } as const;
 export type ResponseNotOKCode = keyof typeof ResponseNotOKMessage;
 export type CustomInterceptorErrorCode = GatewayErrorCode | ResponseNotOKCode;

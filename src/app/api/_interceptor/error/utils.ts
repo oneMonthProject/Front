@@ -31,22 +31,26 @@ export const isCustomInterceptorError = (arg: Error): arg is CustomInterceptorEr
  */
 export const errorHandleMethod = (errorCode: string): ErrorHandle => {
     if (isCustomInterceptorErrorCode(errorCode)) {
-        if (errorCode === 'AUTHENTICATION_FAIL' ||
-            errorCode === 'IN_USE_NICKNAME' ||
-            errorCode === 'IN_USE_EMAIL' ||
-            errorCode === 'IN_USE_OAUTH_USER'||
-            errorCode === 'PARTICIPATE_DUPLICATE' ||
-            errorCode === 'PARTICIPATE_NOT_ALLOWED' ||
-            errorCode === "PARTICIPATE_EXIST" ||
-            errorCode === "VOTE_EXIST_FW" ||
-            errorCode === "VOTE_INSUFF_VOTERS" ||
-            errorCode === "VOTE_DUPLICATE" ||
-            errorCode === "VOTE_NOT_ALLOWED" ||
-            errorCode === "VOTE_TARGET_NOT_ALLOWED" ||
-            errorCode === "VOTE_NOT_ALLOWED_YET" ||
-            errorCode === "NO_PERMISSION_TO_TASK"
-        ) {
-            return 'snackbar';
+        switch (errorCode) {
+            case 'AUTHENTICATION_FAIL':
+            case 'IN_USE_NICKNAME':
+            case 'IN_USE_EMAIL' :
+            case 'IN_USE_OAUTH_USER' :
+            case 'PARTICIPATE_DUPLICATE' :
+            case 'PARTICIPATE_NOT_ALLOWED' :
+            case 'PARTICIPATE_EXIST' :
+            case 'VOTE_EXIST_FW' :
+            case 'VOTE_INSUFF_VOTERS' :
+            case 'VOTE_DUPLICATE' :
+            case 'VOTE_NOT_ALLOWED' :
+            case 'VOTE_TARGET_NOT_ALLOWED' :
+            case 'VOTE_NOT_ALLOWED_YET' :
+            case 'NO_PERMISSION_TO_TASK' :
+            case 'CREATE_EXCEEDED_MS':
+            case 'CREATE_EXCEEDED_WORK':
+                return 'snackbar'
+            default:
+                return 'retry'
         }
     }
 
