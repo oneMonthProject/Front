@@ -2,9 +2,8 @@
 import React, {ChangeEvent} from 'react';
 import {useRecoilState} from "recoil";
 import Input from '@/components/ui/form/Input';
-import CalendarInput from '@/components/ui/form/CalendarInput';
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import MilestoneStatusSelector from "@/components/project/work/milestone/MilestoneStatusSelector";
+import DateRangePicker from "@/components/ui/datepicker/DateRangePicker";
 
 
 function MilestoneModalContent() {
@@ -36,19 +35,12 @@ function MilestoneModalContent() {
                 </div>
                 <div className='flex'>
                     <label className="text-gray-700 font-semibold self-center">기간</label>
-                    <div className='w-[350px] mobile:w-[220px] ml-auto flex space-x-1'>
-                        <CalendarInput
-                            placeholder="선택"
-                            date={currentForm?.startDate || null}
-                            setDate={(date) => onDateChange(date, "startDate")}
-                        />
-                        <div className="text-gray-700 w-[20px] text-center self-center">~</div>
-                        <CalendarInput
-                            placeholder="선택"
-                            date={currentForm?.endDate || null}
-                            setDate={(date) => onDateChange(date, "endDate")}
-                        />
-                    </div>
+                    <DateRangePicker
+                        startDate={currentForm?.startDate || null}
+                        endDate={currentForm?.endDate || null}
+                        setStartDate={(date) => onDateChange(date,"startDate")}
+                        setEndDate={(date) => onDateChange(date, "endDate")}
+                    />
                 </div>
                 {currentForm?.type === 'modify' && (
                     <div className='max-w-[360px] flex'>
