@@ -12,6 +12,8 @@ export interface CalenderProps extends InputHTMLAttributes<HTMLInputElement> {
     setDate: (value: string) => void;
     disabled?: boolean;
     minDate?: Date | null | undefined;
+    includeDateIntervals?: Array<{ start: Date; end: Date }> | undefined;
+    openToDate?: Date | undefined;
 }
 
 
@@ -23,6 +25,8 @@ function CalendarInput({
                            setDate,
                            disabled = false,
                            minDate,
+                           includeDateIntervals,
+                           openToDate,
                            ...props
                        }: CalenderProps) {
     const datePickerRef = useRef<HTMLDivElement | null>(null);
@@ -84,6 +88,8 @@ function CalendarInput({
                         onChange={handleChange}
                         inline
                         minDate={minDate}
+                        includeDateIntervals={includeDateIntervals}
+                        openToDate={openToDate}
                         showDisabledMonthNavigation
                     />
                 </div>

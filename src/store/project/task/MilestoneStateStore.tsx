@@ -131,4 +131,9 @@ export const milestoneModalStateSelector = selector<ModalState>({
 
         return {isOpen: state !== null, title: title};
     }
-})
+});
+
+export const activeMilestoneDateStateStore = atom({
+    key:'activeMilestoneDateStateStore',
+    default: null
+});

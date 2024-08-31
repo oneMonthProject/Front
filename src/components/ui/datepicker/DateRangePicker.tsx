@@ -4,23 +4,27 @@ import CalendarInput from "@/components/ui/form/CalendarInput";
 import {addDays, format, subDays} from "date-fns";
 import _ from "lodash";
 
-type CustomDateRangePickerProps = {
+export type CustomDateRangePickerProps = {
     startDate: string | null;
     endDate: string | null;
     setStartDate: (value: string) => void;
     setEndDate: (value: string) => void;
+    includeDateIntervals?: Array<{ start: Date; end: Date }> | undefined;
+    startOpenToDate?: Date | undefined;
+    endOpenToDate?: Date | undefined;
 };
 
 function DateRangePicker({
                              startDate,
                              endDate,
                              setStartDate,
-                             setEndDate
+                             setEndDate,
+                             includeDateIntervals,
+                             startOpenToDate,
+                             endOpenToDate
                          }: CustomDateRangePickerProps) {
     const [endMinDate, setEndMinDate] = useState<Date | null>(() =>
         addDays(startDate ? new Date(startDate) : new Date(), 1));
-
-    console.log("endMinDate: ", endMinDate);
 
     // 시작날짜보다 종료날짜 앞서지 못하도록
     useEffect(() => {
@@ -45,6 +49,8 @@ function DateRangePicker({
                 placeholder="시작 날짜 선택"
                 date={startDate}
                 setDate={(value) => setStartDate(value)}
+                includeDateIntervals={includeDateIntervals}
+                openToDate={startOpenToDate}
             />
             <div className="text-gray-700 w-[20px] text-center self-center">~</div>
             <CalendarInput
@@ -53,6 +59,8 @@ function DateRangePicker({
                 date={endDate}
                 setDate={(value) => setEndDate(value)}
                 minDate={endMinDate}
+                includeDateIntervals={includeDateIntervals}
+                openToDate={endOpenToDate}
             />
         </div>
     );

@@ -77,7 +77,7 @@ function TaskModal() {
                                 <div className="space-y-5 mobile:space-y-3 mx-4 mobile:mx-0 mobile:text-sm">
                                     <TaskContent/>
                                     <TaskProgressStatus/>
-                                    <TaskDate/>
+                                    <TaskDate milestoneId={form.milestoneId}/>
                                     <TaskAssignedCrew/>
                                     <TaskUpdatedBy/>
                                     <TaskContentDetail/>

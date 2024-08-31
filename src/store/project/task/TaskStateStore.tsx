@@ -69,8 +69,8 @@ export const taskContentDetailSelector = selector<TaskContentDetails>({
             const form = get(taskModalState).form!;
 
             const updatedContentDetailArr = []
-            if(!_.isEmpty(newValue)){
-                for(const [key, value] of newValue){
+            if (!_.isEmpty(newValue)) {
+                for (const [key, value] of newValue) {
                     updatedContentDetailArr.push(value);
                 }
             }
@@ -141,4 +141,7 @@ export const taskProgressModFieldSelector = selector({
     }
 });
 
-
+export const taskDateRangeStateStore = atom({
+    key: 'taskDateRangeStateStore',
+    default: null
+})

@@ -17,6 +17,14 @@ export async function getProjectMilestones(projectId: string) {
 }
 
 /**
+ * 마일스톤 정보 조회
+ * @param milestoneId
+ */
+export async function getMilestone(milestoneId: string) {
+    return await requestWithAuth('GET', `/api/project/milestone/${milestoneId}`);
+}
+
+/**
  * 프로젝트 마일스톤 생성
  * @param milestoneInfo
  * @param projectId
@@ -59,6 +67,7 @@ export type DeleteMilestoneReqData = {
     projectId: bigint;
     authMap: ProjectAuthMap;
 }
+
 /**
  * 마일스톤 삭제
  * @param milestoneId
