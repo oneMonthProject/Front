@@ -1,20 +1,18 @@
 'use client';
 import React, {MouseEvent} from 'react';
-import {MilestoneInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
+import {MilestoneInfo, ProjectAuthMap} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/work/milestone/MilestoneCardMenu";
-import {useRecoilValue, useRecoilValueLoadable, useResetRecoilState, useSetRecoilState} from "recoil";
+import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     milestoneActiveStateStore,
     MilestoneModalForm,
     milestoneModalFormState,
     MilestoneModalFormState
 } from "@/store/project/task/MilestoneStateStore";
-import MilestoneStatusBadge from "@/components/ui/badge/MilestoneStatusBadge";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
 import {snackbarState} from '@/store/CommonStateStore';
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
-import {numStrToBigInt} from "@/utils/common";
+import {bigIntToString} from "@/utils/common";
 
 type MilestoneCardProps = {
     milestoneInfo: MilestoneInfo;
@@ -29,7 +27,6 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
         content,
         startDate,
         endDate,
-        progressStatus,
     } = milestoneInfo;
 
     const setSnackBar = useSetRecoilState(snackbarState);
@@ -46,7 +43,7 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
 
     const {mutate: deleteMilestone} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI({
-            projectId: numStrToBigInt(projectId as string),
+            projectId: projectId as bigint,
             milestoneId: mileStoneId,
             authMap
         }),
@@ -55,7 +52,7 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
                 setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
             } else {
                 resetActiveMilestone();
-                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
+                await queryClient.invalidateQueries({queryKey: ['milestoneList', bigIntToString(projectId)]});
                 setSnackBar({show: true, content: '마일스톤을 삭제했습니다.', type: 'INFO'});
             }
         },
