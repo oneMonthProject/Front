@@ -4,6 +4,11 @@ import {NextRequest} from "next/server";
 import {routeResponse} from "@/app/api/_interceptor/routeResponse";
 import {JSONReplaceBigInt} from "@/utils/common";
 
+/**
+ * 게시글 상세조회
+ * @param req
+ * @constructor
+ */
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url);
   const postId = searchParams.get("postId");

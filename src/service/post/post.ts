@@ -29,15 +29,27 @@ const createQueryParams = (params: SearchParams) => {
     return decodeURI(queryParams.toString());
 };
 
+/**
+ * 게시글 목록 조회
+ * @param params
+ */
 export const getPostList = async (params: SearchParams = {techStacks: [], position: null, page: 0, keyword: ''}) => {
     const queryParams = createQueryParams(params);
     return await request('GET', `/api/post/search?${queryParams}`);
 };
 
+/**
+ * 게시글 상세조회
+ * @param postId
+ */
 export const getPost = async (postId: bigint):Promise<ResponseBody<PostDetailInfo>> => {
     return await request('GET', `/api/post?postId=${postId}`);
 };
 
+/**
+ * 게시글 생성
+ * @param createData
+ */
 export const createPost = async (createData: CreatePostForm) => {
     const {
         project:
