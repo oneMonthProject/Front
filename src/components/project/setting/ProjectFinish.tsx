@@ -26,11 +26,9 @@ function ProjectFinish({projectId}:{projectId:string}) {
 
     return (
         <div className="space-y-3">
-            <div className="font-semibold text-xl mobile:text-lg py-2 border-b-2">프로젝트 상태 설정</div>
             <div className="flex mobile:flex-col px-3 mobile:px-0">
-                <div className="self-center mobile:text-sm">프로젝트 종료 후 다시 상태를 변경할 수 없습니다.</div>
-                <div className="ml-auto mobile:mt-2">
-                    <Button theme='black' size='md' onClickHandler={endProject}>프로젝트 종료</Button>
+                <div className="mr-auto mobile:mt-2">
+                    <Button theme='danger' size='md' onClickHandler={endProject}>프로젝트 종료 투표</Button>
                 </div>
             </div>
         </div>

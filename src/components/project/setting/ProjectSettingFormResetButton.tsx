@@ -1,16 +1,21 @@
 import React from 'react';
 import Button from "@/components/ui/Button";
 import {useResetRecoilState} from "recoil";
-import {projectSettingFormState} from "@/store/project/setting/ProjectSettingFormStateStore";
+import {projectSettingInfoStateStore} from "@/store/project/setting/ProjectSettingFormStateStore";
+import {useQueryClient} from "@tanstack/react-query";
 
 function ProjectSettingFormResetButton() {
-    const resetProjectSettingForm = useResetRecoilState(projectSettingFormState);
+    const resetProjectSettingInfo = useResetRecoilState(projectSettingInfoStateStore);
+    const queryClient = useQueryClient();
 
     return (
         <Button
             theme="primary-hollow"
             size="md"
-            onClickHandler={() => resetProjectSettingForm()}
+            onClickHandler={() => {
+                resetProjectSettingInfo();
+                queryClient.invalidateQueries({queryKey:['projectSettingInfo']});
+            }}
         >
             초기화
         </Button>
