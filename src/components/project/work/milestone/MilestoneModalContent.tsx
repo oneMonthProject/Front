@@ -3,7 +3,7 @@ import React, {ChangeEvent} from 'react';
 import {useRecoilState} from "recoil";
 import Input from '@/components/ui/form/Input';
 import {milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import DateRangePicker from "@/components/ui/datepicker/DateRangePicker";
+import MilestoneDate from "@/components/project/work/milestone/MilestoneDate";
 
 
 function MilestoneModalContent() {
@@ -16,12 +16,6 @@ function MilestoneModalContent() {
         }
     }
 
-    const onDateChange = (date: string, target: 'startDate' | 'endDate') => {
-        if (currentForm) {
-            const updatedForm = {...currentForm, [target]: date};
-            setCurrentForm(updatedForm);
-        }
-    }
 
     return (
         <section className='tablet:w-[450px] mobile:w-[280px] max-h-[500px] mb-4 flex-col mt-5'>
@@ -33,15 +27,7 @@ function MilestoneModalContent() {
                                value={currentForm?.content} onChange={onInputChange}/>
                     </div>
                 </div>
-                <div className='flex'>
-                    <label className="text-gray-700 font-semibold self-center">기간</label>
-                    <DateRangePicker
-                        startDate={currentForm?.startDate || null}
-                        endDate={currentForm?.endDate || null}
-                        setStartDate={(date) => onDateChange(date,"startDate")}
-                        setEndDate={(date) => onDateChange(date, "endDate")}
-                    />
-                </div>
+                <MilestoneDate/>
                 {currentForm?.type === 'modify' && (
                     <div className='max-w-[360px] flex'>
                         <label className="text-gray-700 font-semibold self-center">업데이트</label>
