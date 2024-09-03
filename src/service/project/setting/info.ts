@@ -1,5 +1,7 @@
 import {requestWithAuth} from "@/service/project/request";
 import {ProjectAuthMap, TechStackItem} from "@/utils/type";
+import {isEqual} from "lodash";
+import {throwErrorIfInvalid} from "@/utils/common";
 
 export type ProjectSettingInfoData = {
     projectId: bigint;
@@ -32,5 +34,11 @@ export type ProjectSettingInfoUpdReqData = {
  * @param reqData
  */
 export const updateProjectSettingInfo = async (reqData: ProjectSettingInfoUpdReqData) => {
+    throwErrorIfInvalid(isEqual(reqData.projectName, ''), '프로젝트 이름을 입력해주세요');
+    throwErrorIfInvalid(isEqual(reqData.projectSubject, ''), '프로젝트 주제를 입력해주세요');
+    throwErrorIfInvalid(isEqual(reqData.startDate, ''), '프로젝트 시작날짜를 입력해주세요');
+    throwErrorIfInvalid(isEqual(reqData.endDate, ''), '프로젝트 종료날짜를 입력해주세요');
+    throwErrorIfInvalid(isEqual(reqData.technologyIds, []), '프로젝트 기술스택을 선택해주세요.');
+
     return await requestWithAuth("PUT", "/api/project/setting/info", reqData);
 }

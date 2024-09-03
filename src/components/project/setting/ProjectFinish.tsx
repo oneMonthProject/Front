@@ -5,7 +5,7 @@ import {useSetRecoilState} from "recoil";
 import {snackbarState} from "@/store/CommonStateStore";
 import {useRouter} from "next/navigation";
 
-function ProjectFinish({projectId}:{projectId:string}) {
+function ProjectFinish({projectId}: { projectId: string }) {
     const setSnackbar = useSetRecoilState(snackbarState);
     const router = useRouter();
 
@@ -25,13 +25,7 @@ function ProjectFinish({projectId}:{projectId:string}) {
     }
 
     return (
-        <div className="space-y-3">
-            <div className="flex mobile:flex-col px-3 mobile:px-0">
-                <div className="mr-auto mobile:mt-2">
-                    <Button theme='danger' size='md' onClickHandler={endProject}>프로젝트 종료 투표</Button>
-                </div>
-            </div>
-        </div>
+        <Button theme='danger' size='md' onClickHandler={endProject}>종료 투표 생성</Button>
     );
 }
 

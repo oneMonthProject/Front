@@ -21,7 +21,6 @@ function ProjectTechnologies({initData}: { initData: ProjectSettingInfoData['tec
             setTechStacks={(item: readonly TechStackValueType[]) => setTechnologyIds([...item])}
             label="기술 스택"
             placeholder="기술 스택을 선택해주세요."
-            required
         />
     );
 }

@@ -8,7 +8,7 @@ import ProjectSettingInfo from "@/components/project/setting/info/ProjectSetting
 
 
 function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: string } }) {
-    const {state: authState, contents: authContents} = useRecoilValueLoadable(projectTaskAuthSelector(projectId));
+    const {state: authState, contents: authContents} = useRecoilValueLoadable(projectTaskAuthSelector(null));
 
     if(authState === 'loading') return <div>loading..</div>;
 
