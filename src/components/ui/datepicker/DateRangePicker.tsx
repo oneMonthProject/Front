@@ -29,16 +29,19 @@ function DateRangePicker({
     // 시작날짜보다 종료날짜 앞서지 못하도록
     useEffect(() => {
         if (startDate) {
+            const initEndDate = addDays(new Date(startDate), 1);
             const startDateNum = parseInt(startDate.replaceAll("-", ""), 10);
-            if (
-                endDate == null
-                || parseInt(endDate.replaceAll("-", ""), 10) <= startDateNum
-            ) {
-                const initEndDate = addDays(new Date(startDate), 1);
-                setEndMinDate(initEndDate);
+            const endDateNum =
+                endDate
+                    ? parseInt(endDate.replaceAll("-", ""), 10)
+                    : parseInt(format(addDays(new Date(), 1), 'yyyyMMdd'), 10);
+
+            if (endDateNum <= startDateNum) {
                 setEndDate(format(initEndDate, 'yyyy-MM-dd'));
             }
+            setEndMinDate(initEndDate);
         }
+
     }, [startDate, endDate, setEndDate]);
 
 
