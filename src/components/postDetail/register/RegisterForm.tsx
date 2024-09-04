@@ -5,7 +5,6 @@ import {useRecoilValue, useResetRecoilState} from "recoil";
 import PostTitle from "@/components/postDetail/register/PostTitle";
 import ProjectName_Reg from "@/components/postDetail/register/ProjectName_Reg";
 import ProjectSubject_Reg from "@/components/postDetail/register/ProjectSubject_Reg";
-import ProjectCrewCount from "@/components/postDetail/register/ProjectCrewCount";
 import ProjectRecruitPosition from "@/components/postDetail/register/ProjectRecruitPosition";
 import ProjectDate_Reg from "@/components/postDetail/register/ProjectDate_Reg";
 import ProjectTech from "@/components/postDetail/register/ProjectTech";
@@ -42,7 +41,6 @@ function RegisterForm() {
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                     <ProjectName_Reg/>
                     <ProjectSubject_Reg/>
-                    <ProjectCrewCount/>
                     <ProjectRecruitPosition/>
                 </div>
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">

@@ -233,7 +233,6 @@ export interface Project {
     createDate: string;
     updateDate: string;
     status: string;
-    crewNumber: number;
     authMap: ProjectAuthMap
 }
 

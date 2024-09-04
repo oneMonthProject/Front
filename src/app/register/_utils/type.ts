@@ -18,7 +18,6 @@ export type RecruitCountName = RecruitCount['name'];
 export type CreateProject = {
     name: string;
     subject: string;
-    crewNumber: RecruitCountValue;
     startDate: string;
     endDate: string;
     technologyIds: readonly TechStackValueType[];

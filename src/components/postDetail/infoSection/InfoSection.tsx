@@ -11,7 +11,7 @@ interface InfoProps {
 }
 
 const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
-  const { name: projectName, subject, startDate, endDate, crewNumber, technologyStacks } = projectInfo;
+  const { name: projectName, subject, startDate, endDate, technologyStacks } = projectInfo;
 
   return (
     <div className="px-2 mobile:px-0">
@@ -39,10 +39,6 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
               <TechStackImage key={stack.techStackId.toString()} stackName={stack.techStackName} width={32} height={32} />
             ))}
           </div>
-        </div>
-        <div className="flex gap-5 h-10 items-center">
-          <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">모집 인원</div>
-          <div>{crewNumber > 0 ? `${crewNumber}명` : "인원미정"}</div>
         </div>
         <div className="flex gap-5 h-10 items-center">
           <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">연락 방법</div>
