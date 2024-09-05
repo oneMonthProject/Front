@@ -39,7 +39,7 @@ function ProjectDate({
     }, [startDateValue, endDateValue, setEndDate, setEndMinDate]);
 
     return (
-        <div className="w-[380px] tablet:w-full space-y-10 mobile:mx-auto">
+        <div className="w-[380px] mobile:w-[300px] space-y-10 mobile:mx-auto">
             <CalendarInput
                 id="startDate"
                 label="시작 날짜"

@@ -14,6 +14,7 @@ import {
 } from "@/store/project/setting/ProjectSettingFormStateStore";
 import ProjectTechnologies from "@/components/project/setting/info/ProjectTechnologies";
 import {bigIntToString} from "@/utils/common";
+import ProjectSettingInfoSkeleton from "@/components/project/setting/info/ProjectSettingInfoSkeleton";
 
 function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: ProjectAuthMap }) {
     const setProjectSettingProjectId = useSetRecoilState(projectSettingInfoSelector("projectId"));
@@ -31,30 +32,30 @@ function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: 
         return () => resetProjectSettingInfoState();
     }, [projectId, authMap, setProjectSettingProjectId, setProjectSettingAuthMap, resetProjectSettingInfoState]);
 
-    if (isFetching) return <div>loading...</div>;
+    if (isFetching) return <ProjectSettingInfoSkeleton/>;
 
     const {projectName, projectSubject, startDate, endDate, technologyStacks} = data!.data!;
     return (
         <>
-            <div className="space-y-10 px-8 mobile:px-4">
+            <div className="max-w-[1100px] space-y-10 px-8 mobile:px-4">
                 <div className="mt-6 font-semibold text-xl mobile:text-lg py-2 border-b-2">프로젝트 정보</div>
-                <div className="grid pc:grid-cols-2 tablet:grid-cols-1 gap-10 place-content-between">
-                    <div className="w-[380px] tablet:w-full mobile:space-y-3 mobile:mx-auto">
+                <div className="w-full mx-auto grid pc:grid-cols-2 tablet:grid-cols-1 gap-10 place-content-between">
+                    <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                         <ProjectName initData={projectName}/>
                     </div>
-                    <div className="w-[380px] tablet:w-full mobile:space-y-3 mobile:mx-auto">
+                    <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                         <ProjectSubject initData={projectSubject}/>
                     </div>
                     <div className='row-span-2'>
                         <ProjectDate initStartDate={startDate} initEndDate={endDate}/>
                     </div>
-                    <div className="w-[380px] tablet:w-full mobile:space-y-3 mobile:mx-auto">
+                    <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                         <ProjectTechnologies initData={technologyStacks}/>
                     </div>
-                    <div className="w-[380px] tablet:w-full flex items-center space-x-2">
-                        <ProjectSettingFormResetButton/>
-                        <ProjectSettingFormSaveButton initData={data!.data!}/>
-                    </div>
+                </div>
+                <div className="w-full my-4 flex items-center justify-center space-x-2">
+                    <ProjectSettingFormResetButton/>
+                    <ProjectSettingFormSaveButton initData={data!.data!}/>
                 </div>
             </div>
             <div className="mt-12 px-8 mobile:px-4 space-y-10">

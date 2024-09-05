@@ -13,6 +13,7 @@ import Content from "@/components/project/setting/board/Content";
 import ProjectSettingBoardInfoResetBtn from "@/components/project/setting/board/ProjectSettingBoardInfoResetBtn";
 import ProjectSettingBoardInfoSaveBtn from "@/components/project/setting/board/ProjectSettingBoardInfoSaveBtn";
 import RecruitmentStatus from "@/components/project/setting/board/RecruitmentStatus";
+import ProjectSettingBoardInfoSkeleton from "@/components/project/setting/board/ProjectSettingBoardInfoSkeleton";
 
 function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, authMap: ProjectAuthMap }) {
     const setProjectSettingBoardInfoProjectId = useSetRecoilState(projectSettingBoardInfoSelector("projectId"));
@@ -36,7 +37,7 @@ function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, auth
         resetProjectSettingBoardInfo
     ]);
 
-    if (isFetching) return <div>loading...</div>;
+    if (isFetching) return <ProjectSettingBoardInfoSkeleton/>;
 
     const {title, boardPositions, contact, recruitmentStatus, content} = data!.data!;
 
@@ -56,11 +57,11 @@ function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, auth
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                     <Contact initData={contact}/>
                 </div>
-                <div className="w-full mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto col-span-2">
+                <div className="w-full mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto pc:col-span-2">
                     <Content initData={content}/>
                 </div>
             </div>
-            <div className="w-full my-4 flex items-center justify-center space-x-2">
+            <div className="pc:w-full my-4 flex items-center justify-center space-x-2">
                 <ProjectSettingBoardInfoResetBtn/>
                 <ProjectSettingBoardInfoSaveBtn initData={data!.data!}/>
             </div>
