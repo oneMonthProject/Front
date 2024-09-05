@@ -11,11 +11,9 @@ import {
     updateProjectSettingInfo as updateProjectSettingInfoAPI
 } from "@/service/project/setting/info";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 
 
 function ProjectSettingFormSaveButton({initData}: { initData: ProjectSettingInfoData }) {
-    const projectId = useRecoilValue(projectIdState)!;
     const queryClinet = useQueryClient();
     const projectSettingInfo = useRecoilValue(projectSettingInfoStateStore);
     const {setSuccessSnackbar, setErrorSnackbar} = useSnackbar();

@@ -14,7 +14,6 @@ import {
 } from "@/store/project/setting/ProjectSettingFormStateStore";
 import ProjectTechnologies from "@/components/project/setting/info/ProjectTechnologies";
 import {bigIntToString} from "@/utils/common";
-import {useQueryClient} from "@tanstack/react-query";
 
 function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: ProjectAuthMap }) {
     const setProjectSettingProjectId = useSetRecoilState(projectSettingInfoSelector("projectId"));
@@ -46,7 +45,6 @@ function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: 
                     <div className="w-[380px] tablet:w-full mobile:space-y-3 mobile:mx-auto">
                         <ProjectSubject initData={projectSubject}/>
                     </div>
-                    {/*</div>*/}
                     <div className='row-span-2'>
                         <ProjectDate initStartDate={startDate} initEndDate={endDate}/>
                     </div>

@@ -1,7 +1,10 @@
 import {atom, DefaultValue, selectorFamily} from "recoil";
 import {ProjectSettingInfoUpdReqData} from "@/service/project/setting/info";
+import {ProjectSettingBoardUpdReqData} from "@/service/project/setting/board";
 
-
+/**
+ * 프로젝트 설정 - 프로젝트 정보 상태 store/selector
+ */
 export const projectSettingInfoStateStore = atom<ProjectSettingInfoUpdReqData>({
     key: 'projectSettingInfoStateStore',
     default: {
@@ -34,7 +37,7 @@ export const projectSettingInfoSelector = selectorFamily({
         const updated = {...projectSettingInfoUpdReq, [param]: newValue};
         set(projectSettingInfoStateStore, updated);
     }
-})
+});
 
 
 
