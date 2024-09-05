@@ -22,13 +22,13 @@ export const getProjectSettingBoardInfo = async (projectId: bigint) => {
     return await requestWithAuth("GET", `/api/project/setting/board?projectId=${projectId}`);
 }
 
-type ProjectSettingBoardUpdReqData = {
+export type ProjectSettingBoardUpdReqData = {
     projectId: bigint;
     boardId: bigint;
     authMap: ProjectAuthMap;
     title: string;
     content: string;
-    recruitmentStatus: boolean;
+    recruitmentStatus: boolean | null;
     contact: string;
     positionIds: bigint[];
 };

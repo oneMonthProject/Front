@@ -40,6 +40,42 @@ export const projectSettingInfoSelector = selectorFamily({
 });
 
 
+/**
+ * 프로젝트 설정 - 프로젝트 게시글 정보 상태 store/selector
+ */
+export const projectSettingBoardInfoStateStore = atom<ProjectSettingBoardUpdReqData>({
+    key: 'projectSettingBoardInfoStateStore',
+    default: {
+        projectId: 0n,
+        boardId: 0n,
+        authMap: {
+            milestoneAuth: false,
+            workAuth: false,
+            voteAuth: false
+        },
+        title: '',
+        content: '',
+        recruitmentStatus: null,
+        contact: '',
+        positionIds: []
+    }
+});
 
+export type ProjectSettingBoardUpdReqKey = keyof ProjectSettingBoardUpdReqData;
+export type ProjectSettingBoardInfoUpdField<T> = ProjectSettingBoardUpdReqData[Extract<ProjectSettingBoardUpdReqKey, T>];
+export const projectSettingBoardInfoSelector = selectorFamily({
+    key: 'projectSettingBoardInfoSelector',
+    get: (param: ProjectSettingBoardUpdReqKey) => ({get}) => {
+        const projectSettingBoardInfoUpdReqData = get(projectSettingBoardInfoStateStore);
+        return projectSettingBoardInfoUpdReqData[param] as ProjectSettingBoardInfoUpdField<typeof param>;
+    },
+    set: (param: ProjectSettingBoardUpdReqKey) => ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
+
+        const projectSettingBoardInfoUpdReqData = get(projectSettingBoardInfoStateStore);
+        const updated = {...projectSettingBoardInfoUpdReqData, [param]: newValue};
+        set(projectSettingBoardInfoStateStore, updated);
+    }
+});
 
 
