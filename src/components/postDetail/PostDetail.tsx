@@ -36,7 +36,6 @@ const PostDetail = ({postId}: { postId: string }) => {
                 <InfoSection projectInfo={project} contact={board.contact} boardPositions={board.boardPositions}/>
                 <BodySection content={board.content}/>
                 <div className="flex-col mb-5">
-                    <RecruitStatusButton boardInfo={board}/>
                     <JoinProject projectId={project.projectId as bigint} boardInfo={board}/>
                 </div>
             </div>
