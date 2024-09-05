@@ -28,7 +28,8 @@ const PostList = () => {
             position: selectedPosition,
             keyword: searchValue,
             page: pageNumber
-        })
+        }),
+        staleTime: 0
     });
 
     if (isFetching || isError) return <PostListSkeleton itemCount={8}/>;
