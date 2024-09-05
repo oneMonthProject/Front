@@ -8,7 +8,7 @@ function ProjectDate_Reg() {
     const [{endDate}, setEndDate] = useRecoilState(projectFieldSelector('endDate'));
 
     return (
-        <>
+        <div className="w-[380px] tablet:w-full space-y-10 mobile:mx-auto">
             <CalendarInput
                 id="startDate"
                 label="시작 날짜"
@@ -23,7 +23,7 @@ function ProjectDate_Reg() {
                 date={endDate}
                 setDate={(value) => setEndDate({endDate:value})}
             />
-        </>
+        </div>
     );
 }
 

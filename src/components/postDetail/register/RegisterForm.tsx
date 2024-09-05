@@ -26,33 +26,41 @@ function RegisterForm() {
     const registerForm = useRecoilValue(registerPostFormState);
 
     useEffect(() => {
-       return () => {
-           resetPostFormState();
-           resetProjectFormState();
-       }
-    },[resetPostFormState, resetProjectFormState]);
+        return () => {
+            resetPostFormState();
+            resetProjectFormState();
+        }
+    }, [resetPostFormState, resetProjectFormState]);
 
     return (
-        <div className="w-full max-w-[800px] mobile:max-w-[400px] mx-auto space-y-5 mobile:space-y-3 my-8 mobile:my-6">
+        <div className="max-w-[1000px] mobile:max-w-[400px] mx-auto space-y-12 mobile:space-y-3 mt-[80px] mb-8 mobile:my-6">
             <div className="w-full mobile:w-[300px] mx-auto">
                 <PostTitle/>
             </div>
-            <div className="flex mobile:block pc:space-x-8 tablet:space-x-8 mobile:space-y-3">
+            <div className="mx-auto grid pc:grid-cols-2 tablet:grid-cols-1 gap-10 place-content-between">
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                     <ProjectName_Reg/>
-                    <ProjectSubject_Reg/>
-                    <ProjectRecruitPosition/>
                 </div>
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
+                    <ProjectSubject_Reg/>
+                </div>
+                <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
+                    <ProjectRecruitPosition/>
+                </div>
+                <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto row-span-2">
                     <ProjectDate_Reg/>
+                </div>
+                <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                     <ProjectTech/>
+                </div>
+                <div className='w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto'>
                     <ProjectOwnerContact/>
                 </div>
             </div>
             <div className="mobile:w-[300px] mx-auto">
                 <ProjectIntro/>
             </div>
-            <div className="mobile:w-[300px] space-x-1 text-right">
+            <div className="mobile:w-[300px] space-x-2 text-center">
                 <Button
                     theme="primary-hollow"
                     onClickHandler={() => router.push("/")}
