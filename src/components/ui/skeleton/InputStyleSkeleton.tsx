@@ -8,7 +8,7 @@ function InputStyleSkeleton({label}: { label: string }) {
                 <span className="text-gray-700">
                     {label}
                 </span>
-                <Skeleton className='w-full h-[45px] py-2 px-4'/>
+                <Skeleton className='w-full h-[40px] py-2 px-4'/>
             </div>
         </div>
     );

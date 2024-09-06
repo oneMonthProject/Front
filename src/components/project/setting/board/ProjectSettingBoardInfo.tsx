@@ -14,6 +14,9 @@ import ProjectSettingBoardInfoResetBtn from "@/components/project/setting/board/
 import ProjectSettingBoardInfoSaveBtn from "@/components/project/setting/board/ProjectSettingBoardInfoSaveBtn";
 import RecruitmentStatus from "@/components/project/setting/board/RecruitmentStatus";
 import ProjectSettingBoardInfoSkeleton from "@/components/project/setting/board/ProjectSettingBoardInfoSkeleton";
+import SettingContainer from "@/components/project/setting/SettingContainer";
+import SettingTitle from "@/components/project/setting/SettingTitle";
+import SettingBody from "@/components/project/setting/SettingBody";
 
 function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, authMap: ProjectAuthMap }) {
     const setProjectSettingBoardInfoProjectId = useSetRecoilState(projectSettingBoardInfoSelector("projectId"));
@@ -42,9 +45,9 @@ function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, auth
     const {title, boardPositions, contact, recruitmentStatus, content} = data!.data!;
 
     return (
-        <div className="max-w-[1100px] space-y-10 px-8 mobile:px-4">
-            <div className="mt-6 font-semibold text-xl mobile:text-lg py-2 border-b-2">모집 게시글</div>
-            <div className="w-full mx-auto grid pc:grid-cols-2 tablet:grid-cols-1 gap-10 place-content-between">
+        <SettingContainer>
+            <SettingTitle>모집 게시글</SettingTitle>
+            <SettingBody>
                 <div className="w-[380px] mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto">
                     <RecruitmentStatus initData={recruitmentStatus}/>
                 </div>
@@ -60,12 +63,12 @@ function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, auth
                 <div className="w-full mobile:w-[300px] space-y-5 mobile:space-y-3 mobile:mx-auto pc:col-span-2">
                     <Content initData={content}/>
                 </div>
-            </div>
+            </SettingBody>
             <div className="pc:w-full my-4 flex items-center justify-center space-x-2">
                 <ProjectSettingBoardInfoResetBtn/>
                 <ProjectSettingBoardInfoSaveBtn initData={data!.data!}/>
             </div>
-        </div>
+        </SettingContainer>
     );
 }
 
