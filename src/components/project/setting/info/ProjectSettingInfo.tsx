@@ -1,11 +1,11 @@
 import React, {useEffect} from 'react';
 import {ProjectAuthMap} from "@/utils/type";
-import ProjectName from "@/components/project/setting/ProjectName";
-import ProjectSubject from "@/components/project/setting/ProjectSubject";
-import ProjectDate from "@/components/project/setting/ProjectDate";
-import ProjectSettingFormResetButton from "@/components/project/setting/ProjectSettingFormResetButton";
-import ProjectSettingFormSaveButton from "@/components/project/setting/ProjectSettingFormSaveButton";
-import ProjectFinish from "@/components/project/setting/ProjectFinish";
+import ProjectName from "@/components/project/setting/info/ProjectName";
+import ProjectSubject from "@/components/project/setting/info/ProjectSubject";
+import ProjectDate from "@/components/project/setting/info/ProjectDate";
+import ProjectSettingFormResetButton from "@/components/project/setting/info/ProjectSettingFormResetButton";
+import ProjectSettingFormSaveButton from "@/components/project/setting/info/ProjectSettingFormSaveButton";
+import ProjectFinish from "@/components/project/setting/info/ProjectFinish";
 import useProjectSettingInfo from "@/hooks/useProjectSettingInfo";
 import {useResetRecoilState, useSetRecoilState} from "recoil";
 import {
