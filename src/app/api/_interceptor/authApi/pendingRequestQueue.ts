@@ -1,5 +1,3 @@
-import {CustomResponse} from "@/app/api/_interceptor/response";
-
 export type PendingRequest = (error: Error | null) => Promise<void>;
 export const pendingRequests: Map<string, PendingRequest[]> = new Map<string, PendingRequest[]>();
 export const addToPendingRequest = (userId: string, request: PendingRequest) => {
