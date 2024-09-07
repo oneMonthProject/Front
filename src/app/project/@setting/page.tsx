@@ -6,12 +6,12 @@ import {useRecoilValueLoadable} from "recoil";
 import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 import ProjectSettingInfo from "@/components/project/setting/info/ProjectSettingInfo";
 import ProjectSettingBoardInfo from "@/components/project/setting/board/ProjectSettingBoardInfo";
-import ProjectSettingCrew from "@/components/project/setting/crew/ProjectSettingCrew";
+import ProjectSettingCrewAuth from "@/components/project/setting/crewAuth/ProjectSettingCrewAuth";
 import ProjectSettingEndProject from "@/components/project/setting/endProject/ProjectSettingEndProject";
 import ProjectSettingEndProjectSkeleton from "@/components/project/setting/endProject/ProjectSettingEndProjectSkeleton";
 import ProjectSettingInfoSkeleton from "@/components/project/setting/info/ProjectSettingInfoSkeleton";
 import ProjectSettingBoardInfoSkeleton from "@/components/project/setting/board/ProjectSettingBoardInfoSkeleton";
-import ProjectSettingCrewSkeleton from "@/components/project/setting/crew/ProjectSettingCrewSkeleton";
+import ProjectSettingCrewAuthSkeleton from "@/components/project/setting/crewAuth/ProjectSettingCrewAuthSkeleton";
 
 
 function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: string } }) {
@@ -21,7 +21,7 @@ function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: s
         <section className='w-full mx-auto space-y-[100px]'>
             <ProjectSettingInfoSkeleton/>
             <ProjectSettingBoardInfoSkeleton/>
-            <ProjectSettingCrewSkeleton/>
+            <ProjectSettingCrewAuthSkeleton/>
             <ProjectSettingEndProjectSkeleton/>
         </section>
     );
@@ -30,7 +30,7 @@ function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: s
         <section className='w-full mx-auto space-y-[100px]'>
             <ProjectSettingInfo projectId={numStrToBigInt(projectId)} authMap={authContents.data}/>
             <ProjectSettingBoardInfo projectId={numStrToBigInt(projectId)} authMap={authContents.data}/>
-            <ProjectSettingCrew/>
+            <ProjectSettingCrewAuth projectId={projectId}/>
             <ProjectSettingEndProject projectId={numStrToBigInt(projectId)}/>
         </section>
     );

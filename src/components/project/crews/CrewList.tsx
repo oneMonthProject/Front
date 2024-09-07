@@ -6,8 +6,6 @@ import Link from "next/link";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import useProjectCrewList from "@/hooks/useProjectCrewList";
 import {ProjectMember} from "@/utils/type";
-import {useRecoilValue} from "recoil";
-import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 import CrewListSkeleton from "@/components/ui/skeleton/project/crews/CrewListSkeleton";
 
 export default function CrewList({projectId, userId}: { projectId: string, userId: string }) {

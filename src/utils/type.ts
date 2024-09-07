@@ -216,6 +216,8 @@ export interface ProjectMemberAuth {
     projectMemberAuthName: string;
     milestone_change_YN: boolean;
     work_change_YN: boolean;
+    vote_YN: boolean;
+    config_YN: boolean;
 }
 
 export interface Position {
@@ -240,6 +242,7 @@ export type ProjectAuthMap = {
     milestoneAuth: boolean;
     workAuth: boolean;
     voteAuth: boolean;
+    configAuth: boolean;
 }
 
 export interface ProjectInfo extends Project {

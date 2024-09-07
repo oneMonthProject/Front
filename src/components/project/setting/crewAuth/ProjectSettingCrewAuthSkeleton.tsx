@@ -3,7 +3,7 @@ import SettingContainer from "@/components/project/setting/SettingContainer";
 import SettingTitle from "@/components/project/setting/SettingTitle";
 import Skeleton from "@/components/ui/skeleton/Skeleton";
 
-function ProjectSettingCrewSkeleton() {
+function ProjectSettingCrewAuthSkeleton() {
     return (
         <SettingContainer>
             <SettingTitle>크루 권한</SettingTitle>
@@ -32,4 +32,4 @@ function ProjectSettingCrewSkeleton() {
     );
 }
 
-export default ProjectSettingCrewSkeleton;
+export default ProjectSettingCrewAuthSkeleton;
