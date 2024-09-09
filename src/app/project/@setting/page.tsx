@@ -12,6 +12,11 @@ import ProjectSettingEndProjectSkeleton from "@/components/project/setting/endPr
 import ProjectSettingInfoSkeleton from "@/components/project/setting/info/ProjectSettingInfoSkeleton";
 import ProjectSettingBoardInfoSkeleton from "@/components/project/setting/board/ProjectSettingBoardInfoSkeleton";
 import ProjectSettingCrewAuthSkeleton from "@/components/project/setting/crewAuth/ProjectSettingCrewAuthSkeleton";
+import ErrorMessage from "@/components/ui/error/ErrorMessage";
+import {HttpStatus} from "@/app/api/_interceptor/utils/httpStatus";
+import Navigator from "@/components/ui/error/Navigator";
+import StyledLink from "@/components/ui/StyledLink";
+import ErrorPageContainer from "@/components/ui/error/ErrorPageContainer";
 
 
 function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: string } }) {
@@ -24,6 +29,14 @@ function SettingPage({searchParams: {projectId}}: { searchParams: { projectId: s
             <ProjectSettingCrewAuthSkeleton/>
             <ProjectSettingEndProjectSkeleton/>
         </section>
+    );
+
+    if (!authContents.data.configAuth) return (
+        <ErrorPageContainer className='justify-center bg-ground200 rounded-md'>
+            <ErrorMessage className='leading-loose mobile:text-base mobile:px-5'>
+                접근 권한이 없습니다. 프로젝트 관리자에게 문의하세요
+            </ErrorMessage>
+        </ErrorPageContainer>
     );
 
     return (
