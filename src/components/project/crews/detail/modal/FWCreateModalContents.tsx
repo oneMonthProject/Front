@@ -10,7 +10,6 @@ function FwCreateModalContents() {
     const onChangeFWReasonHandler = (e:ChangeEvent<HTMLInputElement>) => {
         setCrewFWModalState((prev) => ({
             ...prev,
-            isOpen:false,
             createData:{
                 ...prev.createData,
                 reason: e.target.value as FWReasonCode

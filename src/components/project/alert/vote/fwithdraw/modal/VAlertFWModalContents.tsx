@@ -38,7 +38,7 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
 
 
     const {
-        fwMemberAuth: {name: fwMemberAuthName},
+        fwMemberAuth: {name: fwMemberAuthName, id: fwMemberAuthId},
         fwMemberPosition: {name: fwMemberPositionName},
         fwUserNickname,
         fwUserProfile,
@@ -63,6 +63,7 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 projectId: numStrToBigInt(projectId as string),
                 voteId,
                 fw_member_id: fwMemberId,
+                fw_member_auth_id: fwMemberAuthId,
                 authMap: contents.data,
                 answer: e.target.value as VoteOptionCode
             };

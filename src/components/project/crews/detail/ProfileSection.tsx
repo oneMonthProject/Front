@@ -3,28 +3,25 @@ import React from 'react';
 import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
 import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
-import {useQuery} from "@tanstack/react-query";
-import {ProjectAuthMap, ProjectMemberProfile, ResponseBody} from "@/utils/type";
-import {getCrewDetail} from "@/service/project/crews";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
 import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detail/ProfileSectionSkeleton";
 import {useRecoilValueLoadable} from "recoil";
 import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 import useProjectMember from "@/hooks/useProjectMember";
-import {numStrToBigInt} from "@/utils/common";
 import {getCookie} from "cookies-next";
 import CrewFwButton from "@/components/project/crews/detail/CrewFWButton";
+import useProjectInfo from "@/hooks/useProjectInfo";
 
 
 function ProfileSection({projectMemberId}: { projectMemberId: string }) {
+    const currentUserId = getCookie('user_id');
     const {projectMemberInfo, isFetching} = useProjectMember(projectMemberId);
 
     if (isFetching) return <ProfileSectionSkeleton/>;
 
     const {user, position, status, projectMemberAuth} = projectMemberInfo!;
-
-    const isMemberCurrentUser = getCookie('user_id') === user.userId.toString();
+    const isMemberCurrentUser = currentUserId === user.userId.toString();
 
     return (
         <div
@@ -39,7 +36,7 @@ function ProfileSection({projectMemberId}: { projectMemberId: string }) {
                 {
                     isMemberCurrentUser
                         ? <CrewOutButton projectMemberInfo={projectMemberInfo!}/>
-                        : <CrewFwButton projectMemberInfo={projectMemberInfo!}/>
+                        : <CrewFwButton projectMemberInfo={projectMemberInfo!} />
                 }
 
             </section>

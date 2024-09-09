@@ -1,4 +1,4 @@
-import {ProjectAuthMap} from "@/utils/type";
+import {ProjectAuthMap, ProjectMemberAuth} from "@/utils/type";
 import {VoteOption} from "@/service/project/vote/constant";
 
 export type VoteOptionCode = keyof typeof VoteOption;
@@ -15,6 +15,7 @@ export type VoteFWReqData = {
     projectId: bigint;
     voteId: bigint;
     fw_member_id: bigint;
+    fw_member_auth_id: bigint;
     authMap: ProjectAuthMap;
     answer: VoteOptionCode;
 };

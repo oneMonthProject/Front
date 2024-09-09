@@ -25,6 +25,9 @@ export const projectInfoQuery = selectorFamily<ResponseBody<ProjectInfo | null>,
             userId = paramObj.userId;
         }
 
+        console.log("projectId: ", projectId);
+        console.log("userId: ", userId);
+
         return await getMyProjectDetail(projectId, userId);
     }
 });
