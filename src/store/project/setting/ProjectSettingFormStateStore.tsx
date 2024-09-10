@@ -12,7 +12,8 @@ export const projectSettingInfoStateStore = atom<ProjectSettingInfoUpdReqData>({
         authMap: {
             milestoneAuth: false,
             workAuth: false,
-            voteAuth: false
+            voteAuth: false,
+            configAuth: false
         },
         projectName: '',
         projectSubject: '',
@@ -51,7 +52,8 @@ export const projectSettingBoardInfoStateStore = atom<ProjectSettingBoardUpdReqD
         authMap: {
             milestoneAuth: false,
             workAuth: false,
-            voteAuth: false
+            voteAuth: false,
+            configAuth: false
         },
         title: '',
         content: '',
