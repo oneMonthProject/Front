@@ -21,8 +21,8 @@ function Button({size = "md", theme = "primary", children, onClickHandler, ...pr
             className={
                 classNames(
                     props.className || ''
-                    , textSize, px, py, bgColor, textColor, ring
-                    , `rounded-full font-semibold ${textColor} shadow-sm`
+                    , textSize, px, py, bgColor, ring
+                    , `rounded-full font-semibold ${textColor} shadow-sm disabled:opacity-50 disabled:cursor-not-allowed`
                 )
             }
             onClick={() => {
