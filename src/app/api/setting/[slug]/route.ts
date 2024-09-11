@@ -7,18 +7,27 @@ export async function GET(
     {params}: { params: { slug: string } }
 ) {
     let res: Response;
-    if (params.slug === "position") {
-        res = await publicApi("/api/position-list/public");
-    } else if (params.slug === "tech-stack") {
-        res = await publicApi("/api/technology-stack-list/public");
-    } else if (params.slug === "tech-stack-category") {
-        res = await publicApi("/api/technology-stack-category-list/public");
-    } else if (params.slug === "tech-stack-with-category") {
-        res = await publicApi("/api/technology-stack-category-mapping-list/public");
-    } else {
-        throw Error("Unknown Api Route");
+
+    switch (params.slug) {
+        case "position":
+            res = await publicApi("/api/position-list/public");
+            break;
+        case "tech-stack":
+            res = await publicApi("/api/technology-stack-list/public");
+            break;
+        case "tech-stack-category":
+            res = await publicApi("/api/technology-stack-category-list/public");
+            break;
+        case "tech-stack-with-category":
+            res = await publicApi("/api/technology-stack-category-mapping-list/public");
+            break;
+        case "crewAuth":
+            res = await publicApi("/api/crewAuth/public");
+            break;
+        default:
+            throw Error(`Unknown Api Route: ${req.url}`);
+
     }
 
-   return routeResponse(req, res);
-
+    return routeResponse(req, res);
 }

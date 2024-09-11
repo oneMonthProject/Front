@@ -1,7 +1,6 @@
 import React, {useState} from 'react';
 import Avatar from "@/components/ui/Avatar";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
-import Select from "@/components/ui/selector/Select";
 import Button from "@/components/ui/Button";
 import {ProjectAuthMap, ProjectMember} from "@/utils/type";
 import {useMutation} from "@tanstack/react-query";
@@ -11,14 +10,14 @@ import {
 } from "@/service/project/setting/crewAuth";
 import {numStrToBigInt} from "@/utils/common";
 import useSnackbar from "@/hooks/useSnackbar";
+import CrewAuthSelector from "@/components/project/setting/crewAuth/CrewAuthSelector";
 
 function CrewAuthRow({crew, projectId, authMap}: { crew: ProjectMember, projectId: string, authMap: ProjectAuthMap }) {
     const {setSuccessSnackbar, setErrorSnackbar} = useSnackbar();
-
     const {projectMemberAuth: initAuth, user, position} = crew;
     const [auth, setAuth] = useState(() => ({
-        name: initAuth.projectMemberAuthName,
-        value: initAuth.projectMemberAuthId
+        name: initAuth.name,
+        value: initAuth.code
     }));
 
     const {mutate: updateProjectSettingCrewAuth, isPending} = useMutation({
@@ -39,7 +38,7 @@ function CrewAuthRow({crew, projectId, authMap}: { crew: ProjectMember, projectI
         const reqData: ProjectSettingCrewAuthUpdData = {
             authMap,
             projectId: numStrToBigInt(projectId),
-            projectMemberAuthId: auth.value,
+            projectMemberAuth: auth.value,
             projectMemberId: crew.projectMemberId
         };
 
@@ -65,13 +64,7 @@ function CrewAuthRow({crew, projectId, authMap}: { crew: ProjectMember, projectI
             </td>
             <td className="max-w-[30%] whitespace-nowrap px-3 py-5 text-sm text-gray-500">
                 <div className=" flex items-center">
-                    <div className='w-[230px] mobile:w-[95px]'>
-                        <Select
-                            items={[{name: '매니저', value: 1n}, {name: '크루', value: 3n}]}
-                            setValue={(crew) => setAuth(crew)}
-                            value={auth}
-                        />
-                    </div>
+                    <CrewAuthSelector value={auth} setValue={setAuth}/>
                 </div>
             </td>
             <td className="max-w-[30%] relative whitespace-nowrap py-5 pl-3 pr-4 tablet:text-right text-sm font-medium sm:pr-0">
