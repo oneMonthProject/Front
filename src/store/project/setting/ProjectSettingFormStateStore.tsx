@@ -9,13 +9,7 @@ export const projectSettingInfoStateStore = atom<ProjectSettingInfoUpdReqData>({
     key: 'projectSettingInfoStateStore',
     default: {
         projectId: 0n,
-        authMap: {
-            code: '',
-            name: '',
-            milestoneChangeYN: false,
-            workChangeYN: false,
-            configYn: false
-        },
+        authMap: '',
         projectName: '',
         projectSubject: '',
         startDate: '',
@@ -50,13 +44,7 @@ export const projectSettingBoardInfoStateStore = atom<ProjectSettingBoardUpdReqD
     default: {
         projectId: 0n,
         boardId: 0n,
-        authMap: {
-            code: '',
-            name: '',
-            milestoneChangeYN: false,
-            workChangeYN: false,
-            configYn: false
-        },
+        authMap: '',
         title: '',
         content: '',
         recruitmentStatus: null,

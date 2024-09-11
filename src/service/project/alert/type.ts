@@ -1,6 +1,6 @@
 import {AlertType, FWReason, VoteStatus} from "@/service/project/alert/constant";
 import {Notice} from "@/app/project/@notice/_utils/type";
-import {ProfileInfo, ProjectAuthMap} from "@/utils/type";
+import {ProfileInfo, ProjectAuthMap, ProjectAuthMapCode} from "@/utils/type";
 
 export type VoteStatusCode = keyof typeof VoteStatus;
 export type VoteStatusType = typeof VoteStatus.VSTAT1001 | typeof VoteStatus.VSTAT1002;
@@ -35,8 +35,8 @@ export type VAlertRecruitDetailData = {
 export type VAlertFWCreateData = {
     project_id: bigint;
     fw_member_id: bigint;
-    fw_member_auth: ProjectAuthMap;
-    authMap: ProjectAuthMap;
+    fw_member_auth: ProjectAuthMapCode;
+    authMap: ProjectAuthMapCode;
     reason: FWReasonCode;
 }
 
@@ -60,13 +60,7 @@ export type AlertCrewData = {
 
 export type VAlertFWDetailData = VoteData & {
     reason: FWReasonType;
-    fwMemberAuth: {
-        id: bigint;
-        name: string;
-        milestoneChangeYN: boolean;
-        workChangeYN: boolean;
-        voteYN: boolean;
-    },
+    fwMemberAuth: ProjectAuthMap;
     fwMemberPosition: {
         id: bigint;
         name: string;

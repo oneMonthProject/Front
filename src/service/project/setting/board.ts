@@ -1,5 +1,5 @@
 import {requestWithAuth} from "@/service/project/request";
-import {Position, PostInfoSummary, ProjectAuthMap} from "@/utils/type";
+import {Position, PostInfoSummary, ProjectAuthMap, ProjectAuthMapCode} from "@/utils/type";
 
 export type BoardPosition = {
     boardPositionId: bigint;
@@ -22,7 +22,7 @@ export const getProjectSettingBoardInfo = async (projectId: bigint) => {
 export type ProjectSettingBoardUpdReqData = {
     projectId: bigint;
     boardId: bigint;
-    authMap: ProjectAuthMap;
+    authMap: ProjectAuthMapCode;
     title: string;
     content: string;
     recruitmentStatus: boolean | null;

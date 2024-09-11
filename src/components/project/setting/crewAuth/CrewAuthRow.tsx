@@ -36,7 +36,7 @@ function CrewAuthRow({crew, projectId, authMap}: { crew: ProjectMember, projectI
 
     const onClickSaveCrewAuthButtonHandler = () => {
         const reqData: ProjectSettingCrewAuthUpdData = {
-            authMap,
+            authMap: authMap.code,
             projectId: numStrToBigInt(projectId),
             projectMemberAuth: auth.value,
             projectMemberId: crew.projectMemberId

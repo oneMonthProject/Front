@@ -222,6 +222,8 @@ export type ProjectAuthMap = {
     configYn: boolean;
 };
 
+export type ProjectAuthMapCode = ProjectAuthMap['code'];
+
 export type ProjectInfoSummary = {
     projectId: bigint;
     projectName: string;

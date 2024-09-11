@@ -1,5 +1,5 @@
 import {requestWithAuth} from "@/service/project/request";
-import {ProjectAuthMap} from "@/utils/type";
+import {ProjectAuthMap, ProjectAuthMapCode} from "@/utils/type";
 
 /**
  * 프로젝트 크루 목록 조회
@@ -31,7 +31,7 @@ export async function getCrewTaskHistory(projectMemberId: string | bigint, pageI
 export type WithdrawReqDto = {
     projectId: bigint;
     wMemberId: bigint;
-    wMemberAuth: ProjectAuthMap['code'];
+    wMemberAuth: ProjectAuthMapCode;
 };
 
 /**

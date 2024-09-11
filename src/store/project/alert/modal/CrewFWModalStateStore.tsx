@@ -15,20 +15,8 @@ export const crewFWModalStateStore = atom<CrewFWModalState>({
         createData: {
             project_id: 0n,
             fw_member_id: 0n,
-            fw_member_auth: {
-               code: '',
-                name: '',
-                workChangeYN: false,
-                milestoneChangeYN: false,
-                configYn: false
-            },
-            authMap: {
-                code: '',
-                name: '',
-                workChangeYN: false,
-                milestoneChangeYN: false,
-                configYn: false
-            },
+            fw_member_auth: '',
+            authMap: '',
             reason: FWReason.FWR1004.code
         }
     }

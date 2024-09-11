@@ -56,7 +56,7 @@ function ProjectSettingFormSaveButton({initData}: { initData: ProjectSettingInfo
 
         const reqData: ProjectSettingInfoUpdReqData = {
             projectId: projectId,
-            authMap: authMap,
+            authMap,
             projectName: projectName ? projectName : initProjectName,
             projectSubject: projectSubject ? projectSubject : initProjectSubject,
             startDate: startDate ? startDate : initStartDate,

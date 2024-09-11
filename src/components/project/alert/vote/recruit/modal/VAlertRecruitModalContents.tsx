@@ -77,7 +77,7 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
             const reqData: VoteRecruitReqData = {
                 voteId,
                 applyId,
-                authMap: currentUserPMAuth,
+                authMap: currentUserPMAuth.code,
                 answer: e.target.value as VoteOptionCode
             };
             voteForProjectRecruit(reqData);

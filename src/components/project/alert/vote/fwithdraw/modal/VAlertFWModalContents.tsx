@@ -45,7 +45,7 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
     );
 
     const {
-        fwMemberAuth: {name: fwMemberAuthName, id: fwMemberAuthId},
+        fwMemberAuth,
         fwMemberPosition: {name: fwMemberPositionName},
         fwUserNickname,
         fwUserProfile,
@@ -70,8 +70,8 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 projectId: numStrToBigInt(projectId as string),
                 voteId,
                 fw_member_id: fwMemberId,
-                fw_member_auth_id: fwMemberAuthId,
-                authMap: currentUserPMAuth,
+                fw_member_auth: fwMemberAuth.code,
+                authMap: currentUserPMAuth.code,
                 answer: e.target.value as VoteOptionCode
             };
             voteForProjectFWithdraw(reqData);
@@ -93,7 +93,7 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 <div><Avatar src={fwUserProfile} alt='강제탈퇴 멤버 아바타' size='md'/></div>
                 <h3 className='my-1 text-[1.4rem] text-greyDarkBlue font-medium'>{fwUserNickname}</h3>
                 <div className='mx-auto flex justify-center space-x-2'>
-                    <ProjectRoleBadge text={fwMemberAuthName} size='sm'/>
+                    <ProjectRoleBadge text={fwMemberAuth.name} size='sm'/>
                     <PositionBadge text={fwMemberPositionName} size='sm'/>
                 </div>
             </section>

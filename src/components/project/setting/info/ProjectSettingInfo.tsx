@@ -28,7 +28,7 @@ function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: 
     useEffect(() => {
         // 마운트시 projectId, authMap 상태 초기화
         setProjectSettingProjectId(projectId);
-        setProjectSettingAuthMap(authMap);
+        setProjectSettingAuthMap(authMap.code);
 
         // 언마운트시 프로젝트정보 store 초기화
         return () => resetProjectSettingInfoState();

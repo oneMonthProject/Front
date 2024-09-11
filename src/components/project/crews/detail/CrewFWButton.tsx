@@ -23,8 +23,8 @@ function CrewFwButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPro
             createData: {
                 project_id: projectId,
                 fw_member_id: projectMemberId,
-                fw_member_auth: projectMemberAuth,
-                authMap: currentUserPMAuth!,
+                fw_member_auth: projectMemberAuth.code,
+                authMap: currentUserPMAuth!.code,
                 reason: createFWModalState.createData.reason
             }
         }

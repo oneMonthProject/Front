@@ -28,7 +28,7 @@ function ProjectSettingBoardInfo({projectId, authMap}: { projectId: bigint, auth
     useEffect(() => {
         // 마운트시 projectId, authMap 상태 초기화
         setProjectSettingBoardInfoProjectId(projectId);
-        setProjectSettingBoardInfoAuthMap(authMap);
+        setProjectSettingBoardInfoAuthMap(authMap.code);
 
         // 언마운트시 프로젝트 게시글정보 store reset
         return () => resetProjectSettingBoardInfo();

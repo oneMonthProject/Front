@@ -1,5 +1,5 @@
 import {requestWithAuth} from "@/service/project/request";
-import {ProjectAuthMap, TechStackItem} from "@/utils/type";
+import {ProjectAuthMap, ProjectAuthMapCode, TechStackItem} from "@/utils/type";
 import {isEqual} from "lodash";
 import {throwErrorIfInvalid} from "@/utils/common";
 
@@ -21,7 +21,7 @@ export const getProjectSettingInfo = async (projectId: bigint) => {
 
 export type ProjectSettingInfoUpdReqData = {
     projectId: bigint;
-    authMap: ProjectAuthMap;
+    authMap: ProjectAuthMapCode;
     projectName: string;
     projectSubject: string;
     startDate: string;
