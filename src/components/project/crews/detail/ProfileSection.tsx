@@ -42,7 +42,7 @@ function ProfileSection({projectMemberId}: { projectMemberId: string }) {
                 <div className='pc:h-[50px] tablet:mx-8 flex items-center justify-around mobile:space-x-4'>
                     <span className='tablet:w-[200px] tablet:text-[1.2rem] font-medium text-geryDarkBlue'>프로젝트 권한</span>
                     <span className='min-w-[100px] flex justify-center grow-0 mx-auto'>
-                        <ProjectRoleBadge text={projectMemberAuth.projectMemberAuthName} size='sm'/>
+                        <ProjectRoleBadge text={projectMemberAuth.name} size='sm'/>
                     </span>
                 </div>
                 <div className='pc:h-[50px] tablet:mx-8 flex items-center justify-around mobile:space-x-4'>

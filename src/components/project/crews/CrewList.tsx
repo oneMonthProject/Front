@@ -18,7 +18,7 @@ export default function CrewList({projectId, userId}: { projectId: string, userI
             {crewList.map(
                 ({
                      position: {name},
-                     projectMemberAuth: {projectMemberAuthName},
+                     projectMemberAuth: {name:projectMemberAuthName},
                      user: {userId: projectMemberUseId, nickname, profileImgSrc},
                      projectMemberId
                  }: ProjectMember) => {

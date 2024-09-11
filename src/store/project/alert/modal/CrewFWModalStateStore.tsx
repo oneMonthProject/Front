@@ -16,18 +16,18 @@ export const crewFWModalStateStore = atom<CrewFWModalState>({
             project_id: 0n,
             fw_member_id: 0n,
             fw_member_auth: {
-                projectMemberAuthId: 0n,
-                projectMemberAuthName: '',
-                milestone_change_YN: false,
-                work_change_YN: false,
-                vote_YN: false,
-                config_YN: false,
+               code: '',
+                name: '',
+                workChangeYN: false,
+                milestoneChangeYN: false,
+                configYn: false
             },
             authMap: {
-                milestoneAuth: false,
-                workAuth: false,
-                voteAuth: false,
-                configAuth: false
+                code: '',
+                name: '',
+                workChangeYN: false,
+                milestoneChangeYN: false,
+                configYn: false
             },
             reason: FWReason.FWR1004.code
         }

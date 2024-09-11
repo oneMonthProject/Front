@@ -21,7 +21,7 @@ function CrewOutButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPr
             const reqData: WithdrawReqDto = {
                 projectId,
                 wMemberId: projectMemberId,
-                wMemberAuthId: projectMemberAuth.projectMemberAuthId
+                wMemberAuth: projectMemberAuth.code
             };
 
             setIsPending(true);
