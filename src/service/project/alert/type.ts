@@ -1,6 +1,6 @@
 import {AlertType, FWReason, VoteStatus} from "@/service/project/alert/constant";
 import {Notice} from "@/app/project/@notice/_utils/type";
-import {Position, ProfileInfo, ProjectAuthMap, ProjectMemberAuth} from "@/utils/type";
+import {ProfileInfo, ProjectAuthMap} from "@/utils/type";
 
 export type VoteStatusCode = keyof typeof VoteStatus;
 export type VoteStatusType = typeof VoteStatus.VSTAT1001 | typeof VoteStatus.VSTAT1002;
@@ -35,7 +35,7 @@ export type VAlertRecruitDetailData = {
 export type VAlertFWCreateData = {
     project_id: bigint;
     fw_member_id: bigint;
-    fw_member_auth: ProjectMemberAuth;
+    fw_member_auth: ProjectAuthMap;
     authMap: ProjectAuthMap;
     reason: FWReasonCode;
 }

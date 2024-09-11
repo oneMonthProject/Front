@@ -1,7 +1,4 @@
-import {atom, atomFamily, selectorFamily} from "recoil";
-import {getMyProjectDetail} from "@/service/project/project";
-import {ProjectInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
-import {userStateStore} from "@/store/user/UserStateStore";
+import {atom} from "recoil";
 
 
 export const projectIdState = atom<string | null>({
@@ -9,49 +6,6 @@ export const projectIdState = atom<string | null>({
     default: null
 });
 
-export type ProjectInfoParamType = { projectId: string, userId: string };
-
-export const projectInfoQuery = selectorFamily<ResponseBody<ProjectInfo | null>, string | null>({
-    key: 'projectInfoQuery',
-    get: (param: string | null) => async ({get}) => {
-        let projectId;
-        let userId;
-        if (param === null) {
-            projectId = get(projectIdState);
-            userId = get(userStateStore);
-        } else {
-            const paramObj: ProjectInfoParamType = JSON.parse(param);
-            projectId = paramObj.projectId;
-            userId = paramObj.userId;
-        }
-
-        console.log("projectId: ", projectId);
-        console.log("userId: ", userId);
-
-        return await getMyProjectDetail(projectId, userId);
-    }
-});
-
-export const projectInfoState = atomFamily<ResponseBody<ProjectInfo | null>, string | null>({
-    key: 'projectInfoState',
-    default: selectorFamily<ResponseBody<ProjectInfo | null>, string | null>({
-        key: 'projectInfoSelector',
-        get: (param: string | null) => ({get}) => {
-            return get(projectInfoQuery(param));
-        }
-    })
-});
-
-/**
- * 프로젝트 상세정보 auth selector
- */
-export const projectTaskAuthSelector = selectorFamily<ResponseBody<ProjectAuthMap | null>, string | null>({
-    key: 'projectTaskAuthSelector',
-    get: (param: string | null) => ({get}) => {
-        const res: ResponseBody<ProjectInfo | null> = get(projectInfoState(param));
-        return {data: res.data?.authMap || null, result: res.result, message: res.message};
-    }
-});
 
 
 

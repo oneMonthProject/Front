@@ -6,14 +6,14 @@ import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import {VAlertRecruitDetailData} from "@/service/project/alert/type";
 import {useQuery} from "@tanstack/react-query";
 import {getVAlertRecruitDetail} from "@/service/project/alert/vote/recruit";
-import VAlertRecruitModalSkeleton
-    from "@/components/ui/skeleton/project/alert/VAlertRecruitModalSkeleton";
+import VAlertRecruitModalSkeleton from "@/components/ui/skeleton/project/alert/VAlertRecruitModalSkeleton";
 import VoteStatusBadge from "@/components/ui/badge/VoteStatusBadge";
 import useVoteRecruit from "@/hooks/useVoteRecruit";
 import {VoteOptionCode, VoteRecruitReqData} from "@/service/project/vote/type";
 import {VoteOption} from "@/service/project/vote/constant";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 import {useRecoilValue} from "recoil";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 type VAlertRecruitModalContentsProps = {
     voteId: bigint;
@@ -22,9 +22,12 @@ type VAlertRecruitModalContentsProps = {
 }
 
 function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitModalContentsProps) {
+    const projectId = useRecoilValue(projectIdState);
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
+
     const [agreeChecked, setAgreeChecked] = useState(false);
     const [disagreeChecked, setDisagreeChecked] = useState(false);
-    const {data: projectAuthMap} = useRecoilValue(projectTaskAuthSelector(null));
+
     const {voteForProjectRecruit, isUpdating} = useVoteRecruit();
 
     const {data, isPending, isError} = useQuery<ResponseBody<VAlertRecruitDetailData>, Error>({
@@ -33,9 +36,14 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
         staleTime: 0
     });
 
-    if (isPending || isUpdating) return <VAlertRecruitModalSkeleton/>;
-    if (isError || !data.data) return <div className='alertModal_contents text-3xl text-gray-600/90 text-center'>⚠️데이터를
-        불러올 수 없습니다</div>;
+    if (isPending || isUpdating || isFetchingCurrentUserPMAuth) return <VAlertRecruitModalSkeleton/>;
+
+    if (isError || !data.data || !currentUserPMAuth) return (
+        <div
+            className='alertModal_contents text-3xl text-gray-600/90 text-center'>⚠️데이터를
+            불러올 수 없습니다
+        </div>
+    );
 
     const {
         applicantInfo: {
@@ -69,14 +77,14 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
             const reqData: VoteRecruitReqData = {
                 voteId,
                 applyId,
-                authMap: projectAuthMap!,
+                authMap: currentUserPMAuth,
                 answer: e.target.value as VoteOptionCode
             };
             voteForProjectRecruit(reqData);
-        }else{
-            if(e.target.value === VoteOption.VODA1001.code){
+        } else {
+            if (e.target.value === VoteOption.VODA1001.code) {
                 setAgreeChecked(false);
-            }else{
+            } else {
                 setDisagreeChecked(false);
             }
             e.target.blur();
@@ -160,7 +168,7 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                     <div className='mx-3 text-[18px] text-greyDarkblue font-medium'>반대</div>
                     <div className={`relative tablet:basis-[60%] h-2 ${barColor} rounded-full`}>
                         <div
-                            style={{width:`${disagreeWidth}%`}}
+                            style={{width: `${disagreeWidth}%`}}
                             className={`${disagreeBarColor} h-full text-center text-xs text-white rounded-full`}></div>
                         <span
                             className='absolute top-[-7px] left-[102%] text-greyBlue font-medium'>{`${disagrees}/${maxVoteCount}`}</span>

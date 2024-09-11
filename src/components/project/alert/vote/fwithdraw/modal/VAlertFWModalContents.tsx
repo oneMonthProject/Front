@@ -9,11 +9,12 @@ import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import VoteStatusBadge from "@/components/ui/badge/VoteStatusBadge";
 import {VoteOption} from "@/service/project/vote/constant";
 import {VoteFWReqData, VoteOptionCode} from "@/service/project/vote/type";
-import {useRecoilValue, useRecoilValueLoadable} from "recoil";
-import {projectIdState, projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {useRecoilValue} from "recoil";
+import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 import {numStrToBigInt} from "@/utils/common";
 import useVoteFwithdraw from "@/hooks/useVoteFwithdraw";
 import VAlertFwModalSkeleton from "@/components/ui/skeleton/project/alert/VAlertFWModalSkeleton";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 type VAlertFWModalContentsProps = {
     voteId: bigint;
@@ -21,21 +22,27 @@ type VAlertFWModalContentsProps = {
 }
 
 function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps) {
+    const projectId = useRecoilValue(projectIdState);
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
+
     const [agreeChecked, setAgreeChecked] = useState(false);
     const [disagreeChecked, setDisagreeChecked] = useState(false);
+
     const {voteForProjectFWithdraw, isUpdating} = useVoteFwithdraw();
-    const projectId = useRecoilValue(projectIdState);
-    const {state, contents} = useRecoilValueLoadable(projectTaskAuthSelector(null));
+
     const {data, isPending, isError} = useQuery<ResponseBody<VAlertFWDetailData>, Error>({
         queryKey: ["vAlertFWDetailData", voteId, fwMemberId],
         queryFn: () => getVAlertFWDetail(voteId, fwMemberId),
         staleTime: 0
     });
 
-    if (isPending || state === 'loading' || isUpdating) return <VAlertFwModalSkeleton/>;
-    if (isError || !data.data) return <div className='alertModal_contents text-3xl text-gray-600/90 text-center'>⚠️데이터를
-        불러올 수 없습니다</div>;
+    if (isPending || isFetchingCurrentUserPMAuth || isUpdating) return <VAlertFwModalSkeleton/>;
 
+    if (isError || !data.data || !currentUserPMAuth) return (
+        <div className='alertModal_contents text-3xl text-gray-600/90 text-center'>⚠️데이터를
+            불러올 수 없습니다
+        </div>
+    );
 
     const {
         fwMemberAuth: {name: fwMemberAuthName, id: fwMemberAuthId},
@@ -64,14 +71,14 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 voteId,
                 fw_member_id: fwMemberId,
                 fw_member_auth_id: fwMemberAuthId,
-                authMap: contents.data,
+                authMap: currentUserPMAuth,
                 answer: e.target.value as VoteOptionCode
             };
             voteForProjectFWithdraw(reqData);
-        }else{
-            if(e.target.value === VoteOption.VODA1001.code){
+        } else {
+            if (e.target.value === VoteOption.VODA1001.code) {
                 setAgreeChecked(false);
-            }else{
+            } else {
                 setDisagreeChecked(false);
             }
             e.target.blur();

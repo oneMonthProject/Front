@@ -1,35 +1,27 @@
 'use client';
 
-import React, {useEffect} from 'react';
-import {useRecoilValueLoadable, useResetRecoilState} from "recoil";
-import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
+import React from 'react';
 import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
+import useProjectInfoSummary from "@/hooks/useProjectInfoSummary";
 
 function ProjectInfo({projectId, userId}: { projectId: string, userId: string }) {
-    const stateParam = JSON.stringify({projectId, userId});
-    const {state, contents} = useRecoilValueLoadable(projectInfoState(stateParam));
+    const {data, isFetching} = useProjectInfoSummary(projectId);
 
-    const resetProjectInfo = useResetRecoilState(projectInfoState(stateParam));
-    useEffect(() => {
-        // 프로젝트 상세 페이지 벗어나면 프로젝트 정보 초기화
-        return () => resetProjectInfo();
-    }, [resetProjectInfo]);
+    if (isFetching) return <ProjectInfoSkeleton/>;
 
-    if (state === 'loading' || contents.result !== "success") return <ProjectInfoSkeleton/>;
-
-    const {name, subject, startDate, endDate} = contents.data;
+    const {projectName, projectSubject, startDate, endDate} = data!.data!;
 
     return (
         <section
             className='tablet:flex mobile:flex-col items-center justify-start w-full tablet:mt-[40px] mobile:mt-[10px] '>
             <div className='flex-col pr-20 tablet:w-[460px] mobile:w-full tablet:border-r-[3px] tablet:border-grey150'>
                 <div className='tablet:text-5xl mobile:text-[24px] font-medium'>
-                    <div aria-hidden={true}>{name}</div>
-                    <div className='sr-only'>프로젝트 이름 : {name}</div>
+                    <div aria-hidden={true}>{projectName}</div>
+                    <div className='sr-only'>프로젝트 이름 : {projectName}</div>
                 </div>
                 <div className='tablet:mt-2 tablet:text-[1.5rem] mobile:text-[14px] text-grey800 font-semibold'>
-                    <div aria-hidden={true}>{subject}</div>
-                    <div className='sr-only'>프로젝트 주제 : {subject}</div>
+                    <div aria-hidden={true}>{projectSubject}</div>
+                    <div className='sr-only'>프로젝트 주제 : {projectSubject}</div>
                 </div>
             </div>
             <div

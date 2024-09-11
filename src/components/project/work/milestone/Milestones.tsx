@@ -5,16 +5,11 @@ import MilestoneCard from "@/components/project/work/milestone/MilestoneCard";
 import CustomSwiper from "@/components/ui/CustomSwiper";
 import {useMilestones} from "@/hooks/useMilestones";
 import {MilestoneListSkeleton} from "@/components/ui/skeleton/project/task";
-import {useRecoilValueLoadable} from "recoil";
-import {ProjectAuthMap, ResponseBody} from "@/utils/type";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 
 function Milestones({projectId}: { projectId: string }) {
-    const {
-        state: authState,
-        contents
-    } = useRecoilValueLoadable<ResponseBody<ProjectAuthMap | null>>(projectTaskAuthSelector(null));
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
     const {
         milestoneList,
         activeMilestoneIndex: initActiveMilestoneIndex,
@@ -23,7 +18,7 @@ function Milestones({projectId}: { projectId: string }) {
     } = useMilestones(projectId);
 
 
-    if (isMilestoneFetching || authState === 'loading') return <MilestoneListSkeleton/>;
+    if (isMilestoneFetching || isFetchingCurrentUserPMAuth) return <MilestoneListSkeleton/>;
 
     return milestoneList!.length < 1
         ? (
@@ -41,7 +36,7 @@ function Milestones({projectId}: { projectId: string }) {
                                 <MilestoneCard
                                     milestoneInfo={v}
                                     initActiveMilestoneId={initActiveMilestoneId}
-                                    authMap={contents.data}
+                                    authMap={currentUserPMAuth!}
                                 />
                         }
                     ))}

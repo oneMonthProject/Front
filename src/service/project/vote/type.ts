@@ -1,4 +1,4 @@
-import {ProjectAuthMap, ProjectMemberAuth} from "@/utils/type";
+import {ProjectAuthMap} from "@/utils/type";
 import {VoteOption} from "@/service/project/vote/constant";
 
 export type VoteOptionCode = keyof typeof VoteOption;

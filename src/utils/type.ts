@@ -195,7 +195,7 @@ export interface ProjectMemberProfile {
     projectId: bigint;
     projectCount: number;
     user: ProjectUser;
-    projectMemberAuth: ProjectMemberAuth;
+    projectMemberAuth: ProjectAuthMap;
     position: Position;
     status: CrewStatusKeys;
 }
@@ -203,18 +203,9 @@ export interface ProjectMemberProfile {
 export interface ProjectMember {
     projectMemberId: bigint;
     user: User;
-    projectMemberAuth: ProjectMemberAuth;
+    projectMemberAuth: ProjectAuthMap;
     position: Position;
     lastWorkDate: string;
-}
-
-export interface ProjectMemberAuth {
-    projectMemberAuthId: bigint;
-    projectMemberAuthName: string;
-    milestone_change_YN: boolean;
-    work_change_YN: boolean;
-    vote_YN: boolean;
-    config_YN: boolean;
 }
 
 export interface Position {

@@ -10,7 +10,6 @@ export default function useProjectInfoSummary(projectId: string) {
     } = useQuery<Promise<ResponseBody<ProjectInfoSummary>>, Error, ResponseBody<ProjectInfoSummary>>({
         queryKey: ['projectInfoSummary', projectId],
         queryFn: () => getProjectSettingInfo(numStrToBigInt(projectId)),
-        staleTime: 0
     });
 
     return {data, isFetching};

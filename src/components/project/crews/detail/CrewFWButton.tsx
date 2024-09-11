@@ -1,20 +1,20 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import Button from "@/components/ui/Button";
-import {useRecoilState, useRecoilValueLoadable} from "recoil";
+import {useRecoilState} from "recoil";
 import {CrewFWModalState, crewFWModalStateStore} from "@/store/project/alert/modal/CrewFWModalStateStore";
-import {ProjectAuthMap, ProjectMemberProfile} from "@/utils/type";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
-import {getMyProjectDetail} from "@/service/project/project";
-import useProjectInfo from "@/hooks/useProjectInfo";
+import {ProjectMemberProfile} from "@/utils/type";
 import ButtonStyleSkeleton from "@/components/ui/skeleton/ButtonStyleSkeleton";
+import {bigIntToString} from "@/utils/common";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 function CrewFwButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberProfile }) {
-    const {projectInfo, isFetching} = useProjectInfo(projectMemberInfo.projectId, projectMemberInfo.user.userId);
     const [createFWModalState, setCreateFWModalState] = useRecoilState(crewFWModalStateStore);
+
     const {projectMemberId, projectId, projectMemberAuth} = projectMemberInfo;
 
-    if (isFetching) return <ButtonStyleSkeleton size='md' className='w-[80px] h-[30px] my-3 '/>;
-    const {authMap} = projectInfo;
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(bigIntToString(projectId));
+
+    if (isFetchingCurrentUserPMAuth) return <ButtonStyleSkeleton size='md' className='w-[80px] h-[30px] my-3 '/>;
 
     const onClickCrewFWButtonHandler = () => {
         const updateModalState: CrewFWModalState = {
@@ -24,7 +24,7 @@ function CrewFwButton({projectMemberInfo}: { projectMemberInfo: ProjectMemberPro
                 project_id: projectId,
                 fw_member_id: projectMemberId,
                 fw_member_auth: projectMemberAuth,
-                authMap,
+                authMap: currentUserPMAuth!,
                 reason: createFWModalState.createData.reason
             }
         }

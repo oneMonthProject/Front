@@ -4,23 +4,17 @@ import React from 'react';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getTodayString} from "@/utils/common";
-import {MilestoneInfo, ProjectAuthMap, ResponseBody} from "@/utils/type";
+import {MilestoneInfo} from "@/utils/type";
 import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
-import {useRecoilValueLoadable, useSetRecoilState} from "recoil";
-import {snackbarState} from "@/store/CommonStateStore";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import {useSetRecoilState} from "recoil";
 import {MilestoneAddButtonSkeleton} from "@/components/ui/skeleton/project/task";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 function MilestoneAddButton({projectId, userId}: { projectId: string, userId: string }) {
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
     const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
 
-    const stateParam = JSON.stringify({projectId, userId});
-    const {
-        state: authState,
-        contents
-    } = useRecoilValueLoadable<ResponseBody<ProjectAuthMap | null>>(projectTaskAuthSelector(stateParam)); // 프로젝트 상세정보 중 auth state
-
-    if (authState === 'loading') return <MilestoneAddButtonSkeleton/>;
+    if (isFetchingCurrentUserPMAuth) return <MilestoneAddButtonSkeleton/>;
 
     const onClickHandler = () => {
         const today = getTodayString();
@@ -33,7 +27,7 @@ function MilestoneAddButton({projectId, userId}: { projectId: string, userId: st
             startDate: '',
             endDate: '',
             updateDate: today,
-            authMap: contents.data
+            authMap: currentUserPMAuth!
         }
 
         setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));

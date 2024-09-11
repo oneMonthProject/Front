@@ -4,19 +4,13 @@ import SettingTitle from "@/components/project/setting/SettingTitle";
 import useProjectCrewList from "@/hooks/useProjectCrewList";
 import ProjectSettingCrewAuthSkeleton from "@/components/project/setting/crewAuth/ProjectSettingCrewAuthSkeleton";
 import CrewAuthRow from "@/components/project/setting/crewAuth/CrewAuthRow";
-import {useRecoilValueLoadable} from "recoil";
-import {ProjectAuthMap, ResponseBody} from "@/utils/type";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 function ProjectSettingCrewAuth({projectId}: { projectId: string }) {
     const {crewList, isFetching} = useProjectCrewList(projectId);
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
 
-    const {
-        state: authState,
-        contents: authContents
-    } = useRecoilValueLoadable<ResponseBody<ProjectAuthMap | null>>(projectTaskAuthSelector(null));
-
-    if (isFetching || authState === 'loading') return <ProjectSettingCrewAuthSkeleton/>;
+    if (isFetching || isFetchingCurrentUserPMAuth) return <ProjectSettingCrewAuthSkeleton/>;
 
     return (
         <SettingContainer>
@@ -31,7 +25,7 @@ function ProjectSettingCrewAuth({projectId}: { projectId: string }) {
                                     key={crew.projectMemberId}
                                     crew={crew}
                                     projectId={projectId}
-                                    authMap={authContents.data}/>
+                                    authMap={currentUserPMAuth!}/>
                             ))}
                             </tbody>
                         </table>
