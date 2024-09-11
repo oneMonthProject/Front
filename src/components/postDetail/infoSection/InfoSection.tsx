@@ -1,17 +1,16 @@
 import React from "react";
 import PositionBadge from "@/components/ui/badge/PositionBadge";
-import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import TechStackImage from "@/components/ui/TechStackImage";
-import { PostDetailPosition, ProjectInfo } from "@/utils/type";
+import {PostDetailPosition, ProjectInfoSummary} from "@/utils/type";
 
 interface InfoProps {
-  projectInfo: ProjectInfo;
+  projectInfo: ProjectInfoSummary;
   contact: string;
   boardPositions: PostDetailPosition[];
 }
 
 const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
-  const { name: projectName, subject, startDate, endDate, technologyStacks } = projectInfo;
+  const { projectName, projectSubject, startDate, endDate, technologyStacks } = projectInfo;
 
   return (
     <div className="px-2 mobile:px-0">
@@ -26,7 +25,7 @@ const InfoSection = ({ projectInfo, contact, boardPositions }: InfoProps) => {
         </div>
         <div className="flex gap-5 h-10 items-center break-words">
           <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">프로젝트 주제</div>
-          <div className="w-[calc(100%-130px)] line-clamp-2">{subject}</div>
+          <div className="w-[calc(100%-130px)] line-clamp-2">{projectSubject}</div>
         </div>
         <div className="flex gap-5 h-10 items-center">
           <div className="text-grey800 w-[110px] mobile:w-[80px] text-center text-xl mobile:text-sm whitespace-nowrap font-bold">종료 예정</div>

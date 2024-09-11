@@ -2,37 +2,36 @@ import React from "react";
 import TrustGradeBadge from "../../ui/badge/TrustGradeBadge";
 import Image from "next/image";
 import Avatar from "@/components/ui/Avatar";
-import {ProjectPost} from "@/utils/type";
+import {ProjectInfoSummary} from "@/utils/type";
 import {format} from "date-fns";
 import Link from "next/link";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
 import {getCookie} from "cookies-next";
+import TechStackImage from "@/components/ui/TechStackImage";
+import {FaPlusCircle} from "@react-icons/all-files/fa/FaPlusCircle";
 
 interface ProjectCardProps {
-    projectPost: ProjectPost;
+    projectPost: ProjectInfoSummary;
 }
 
 const ProjectCard = ({projectPost}: ProjectCardProps) => {
     const userId = getCookie('user_id');
     const {
-        name,
-        trustGrade,
+        projectId,
+        projectName,
+        projectSubject,
         startDate,
         endDate,
-        subject,
-        members,
-        updateDate,
-        projectId
+        technologyStacks
     } = projectPost;
 
-    const visibleMembers = members.slice(0, 5);
 
     return (
         <article className='p-4'>
             <div className="flex mb-[16px]">
                 <span className='sr-only'>프로젝트 이름:</span>
                 <span className="inline-block mr-3 font-bold text-xl">
-                        {name}
+                        {projectName}
                     </span>
             </div>
             <div className="my-2 flex items-center text-base text-gray-600 font-medium">
@@ -50,46 +49,48 @@ const ProjectCard = ({projectPost}: ProjectCardProps) => {
             <div className="relative my-3 flex items-start">
                 <span className='basis-[50px] text-base text-gray-500 font-semibold'>주제</span>
                 <div className='group'>
-                    <div className='max-w-[180px] truncate text-lg font-semibold'>{subject}</div>
+                    <div className='max-w-[180px] truncate text-lg font-semibold'>{projectSubject}</div>
                     <div id="tooltip-subject" role="tooltip"
                          className="customTooltip group-hover:visible">
-                        {subject}
+                        {projectSubject}
                     </div>
                 </div>
             </div>
             <div className='my-2 flex items-center space-x-3'>
-                <span className='basis-[50px] text-gray-500 font-bold'>멤버</span>
-                <ul className="w-full flex -space-x-3 overflow-hidden">
-                    {visibleMembers.map(
-                        v => (
-                            <li key={v.projectMemberId}>
-                                <Avatar
-                                    size='xs'
-                                    alt='프로젝트 멤버 프로필 이미지'
-                                    src={v.user.profileImgSrc}
-                                />
+                <span className='basis-[50px] text-gray-500 font-bold'>기술스택</span>
+                <ul className='flex items-center space-x-1 basis-[180px]'>
+                    {
+                        technologyStacks.slice(0, 5).map(({techStackId, techStackName}) => (
+                            <li key={techStackId}>
+                                <TechStackImage
+                                    key={techStackId}
+                                    stackName={techStackName}
+                                    width={30}
+                                    height={30}/>
                             </li>
-                        ))}
-
+                        ))
+                    }
                 </ul>
                 {
-                    visibleMembers.length < members.length &&
-                    <div className='flex items-center space-x-2 text-grey900'>
-                        <FaPlus/>
-                        <span className='sr-only'>{`외 ${members.length - visibleMembers.length} 명`}</span>
-                        <span className='font-medium' aria-hidden={true}>{members.length - visibleMembers.length}</span>
+                    technologyStacks.length > 5 &&
+                    <div className='flex items-center space-x-2'>
+                        <FaPlusCircle/>
+                        <span
+                            className='pt-1 leading-none text-greyDarkblue/80 font-semibold'>
+                                    {technologyStacks.length - 5}
+                                </span>
                     </div>
                 }
             </div>
-            <div className="flex my-5 text-base">
-                <span className='basis-[30px] text-gray-500 font-semibold'>
-                    <Image src="/images/update.svg" alt="update date" width={20} height={20} className='mx-auto'/>
-                </span>
-                <span
-                    className="ml-5 inline-block font-bold text-grey800">
-                        {format(new Date(updateDate), 'yyyy-MM-dd')}
-                    </span>
-            </div>
+            {/*<div className="flex my-5 text-base">*/}
+            {/*    <span className='basis-[30px] text-gray-500 font-semibold'>*/}
+            {/*        <Image src="/images/update.svg" alt="update date" width={20} height={20} className='mx-auto'/>*/}
+            {/*    </span>*/}
+            {/*    <span*/}
+            {/*        className="ml-5 inline-block font-bold text-grey800">*/}
+            {/*            {format(new Date(updateDate), 'yyyy-MM-dd')}*/}
+            {/*        </span>*/}
+            {/*</div>*/}
             <div className='flex justify-center mt-5 mb-3'>
                 <Link
                     href={`/project?projectId=${projectId}&userId=${userId}`}

@@ -5,7 +5,7 @@ import ProjectSubject from "@/components/project/setting/info/ProjectSubject";
 import ProjectDate from "@/components/project/setting/info/ProjectDate";
 import ProjectSettingFormResetButton from "@/components/project/setting/info/ProjectSettingFormResetButton";
 import ProjectSettingFormSaveButton from "@/components/project/setting/info/ProjectSettingFormSaveButton";
-import useProjectSettingInfo from "@/hooks/useProjectSettingInfo";
+import useProjectInfoSummary from "@/hooks/useProjectInfoSummary";
 import {useResetRecoilState, useSetRecoilState} from "recoil";
 import {
     projectSettingInfoSelector,
@@ -16,13 +16,14 @@ import ProjectSettingInfoSkeleton from "@/components/project/setting/info/Projec
 import SettingContainer from "@/components/project/setting/SettingContainer";
 import SettingTitle from "@/components/project/setting/SettingTitle";
 import SettingBody from "@/components/project/setting/SettingBody";
+import {bigIntToString} from "@/utils/common";
 
 function ProjectSettingInfo({projectId, authMap}: { projectId: bigint, authMap: ProjectAuthMap }) {
     const setProjectSettingProjectId = useSetRecoilState(projectSettingInfoSelector("projectId"));
     const setProjectSettingAuthMap = useSetRecoilState(projectSettingInfoSelector("authMap"));
     const resetProjectSettingInfoState = useResetRecoilState(projectSettingInfoStateStore);
 
-    const {data, isFetching} = useProjectSettingInfo(projectId);
+    const {data, isFetching} = useProjectInfoSummary(bigIntToString(projectId));
 
     useEffect(() => {
         // 마운트시 projectId, authMap 상태 초기화

@@ -5,6 +5,7 @@ import {TrustGradeNameType, TrustGradeValueType} from "@/app/project/@setting/_u
 import {ErrorHandle} from "@/app/api/_interceptor/error/utils";
 import {ProjectApplyStatusCode} from "@/service/project/apply";
 import {VoteStatusCode} from "@/service/project/alert/type";
+import {BoardPosition, ProjectSettingBoardData} from "@/service/project/setting/board";
 
 export type DropDownItem = {
     name: string;
@@ -127,26 +128,22 @@ export interface UserProjectHistory {
     updateDate: string;
 }
 
-interface PostPosition {
-    boardPositionId: bigint;
-    position: Position;
-}
-
-export interface PostUserInfo {
-    email: string;
-    nickname: string;
-    profileImgSrc: string | null;
-    trustGrade: TrustGrade;
-}
-
-export interface PostCardInfo {
+export type PostInfoSummary = {
     boardId: bigint;
-    boardTitle: string;
-    boardPositions: PostPosition[];
-    project: ProjectInfo;
-    positions: PositionItem[];
+    title: string;
+    recruitmentStatus: boolean;
+    boardPositions: BoardPosition[];
+};
+
+export interface PostCardInfo extends PostInfoSummary {
+    project: ProjectInfoSummary;
     boardPageView: number;
-    user: PostUserInfo;
+    user: {
+        email: string;
+        nickname: string;
+        profileImgSrc: string | null;
+        trustGrade: TrustGrade;
+    };
     createDate: string;
     updateDate: string;
 }
@@ -225,64 +222,46 @@ export interface Position {
     name: string;
 }
 
-export interface Project {
-    projectId: bigint;
-    name: string;
-    subject: string;
-    trustGrade: TrustGrade;
-    startDate: string;
-    endDate: string;
-    createDate: string;
-    updateDate: string;
-    status: string;
-    authMap: ProjectAuthMap
-}
 
 export type ProjectAuthMap = {
-    milestoneAuth: boolean;
-    workAuth: boolean;
-    voteAuth: boolean;
-    configAuth: boolean;
-}
+    code: string;
+    name: string;
+    workChangeYN: boolean;
+    milestoneChangeYN: boolean;
+    configYn: boolean;
+};
 
-export interface ProjectInfo extends Project {
+export type ProjectInfoSummary = {
+    projectId: bigint;
+    projectName: string;
+    projectSubject: string;
+    startDate: string;
+    endDate: string;
     technologyStacks: TechStackItem[];
-    trustGradeId: TrustGradeValueType[];
-    technologyIds: bigint[];
-}
+};
 
-export interface ProjectPost extends Project {
-    members: ProjectMember[];
-}
-
-export interface PostDetailUserInfo {
-    userId: bigint;
-    nickName: string;
-    userProfileImgSrc: string;
-}
-
+/**
+ * 프로젝트 모집 게시글 - 모집 포지션
+ */
 export interface PostDetailPosition {
     boardPositionId: bigint;
     position: Position;
 }
 
-export interface PostInfo {
-    boardId: bigint;
-    title: string;
-    content: string;
+/**
+ * 프로젝트 모집 게시글 - 게시글 상세
+ */
+export type PostInfo = ProjectSettingBoardData & {
     pageView: number;
-    recruitmentStatus: boolean;
-    user: PostDetailUserInfo;
-    contact: string;
+    user: {
+        userId: bigint;
+        nickName: string;
+        userProfileImgSrc: string | null;
+    };
     createDate: string;
     updateDate: string;
-    boardPositions: PostDetailPosition[];
 }
 
-export interface PostDetailInfo {
-    board: PostInfo,
-    project: ProjectInfo
-}
 
 export type SnackbarType = "INFO" | "ERROR" | "SUCCESS";
 

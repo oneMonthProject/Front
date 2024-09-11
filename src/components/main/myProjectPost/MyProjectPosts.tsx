@@ -3,7 +3,7 @@ import React, {useState} from "react";
 import ProjectCard from "../projectCard/ProjectCard";
 import {useQuery} from "@tanstack/react-query";
 import {getMyProjectList} from "@/service/project/project";
-import {PageResponseBody, ProjectPost} from "@/utils/type";
+import {PageResponseBody, ProjectInfoSummary} from "@/utils/type";
 import CommonPagination from "@/components/ui/CommonPagination";
 import {ITEM_COUNT, PAGE_RANGE} from "@/utils/constant";
 import PostListSkeleton from "@/components/main/PostListSkeleton";
@@ -20,7 +20,7 @@ function MyProjectPosts() {
         data,
         isFetching,
         isError
-    } = useQuery<Promise<PageResponseBody<ProjectPost[]>>, Error, PageResponseBody<ProjectPost[]>>({
+    } = useQuery<Promise<PageResponseBody<ProjectInfoSummary[]>>, Error, PageResponseBody<ProjectInfoSummary[]>>({
         queryKey: ['myProjectList', pageNumber],
         queryFn: () => getMyProjectList(pageNumber, 8),
         staleTime: 0

@@ -4,43 +4,44 @@ import TitleSection from "./titleSection/TitleSection";
 import InfoSection from "./infoSection/InfoSection";
 import BodySection from "./bodySection/BodySection";
 import {useQuery} from "@tanstack/react-query";
-import {PostDetailInfo, ResponseBody} from "@/utils/type";
+import {PostInfo, ResponseBody} from "@/utils/type";
 import {getPost} from "@/service/post/post";
 import PostDetailSkeleton from "@/components/ui/skeleton/postDetail/PostDetailSkeleton";
-import RecruitStatusButton from "@/components/postDetail/RecruitStatusButton";
 import JoinProject from "@/components/postDetail/joinProject/JoinProject";
+import useProjectInfoSummary from "@/hooks/useProjectInfoSummary";
+import {numStrToBigInt} from "@/utils/common";
 
-const PostDetail = ({postId}: { postId: string }) => {
+const PostDetail = ({postId, projectId}: { postId: string, projectId: string }) => {
+    const {data: projectInfo, isFetching: isFetchingProjectInfo} = useProjectInfoSummary(projectId);
+
     const {
-        data,
-        isRefetching,
-        isLoading,
-        isSuccess
-    } = useQuery<ResponseBody<PostDetailInfo>, Error, ResponseBody<PostDetailInfo>>({
+        data: postInfo,
+        isFetching: isFetchingPostInfo,
+    } = useQuery<ResponseBody<PostInfo>, Error, ResponseBody<PostInfo>>({
         queryKey: ['postInfo', postId],
-        queryFn: () => getPost(BigInt(postId))
+        queryFn: () => getPost(numStrToBigInt(postId)),
+        staleTime: 0
     });
 
-    if (isRefetching || isLoading) return <PostDetailSkeleton/>;
+    if (isFetchingProjectInfo || isFetchingPostInfo) return <PostDetailSkeleton/>;
 
-    if (isSuccess) {
-        const postDetail = data.data;
-        if (postDetail === null) throw new Error("존재하지 않는 데이터 입니다.");
+    const projectInfoData = projectInfo!.data!;
+    const postInfoData = postInfo!.data!;
 
-        const {board, project} = postDetail;
-
-
-        return (
-            <div className="p-5 mobile:p-1 m-auto">
-                <TitleSection boardInfo={board}/>
-                <InfoSection projectInfo={project} contact={board.contact} boardPositions={board.boardPositions}/>
-                <BodySection content={board.content}/>
-                <div className="flex-col mb-5">
-                    <JoinProject projectId={project.projectId as bigint} boardInfo={board}/>
-                </div>
+    return (
+        <div className="p-5 mobile:p-1 m-auto">
+            <TitleSection boardInfo={postInfoData}/>
+            <InfoSection
+                projectInfo={projectInfoData}
+                contact={postInfoData.contact}
+                boardPositions={postInfoData.boardPositions}
+            />
+            <BodySection content={postInfoData.content}/>
+            <div className="flex-col mb-5">
+                <JoinProject projectId={projectInfoData.projectId} boardInfo={postInfoData}/>
             </div>
-        );
-    }
+        </div>
+    );
 
 
 };

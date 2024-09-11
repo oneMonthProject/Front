@@ -8,22 +8,25 @@ import {BsEyeFill} from "@react-icons/all-files/bs/BsEyeFill";
 import {PostCardInfo} from "@/utils/type";
 import {format} from "date-fns";
 import {FaPlusCircle} from "@react-icons/all-files/fa/FaPlusCircle";
+import {bigIntToString} from "@/utils/common";
 
 const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
-    const {boardId, boardTitle, project, boardPositions, boardPageView, user: {profileImgSrc, nickname, trustGrade}} = postInfo;
+    const {
+        boardId,
+        title,
+        project: {projectId, projectName, startDate, endDate, projectSubject, technologyStacks},
+        boardPositions,
+        boardPageView,
+        user: {profileImgSrc, nickname, trustGrade}
+    } = postInfo;
 
-    const profileImgUrl = profileImgSrc?.replace("projectmatch-user-image.s3.ap-northeast-2.amazonaws.com", "projectmatch-bucket.s3.ap-northeast-2.amazonaws.com")
-        || null;
-
-    const {name: projectName, startDate, endDate, subject, technologyStacks} = project;
 
     return (
         <article className='p-4'>
-            <Link href={`/post?postId=${boardId}`}>
+            <Link href={`/post?postId=${boardId}&projectId=${projectId}`}>
                 <div className="flex items-center justify-start  truncate mb-1">
-
                     <span className='text-xl font-bold'>
-                    {boardTitle}
+                    {title}
                     </span>
                 </div>
                 <div className="mt-4 mb-2 flex items-center text-base text-gray-600 font-medium">
@@ -48,10 +51,10 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                 <div className="relative my-2 flex items-start">
                     <span className='basis-[50px] text-base text-gray-500 font-semibold'>주제</span>
                     <div className='group'>
-                        <div className='max-w-[180px] truncate text-lg font-semibold'>{subject}</div>
+                        <div className='max-w-[180px] truncate text-lg font-semibold'>{projectSubject}</div>
                         <div id="tooltip-subject" role="tooltip"
                              className="customTooltip group-hover:visible">
-                            {subject}
+                            {projectSubject}
                         </div>
                     </div>
                 </div>
@@ -111,7 +114,7 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                 }
                 <div className="flex items-center pt-3 px-1 justify-between">
                     <div className="flex items-center">
-                        <Avatar size="2xs" alt="사용자" src={profileImgUrl}/>
+                        <Avatar size="2xs" alt="사용자" src={profileImgSrc}/>
                         <div className="flex items-center ml-2 text-sm">
                             <span className='leading-none self-end'>
                             {nickname}
