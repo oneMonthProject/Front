@@ -17,7 +17,7 @@ export async function getProjectMilestones(projectId: string) {
 }
 
 /**
- * 마일스톤 정보 조회
+ * 프로젝트 마일스톤 상세 조회
  * @param milestoneId
  */
 export async function getMilestone(milestoneId: string) {
@@ -46,7 +46,7 @@ export async function createMilestone<T extends MilestoneInfo>(
 }
 
 /**
- * 마일스톤 수정
+ * 프로젝트 마일스톤 수정
  * @param milestoneInfo
  */
 export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: { milestoneInfo: T }) {

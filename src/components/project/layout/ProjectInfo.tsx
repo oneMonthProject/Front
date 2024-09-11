@@ -1,7 +1,6 @@
 'use client';
 
 import React, {useEffect} from 'react';
-import TrustGradeBadge from "@/components/ui/badge/TrustGradeBadge";
 import {useRecoilValueLoadable, useResetRecoilState} from "recoil";
 import {projectInfoState} from "@/store/project/ProjectInfoStateStore";
 import {ProjectInfoSkeleton} from "@/components/ui/skeleton/project/task";
@@ -18,7 +17,7 @@ function ProjectInfo({projectId, userId}: { projectId: string, userId: string })
 
     if (state === 'loading' || contents.result !== "success") return <ProjectInfoSkeleton/>;
 
-    const {name, subject, trustGrade, startDate, endDate} = contents.data;
+    const {name, subject, startDate, endDate} = contents.data;
 
     return (
         <section

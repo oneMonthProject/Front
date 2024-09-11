@@ -43,43 +43,6 @@ export async function getMyProjectDetail(projectId: string | bigint | null, user
     return await requestWithAuth('GET', `/api/project/detail?projectId=${_projectId}&userId=${_userId}`)
 }
 
-/**
- * 프로젝트 정보 수정
- * @param projectInfo
- */
-export async function updateProjectInfo(projectInfo: ProjectInfoUpdateReq) {
-
-    const {
-        authMap: {milestoneAuth},
-        projectName,
-        subject,
-        startDate,
-        endDate
-    } = projectInfo;
-
-    let errorMessage = '';
-    if(!milestoneAuth) errorMessage = '프로젝트 수정 권한이 없습니다.';
-    if(_.isEmpty(projectName)) errorMessage = '프로젝트 이름을 입력해주세요';
-    if(_.isEmpty(subject)) errorMessage = '프로젝트 주제를 입력해주세요';
-    if(_.isEmpty(startDate)) errorMessage = '시작날짜를 선택해주세요';
-    if(_.isEmpty(endDate)) errorMessage = '종료날짜를 선택해주세요';
-
-    if (errorMessage){
-        const resBody:ResponseBody<null> = {
-            result: 'fail',
-            message: errorMessage,
-            data: null,
-            errorHandle: 'snackbar'
-        };
-        return resBody;
-    }
-
-    return await requestWithAuth('PUT', `/api/project`, {
-        projectInfo: {
-            ...projectInfo
-        }
-    });
-}
 
 /**
  * 프로젝트 종료
