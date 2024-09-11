@@ -6,12 +6,9 @@ import ProjectRoleBadge from "@/components/ui/badge/ProjectRoleBadge";
 import CrewStatusBadge from "@/components/ui/badge/CrewStatusBadge";
 import CrewOutButton from "@/components/project/crews/detail/CrewOutButton";
 import ProfileSectionSkeleton from "@/components/ui/skeleton/project/crews/detail/ProfileSectionSkeleton";
-import {useRecoilValueLoadable} from "recoil";
-import {projectTaskAuthSelector} from "@/store/project/ProjectInfoStateStore";
 import useProjectMember from "@/hooks/useProjectMember";
 import {getCookie} from "cookies-next";
 import CrewFwButton from "@/components/project/crews/detail/CrewFWButton";
-import useProjectInfo from "@/hooks/useProjectInfo";
 
 
 function ProfileSection({projectMemberId}: { projectMemberId: string }) {
@@ -27,7 +24,7 @@ function ProfileSection({projectMemberId}: { projectMemberId: string }) {
         <div
             className="flex mobile:flex-col mobile:space-y-6 mobile:mt-4 px-1 py-4 mx-auto items-center justify-center">
             <section className='mobile:w-full pc:w-[200px] tablet:w-[150px] tablet:mr-10 flex flex-col items-center'>
-                <Avatar size="md" src={user.profileImgSrc} alt="빈 프로필"/>
+                <Avatar size="md" src={user.profileImgSrc} alt="크루 프로필"/>
                 <ul className="my-3 flex flex-col items-center">
                     <li className="pc:text-2xl tablet:text-[1.3rem] mobile:text-lg font-medium text-greyDarkBlue">
                         {user.nickname}
