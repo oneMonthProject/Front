@@ -1,8 +1,6 @@
 import {requestWithAuth} from "@/service/project/request";
 import {ResponseBody} from "@/utils/type";
-import {ProjectInfoUpdateReq} from "@/app/project/@setting/_utils/type";
 import {sortByStartDate} from "@/utils/common";
-import _ from "lodash";
 
 
 /**
@@ -50,4 +48,14 @@ export async function getMyProjectDetail(projectId: string | bigint | null, user
  */
 export async function endProject(projectId: string | bigint) {
     return await requestWithAuth('POST', '/api/project', {projectId});
+}
+
+/**
+ * 현재 사용자의 프로젝트 멤버 권한 조회
+ * @param projectId
+ */
+export async function getCurrentUserProjectMemberAuth(projectId: string | bigint) {
+    const _projectId = typeof projectId === 'string' ? BigInt(projectId) : projectId;
+
+    return await requestWithAuth("GET", `/api/project/currentUserAuth?projectId=${_projectId}`);
 }
