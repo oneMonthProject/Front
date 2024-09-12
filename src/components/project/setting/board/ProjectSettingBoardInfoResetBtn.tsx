@@ -14,7 +14,7 @@ function ProjectSettingBoardInfoResetBtn() {
             size="md"
             onClickHandler={() => {
                 resetProjectSettingBoardInfo();
-                queryClient.invalidateQueries({queryKey:['projectSettingInfo']});
+                queryClient.invalidateQueries({queryKey:['postInfo']});
             }}
         >
             초기화

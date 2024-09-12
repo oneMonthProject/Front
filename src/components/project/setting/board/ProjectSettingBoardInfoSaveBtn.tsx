@@ -21,7 +21,9 @@ function ProjectSettingBoardInfoSaveBtn({initData}: { initData: ProjectSettingBo
         onSuccess: async (data) => {
             const {message, result} = data;
             if (result === "success") {
-                await queryClient.invalidateQueries({queryKey: ['projectSettingBoardInfo']});
+                const invalidateSettingBoard = queryClient.invalidateQueries({queryKey: ['projectSettingBoardInfo']});
+                const invalidatePostInfo = queryClient.invalidateQueries({queryKey: ['postInfo']});
+                await Promise.all([invalidateSettingBoard, invalidatePostInfo]);
                 setSuccessSnackbar("프로젝트 모집 게시글을 수정했습니다.");
             } else {
                 setErrorSnackbar(message);
