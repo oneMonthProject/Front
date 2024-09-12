@@ -16,9 +16,6 @@ function MilestoneModDate({
     const startDateValue = startDate ? startDate as MilestoneModDataField<'startDate'> : initStartDate;
     const endDateValue = endDate ? endDate as MilestoneModDataField<'endDate'> : initEndDate;
 
-    console.log("endDateValue: ",endDateValue);
-    console.log("endDate: ",endDate);
-
     return (
         <div className='flex'>
             <label className="text-gray-700 font-semibold self-center">기간</label>

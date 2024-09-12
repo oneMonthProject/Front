@@ -9,7 +9,7 @@ export const projectSettingInfoStateStore = atom<ProjectSettingInfoUpdReqData>({
     key: 'projectSettingInfoStateStore',
     default: {
         projectId: 0n,
-        authMap: '',
+        authMap:'',
         projectName: '',
         projectSubject: '',
         startDate: '',
