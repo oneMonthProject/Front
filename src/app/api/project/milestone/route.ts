@@ -43,10 +43,10 @@ export async function POST(req: NextRequest) {
  * @constructor
  */
 export async function PATCH(req: NextRequest) {
-    const {content, startDate, endDate, mileStoneId, progressStatusCode} = await req.json();
+    const {content, startDate, endDate, milestoneId, progressStatusCode} = await req.json();
 
     const res = await authApi(
-        `/api/milestone/${mileStoneId}`,
+        `/api/milestone/${milestoneId}`,
         {
             method: 'PATCH',
             body: JSONReplaceBigInt({

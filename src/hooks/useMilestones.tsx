@@ -28,7 +28,7 @@ export const useMilestones = (projectId: string) => {
     };
 
     const activeMilestone = milestoneList.find(v => v.progressStatus === '진행중') || milestoneList[0];
-    const activeMilestoneId = activeMilestone ? activeMilestone.mileStoneId : null;
+    const activeMilestoneId = activeMilestone ? activeMilestone.milestoneId : null;
     const activeMilestoneIndex = activeMilestone ? activeMilestone.index! : null;
 
     return {

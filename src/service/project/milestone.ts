@@ -1,4 +1,4 @@
-import {MilestoneInfo, ProjectAuthMap} from "@/utils/type";
+import {MilestoneInfo, ProjectAuthMap, ProjectAuthMapCode} from "@/utils/type";
 import {requestWithAuth} from "@/service/project/request";
 import {sortByStartDate, throwErrorIfInvalid} from "@/utils/common";
 
@@ -24,40 +24,42 @@ export async function getMilestone(milestoneId: string) {
     return await requestWithAuth('GET', `/api/project/milestone/${milestoneId}`);
 }
 
+export type MilestoneAddReqData = {
+    projectId: bigint;
+    startDate: string;
+    endDate: string;
+    content: string;
+    authMap: ProjectAuthMapCode;
+};
+
 /**
  * 프로젝트 마일스톤 생성
- * @param milestoneInfo
- * @param projectId
+ * @param reqData
  */
-export async function createMilestone<T extends MilestoneInfo>(
-    {
-        milestoneInfo,
-    }: {
-        milestoneInfo: T
-    }) {
-    const {content, startDate, endDate, projectId, authMap} = milestoneInfo;
-
-    throwErrorIfInvalid(!content, "마일스톤 내용을 입력해 주세요");
-    throwErrorIfInvalid(!startDate, "시작날짜를 선택해 주세요");
-    throwErrorIfInvalid(!endDate, "종료날짜를 선택해 주세요");
-    const reqData = {projectId, content, startDate, endDate, authMap};
+export async function createMilestone(reqData: MilestoneAddReqData) {
+    throwErrorIfInvalid(!reqData.content, "마일스톤 내용을 입력해 주세요");
+    throwErrorIfInvalid(!reqData.startDate, "시작날짜를 선택해 주세요");
+    throwErrorIfInvalid(!reqData.endDate, "종료날짜를 선택해 주세요");
 
     return await requestWithAuth('POST', `/api/project/milestone`, reqData);
 }
 
+export type MilestoneModReqData = {
+    milestoneId: bigint;
+    content: string;
+    startDate: string;
+    endDate: string;
+    authMap: ProjectAuthMapCode;
+};
+
 /**
  * 프로젝트 마일스톤 수정
- * @param milestoneInfo
+ * @param reqData
  */
-export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: { milestoneInfo: T }) {
-    const {content, startDate, endDate, progressStatusCode, mileStoneId} = milestoneInfo;
-
-    throwErrorIfInvalid(!content, "마일스톤 내용을 입력해 주세요");
-    throwErrorIfInvalid(!startDate, "시작날짜를 선택해 주세요");
-    throwErrorIfInvalid(!endDate, "종료날짜를 선택해 주세요");
-    throwErrorIfInvalid(!progressStatusCode, "마일스톤 진행상태를 선택해 주세요");
-
-    const reqData = {content, startDate, endDate, progressStatusCode, mileStoneId};
+export async function updateMilestone(reqData: MilestoneModReqData) {
+    throwErrorIfInvalid(!reqData.content, "마일스톤 내용을 입력해 주세요");
+    throwErrorIfInvalid(!reqData.startDate, "시작날짜를 선택해 주세요");
+    throwErrorIfInvalid(!reqData.endDate, "종료날짜를 선택해 주세요");
 
     return await requestWithAuth('PATCH', `/api/project/milestone`, reqData);
 }
@@ -65,7 +67,7 @@ export async function updateMilestone<T extends MilestoneInfo>({milestoneInfo}: 
 export type DeleteMilestoneReqData = {
     milestoneId: bigint;
     projectId: bigint;
-    authMap: ProjectAuthMap;
+    authMap: ProjectAuthMapCode;
 }
 
 /**

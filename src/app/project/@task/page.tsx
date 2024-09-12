@@ -1,11 +1,12 @@
 'use client';
 
 import React from 'react';
-import MilestoneModal from '@/components/project/work/milestone/MilestoneModal';
 import TaskModal from '@/components/project/work/work/TaskModal';
 import Milestones from "@/components/project/work/milestone/Milestones";
 import MilestoneAddButton from "@/components/project/work/milestone/MilestoneAddButton";
 import TaskSection from "@/components/project/work/work/TaskSection";
+import MilestoneAddModal from "@/components/project/work/milestone/modal/add/MilestoneAddModal";
+import MilestoneModModal from "@/components/project/work/milestone/modal/mod/MilestoneModModal";
 
 function TaskPage({searchParams: {projectId, userId}}: { searchParams: { projectId: string, userId: string } }) {
 
@@ -16,7 +17,8 @@ function TaskPage({searchParams: {projectId, userId}}: { searchParams: { project
                 <Milestones projectId={projectId}/>
                 <TaskSection projectId={projectId}/>
             </section>
-            <MilestoneModal/>
+            <MilestoneModModal/>
+            <MilestoneAddModal/>
             <TaskModal/>
         </>
     );

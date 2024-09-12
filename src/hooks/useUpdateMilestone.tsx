@@ -1,29 +1,31 @@
 'use client';
 
-import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
-import {milestoneActiveStateStore, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
+import {useResetRecoilState, useSetRecoilState} from "recoil";
+import {
+    milestoneActiveStateStore,
+    milestoneModDataStateStore,
+    milestoneModModalStateStore
+} from "@/store/project/task/MilestoneStateStore";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {updateMilestone as updateMilestoneAPI} from "@/service/project/milestone";
+import {MilestoneModReqData, updateMilestone as updateMilestoneAPI} from "@/service/project/milestone";
 import {snackbarState} from "@/store/CommonStateStore";
-import {bigIntToString} from "@/utils/common";
 
 export default function useUpdateMilestone() {
     const setSnackBar = useSetRecoilState(snackbarState);
-    const resetCurrentForm = useResetRecoilState(milestoneModalFormState);
+    const resetMilestoneModDataState = useResetRecoilState(milestoneModDataStateStore);
+    const resetMilestoneModalState = useResetRecoilState(milestoneModModalStateStore);
     const resetActiveMilestone = useResetRecoilState(milestoneActiveStateStore);
-    const currentForm = useRecoilValue(milestoneModalFormState);
 
     const queryClient = useQueryClient();
 
     const {mutate: updateMilestone, isPending: isUpdating} = useMutation({
-        mutationFn: () => updateMilestoneAPI({milestoneInfo: currentForm!}),
+        mutationFn: (reqData:MilestoneModReqData) => updateMilestoneAPI(reqData),
         onSuccess: async (data) => {
             if (data.result === 'success') {
-                resetCurrentForm();
+                resetMilestoneModDataState();
+                resetMilestoneModalState();
                 resetActiveMilestone();
-                await queryClient.invalidateQueries({
-                    queryKey: ['milestoneList', bigIntToString(currentForm!.projectId)]
-                });
+                await queryClient.invalidateQueries({queryKey: ['milestoneList']});
                 setSnackBar({show: true, content: '마일스톤을 수정했습니다.', type: 'SUCCESS'});
             } else {
                 setSnackBar({show: true, content: data.message, type: 'ERROR'});

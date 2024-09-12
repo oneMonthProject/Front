@@ -4,10 +4,7 @@ import {MilestoneInfo, ProjectAuthMap} from "@/utils/type";
 import MilestoneCardMenu from "@/components/project/work/milestone/MilestoneCardMenu";
 import {useRecoilValue, useResetRecoilState, useSetRecoilState} from "recoil";
 import {
-    milestoneActiveStateStore,
-    MilestoneModalForm,
-    milestoneModalFormState,
-    MilestoneModalFormState
+    milestoneActiveStateStore, milestoneModDataStateSelector, milestoneModModalStateStore,
 } from "@/store/project/task/MilestoneStateStore";
 import {deleteMilestone as deleteMilestoneAPI} from "@/service/project/milestone";
 import {useMutation, useQueryClient} from "@tanstack/react-query";
@@ -23,7 +20,7 @@ type MilestoneCardProps = {
 function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: MilestoneCardProps) {
     const {
         projectId,
-        mileStoneId,
+        milestoneId,
         content,
         startDate,
         endDate,
@@ -31,21 +28,20 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
 
     const setSnackBar = useSetRecoilState(snackbarState);
 
-    const {activeMilestoneId: updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
-    const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActiveMilestoneId;
-
     const setActiveMilestone = useSetRecoilState(milestoneActiveStateStore);
     const resetActiveMilestone = useResetRecoilState(milestoneActiveStateStore);
+    const {activeMilestoneId: updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
 
-    const setMilestoneModalForm = useSetRecoilState<null | MilestoneModalFormState>(milestoneModalFormState);
+    const setMilestoneModModalState = useSetRecoilState(milestoneModModalStateStore);
+    const setMilestoneModDataMilestoneId = useSetRecoilState(milestoneModDataStateSelector('milestoneId'));
+    const setMilestoneModDataAuthMap = useSetRecoilState(milestoneModDataStateSelector('authMap'));
 
     const queryClient = useQueryClient();
-
     const {mutate: deleteMilestone} = useMutation({
         mutationFn: (mileStoneId: bigint) => deleteMilestoneAPI({
             projectId: projectId as bigint,
             milestoneId: mileStoneId,
-            authMap
+            authMap: authMap.code
         }),
         onSuccess: async (res) => {
             if (res.message !== 'success') {
@@ -59,35 +55,33 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
         onError: (error) => {
             setSnackBar({show: true, content: '프로세스 수행중 에러가 발생했습니다.', type: 'ERROR'});
         }
-    })
+    });
+
+    function onClickEditHandler() {
+        setMilestoneModModalState(prev => ({...prev, isOpen:true}));
+        setMilestoneModDataMilestoneId(milestoneId);
+        setMilestoneModDataAuthMap(authMap.code);
+    }
 
     function onClickContentHandler(e: MouseEvent<HTMLElement>) {
         if ((e.target as HTMLElement).dataset.role === 'milestone-menu') return;
         setActiveMilestone({
             activeMilestone: milestoneInfo,
             activeMilestoneIndex: milestoneInfo.index || null,
-            activeMilestoneId: milestoneInfo.mileStoneId
+            activeMilestoneId: milestoneId
         });
-    }
-
-    function onEditClickHandler() {
-        setMilestoneModalForm(
-            new MilestoneModalForm(
-                'modify',
-                milestoneInfo
-            )
-        );
     }
 
     async function onDeleteClickHandler() {
         if (confirm("마일스톤과 관련 업무를 삭제하시겠습니까?")) {
-            await deleteMilestone(mileStoneId);
+            await deleteMilestone(milestoneId);
         }
     }
 
+    const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActiveMilestoneId;
 
-    const activeClass = activeMilestoneId === mileStoneId ? 'ring-2 ring-primary' : 'shadow-md';
-    const textClass = activeMilestoneId === mileStoneId ? 'text-secondary' : 'text-gray-900';
+    const activeClass = activeMilestoneId === milestoneId ? 'ring-2 ring-primary' : 'shadow-md';
+    const textClass = activeMilestoneId === milestoneId ? 'text-secondary' : 'text-gray-900';
 
     return (
         <div
@@ -106,8 +100,8 @@ function MilestoneCard({milestoneInfo, initActiveMilestoneId, authMap}: Mileston
                 </div>
             </div>
             <MilestoneCardMenu
-                milestoneId={mileStoneId}
-                onEditClickHandler={onEditClickHandler}
+                milestoneId={milestoneId}
+                onEditClickHandler={onClickEditHandler}
                 onDeleteClickHandler={onDeleteClickHandler}
             />
         </div>

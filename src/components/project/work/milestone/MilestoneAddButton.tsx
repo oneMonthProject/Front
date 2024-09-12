@@ -3,35 +3,27 @@
 import React from 'react';
 import Button from "@/components/ui/Button";
 import {FaPlus} from "@react-icons/all-files/fa/FaPlus";
-import {getTodayString} from "@/utils/common";
-import {MilestoneInfo} from "@/utils/type";
-import {MilestoneModalForm, milestoneModalFormState} from "@/store/project/task/MilestoneStateStore";
+import {
+    milestoneAddDataStateSelector,
+    milestoneAddModalStateStore,
+    milestoneModModalStateStore
+} from "@/store/project/task/MilestoneStateStore";
 import {useSetRecoilState} from "recoil";
 import {MilestoneAddButtonSkeleton} from "@/components/ui/skeleton/project/task";
 import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
-function MilestoneAddButton({projectId, userId}: { projectId: string, userId: string }) {
+function MilestoneAddButton({projectId}: { projectId: string, userId: string }) {
     const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
-    const setMilestoneModalForm = useSetRecoilState(milestoneModalFormState);
+    const setMilestoneAddModalState = useSetRecoilState(milestoneAddModalStateStore);
+    const setMilestoneAddDataProjectId = useSetRecoilState(milestoneAddDataStateSelector('projectId'));
+    const setMilestoneAddDataAuthMap = useSetRecoilState(milestoneAddDataStateSelector('authMap'));
 
     if (isFetchingCurrentUserPMAuth) return <MilestoneAddButtonSkeleton/>;
 
     const onClickHandler = () => {
-        const today = getTodayString();
-        const addMilestoneForm: MilestoneInfo = {
-            content: "",
-            createDate: today,
-            mileStoneId: 0n,
-            progressStatus: "",
-            projectId: projectId,
-            startDate: '',
-            endDate: '',
-            updateDate: today,
-            authMap: currentUserPMAuth!
-        }
-
-        setMilestoneModalForm(new MilestoneModalForm("add", addMilestoneForm));
-
+        setMilestoneAddModalState(prev => ({...prev, isOpen: true}));
+        setMilestoneAddDataProjectId(projectId);
+        setMilestoneAddDataAuthMap(currentUserPMAuth!.code);
     }
 
     return (

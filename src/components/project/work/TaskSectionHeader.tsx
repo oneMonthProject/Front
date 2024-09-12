@@ -10,12 +10,12 @@ import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStor
 export default function TaskSectionHeader({initActiveMilestone}: { initActiveMilestone: MilestoneInfo | null }) {
     const {activeMilestone: updateActiveMilestone} = useRecoilValue(milestoneActiveStateStore);
     const activeMilestone = updateActiveMilestone !== null ? updateActiveMilestone : initActiveMilestone;
-    const {mileStoneId, content, projectId, startDate, endDate, progressStatus} = activeMilestone!;
+    const {milestoneId, content, projectId, startDate, endDate, progressStatus} = activeMilestone!;
 
     return (
         <div
             className='w-full flex mobile:flex-col mobile:items-start items-center justify-start mobile:space-y-4 tablet:mb-4'>
-            <TaskAddButton milestoneId={mileStoneId} projectId={projectId}/>
+            <TaskAddButton milestoneId={milestoneId} projectId={projectId}/>
             <div className='flex-wrap flex items-center tablet:ml-4 mr-auto space-x-3'>
                 <h3 className='max-w-[300px] mobile:w-[150px] my-2 tablet:text-3xl font-medium text-greyDarkBlue truncate'>
                     {content}

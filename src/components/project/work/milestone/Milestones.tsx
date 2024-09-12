@@ -31,7 +31,7 @@ function Milestones({projectId}: { projectId: string }) {
                 slideItems={
                     milestoneList.map((v) => (
                         {
-                            key: v.mileStoneId.toString(),
+                            key: v.milestoneId.toString(),
                             components:
                                 <MilestoneCard
                                     milestoneInfo={v}
