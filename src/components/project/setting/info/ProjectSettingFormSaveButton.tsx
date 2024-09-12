@@ -23,7 +23,7 @@ function ProjectSettingFormSaveButton({initData}: { initData: ProjectSettingInfo
         onSuccess: async (data) => {
             const {message, result} = data;
             if (result === 'success') {
-                await queryClinet.invalidateQueries({queryKey: ['projectSettingInfo']});
+                await queryClinet.invalidateQueries({queryKey: ['projectInfoSummary']});
                 setSuccessSnackbar("프로젝트 정보를 수정했습니다.");
             } else {
                 setErrorSnackbar(message);
