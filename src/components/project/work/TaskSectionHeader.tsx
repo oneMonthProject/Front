@@ -20,7 +20,6 @@ export default function TaskSectionHeader({initActiveMilestone}: { initActiveMil
                 <h3 className='max-w-[300px] mobile:w-[150px] my-2 tablet:text-3xl font-medium text-greyDarkBlue truncate'>
                     {content}
                 </h3>
-                <TaskStatusBadge text={progressStatus} size='sm'/>
                 <div className='flex-wrap flex items-center space-x-2 tablet:text-xl text-grey800'>
                     <span>{startDate}</span>
                     <span>&#126;</span>
