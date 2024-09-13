@@ -1,4 +1,4 @@
-import {requestWithAuth} from "@/service/project/request";
+import {request, requestWithAuth} from "@/service/project/request";
 import {ProjectAuthMap, ProjectAuthMapCode, TechStackItem} from "@/utils/type";
 import {isEqual} from "lodash";
 import {throwErrorIfInvalid} from "@/utils/common";
@@ -16,7 +16,7 @@ export type ProjectSettingInfoData = {
  * @param projectId
  */
 export const getProjectSettingInfo = async (projectId: bigint) => {
-    return requestWithAuth("GET", `/api/project/setting/info?projectId=${projectId}`);
+    return await request("GET", `/api/project/setting/info?projectId=${projectId}`);
 }
 
 export type ProjectSettingInfoUpdReqData = {

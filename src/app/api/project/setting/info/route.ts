@@ -13,7 +13,7 @@ export async function GET(req:NextRequest){
     const {searchParams} = new URL(req.url);
     const projectId = searchParams.get("projectId");
 
-    const res = await authApi(`/api/project/setting/info/${projectId}`, {method});
+    const res = await authApi(`/api/project/setting/info/${projectId}/public`, {method});
     return routeResponse(req, res);
 }
 
