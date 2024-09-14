@@ -1,5 +1,5 @@
 'use client';
-import React from "react";
+import React, {useEffect} from "react";
 import TitleSection from "./titleSection/TitleSection";
 import InfoSection from "./infoSection/InfoSection";
 import BodySection from "./bodySection/BodySection";
@@ -10,9 +10,17 @@ import PostDetailSkeleton from "@/components/ui/skeleton/postDetail/PostDetailSk
 import JoinProject from "@/components/postDetail/joinProject/JoinProject";
 import useProjectInfoSummary from "@/hooks/useProjectInfoSummary";
 import {numStrToBigInt} from "@/utils/common";
+import {useResetRecoilState} from "recoil";
+import {selectRecruitPositionState} from "@/store/postDetail/PostDetailStateStore";
 
 const PostDetail = ({postId, projectId}: { postId: string, projectId: string }) => {
     const {data: projectInfo, isFetching: isFetchingProjectInfo} = useProjectInfoSummary(projectId);
+    const resetRecruitPositionState = useResetRecoilState(selectRecruitPositionState);
+
+    // unmount시 모집포지션 select state 초기화
+    useEffect(() => {
+        return () => resetRecruitPositionState()
+    }, [resetRecruitPositionState]);
 
     const {
         data: postInfo,
@@ -22,6 +30,7 @@ const PostDetail = ({postId, projectId}: { postId: string, projectId: string }) 
         queryFn: () => getPost(numStrToBigInt(postId)),
         staleTime: 0
     });
+
 
     if (isFetchingProjectInfo || isFetchingPostInfo) return <PostDetailSkeleton/>;
 
