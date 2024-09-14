@@ -29,7 +29,7 @@ const PostDetail = ({postId, projectId}: { postId: string, projectId: string }) 
     const postInfoData = postInfo!.data!;
 
     return (
-        <div className="p-5 mobile:p-1 m-auto">
+        <div className="p-5 mobile:p-1">
             <TitleSection boardInfo={postInfoData}/>
             <InfoSection
                 projectInfo={projectInfoData}
