@@ -46,13 +46,12 @@ const PostList = () => {
 
     return (
         <section className="mt-6 mobile:mt-2">
-
-            <ul className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-0 mobile:bg-grey200'>
+            <ul className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-5 '>
                 {
                     infos.map((info) => (
                             <li
                                 key={info.boardId.toString()}
-                                className="flex-col w-[280px] max-h-[330px] rounded-xl border-2 shadow-lg mobile:bg-white mobile:w-full mobile:shadow-none mobile:rounded-none mobile:border-none mobile:mt-2"
+                                className="flex-col w-[280px] max-h-[330px] rounded-xl border-2 shadow-lg mobile:w-full mobile:mt-2"
                             >
                                 <PostCard key={info.boardId.toString()} postInfo={info}/>
                             </li>

@@ -6,9 +6,9 @@ import PositionFilter from "@/components/main/searchFilter/PositionFilter";
 
 const Posts = () => {
     return (
-        <div className="flex-col">
-            <div className="mt-6 flex justify-between mobile:block mobile:space-y-2 mobile:mt-2">
-                <div className="flex space-x-5 mobile:space-x-2">
+        <div className="flex flex-col space-y-5">
+            <div className="mt-6 flex justify-between mobile:block mobile:space-y-5">
+                <div className="flex space-x-5">
                     <TechStackDropdown/>
                     <PositionFilter />
                 </div>
