@@ -4,7 +4,7 @@ import CrewListSkeleton from "@/components/ui/skeleton/project/crews/CrewListSke
 
 function CrewsPage({searchParams: {projectId, userId}}: { searchParams: { projectId: string, userId:string } }) {
     return (
-        <section className='w-full pc:w-[90%] mobile:max-h-[400px] mx-auto  mobile:overflow-y-scroll'>
+        <section className='w-full mobile:max-h-[400px] mx-auto  mobile:overflow-y-scroll'>
             <CrewList projectId={projectId} userId={userId}/>
         </section>
     );
