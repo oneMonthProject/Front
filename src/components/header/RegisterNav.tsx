@@ -11,7 +11,7 @@ function RegisterNav() {
     return (
         <Link href='/register'>
             {
-                isDesktop ? '프로젝트 모집' : <IoCreateOutline className='h-6 w-6'/>
+                isDesktop ? '새 프로젝트' : <IoCreateOutline className='h-6 w-6'/>
             }
         </Link>
     );

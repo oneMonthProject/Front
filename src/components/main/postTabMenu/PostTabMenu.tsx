@@ -18,7 +18,7 @@ const PostTabMenu = () => {
           }`}
         onClick={() => setIsMyProjectPostsTab(false)}
       >
-        프로젝트
+        프로젝트 모집
       </div>
       {
         mounted && hasCookie("user_id") ? (

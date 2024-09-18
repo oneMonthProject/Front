@@ -18,7 +18,7 @@ export const PROJECT_MENU = {
         url: '/project/notice'
     },
     SETTING: {
-        name: '프로젝트 세팅',
+        name: '프로젝트 설정',
         value:'SETTING',
         url: '/project/setting'
     },
