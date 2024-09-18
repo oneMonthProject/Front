@@ -22,8 +22,8 @@ function TechStackImage({ stackName, width, height }: TechStackImageProps) {
       src={`${process.env.NEXT_PUBLIC_URL}/images/tech/${fileName}.svg`}
       alt={stackName}
       fill={responsiveWidth && responsiveHeight ? undefined : true}
-      width={width ? responsiveWidth : undefined}
-      height={height ? responsiveHeight : undefined}
+      width={responsiveWidth ? responsiveWidth : undefined}
+      height={responsiveHeight ? responsiveHeight : undefined}
     />
   );
 }
