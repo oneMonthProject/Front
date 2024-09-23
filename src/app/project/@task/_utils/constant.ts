@@ -1,21 +1,17 @@
 
 
 export const TASK_STATUS = {
-    DEFAULT: {
-        name: '진행상태',
-        value: null
-    },
     PS001: {
-        name: '시작전',
-        value: 'PS001'
+        code: 'PS001',
+        name: '시작전'
     },
     PS002: {
+        code: 'PS002',
         name: '진행중',
-        value: 'PS002'
     },
     PS003: {
-        name: '완료',
-        value: 'PS003'
+        code: 'PS003',
+        name: '완료'
     }
 } as const;
 

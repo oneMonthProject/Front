@@ -1,16 +1,11 @@
 'use client';
 import React from 'react';
 import TaskAddButton from "@/components/project/work/work/TaskAddButton";
-import TaskStatusBadge from "@/components/ui/badge/TaskStatusBadge";
 import {MilestoneInfo} from "@/utils/type";
-import {useRecoilValue} from "recoil";
-import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
 
 
-export default function TaskSectionHeader({initActiveMilestone}: { initActiveMilestone: MilestoneInfo | null }) {
-    const {activeMilestone: updateActiveMilestone} = useRecoilValue(milestoneActiveStateStore);
-    const activeMilestone = updateActiveMilestone !== null ? updateActiveMilestone : initActiveMilestone;
-    const {milestoneId, content, projectId, startDate, endDate, progressStatus} = activeMilestone!;
+export default function TaskSectionHeader({milestoneInfo}:{milestoneInfo:MilestoneInfo}) {
+    const {milestoneId, content, projectId, startDate, endDate} = milestoneInfo;
 
     return (
         <div

@@ -12,6 +12,7 @@ export type CustomDateRangePickerProps = {
     includeDateIntervals?: Array<{ start: Date; end: Date }> | undefined;
     startOpenToDate?: Date | undefined;
     endOpenToDate?: Date | undefined;
+    disabled?: boolean | undefined;
 };
 
 function DateRangePicker({
@@ -21,7 +22,8 @@ function DateRangePicker({
                              setEndDate,
                              includeDateIntervals,
                              startOpenToDate,
-                             endOpenToDate
+                             endOpenToDate,
+                             disabled = false
                          }: CustomDateRangePickerProps) {
     const [endMinDate, setEndMinDate] = useState<Date | null>(() =>
         addDays(startDate ? new Date(startDate) : new Date(), 1));
@@ -54,6 +56,7 @@ function DateRangePicker({
                 setDate={(value) => setStartDate(value)}
                 includeDateIntervals={includeDateIntervals}
                 openToDate={startOpenToDate}
+                disabled={disabled}
             />
             <div className="text-gray-700 w-[20px] text-center self-center">~</div>
             <CalendarInput
@@ -64,6 +67,7 @@ function DateRangePicker({
                 minDate={endMinDate}
                 includeDateIntervals={includeDateIntervals}
                 openToDate={endOpenToDate}
+                disabled={disabled}
             />
         </div>
     );

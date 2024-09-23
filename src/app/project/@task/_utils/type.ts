@@ -2,8 +2,10 @@ import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 
 export type TaskStatusKey = keyof typeof TASK_STATUS;
+export type TaskStatusType = typeof TASK_STATUS[TaskStatusKey];
 export type TaskStatusNameType = (typeof TASK_STATUS)[TaskStatusKey]["name"];
-export type TaskStatusValueType = (typeof TASK_STATUS)[TaskStatusKey]["value"];
+
+export type TaskStatusValueType = (typeof TASK_STATUS)[TaskStatusKey]["code"];
 
 
 export interface TaskItem {
@@ -15,7 +17,7 @@ export interface TaskItem {
     content: string;
     startDate: string;
     endDate: string;
-    progressStatus: TaskStatusNameType;
+    progressStatus: TaskStatusType;
     contentDetail: string | '';
 }
 

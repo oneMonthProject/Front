@@ -1,12 +1,10 @@
 import {requestWithAuth} from "@/service/project/request";
+import {ProjectAuthMapCode} from "@/utils/type";
 
 
 export type WorkCompleteRequestDto = {
-    userId: bigint;
-    projectId: bigint;
-    milestoneId: bigint;
     workId: bigint;
-    content: string
+    authMap: ProjectAuthMapCode;
 }
 
 /**

@@ -1,7 +1,10 @@
 import {atom, DefaultValue, selector, selectorFamily} from "recoil";
-import {TaskContentDetails, TaskForm, TaskModifyForm} from "@/app/project/@task/_utils/type";
+import {TaskForm} from "@/app/project/@task/_utils/type";
 import _ from "lodash";
 import {v4} from "uuid";
+import {ModalState} from "@/utils/type";
+import {TaskCreateReqData, TaskModifyReqData} from "@/service/project/task";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 
 export type TaskModalState = {
@@ -17,72 +20,142 @@ export const taskModalState = atom<TaskModalState>({
     }
 });
 
+export const taskAddModalStateStore = atom<ModalState>({
+    key: 'taskAddModalStateStore',
+    default: {
+        isOpen: false,
+        title: '새 업무'
+    }
+});
 
-export type TaskFieldKey = Exclude<keyof TaskForm, 'progressStatusCode' | 'progressStatus' | 'contentDetail'>;
-// TaskForm 필드에서 progressStatus(+progressStatusCode),contentDetail 제외한 나머지 중 특정 필드 추출
-// : 각 필드의 state 타입으로 사용한다
-export type TaskField<T> = TaskForm[Extract<TaskFieldKey, T>];
+export const taskAddModalDataStateStore = atom<TaskCreateReqData>({
+    key: 'taskAddModalDataStateStore',
+    default: {
+        projectId: 0n,
+        milestoneId: 0n,
+        content: '',
+        startDate: '',
+        endDate: '',
+        assignedUserId: 0n,
+        contentDetail: ''
+    }
+});
 
-/**
- * 업무 생성/수정 modal 각 필드 상태관리('진행상태', '할일목록' 제외)
- */
-export const taskModalFieldSelector = selectorFamily({
-    key: 'taskModalFieldSelector',
-    get: (param: TaskFieldKey) => ({get}) => {
-        const form = get(taskModalState).form!;
-        return form[param] as TaskField<typeof param>;
+export type TaskAddModalFieldKey = keyof TaskCreateReqData;
+export type TaskAddModalField<T> = TaskCreateReqData[Extract<TaskAddModalFieldKey, T>];
+
+
+// ** =============================== Task Mod Modal ====================================== ** //
+export const taskModModalStateStore = atom<ModalState>({
+    key: 'taskModModalStateStore',
+    default: {
+        isOpen: false,
+        title: '업무 수정'
+    }
+});
+
+export const taskModModalDataStateStore = atom<TaskModifyReqData>({
+    key: 'taskModModalDataStateStore',
+    default: {
+        projectId: 0n,
+        milestoneId: 0n,
+        workId: 0n,
+        content: '',
+        startDate: '',
+        endDate: '',
+        assignedUserId: 0n,
+        contentDetail: '',
+        progressStatus: TASK_STATUS.PS002.code,
+        authMap: ''
+    }
+});
+
+export type TaskModModalFieldKey = keyof TaskModifyReqData;
+export type TaskModModalField<T> = TaskModifyReqData[Extract<TaskModModalFieldKey, T>];
+
+export type TaskModalType = 'add' | 'mod';
+
+export function isTaskAddModalFieldKey(modalType: TaskModalType, key: string): key is TaskAddModalFieldKey {
+    return modalType === 'add';
+}
+
+export function isTaskModModalFieldKey(modalType: TaskModalType, key: string): key is TaskModModalFieldKey {
+    return modalType === 'mod';
+}
+
+export const taskModalDataFieldSelector = selectorFamily({
+    key: 'taskModalDataFieldSelector',
+    get: (param: { modalType: TaskModalType, fieldKey: TaskAddModalFieldKey }) => ({get}) => {
+
+        if (isTaskAddModalFieldKey(param.modalType, param.fieldKey)) {
+            const data = get(taskAddModalDataStateStore);
+            return data[param.fieldKey] as TaskAddModalField<typeof param.fieldKey>;
+
+        } else if (isTaskModModalFieldKey(param.modalType, param.fieldKey)) {
+            const data = get(taskModModalDataStateStore);
+            return data[param.fieldKey] as TaskModModalField<typeof param.fieldKey>;
+        }
     },
-    set: (param: TaskFieldKey) => ({get, set}, newValue) => {
-        const modalState = get(taskModalState);
-        const form = modalState.form!;
-        const updatedForm = {...form, [param]: newValue};
-        set(taskModalState, {isOpen: modalState.isOpen, form: updatedForm});
+    set: (param: { modalType: TaskModalType, fieldKey: TaskAddModalFieldKey }) => ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
+
+        if (isTaskAddModalFieldKey(param.modalType, param.fieldKey)) {
+            const data = get(taskAddModalDataStateStore);
+            set(taskAddModalDataStateStore, {...data, [param.fieldKey]: newValue});
+
+        } else if (isTaskModModalFieldKey(param.modalType, param.fieldKey)) {
+            const data = get(taskModModalDataStateStore);
+            set(taskModModalDataStateStore, {...data, [param.fieldKey]: newValue});
+        }
     }
 });
 
 /**
  * 업무 생성/수정 modal '할일목록' 필드 상태관리 :
  * (조회) contentDetail 필드(문자열) get
- *        -> 각 문자열을 TaskContentDetails 객체로 변환(data: 할일 문자열, id: 랜덤생성한 할 일별 고유id)
+ *        -> 각 문자열을 TaskContentDetails 타입으로 변환 ({data: 할일 문자열, id: 랜덤생성한 할 일별 고유id})
  *        -> 하위 selector에서 id를 파라미터로 특정 할일 data 조회
- * (수정) 하위 selector에서 업데이트한 TaskContentDetails를 문자열로 변환 -> 업무 form set
+ * (수정) 하위 selector에서 업데이트한 TaskContentDetails를 문자열로 변환 -> 업무 field set
  */
-export const taskContentDetailSelector = selector<TaskContentDetails>({
-    key: 'taskContentDetailSelector',
-    get: ({get}) => {
-        const {form: modalForm} = get(taskModalState);
+export const taskModalContentDetailSelector = selectorFamily({
+    key: 'taskModalContentDetailSelector',
+    get: (param: TaskModalType) => ({get}) => {
+        const modalData = param === 'add' ? get(taskAddModalDataStateStore) : get(taskModModalDataStateStore);
 
         const contentDetailMap = new Map();
 
-        if (!modalForm || !modalForm.contentDetail) return contentDetailMap;
+        if (!modalData.contentDetail) return contentDetailMap;
 
-        const contentDetailArray = modalForm.contentDetail.split("&");
+        const contentDetailArray = modalData.contentDetail.split("&");
         for (const item of contentDetailArray) {
             contentDetailMap.set(v4(), item);
         }
 
         return contentDetailMap;
     },
-    set: ({get, set}, newValue) => {
-        if (!(newValue instanceof DefaultValue)) {
-            const modalState = get(taskModalState);
-            const form = get(taskModalState).form!;
+    set: (param: TaskModalType) => ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
 
-            const updatedContentDetailArr = []
-            if (!_.isEmpty(newValue)) {
-                for (const [key, value] of newValue) {
-                    updatedContentDetailArr.push(value);
-                }
+        const modalDataStore = param === 'add' ? taskAddModalDataStateStore : taskModModalDataStateStore;
+        const modalData = get(modalDataStore);
+
+        const updatedContentDetailArr = []
+        if (!_.isEmpty(newValue)) {
+            for (const [key, value] of newValue) {
+                updatedContentDetailArr.push(value);
             }
-            const updatedContentDetailString = updatedContentDetailArr.join('&');
+        }
+        const updatedContentDetailString = updatedContentDetailArr.join('&');
 
+        const updated = {
+            ...modalData,
+            contentDetail: updatedContentDetailString
+        };
 
-            const updatedForm = {
-                ...form,
-                contentDetail: updatedContentDetailString
-            };
-
-            set(taskModalState, {isOpen: modalState.isOpen, form: updatedForm});
+        if (param === 'add') {
+            set(taskAddModalDataStateStore, updated);
+        } else if (param === 'mod') {
+            set(taskModModalDataStateStore, updated as TaskModifyReqData);
         }
     }
 });
@@ -92,25 +165,24 @@ export const taskContentDetailSelector = selector<TaskContentDetails>({
  * (조회) TaskContentDetails get -> id를 파라미터로 특정 할일 data 조회
  * (수정) 특정 할일 data 변경 -> TaskContentDetails에 변경내용 set
  */
-export const taskContentDetailFieldSelector = selectorFamily<string, string>({
+export const taskContentDetailFieldSelector = selectorFamily({
     key: 'taskContentDetailFieldSelector',
-    get: (param: string) => ({get}) => {
-        const contentDetailFields = get(taskContentDetailSelector);
-        return _.isEmpty(contentDetailFields) ? '' : contentDetailFields.get(param)!;
+    get: (param: { modalType: TaskModalType, idForEdit: string }) => ({get}) => {
+        const contentDetailFields = get(taskModalContentDetailSelector(param.modalType));
+        return _.isEmpty(contentDetailFields) ? '' : contentDetailFields.get(param.idForEdit)!;
     },
-    set: (param: string) => ({get, set}, newValue) => {
-        if (!(newValue instanceof DefaultValue)) {
-            const contentDetails = get(taskContentDetailSelector);
+    set: (param: { modalType: TaskModalType, idForEdit: string }) => ({get, set}, newValue) => {
+        if (newValue instanceof DefaultValue) return;
 
-            const newContentDetail = new Map([[param, newValue]]);
+        const contentDetails = get(taskModalContentDetailSelector(param.modalType));
 
-            const updatedContentDetails = new Map([...contentDetails, ...newContentDetail]);
+        const newContentDetail = new Map([[param.idForEdit, newValue]]);
 
-            set(taskContentDetailSelector, updatedContentDetails);
-        }
+        const updatedContentDetails = new Map([...contentDetails, ...newContentDetail]);
+
+        set(taskModalContentDetailSelector(param.modalType), updatedContentDetails);
     }
-
-})
+});
 
 
 /**
@@ -120,28 +192,26 @@ export const taskContentDetailFieldSelector = selectorFamily<string, string>({
 export const taskProgressModFieldSelector = selector({
     key: 'taskProgressModFieldSelector',
     get: ({get}) => {
-        const form = get(taskModalState).form! as TaskModifyForm;
-        const progressStatusCode = form.progressStatusCode;
-        const progressStatus = form.progressStatus;
-        return {progressStatusCode, progressStatus};
+        const modalData = get(taskModModalDataStateStore);
+        return modalData.progressStatus;
     },
     set: ({get, set}, newValue) => {
         if (newValue instanceof DefaultValue) return;
 
-        const modalState = get(taskModalState);
-        const form = get(taskModalState).form! as TaskModifyForm;
+        const modalData = get(taskModModalDataStateStore);
 
-        const updatedForm = {
-            ...form,
-            progressStatusCode: newValue.progressStatusCode,
-            progressStatus: newValue.progressStatus
-        };
-
-        set(taskModalState, {isOpen: modalState.isOpen, form: updatedForm});
+        set(taskModModalDataStateStore, {...modalData, progressStatus: newValue});
     }
 });
 
-export const taskDateRangeStateStore = atom({
-    key: 'taskDateRangeStateStore',
-    default: null
-})
+export const taskModalEditDisabledSelector = selectorFamily({
+    key:'taskModalEditDisabledSelector',
+    get: (param: TaskModalType) => ({get}) => {
+        if(param === 'add') return false;
+
+        const modalData = get(taskModModalDataStateStore);
+        const progressStatusCode = modalData.progressStatus;
+        return progressStatusCode === TASK_STATUS.PS003.code;
+    }
+});
+

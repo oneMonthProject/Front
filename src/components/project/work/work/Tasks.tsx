@@ -9,12 +9,11 @@ import TasksSkeleton from "@/components/ui/skeleton/project/task/TasksSkeleton";
 import {ITEM_COUNT} from "@/utils/constant";
 import {useRecoilValue} from "recoil";
 import {milestoneActiveStateStore} from "@/store/project/task/MilestoneStateStore";
+import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
 
 
-function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigint, projectId: DataId }) {
-    const {activeMilestoneId: updateActiveMilestoneId} = useRecoilValue(milestoneActiveStateStore);
-    const activeMilestoneId = updateActiveMilestoneId !== null ? updateActiveMilestoneId : initActivemilestoneId;
-
+function Tasks({projectId, milestoneId}: { projectId: DataId, milestoneId:bigint }) {
+    const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
     const [pageNumber, setPageNumber] = useState(0);
 
     const {
@@ -23,7 +22,7 @@ function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigi
         isTasksLoading
     } = useTasks({
         projectId,
-        milestoneId: activeMilestoneId,
+        milestoneId,
         pageNumber,
         itemsPerPage: ITEM_COUNT.CARDS_SM
     })
@@ -33,7 +32,7 @@ function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigi
     }
 
 
-    return isTasksLoading
+    return isTasksLoading || isFetchingCurrentUserPMAuth
         ? <TasksSkeleton itemCount={ITEM_COUNT.CARDS_SM}/>
         : (
             <div className='w-full mt-4 flex flex-col items-center'>
@@ -43,7 +42,7 @@ function Tasks({initActivemilestoneId, projectId}: { initActivemilestoneId: bigi
                             {taskList.map(v =>
                                 (
                                     <li key={v.workId}>
-                                        <TaskCard item={v}/>
+                                        <TaskCard item={v} authMap={currentUserPMAuth!}/>
                                     </li>
                                 ))}
                         </ul>

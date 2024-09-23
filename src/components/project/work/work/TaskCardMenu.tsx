@@ -3,30 +3,48 @@ import React, {Fragment} from 'react';
 import {Menu, Transition} from "@headlessui/react";
 import {IoEllipsisVertical} from "@react-icons/all-files/io5/IoEllipsisVertical";
 import {classNames} from "@/utils/common";
-import {TaskItem, TaskModifyForm} from "@/app/project/@task/_utils/type";
+import {TaskItem} from "@/app/project/@task/_utils/type";
 import {useSetRecoilState} from "recoil";
-import {taskModalState} from "@/store/project/task/TaskStateStore";
-import {TASK_STATUS, TASK_STATUS as TS} from "@/app/project/@task/_utils/constant";
+import {taskModModalDataStateStore, taskModModalStateStore} from "@/store/project/task/TaskStateStore";
 import useDeleteTask from "@/hooks/useDeleteTask";
+import {TaskModifyReqData} from "@/service/project/task";
+import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
+import {ProjectAuthMap} from "@/utils/type";
 
 
-function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
-    const {content: title, workId, progressStatus} = taskItem;
+function TaskCardMenu({taskItem, authMap}: { taskItem: TaskItem, authMap: ProjectAuthMap }) {
+    const {
+        content,
+        workId,
+        startDate,
+        endDate,
+        progressStatus,
+        milestoneId,
+        projectId,
+        assignedUser,
+        contentDetail
+    } = taskItem;
     const {deleteTask, isDeleting} = useDeleteTask();
-    const setTaskModalForm = useSetRecoilState(taskModalState);
+    const setTaskModalState = useSetRecoilState(taskModModalStateStore);
+    const setTaskModalData = useSetRecoilState(taskModModalDataStateStore);
+
 
     function onClickUpdateHandler() {
-        const progressStatusCode = Object.values(TASK_STATUS)
-            .find(({name}) => name === progressStatus)!
-            .value;
-        const updateForm: TaskModifyForm = {
-            ...taskItem,
-            title,
-            type: 'modify',
-            progressStatusCode
+        const updateForm: TaskModifyReqData = {
+            projectId,
+            milestoneId,
+            content,
+            progressStatus: progressStatus.code,
+            startDate,
+            endDate,
+            assignedUserId: assignedUser!.projectMemberId,
+            contentDetail,
+            workId,
+            authMap: authMap.code
         };
 
-        setTaskModalForm({isOpen: true, form: updateForm});
+        setTaskModalState(prev => ({...prev, isOpen: true}));
+        setTaskModalData(updateForm);
     }
 
     /**
@@ -34,7 +52,7 @@ function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
      */
     function onClickDeleteCardHandler() {
         if (confirm("업무를 삭제하시겠습니까?")) {
-            deleteTask(workId);
+            deleteTask({workId, authMap: authMap.code});
         }
     }
 
@@ -60,23 +78,26 @@ function TaskCardMenu({taskItem}: { taskItem: TaskItem }) {
                 <Menu.Items
                     className="absolute right-2 z-10 mt-1 tablet:min-w-[60px] origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <div className="py-1 ">
-                        <Menu.Item key='modify'>
-                            {({active}) => (
-                                <a
-                                    href="javascript;"
-                                    onClick={(e) => {
-                                        e.preventDefault();
-                                        onClickUpdateHandler();
-                                    }}
-                                    className={classNames(
-                                        active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
-                                        'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
-                                    )}
-                                >
-                                    수정
-                                </a>
-                            )}
-                        </Menu.Item>
+                        {
+                            progressStatus.code !== TASK_STATUS.PS003.code
+                            && <Menu.Item key='modify'>
+                                {({active}) => (
+                                    <a
+                                        href="javascript;"
+                                        onClick={(e) => {
+                                            e.preventDefault();
+                                            onClickUpdateHandler();
+                                        }}
+                                        className={classNames(
+                                            active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                                            'block px-4 py-2 tablet:text-[16px] mobile:text-sm'
+                                        )}
+                                    >
+                                        수정
+                                    </a>
+                                )}
+                            </Menu.Item>
+                        }
                         <Menu.Item key='delete'>
                             {({active}) => (
                                 <a

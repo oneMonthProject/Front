@@ -4,24 +4,24 @@ import React, {useRef, useState} from 'react';
 import {useRecoilState, useRecoilValue, useSetRecoilState} from "recoil";
 import {
     taskContentDetailFieldSelector,
-    taskContentDetailSelector,
-    taskProgressModFieldSelector
+    taskModalContentDetailSelector,
+    taskModalEditDisabledSelector
 } from "@/store/project/task/TaskStateStore";
 import TaskContentCancelDeleteButton
-    from "@/components/project/work/work/TaskContentDetail/TaskContentCancelDeleteButton";
-import TaskContentEditFinishButton from "@/components/project/work/work/TaskContentDetail/TaskContentEditFinishButton";
+    from "@/components/project/work/work/modal/taskContentDetail/TaskContentCancelDeleteButton";
+import TaskContentEditFinishButton
+    from "@/components/project/work/work/modal/taskContentDetail/TaskContentEditFinishButton";
 import {TaskContentDetails} from "@/app/project/@task/_utils/type";
-import {TASK_STATUS} from "@/app/project/@task/_utils/constant";
 
 
-function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
-    const {progressStatusCode} = useRecoilValue(taskProgressModFieldSelector);
+function TaskContentDetailInput({idForEdit, modalType}: { idForEdit: string, modalType: 'add' | 'mod' }) {
+    const disabled = useRecoilValue(taskModalEditDisabledSelector(modalType));
     const [isReadOnly, setIsReadOnly] = useState(true);
     const [placeholder, setPlaceholder] = useState('할 일 입력');
     const [taskContentDetailField, setTaskContentDetailField] =
-        useRecoilState(taskContentDetailFieldSelector(idForEdit));
+        useRecoilState(taskContentDetailFieldSelector({modalType, idForEdit}));
     const [value, setValue] = useState(() => taskContentDetailField);
-    const setTaskContentDetails = useSetRecoilState(taskContentDetailSelector);
+    const setTaskContentDetails = useSetRecoilState(taskModalContentDetailSelector(modalType));
 
     const inputRef = useRef<HTMLInputElement | null>(null);
 
@@ -81,7 +81,7 @@ function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
                         type="text"
                         placeholder={placeholder}
                         className={`w-[320px] mobile:w-full h-full absolute top-0 left-0 z-10 appearance-none border-none focus:border-transparent 
-                            focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'} ${progressStatusCode === TASK_STATUS.PS003.value && 'text-gray-400'} `}
+                            focus:ring-0 focus:outline-none ${!isReadOnly && 'hoverColorChange-ground200'} ${disabled && 'text-gray-400'} `}
                         onChange={(e) => {
                             if (e.target.value === "") {
                                 setPlaceholder('할 일 입력');
@@ -98,10 +98,12 @@ function TaskContentDetailInput({idForEdit}: { idForEdit: string }) {
             <div
                 className={`w-full flex space-x-3 mx-1 text-3xl text-neutral-dark z-10`}>
                 <TaskContentEditFinishButton
+                    disabled={disabled}
                     mode={isReadOnly ? 'edit' : 'finish'}
                     onClickHandler={isReadOnly ? onClickEditModeButtonHandler : onClickEditFinishHandler}
                 />
                 <TaskContentCancelDeleteButton
+                    disabled={disabled}
                     mode={isReadOnly ? 'delete' : 'cancel'}
                     onClickHandler={isReadOnly ? onClickDeleteButtonHandler : onClickEditCancelButtonHandler}
                 />

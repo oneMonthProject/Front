@@ -29,20 +29,12 @@ export async function GET(req: NextRequest) {
  * @constructor
  */
 export async function POST(req: NextRequest) {
-    const {task: {projectId, milestoneId, content, startDate, endDate, assignedUser, contentDetail}} = await req.json();
+    const reqData = await req.json();
     const res = await authApi(
         `/api/project/work`,
         {
             method: 'POST',
-            body: JSONReplaceBigInt({
-                projectId,
-                milestoneId,
-                content,
-                startDate,
-                endDate,
-                contentDetail,
-                assignedUserId: assignedUser.projectMemberId
-            })
+            body: JSONReplaceBigInt(reqData)
         });
 
     return routeResponse(req, res);
@@ -54,30 +46,13 @@ export async function POST(req: NextRequest) {
  * @constructor
  */
 export async function PATCH(req: NextRequest) {
-    const {
-        task: {
-            workId,
-            content,
-            startDate,
-            endDate,
-            progressStatusCode,
-            assignedUser,
-            contentDetail
-        }
-    } = await req.json();
+    const reqData = await req.json();
 
     const res = await authApi(
-        `/api/project/work/${workId}`,
+        `/api/project/work`,
         {
             method: 'PATCH',
-            body: JSONReplaceBigInt({
-                content,
-                startDate,
-                endDate,
-                progressStatusCode,
-                contentDetail,
-                assignedUserId: assignedUser.projectMemberId
-            })
+            body: JSONReplaceBigInt(reqData)
         }
     );
 
@@ -90,12 +65,13 @@ export async function PATCH(req: NextRequest) {
  * @constructor
  */
 export async function DELETE(req: NextRequest) {
-    const {workId} = await req.json();
+    const reqData = await req.json();
 
     const res = await authApi(
-        `/api/project/work/${workId}`,
+        `/api/project/work`,
         {
-            method: 'DELETE'
+            method: 'DELETE',
+            body: JSONReplaceBigInt(reqData)
         }
     )
 

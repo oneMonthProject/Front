@@ -22,14 +22,17 @@ function FwCreateModalContents() {
             <section>
                 <div className='bg-ground200 rounded-md px-5 py-6'>
                     <div className='my-2 text-2xl text-greyDarkblue font-semibold'>주의사항</div>
-                    <ul className='text-left'>
+                    <ul className='max-h-[200px] overflow-auto text-left'>
+                        <li className='my-2'>•매니저 강제탈퇴 투표는 매니저 권한 크루만 신청할 수 있습니다.</li>
                         <li className='my-2'>•탈퇴대상자를 제외한 프로젝트 멤버가 <strong>1명 이상</strong>이어야 투표를 생성할 수 있습니다.</li>
+                        <li className='my-2'>•투표자 과반수가 강제탈퇴에 찬성할 경우, 해당 멤버는 자동으로 강제탈퇴 처리 됩니다.</li>
                         <li className='my-2'>•생성된 투표는 프로젝트 <strong>[알림]</strong> 탭의 <strong>[강제탈퇴]</strong>에서 확인할 수 있습니다.</li>
-                        <li className='my-2'>•투표자 과반수가 강제탈퇴에 찬성할 경우, 해당 멤버는 자동으로 강제탈퇴 처리되며 다음 불이익을 받습니다:
+                        <li className='my-3'>
+                            <span className='font-bold text-lg'>프로젝트 강제탈퇴시 불이익:</span>
                             <ul className='p-3'>
-                                <li>⁃ 강제탈퇴 이후 프로젝트에 재참여할 수 없습니다.</li>
-                                <li>⁃ 강제탈퇴자의 신뢰등급에 비례하여 신뢰점수가 차감됩니다.</li>
-                                <li>⁃ 강제탈퇴 기록이 프로젝트 이력에 남으며, 프로젝트 지원시 조회됩니다.</li>
+                                <li>• 강제탈퇴 이후 프로젝트에 재참여할 수 없습니다.</li>
+                                <li>• 강제탈퇴자의 신뢰등급에 비례하여 신뢰점수가 차감됩니다.</li>
+                                <li>• 강제탈퇴 기록이 프로젝트 이력에 남으며, 프로젝트 지원시 조회됩니다.</li>
                             </ul>
                         </li>
                     </ul>

@@ -67,8 +67,6 @@ export interface MilestoneInfo {
     startDate: string;
     endDate: string;
     updateDate: string;
-    progressStatus: MilestoneStatusName | '';
-    progressStatusCode?: MilestoneStatusCode | '';
     index?: number;
     authMap?: ProjectAuthMap;
 }

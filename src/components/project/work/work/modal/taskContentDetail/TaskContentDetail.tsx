@@ -1,24 +1,22 @@
 'use client';
 
-import React, {useState} from 'react';
-import {RiAddLine} from "@react-icons/all-files/ri/RiAddLine";
-import TaskContentDetailAddInput from "@/components/project/work/work/TaskContentDetail/TaskContentDetailAddInput";
-import TaskContentDetailInput from "@/components/project/work/work/TaskContentDetail/TaskContentDetailInput";
-import {useRecoilState, useRecoilValue} from "recoil";
-import {taskContentDetailSelector} from "@/store/project/task/TaskStateStore";
+import React from 'react';
+import TaskContentDetailInput from "@/components/project/work/work/modal/taskContentDetail/TaskContentDetailInput";
+import {useRecoilValue} from "recoil";
+import {taskModalContentDetailSelector, TaskModalType} from "@/store/project/task/TaskStateStore";
 import _ from "lodash";
 import ToggleTaskContentDetailAddInput
-    from "@/components/project/work/work/TaskContentDetail/ToggleTaskContentDetailAddInput";
+    from "@/components/project/work/work/modal/taskContentDetail/ToggleTaskContentDetailAddInput";
 
-function TaskContentDetail() {
-    const taskContentDetailMap = useRecoilValue(taskContentDetailSelector);
+function TaskContentDetail({modalType}: { modalType: TaskModalType }) {
+    const taskContentDetailMap = useRecoilValue(taskModalContentDetailSelector(modalType));
     return (
         <div className='w-full flex-col pb-3'>
             <div
                 className='w-full py-3 mobile:py-2 flex justify-center text-xl mobile:text-lg font-medium text-gray-700 bg-greyBlue/5 rounded-sm'>
                 할 일
             </div>
-            <ToggleTaskContentDetailAddInput/>
+            <ToggleTaskContentDetailAddInput modalType={modalType}/>
             <div className='max-h-[150px] overflow-y-auto'>
                 {
                     _.isEmpty(taskContentDetailMap)
@@ -29,6 +27,7 @@ function TaskContentDetail() {
                         )
                         : Array.from(taskContentDetailMap.keys(), (idForEdit) =>
                             <TaskContentDetailInput
+                                modalType={modalType}
                                 key={idForEdit}
                                 idForEdit={idForEdit}
                             />)

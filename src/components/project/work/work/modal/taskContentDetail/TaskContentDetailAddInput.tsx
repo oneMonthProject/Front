@@ -2,15 +2,25 @@
 
 import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {useSetRecoilState} from "recoil";
-import {taskContentDetailFieldSelector} from "@/store/project/task/TaskStateStore";
-import TaskContentAddButton from "@/components/project/work/work/TaskContentDetail/TaskContentAddButton";
+import {taskContentDetailFieldSelector, TaskModalType} from "@/store/project/task/TaskStateStore";
+import TaskContentAddButton from "@/components/project/work/work/modal/taskContentDetail/TaskContentAddButton";
 import {v4} from "uuid";
 
-function TaskContentDetailAddInput({setIsOpen}: { setIsOpen: Dispatch<SetStateAction<boolean>>}) {
+function TaskContentDetailAddInput({
+                                       setIsOpen,
+                                       modalType
+                                   }: {
+                                       setIsOpen: Dispatch<SetStateAction<boolean>>,
+                                       modalType: TaskModalType
+                                   }
+) {
     const [value, setValue] = useState('');
     const [placeholder, setPlaceholder] = useState('할 일 입력');
     const idForEdit = useRef(v4());
-    const setTaskContentDetailField = useSetRecoilState(taskContentDetailFieldSelector(idForEdit.current));
+    const setTaskContentDetailField = useSetRecoilState(taskContentDetailFieldSelector({
+        modalType,
+        idForEdit: idForEdit.current
+    }));
 
     function onClickAddButtonHandler() {
         setTaskContentDetailField(value);

@@ -11,7 +11,7 @@ export const crewFWModalStateStore = atom<CrewFWModalState>({
     key: 'crewFWModalStateStore',
     default: {
         isOpen: false,
-        title: "강제탈퇴 투표 생성",
+        title: "강제탈퇴 투표 신청",
         createData: {
             project_id: 0n,
             fw_member_id: 0n,
