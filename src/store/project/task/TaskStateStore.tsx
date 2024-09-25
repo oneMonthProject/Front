@@ -24,7 +24,7 @@ export const taskAddModalStateStore = atom<ModalState>({
     key: 'taskAddModalStateStore',
     default: {
         isOpen: false,
-        title: '새 업무'
+        title: '업무 추가'
     }
 });
 

@@ -38,7 +38,7 @@ function TaskDate({modalType}: { modalType: TaskModalType }) {
     }];
 
     return (
-        <div className='flex'>
+        <div className='flex mobile:space-x-6'>
             <label className="text-gray-700 font-semibold self-center">기간</label>
             <DateRangePicker
                 startDate={startDate as string}

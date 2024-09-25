@@ -21,7 +21,7 @@ function TaskContent({modalType}: TaskContentProps) {
     const value = modalType === 'add' ? content as TaskAddModalField<'content'> : content as TaskModModalField<'content'>;
 
     return (
-        <div className='flex space-x-10'>
+        <div className='flex space-x-10 mobile:space-x-6'>
             <label htmlFor="content" className="text-gray-700 font-semibold self-center">제목</label>
             <div className='w-[250px] mobile:w-[220px]'>
                 <Input

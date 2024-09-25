@@ -19,10 +19,8 @@ function TaskAssignedCrew({modalType}: { modalType: TaskModalType }) {
         ? assignedUserId as TaskAddModalField<'assignedUserId'>
         : assignedUserId as TaskModModalField<'assignedUserId'>;
 
-    console.log("selectedAssignedUserId: ", selectedAssignedUserId);
-
     return (
-        <div className='flex'>
+        <div className='flex mobile:space-x-6'>
             <label htmlFor="content" className="text-gray-700 font-semibold self-center">담당</label>
             <div className='w-[350px] mobile:w-[220px] ml-auto text-left'>
                 <ProjectCrewSelect

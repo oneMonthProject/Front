@@ -51,7 +51,7 @@ export const milestoneAddModalStateStore = atom<ModalState>({
     key: 'milestoneAddModalStateStore',
     default: {
         isOpen: false,
-        title: '새 마일스톤'
+        title: '마일스톤 추가'
     }
 });
 
