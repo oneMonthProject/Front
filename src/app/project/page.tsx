@@ -1,7 +1,7 @@
 'use client';
 
 import React, {useEffect} from 'react';
-import ProjectInfo from "@/components/project/layout/ProjectInfo";
+import ProjectInfo from "@/components/project/layout/projectInfo/ProjectInfo";
 import ProjectNavTab from "@/components/project/layout/ProjectNavTab";
 import useSetProjectIdState from "@/hooks/useSetProjectIdState";
 import useSetUserIdState from "@/hooks/useSetUserIdState";
@@ -14,13 +14,13 @@ function ProjectPage({searchParams: {projectId, userId}}: { searchParams: { proj
 
     useEffect(() => {
         return () => {
-            queryClient.invalidateQueries({queryKey:['currentUserProjectAuth']});
+            queryClient.invalidateQueries({queryKey: ['currentUserProjectAuth']});
         }
-    },[queryClient]);
+    }, [queryClient]);
 
-    return  (
+    return (
         <>
-            <ProjectInfo projectId={projectId} userId={userId}/>
+            <ProjectInfo projectId={projectId}/>
             <ProjectNavTab projectId={projectId} userId={userId}/>
         </>
     );
