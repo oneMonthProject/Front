@@ -22,14 +22,15 @@ function TaskCard({item, authMap}: TaskCardProps) {
     } = item;
 
     const isMobile = useMediaQuery({maxWidth: 700});
+    const isDesktop = useMediaQuery({query: '(min-width: 1280px)'});
 
 
     const contentDetailArr = contentDetail.split("&");
 
-    return !isMobile ? (
+    return isDesktop ? (
             <div className="max-w-[340px] my-5 divide-y divide-gray-200 overflow-hidden rounded-lg bg-white shadow-lg">
                 <div className="w-full flex items-center px-4 py-3 mobile:px-6 bg-ground100">
-                    <div className='pc:text-[1.3rem] font-semibold text-greyDarkBlue'>{content}</div>
+                    <div className='pc:text-[1.3rem] font-semibold text-greyDarkBlue max-w-[150px] truncate'>{content}</div>
                     <div className='ml-auto self-border border-black'>
                         <TaskCardMenu taskItem={item} authMap={authMap}/>
                     </div>
@@ -71,28 +72,34 @@ function TaskCard({item, authMap}: TaskCardProps) {
 
         : (
             <div
-                className="w-[340px] flex flex-wrap items-center justify-between
-                 gap-x-6 gap-y-4 px-3 py-5 mobile:flex-nowrap border border-gray-200 rounded-lg shadow-md"
+                className="relative w-[340px] flex flex-col px-3 py-5 mobile:flex-nowrap border border-gray-200 rounded-lg shadow-md text-sm text-greyBlue"
             >
-                <div>
-                    <div className="flex items-center justify-start space-x-2">
-                    <span className="text-sm font-semibold leading-6 text-greyBlue">
+                <div className='flex items-center justify-start space-x-3 '>
+                    <span className="text-base font-semibold leading-6 max-w-[150px] truncate">
                         {content}
                     </span>
+                    <div className='leading-5 font-semibold'>by.
+                        <span className='mx-1'>{assignedUser?.nickname}</span>
                     </div>
-                    <p className='text-xs text-greyBlue'>{startDate} ~ {endDate}</p>
+                    <div className='flex items-center space-x-2'>
+                        <TaskStatusBadge text={progressStatus.name} size='xs'/>
+                    </div>
                 </div>
-                <div className='flex items-center space-x-2'>
-                    <div className="flex items-center space-x-2 mt-1 text-sm leading-5 text-greyBlue">
-                        <p>{assignedUser?.nickname}</p>
+                <div className='text-sm my-1'>{startDate} ~ {endDate}</div>
+                <div className='mt-2 flex items-center space-x-1 text-greyBlue/90'>
                         <svg viewBox="0 0 2 2" className="h-0.5 w-0.5 fill-current">
                             <circle cx={1} cy={1} r={1}/>
                         </svg>
-                        <TaskStatusBadge text={progressStatus.name} size='xs'/>
-                    </div>
-                    <div className='ml-auto self-border border-black'>
-                        <TaskCardMenu taskItem={item} authMap={authMap}/>
-                    </div>
+                        <span className='w-[120px] truncate'>
+                            {contentDetailArr[0]}
+                        </span>
+                        {
+                            contentDetailArr.length > 1 &&
+                            <span className='text-gray-600'>외 {contentDetailArr.length - 1}개</span>
+                        }
+                </div>
+                <div className='absolute right-3 self-border border-black'>
+                    <TaskCardMenu taskItem={item} authMap={authMap}/>
                 </div>
             </div>
         );

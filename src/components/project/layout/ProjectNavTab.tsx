@@ -16,7 +16,7 @@ export default function ProjectNavTab({projectId, userId}: { projectId: string, 
     },[resetActiveTabName]);
 
     return activeTabName && (
-        <div className='tablet:my-[3.9rem] mobile:my-[3rem]'>
+        <div className='tablet:my-[3.9rem] mobile:mt-[1.5rem] mobile:mb-[3rem]'>
             <div className="border-b-[3px] border-grey300">
                 <nav className="-mb-px" aria-label="Tabs">
                     <ul className='flex tablet:space-x-10 mobile:justify-between'>

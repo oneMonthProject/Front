@@ -38,7 +38,7 @@ function Tasks({projectId, milestoneId}: { projectId: DataId, milestoneId:bigint
             <div className='w-full mt-4 flex flex-col items-center'>
                 {
                     taskList.length > 0 ?
-                        <ul className='w-full grid grid-cols-3 mobile:grid-cols-1 grid-rows-2 mobile:grid-rows-1 place-items-center gap-4 '>
+                        <ul className='w-full grid pc:grid-cols-3 tablet:grid-cols-2 mobile:grid-cols-1 grid-rows-2 mobile:grid-rows-1 place-items-center gap-4 tablet:gap-8'>
                             {taskList.map(v =>
                                 (
                                     <li key={v.workId}>
