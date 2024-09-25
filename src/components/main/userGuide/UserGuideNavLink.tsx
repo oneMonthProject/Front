@@ -5,7 +5,7 @@ function UserGuideNavLink({children, href}: { children: React.ReactNode, href: s
     return (
         <li className='mr-6'>
             <Link href={href} className='group font-bold text-teal-600'>
-                <span className='no-underline group-hover:underline text-lg'>{children}</span>
+                <span className='no-underline group-hover:underline text-lg mobile:text-sm'>{children}</span>
             </Link>
         </li>
     );
