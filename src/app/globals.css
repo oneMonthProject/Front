@@ -50,7 +50,7 @@
     /* END custom pagination  */
     /*  START custom swiper */
     .swiper {
-        @apply pc:max-w-[1200px] tablet:w-full h-[240px] -mt-10 !important;
+        @apply w-[900px] mobile:w-[95%] h-[240px] -mt-10 !important;
     }
 
     .customTooltip {

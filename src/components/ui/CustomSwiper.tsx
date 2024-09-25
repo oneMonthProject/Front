@@ -42,7 +42,7 @@ function CustomSwiper({slideItems, initActiveSlideIndex}: CustomSwiperProps) {
 
 
     return (
-        <div className='w-full flex bg-white overflow-hidden z-0'>
+        <div className='pc:w-[1200px] tablet:w-[680px] mobile:w-full flex bg-white overflow-hidden z-0'>
             <Swiper
                 className='swiper'
                 slidesPerView={slidePerView}
