@@ -186,6 +186,7 @@ export interface ProjectUser extends User {
     role: string;
     createDate: string;
     updateDate: string;
+    technologyStacks: TechStackItem[];
 }
 
 export interface ProjectMemberProfile {
@@ -196,6 +197,7 @@ export interface ProjectMemberProfile {
     projectMemberAuth: ProjectAuthMap;
     position: Position;
     status: CrewStatusKeys;
+
 }
 
 export interface ProjectMember {

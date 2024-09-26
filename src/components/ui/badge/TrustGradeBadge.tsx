@@ -30,6 +30,18 @@ function TrustGradeBadge({text, badgeStyle = 'emo', ...props}: TrustBradeBadgePr
             break;
     }
 
+    let badgeSize = 16;
+    switch(props.size){
+        case 'md':
+            badgeSize = 20;
+            break;
+        case 'lg':
+            badgeSize = 24;
+            break;
+        default:
+            break;
+    }
+
     return (
         <>
             <span className='sr-only'>T-level: {text}</span>
@@ -44,7 +56,7 @@ function TrustGradeBadge({text, badgeStyle = 'emo', ...props}: TrustBradeBadgePr
                     <FaRegSmile
                         className={
                             classNames(`${textColor}`, props.className ? props.className : '')}
-                        size={16}
+                        size={badgeSize}
                     />
             }
 
