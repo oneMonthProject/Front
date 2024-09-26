@@ -105,7 +105,7 @@ function UserHistory() {
                                                 <div
                                                     className="whitespace-nowrap text-right text-sm text-gray-500 ">
                                                     <time
-                                                        dateTime={history.updateDate}>{new Date(history.updateDate).toDateString()}</time>
+                                                        dateTime={history.updateDate}>{history.updateDate}</time>
                                                 </div>
                                             </div>
                                         </div>
