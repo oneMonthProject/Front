@@ -6,6 +6,7 @@ import {ErrorHandle} from "@/app/api/_interceptor/error/utils";
 import {ProjectApplyStatusCode} from "@/service/project/apply";
 import {VoteStatusCode} from "@/service/project/alert/type";
 import {BoardPosition, ProjectSettingBoardData} from "@/service/project/setting/board";
+import {UserProjectHistoryStatus} from "@/service/user/constant";
 
 export type DropDownItem = {
     name: string;
@@ -116,12 +117,14 @@ export interface ProfileInfo {
     updateDate: string;
 }
 
-export type ProjectHistoryStatus = "FORCED_WITHDRAWAL" | "WITHDRAWAL" | "PARTICIPATING" | "FINISH";
+// 사용자 프로젝트 이력 status 데이터 타입
+export type UserProjectHistoryStatusCode = keyof typeof UserProjectHistoryStatus;
+export type UserProjectHistoryStatus = typeof UserProjectHistoryStatus[UserProjectHistoryStatusCode];
 
-export interface UserProjectHistory {
+export interface UserProjectHistoryData {
     userProjectHistoryId: bigint;
     projectId: bigint;
-    status: ProjectHistoryStatus;
+    status: UserProjectHistoryStatus;
     projectName: string;
     updateDate: string;
 }

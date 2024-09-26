@@ -51,7 +51,6 @@ export const updateUser = async (
         return res.json();
     } else {
         const data: ResponseBody<null> = await res.json();
-        console.log("Data::: ",data);
         const errorHandle = data.errorHandle!;
 
         if (errorHandle === 'errorPage') {
@@ -59,11 +58,14 @@ export const updateUser = async (
             window.location.replace(path);
         }
 
-        // retry, toast 인 경우는 useQuery단에서 처리
         return data;
     }
 };
 
+/**
+ * 사용자 프로젝트 이력 조회
+ * @param pageNumber
+ */
 export const getUserProjectHistory = async (pageNumber: number) => {
     return await requestWithAuth('GET', `/api/user/history?pageNumber=${pageNumber}`)
 };
