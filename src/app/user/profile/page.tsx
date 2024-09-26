@@ -1,12 +1,12 @@
 import React from 'react';
 import ProfileCard from '@/components/user/profile/ProfileCard';
-import UserHistory from '@/components/user/profile/UserHistory';
+import ProjectHistory from '@/components/user/profile/projectHistory/ProjectHistory';
 
 function ProfilePage() {
     return (
         <>
             <ProfileCard/>
-            <UserHistory/>
+            <ProjectHistory/>
         </ >
     );
 }
