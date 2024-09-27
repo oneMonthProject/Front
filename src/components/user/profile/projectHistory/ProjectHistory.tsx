@@ -1,7 +1,7 @@
 'use client';
 import React, {useState} from "react";
 import CommonPagination from "@/components/ui/CommonPagination";
-import {getUserProjectHistory} from "@/service/user/user";
+import {getUserMeProjectHistory} from "@/service/user/user";
 import {PageResponseBody, UserProjectHistoryData} from "@/utils/type";
 import {useQuery} from "@tanstack/react-query";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
@@ -14,7 +14,7 @@ function ProjectHistory() {
     const [pageNumber, setPageNumber] = useState(0);
     const {data, isFetching} = useQuery<PageResponseBody<UserProjectHistoryData[]>, Error>({
         queryKey: ['userHistory', pageNumber],
-        queryFn: () => getUserProjectHistory(pageNumber),
+        queryFn: () => getUserMeProjectHistory(pageNumber),
         staleTime: 0,
         // retry: false
     });
@@ -28,7 +28,7 @@ function ProjectHistory() {
             <div
                 className='flex items-center tablet:text-[26px] mobile:text-lg font-semibold text-greyDarkBlue my-10 mobile:my-5'>
                 <GrScorecard className='tablet:text-[1.5rem]'/>
-                <h3 className='ml-2'>사용자 프로젝트 이력</h3>
+                <h3 className='ml-2'>프로젝트 이력</h3>
             </div>
             <div className="flow-root mx-2">
                 {histories.length > 0 ? (

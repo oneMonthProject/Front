@@ -14,6 +14,7 @@ import {VoteOption} from "@/service/project/vote/constant";
 import {projectIdState} from "@/store/project/ProjectInfoStateStore";
 import {useRecoilValue} from "recoil";
 import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
+import ApplicantProjectHistory from "@/components/project/alert/vote/recruit/modal/ApplicantProjectHisotry";
 
 type VAlertRecruitModalContentsProps = {
     voteId: bigint;
@@ -54,7 +55,8 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
             techStacks,
             projectHistoryTotalCount,
             trustGrade: {trustGradeName},
-            trustScore
+            trustScore,
+            userId
         },
         voteInfo: {
             voteStatus,
@@ -115,7 +117,9 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                 <div className='mt-5 mb-7 flex items-center justify-center space-x-4'>
                     <div className='flex flex-col px-3 border-r-2 border-grey300'>
                         <span className='mb-2 text-md font-medium text-greyBlue'>프로젝트</span>
-                        <span className='text-md text-grey900'>{projectHistoryTotalCount}</span>
+                        <span className='text-md text-grey900'>
+                            {projectHistoryTotalCount}
+                        </span>
                     </div>
                     <div className='flex flex-col'>
                         <span className='mb-2 text-md font-medium text-greyBlue'>신뢰등급</span>
@@ -128,6 +132,7 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                         <span className='text-md text-grey900'>{trustScore}점</span>
                     </div>
                 </div>
+                <ApplicantProjectHistory applicantUserId={userId!}/>
             </section>
             <section className='tablet:max-w-[400px] h-[250px] mx-auto flex flex-col justify-center space-y-5'>
                 <div className='flex justify-center items-center space-x-1 text-2xl text-greyDarkblue font-medium'>

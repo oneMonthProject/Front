@@ -15,7 +15,13 @@ export async function GET(
     case 'simple':
       res = await authApi("/api/user/simple-me");
       break;
-    case 'history':
+    case 'history': {
+      const pageNumber = searchParams.get("pageNumber");
+      const userId = searchParams.get("userId");
+      res = await authApi(`/api/user/project-history?userId=${userId}&pageNumber=${pageNumber}`);
+      break;
+    }
+    case 'history-me':
       res = await authApi(`/api/user/me/project-history?pageNumber=${searchParams.get("pageNumber")}`);
       break;
     case 'trust-grade':

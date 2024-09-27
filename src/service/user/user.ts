@@ -63,13 +63,25 @@ export const updateUser = async (
 };
 
 /**
- * 사용자 프로젝트 이력 조회
+ * 현재 사용자 프로젝트 이력 조회
  * @param pageNumber
  */
-export const getUserProjectHistory = async (pageNumber: number) => {
-    return await requestWithAuth('GET', `/api/user/history?pageNumber=${pageNumber}`)
+export const getUserMeProjectHistory = async (pageNumber: number) => {
+    return await requestWithAuth('GET', `/api/user/history-me?pageNumber=${pageNumber}`)
 };
 
+/**
+ * 특정 사용자 프로젝트 이력 조회
+ * @param pageNumber
+ * @param userId
+ */
+export const getUserProjectHistory = async (pageNumber:number, userId: bigint) => {
+    return await requestWithAuth('GET', `/api/user/history?pageNumber=${pageNumber}&userId=${userId}`);
+}
+
+/**
+ *
+ */
 export const getTrustGradeListByUser = async () => {
     return await requestWithAuth('GET', '/api/user/trust-grade');
 };
