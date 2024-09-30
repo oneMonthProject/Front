@@ -35,7 +35,7 @@ const authApi = returnFetchWrapper({
                     requestInit.headers = headers;
                 }
 
-                reqLogger.i(`${requestInit.method}: ${requestArgs[0]}`);
+                reqLogger.i(`${requestInit.method}: ${requestArgs[0]}, ${accessToken}`);
             } catch (error: unknown) {
                 throw new GatewayError('ESENDREQ', (error as Error).message);
             }

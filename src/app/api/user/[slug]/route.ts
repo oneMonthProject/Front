@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import authApi from "@/app/api/_interceptor/authApi";
 import publicApi from "@/app/api/_interceptor/publicApi";
 import {routeResponse} from "@/app/api/_interceptor/routeResponse";
+import {cookies} from "next/headers";
 
 export async function GET(
   req: NextRequest,
@@ -12,9 +13,13 @@ export async function GET(
   let res: Response;
 
   switch(params.slug){
-    case 'simple':
+    case 'simple':{
+      const cookieStore = cookies();
+      const accessToken = cookieStore.get("Access")?.value;
+      console.log("simple, accessToken: ", accessToken);
       res = await authApi("/api/user/simple-me");
       break;
+    }
     case 'history': {
       const pageNumber = searchParams.get("pageNumber");
       const userId = searchParams.get("userId");
