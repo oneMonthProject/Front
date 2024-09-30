@@ -35,7 +35,6 @@ const handleResponse = async (res: Response) => {
         } else {
             return data;
         }
-
     }
 }
 
@@ -53,12 +52,11 @@ export async function request(method: HTTP_METHOD, url: string, data?: Record<st
         console.error((e as Error));
         handleError(e as Error);
     }
-
 }
 
 export async function requestWithAuth(method: HTTP_METHOD, url: string, data?: Record<string, unknown>) {
     const requestInit: RequestInit = {
-        headers, method
+        headers, method, credentials:'include'
     }
     if (method !== 'GET' && data) requestInit.body = JSONReplaceBigInt(data);
 
