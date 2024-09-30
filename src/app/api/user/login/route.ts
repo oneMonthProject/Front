@@ -17,6 +17,8 @@ export async function POST(req: NextRequest) {
         const {headers} = res;
         const accessToken = headers.get("Authorization");
         const setCookieHeader = headers.get("Set-Cookie");
+        console.log("login success, accessToken: ", accessToken);
+        console.log("login success, setCookieHeader: ", setCookieHeader);
 
       const cookieStore = cookies();
         if (accessToken && setCookieHeader) {

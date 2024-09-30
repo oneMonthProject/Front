@@ -12,7 +12,7 @@ export const returnFetchPublicWrapper = (args?: ReturnFetchDefaultOptions) => {
         if (requestInit) requestInit.headers = commonRequestHeaders(requestInit);
 
         try {
-            response = await fetch(url, {...requestInit, next: {revalidate: 0}});
+            response = await fetch(url, {...requestInit});
         } catch (e: unknown) {
             response = await createErrorResponse((e as Error));
         }
