@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
         console.log("login success, accessToken: ", accessToken);
         console.log("login success, setCookieHeader: ", setCookieHeader);
 
-      const cookieStore = cookies();
+        const cookieStore = cookies();
         if (accessToken && setCookieHeader) {
             const {token, options} = getRefreshToken(setCookieHeader);
             cookieStore.set("Access", accessToken, options);
@@ -30,6 +30,8 @@ export async function POST(req: NextRequest) {
         const copiedRes = res.clone();
         const resData = await copiedRes.json();
         cookieStore.set("user_id", resData.data!);
+        console.log("after set, cookieStore accessToken: ", cookieStore.get("Access")?.value);
+        console.log("after set, cookieStore Refresh: ", cookieStore.get("Refresh")?.value);
     }
 
     return routeResponse(req, res);
