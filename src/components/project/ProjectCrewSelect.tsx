@@ -37,19 +37,12 @@ function ProjectCrewSelect({disabled, assignedUserId, setAssignedUserId}: Proejc
         value: bigIntToString(crew.projectMemberId)
     }))];
 
-    console.log("crewSelectItems: ", crewSelectItems);
-    console.log("crewProfileImgSrcList: ", crewProfileImgSrcList);
-    console.log("bigIntToString(assignedUserId): ", bigIntToString(assignedUserId));
-
     const selectedCrew = crewSelectItems.find(item => item.value === bigIntToString(assignedUserId))!;
-
-    console.log("selected: ", selectedCrew);
 
     return (
         <Listbox
             value={selectedCrew}
             onChange={({value}) => {
-                console.log("value: ", value);
                 setAssignedUserId(numStrToBigInt(value)
                 )
             }}

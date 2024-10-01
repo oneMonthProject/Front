@@ -16,7 +16,6 @@ export async function GET(
     case 'simple':{
       const cookieStore = cookies();
       const accessToken = cookieStore.get("Access")?.value;
-      console.log("simple, accessToken: ", accessToken);
       res = await authApi("/api/user/simple-me");
       break;
     }
