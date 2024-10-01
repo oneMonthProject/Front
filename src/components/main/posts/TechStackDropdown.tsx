@@ -45,7 +45,8 @@ const TechStackDropdown = () => {
         isFetching: isFetchingCategory
     } = useQuery<ResponseBody<TechStackCategory[]>, Error>({
         queryKey: ['techStackCategoryList'],
-        queryFn: () => getTechStackCategoryList()
+        queryFn: () => getTechStackCategoryList(),
+        staleTime: Infinity
     });
 
 
@@ -54,7 +55,8 @@ const TechStackDropdown = () => {
         isFetching: isFetchingTechStack
     } = useQuery<ResponseBody<TechStackWithCategory[]>, Error>({
         queryKey: ['techStackListWithCategory'],
-        queryFn: () => getTechStackListWithCategory()
+        queryFn: () => getTechStackListWithCategory(),
+        staleTime: Infinity
     });
 
 

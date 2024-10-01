@@ -13,7 +13,8 @@ export function useTechStackList() {
         isError
     } = useQuery<Promise<ResponseBody<TechStackItem[]>>, Error, ResponseBody<TechStackItem[]>>({
         queryKey: ['techStacks'],
-        queryFn: getTechStackListAPI
+        queryFn: getTechStackListAPI,
+        staleTime: Infinity
     });
 
     if (isError) setSnackBar({show: true, type: 'ERROR', content: '포지션 목록을 가져올 수 없습니다'});

@@ -15,6 +15,7 @@ export function usePositionList() {
     } = useQuery<ResponseBody<PositionItem[]>, Error>({
         queryKey: ['positions'],
         queryFn: () => getPositionListAPI(),
+        staleTime: Infinity
     });
 
 
