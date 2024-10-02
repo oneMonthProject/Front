@@ -1,24 +1,32 @@
 'use client';
 import React, {ChangeEvent, useState} from 'react';
+import {VoteOption} from "@/service/project/vote/constant";
 
 type VoteBarProps = {
     group: string;
     label: string;
     counts: number;
     maxCounts: number;
-    barColor: string
     disabled: boolean;
     onChangeVoteHandler: (value: string) => void;
     value: string;
-
 }
 
-function VoteBar({group, label, counts, barColor, maxCounts, onChangeVoteHandler, disabled, value}: VoteBarProps) {
+const barColorVariants = {
+    green: 'bg-green-500',
+    green_disabled: 'bg-green-500/30',
+    red: 'bg-red-500',
+    red_disabled: 'bg-red-500/30'
+};
+
+function VoteBar({group, label, counts, maxCounts, onChangeVoteHandler, disabled, value}: VoteBarProps) {
     const [checked, setChecked] = useState(false);
 
     const barBackgroundColorColor = disabled ? 'bg-gray-400/40' : 'bg-gray-400/80';
     const barWidth = counts > 0 ? Math.floor((counts / maxCounts) * 100) : 0;
-    const trueBarColor = disabled ? `${barColor}/30` : `${barColor}`;
+    const barColor = disabled
+        ? (value === VoteOption.VODA1001.code ? barColorVariants.green_disabled : barColorVariants.red_disabled)
+        : (value === VoteOption.VODA1001.code ? barColorVariants.green : barColorVariants.red);
 
     const onChangeCheckedHandler = (e: ChangeEvent<HTMLInputElement>) => {
         if (confirm("투표하시겠습니까?")) {
@@ -38,7 +46,7 @@ function VoteBar({group, label, counts, barColor, maxCounts, onChangeVoteHandler
                     className={`relative tablet:basis-[70%] mobile:w-full h-2 ${barBackgroundColorColor} rounded-full`}>
                     <div
                         style={{width: `${barWidth}%`}}
-                        className={`${trueBarColor} h-full text-center text-xs text-white rounded-full`}>
+                        className={`${barColor} h-full text-center text-xs text-white rounded-full`}>
                     </div>
                     <span
                         className='absolute top-[-7px] left-[102%] mobile:text-sm text-greyBlue font-medium'>{`${counts}/${maxCounts}`}</span>

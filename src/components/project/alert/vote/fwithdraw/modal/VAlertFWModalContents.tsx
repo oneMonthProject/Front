@@ -102,7 +102,6 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 }
                 <VoteBar
                     group='fwVote'
-                    barColor='bg-green-500'
                     label='찬성'
                     value={VoteOption.VODA1001.code}
                     counts={agrees}
@@ -112,7 +111,6 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                 />
                 <VoteBar
                     group='fwVote'
-                    barColor='bg-red-500'
                     label='반대'
                     value={VoteOption.VODA1002.code}
                     counts={disagrees}

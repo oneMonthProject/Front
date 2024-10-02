@@ -135,7 +135,6 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                 <VoteBar
                     group='recruitVote'
                     label='찬성'
-                    barColor='bg-green-500'
                     value={VoteOption.VODA1001.code}
                     onChangeVoteHandler={onChangeVoteOptionHandler}
                     counts={agrees}
@@ -145,7 +144,6 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                 <VoteBar
                     group='recruitVote'
                     label='반대'
-                    barColor='bg-red-500'
                     value={VoteOption.VODA1002.code}
                     onChangeVoteHandler={onChangeVoteOptionHandler}
                     counts={disagrees}
