@@ -1,6 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 
 type VoteBarProps = {
+    group: string;
     label: string;
     counts: number;
     maxCounts: number;
@@ -11,7 +12,7 @@ type VoteBarProps = {
 
 }
 
-function VoteBar({label, counts, barColor, maxCounts, onChangeVoteHandler, disabled, value}: VoteBarProps) {
+function VoteBar({group, label, counts, barColor, maxCounts, onChangeVoteHandler, disabled, value}: VoteBarProps) {
     const [checked, setChecked] = useState(false);
 
     const barBackgroundColorColor = disabled ? 'bg-gray-400/40' : 'bg-gray-400/80';
@@ -43,7 +44,8 @@ function VoteBar({label, counts, barColor, maxCounts, onChangeVoteHandler, disab
                 </div>
                 <div className='flex space-x-2 h-5 items-center'>
                     <input
-                        type="radio" name='voteOption' id='voteOption_agree'
+                        type="radio"
+                        name={group}
                         onChange={onChangeCheckedHandler}
                         value={value}
                         checked={checked}

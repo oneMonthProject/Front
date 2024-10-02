@@ -133,6 +133,7 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                     </p>
                 }
                 <VoteBar
+                    group='recruitVote'
                     label='찬성'
                     barColor='bg-green-500'
                     value={VoteOption.VODA1001.code}
@@ -142,6 +143,7 @@ function VAlertRecruitModalContents({voteId, applyId, alertId}: VAlertRecruitMod
                     disabled={isVoteEnded}
                 />
                 <VoteBar
+                    group='recruitVote'
                     label='반대'
                     barColor='bg-red-500'
                     value={VoteOption.VODA1002.code}
