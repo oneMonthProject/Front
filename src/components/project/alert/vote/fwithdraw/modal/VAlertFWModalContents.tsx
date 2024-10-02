@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React from 'react';
 import {useQuery} from "@tanstack/react-query";
 import {getVAlertFWDetail} from "@/service/project/alert/vote/fwithdraw";
 import {VAlertFWDetailData} from "@/service/project/alert/type";
@@ -15,6 +15,7 @@ import {numStrToBigInt} from "@/utils/common";
 import useVoteFwithdraw from "@/hooks/useVoteFwithdraw";
 import VAlertFwModalSkeleton from "@/components/ui/skeleton/project/alert/VAlertFWModalSkeleton";
 import useCurrentUserPMAuth from "@/hooks/useCurrentUserPMAuth";
+import VoteBar from "@/components/ui/votebar/VoteBar";
 
 type VAlertFWModalContentsProps = {
     voteId: bigint;
@@ -24,9 +25,6 @@ type VAlertFWModalContentsProps = {
 function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps) {
     const projectId = useRecoilValue(projectIdState);
     const {currentUserPMAuth, isFetchingCurrentUserPMAuth} = useCurrentUserPMAuth(projectId);
-
-    const [agreeChecked, setAgreeChecked] = useState(false);
-    const [disagreeChecked, setDisagreeChecked] = useState(false);
 
     const {voteForProjectFWithdraw, isUpdating} = useVoteFwithdraw();
 
@@ -58,31 +56,16 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
 
     const isVoteEnded = voteStatus.name === "투표종료";
 
-    const barColor = isVoteEnded ? 'bg-gray-400/40' : 'bg-gray-400/80';
-    const agreeWidth = agrees > 0 ? Math.floor((agrees / maxVoteCount) * 100) : 0;
-    const agreeBarColor = isVoteEnded ? 'bg-green-500/30' : 'bg-green-500';
-    const disagreeWidth = disagrees > 0 ? Math.floor((disagrees / maxVoteCount) * 100) : 0;
-    const disagreeBarColor = isVoteEnded ? 'bg-red-500/30' : 'bg-red-500';
-
-    const onChangeVoteOptionHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        if (confirm("투표하시겠습니까?")) {
-            const reqData: VoteFWReqData = {
-                projectId: numStrToBigInt(projectId as string),
-                voteId,
-                fw_member_id: fwMemberId,
-                fw_member_auth: fwMemberAuth.code,
-                authMap: currentUserPMAuth.code,
-                answer: e.target.value as VoteOptionCode
-            };
-            voteForProjectFWithdraw(reqData);
-        } else {
-            if (e.target.value === VoteOption.VODA1001.code) {
-                setAgreeChecked(false);
-            } else {
-                setDisagreeChecked(false);
-            }
-            e.target.blur();
-        }
+    const onChangeVoteOptionHandler = (value: string) => {
+        const reqData: VoteFWReqData = {
+            projectId: numStrToBigInt(projectId as string),
+            voteId,
+            fw_member_id: fwMemberId,
+            fw_member_auth: fwMemberAuth.code,
+            authMap: currentUserPMAuth.code,
+            answer: value as VoteOptionCode
+        };
+        voteForProjectFWithdraw(reqData);
     }
 
 
@@ -117,51 +100,24 @@ function VAlertFwModalContents({voteId, fwMemberId}: VAlertFWModalContentsProps)
                         }
                     </p>
                 }
-                <div className='flex justify-center items-center'>
-                    <div className='mx-3 text-[18px] text-greyDarkblue font-medium'>찬성</div>
-                    <div className={`relative tablet:basis-[60%] h-2 ${barColor} rounded-full`}>
-                        <div
-                            style={{width: `${agreeWidth}%`}}
-                            className={`${agreeBarColor} h-full text-center text-xs text-white rounded-full`}></div>
-                        <span
-                            className='absolute top-[-7px] left-[102%] text-greyBlue font-medium'>{`${agrees}/${maxVoteCount}`}</span>
-                    </div>
-                    <div className='ml-12 flex space-x-2 h-5 items-center'>
-                        {
-                            !isVoteEnded &&
-                            <input
-                                type="radio" name='voteOption' id='voteOption_agree'
-                                onChange={onChangeVoteOptionHandler}
-                                value={VoteOption.VODA1001.code}
-                                checked={agreeChecked}
-                                className='self-stretch border-gray-400 text-indigo-600 focus:ring-none'
-                            />
-                        }
-                    </div>
-                </div>
-                <div className='flex justify-center items-center'>
-                    <div className='mx-3 text-[18px] text-greyDarkblue font-medium'>반대</div>
-                    <div className={`relative tablet:basis-[60%] h-2 ${barColor} rounded-full`}>
-                        <div
-                            style={{width: `${disagreeWidth}%`}}
-                            className={`${disagreeBarColor} h-full text-center text-xs text-white rounded-full`}></div>
-                        <span
-                            className='absolute top-[-7px] left-[102%] text-greyBlue font-medium'>{`${disagrees}/${maxVoteCount}`}</span>
-                    </div>
-                    <div className='ml-12 flex space-x-2 h-5 items-center'>
-                        {
-                            !isVoteEnded &&
-                            <input
-                                type="radio" name="voteOption" id='voteOption_disagree'
-                                onChange={onChangeVoteOptionHandler}
-                                value={VoteOption.VODA1002.code}
-                                checked={disagreeChecked}
-                                className='self-stretch border-gray-400 text-indigo-600 focus:ring-none'
-                            />
-                        }
-                    </div>
-                </div>
-
+                <VoteBar
+                    barColor='bg-green-500'
+                    label='찬성'
+                    value={VoteOption.VODA1001.code}
+                    counts={agrees}
+                    maxCounts={maxVoteCount}
+                    disabled={isVoteEnded}
+                    onChangeVoteHandler={onChangeVoteOptionHandler}
+                />
+                <VoteBar
+                    barColor='bg-red-500'
+                    label='반대'
+                    value={VoteOption.VODA1002.code}
+                    counts={disagrees}
+                    maxCounts={maxVoteCount}
+                    disabled={isVoteEnded}
+                    onChangeVoteHandler={onChangeVoteOptionHandler}
+                />
             </section>
 
         </section>
