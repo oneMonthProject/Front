@@ -38,8 +38,11 @@ export default function Snackbar() {
   return (
     <div
       aria-live="assertive"
+      aria-atomic="true"
+      aria-hidden={!state.show}
       className="pointer-events-none fixed inset-0 flex items-end px-4 py-6 sm:p-6"
     >
+      <h2 className='sr-only'>알림 메세지</h2>
       <div className="flex w-full flex-col items-center space-y-4 sm:items-end">
         <Transition
           show={state.show}
@@ -63,7 +66,7 @@ export default function Snackbar() {
                     className="inline-flex rounded-md focus:outline-none"
                     onClick={resetSnackbar}
                   >
-                    <span className="sr-only">Close</span>
+                    <span className="sr-only">닫기</span>
                     <RiCloseFill className="h-5 w-5" aria-hidden="true" />
                   </button>
                 </div>

@@ -11,26 +11,20 @@ import UserMenuSkeleton from "@/components/ui/skeleton/header/UserMenuSkeleton";
 function User() {
     const mounted = useClientMount();
     const [userIdState, setUserIdState] = useRecoilState(userStateStore);
+    //
+    // useEffect(() => {
+    //     if (userIdState === null && hasCookie("user_id")) {
+    //         setUserIdState(getCookie("user_id") as string);
+    //     }
+    //
+    //     if (userIdState !== null && !hasCookie("user_id")) {
+    //         setUserIdState(null);
+    //     }
+    // }, [userIdState, setUserIdState]);
+    //
+    // if(!mounted) return <UserMenuSkeleton/>;
 
-    useEffect(() => {
-        if (userIdState === null && hasCookie("user_id")) {
-            setUserIdState(getCookie("user_id") as string);
-        }
-
-        if (userIdState !== null && !hasCookie("user_id")) {
-            setUserIdState(null);
-        }
-    }, [userIdState, setUserIdState]);
-
-    return (
-        <li className='tablet:ml-5 mobile:ml-2'>
-            {
-                mounted
-                    ? (userIdState !== null ? <UserMenu/> : <LoginNav/>)
-                    : <UserMenuSkeleton/>
-            }
-        </li>
-    )
+    return userIdState === null ? <LoginNav/> : <UserMenu/>;
 }
 
 export default User;

@@ -9,7 +9,7 @@ import StaticDataProvider from "@/app/StaticDataProvider";
 export const metadata: Metadata = {
     title: "trustcrews",
     description:
-        "개발자들간의 책임감 있는 협업을 도와주는 팀프로젝트 매칭 서비스",
+        "성실한 개발자들과의 사이드 프로젝트",
 };
 
 

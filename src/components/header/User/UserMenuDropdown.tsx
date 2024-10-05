@@ -15,8 +15,11 @@ function UserMenuDropdown() {
     ]
 
     return (
-        <DropDownWithIcon items={items} icon={<FaChevronDown className="h-4 w-4" aria-hidden="true"/>}
-                          srOnlyButtonName='사용자 메뉴'/>
+        <DropDownWithIcon
+            items={items}
+            icon={<FaChevronDown className="h-4 w-4" aria-hidden="true"/>}
+            srOnlyButtonName='사용자 메뉴 버튼'
+        />
     );
 }
 

@@ -18,12 +18,12 @@ export default function DropDownWithIcon({ items, icon, srOnlyButtonName }: Drop
     <Menu as="div" className="relative inline-block text-center">
       <div>
         <Menu.Button
-          className="flex items-center text-gray-400 hover:text-gray-600">
+          className="flex items-center text-gray-400 hover:text-gray-600"
+        >
           <span className="sr-only">{srOnlyButtonName}</span>
           {icon}
         </Menu.Button>
       </div>
-
       <Transition
         as={Fragment}
         enter="transition ease-out duration-100"
