@@ -21,7 +21,7 @@ const getSelectedTechStackText = (selectedTechStacks: TechStackWithCategory[]) =
 const TechStackDropdown = () => {
     const selectedTechStacks = useRecoilValue(selectedTechStackState);
     const [openDropdown, setOpenDropdown] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement | null>(null);
+    const dropdownRef = useRef<HTMLButtonElement | null>(null);
 
     const handleClick = (e: React.MouseEvent<HTMLElement>) => {
         e.preventDefault();
@@ -73,17 +73,25 @@ const TechStackDropdown = () => {
     );
 
     return (
-        <div ref={dropdownRef} className="relative z-10" onClick={handleClick}>
+        <button
+            aria-label='기술스택 선택'
+            aria-expanded={openDropdown}
+            aria-owns='tech-stack-dropdown'
+            ref={dropdownRef}
+            className="relative z-10"
+            onClick={handleClick}
+        >
             <div
+                aria-hidden={true}
                 className="px-4 flex justify-between w-[150px] h-[40px] mobile:w-[130px] mobile:h-[35px] items-center border-2 rounded-3xl cursor-pointer">
                 <div className="text-base text-grey800 mobile:text-sm block truncate">
                     {getSelectedTechStackText(selectedTechStacks)}
                 </div>
-                <BsChevronDown className="w-4 h-4 text-grey800"/>
+                <BsChevronDown className="w-4 h-4 text-grey800" />
             </div>
             {openDropdown &&
                 <TechStackDropdownList categories={categoryResponse!.data!} items={techStackResponse!.data!}/>}
-        </div>
+        </button>
     );
 };
 

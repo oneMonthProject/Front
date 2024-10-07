@@ -1,72 +1,72 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
-import { useMediaQuery } from "react-responsive";
-import { useRecoilState } from "recoil";
+import {useMediaQuery} from "react-responsive";
+import {useRecoilState} from "recoil";
 import TechStackImage from "@/components/ui/TechStackImage";
-import { TechStackCategory, TechStackWithCategory } from "@/utils/type";
-import { selectedTechStackState } from "@/store/post/PostStateStore";
+import {TechStackCategory, TechStackWithCategory} from "@/utils/type";
+import {selectedTechStackState} from "@/store/post/PostStateStore";
 
 interface TechStackDropdownListProps {
-  categories: TechStackCategory[];
-  items: TechStackWithCategory[];
+    categories: TechStackCategory[];
+    items: TechStackWithCategory[];
 }
 
-const TechStackDropdownList = ({ categories, items }: TechStackDropdownListProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<TechStackCategory>(categories[0]);
-  const [selectedTechStacks, setSelectedTechStacks] = useRecoilState(selectedTechStackState);
-  const [isMobile, setIsMobile] = useState(false);
-  const mobile = useMediaQuery({ maxWidth: 700 });
+const TechStackDropdownList = ({categories, items}: TechStackDropdownListProps) => {
+    const [selectedCategory, setSelectedCategory] = useState<TechStackCategory>(categories[0]);
+    const [selectedTechStacks, setSelectedTechStacks] = useRecoilState(selectedTechStackState);
+    const [isMobile, setIsMobile] = useState(false);
+    const mobile = useMediaQuery({maxWidth: 700});
 
-  const getCategories = () => {
-    const all = { techStackCategoryId: BigInt(0), techStackCategoryName: "모두보기" };
-    return [...categories, all];
-  }
-
-  const filteredTechStacks = items.filter((stack) => {
-    const categoryName = selectedCategory.techStackCategoryName;
-    if (categoryName === "모두보기" || isMobile) {
-      return true;
+    const getCategories = () => {
+        const all = {techStackCategoryId: BigInt(0), techStackCategoryName: "모두보기"};
+        return [...categories, all];
     }
 
-    const { categories } = stack;
-    if (Array.isArray(categories)) {
-      return categories.includes(categoryName);
-    }
+    const filteredTechStacks = items.filter((stack) => {
+        const categoryName = selectedCategory.techStackCategoryName;
+        if (categoryName === "모두보기" || isMobile) {
+            return true;
+        }
 
-    return false;
-  });
+        const {categories} = stack;
+        if (Array.isArray(categories)) {
+            return categories.includes(categoryName);
+        }
 
-  const handleInnerClick = (event: React.MouseEvent) => {
-    event.stopPropagation();
-  };
-
-  const handleCategory = (category: TechStackCategory) => {
-    setSelectedCategory(category);
-  };
-
-  const handleTechStackClick = (stack: TechStackWithCategory) => {
-    setSelectedTechStacks((prevSelected) => {
-      if (prevSelected.includes(stack)) {
-        return prevSelected.filter((prevStack) => prevStack !== stack);
-      } else {
-        return [...prevSelected, stack];
-      }
+        return false;
     });
-  };
 
-  const handleTechStackRemove = (stack: TechStackWithCategory) => {
-    setSelectedTechStacks((prevSelected) =>
-      prevSelected.filter((prevStack) => prevStack !== stack)
-    );
-  };
+    const handleInnerClick = (event: React.MouseEvent) => {
+        event.stopPropagation();
+    };
 
-  const resetSelection = () => {
-    setSelectedTechStacks([]);
-  };
+    const handleCategory = (category: TechStackCategory) => {
+        setSelectedCategory(category);
+    };
 
-  useEffect(() => {
-    setIsMobile(mobile);
-  }, [mobile, isMobile]);
+    const handleTechStackClick = (stack: TechStackWithCategory) => {
+        setSelectedTechStacks((prevSelected) => {
+            if (prevSelected.includes(stack)) {
+                return prevSelected.filter((prevStack) => prevStack !== stack);
+            } else {
+                return [...prevSelected, stack];
+            }
+        });
+    };
+
+    const handleTechStackRemove = (stack: TechStackWithCategory) => {
+        setSelectedTechStacks((prevSelected) =>
+            prevSelected.filter((prevStack) => prevStack !== stack)
+        );
+    };
+
+    const resetSelection = () => {
+        setSelectedTechStacks([]);
+    };
+
+    useEffect(() => {
+        setIsMobile(mobile);
+    }, [mobile, isMobile]);
 
   return (
     <div className="absolute top-12" onClick={handleInnerClick}>
