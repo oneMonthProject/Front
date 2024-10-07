@@ -60,7 +60,6 @@ function Header() {
                     </div>
                 </div>
             </div>
-            <UserGuide/>
         </header>
     );
 }
