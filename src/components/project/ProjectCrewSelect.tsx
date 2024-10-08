@@ -1,25 +1,16 @@
 'use client';
 import React, {Fragment} from 'react';
 import useProjectCrewList from "@/hooks/useProjectCrewList";
-import {SelectItem} from "@/utils/type";
 import {useRecoilValue} from "recoil";
 import {Listbox, Transition} from "@headlessui/react";
-import {bigIntToString, changeImageUrl, classNames, numStrToBigInt} from "@/utils/common";
+import {bigIntToString, classNames, numStrToBigInt} from "@/utils/common";
 import {AiFillCaretDown} from "@react-icons/all-files/ai/AiFillCaretDown";
 import Avatar from "@/components/ui/Avatar";
-import DefaultSelectOption from "@/components/ui/selector/DefaultSelectOption";
 import SelectSkeleton from "@/components/ui/skeleton/SelectSkeleton";
 import {projectIdState} from "@/store/project/ProjectInfoStateStore";
-
-const compareItems = (a: SelectItem<string, string>, b: SelectItem<string, string>) => {
-    if (a && b) {
-        return a?.value === b?.value;
-    }
-    return false;
-}
+import {compareItems} from "@/app/_boardUtil/common";
 
 export const DEFAULT_CREW_OPTION = {name: '멤버 선택', value: '0'} as const;
-
 
 type ProejctCrewSelectProps = { disabled: boolean, assignedUserId: bigint, setAssignedUserId: (id: bigint) => void };
 

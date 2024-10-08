@@ -2,7 +2,7 @@ import React from 'react';
 import CrewProfile from "@/components/project/crews/detail/crewProfile/CrewProfile";
 import {GrScorecard} from "@react-icons/all-files/gr/GrScorecard";
 import CrewTaskHistory from "@/components/project/crews/detail/CrewTaskHistory";
-import BackNav from "@/components/ui/BackNav";
+import HomeNav from "@/components/ui/HomeNav";
 import FwCreateModal from "@/components/project/crews/detail/modal/FWCreateModal";
 
 function CrewDetailPage({
@@ -15,7 +15,7 @@ function CrewDetailPage({
     return (
         <>
             <section className='w-fit tablet:translate-x-[-50%] mobile:translate-x-[-20%]'>
-                <BackNav to={{
+                <HomeNav to={{
                     pathname: '/project',
                     query: {projectId, userId}
                 }}/>

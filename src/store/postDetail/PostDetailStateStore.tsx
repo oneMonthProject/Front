@@ -1,7 +1,6 @@
 import {atom} from "recoil";
-import {PositionItem} from "@/utils/type";
 
-export const selectRecruitPositionState = atom<PositionItem | null>({
+export const selectRecruitPositionState = atom<string>({
     key:'selectRecruitPositionState',
-    default: null
+    default: '0'
 })

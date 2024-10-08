@@ -9,6 +9,7 @@ import {confirmModalState} from "@/store/CommonStateStore";
 import {selectRecruitPositionState} from "@/store/postDetail/PostDetailStateStore";
 import RecruitPositionDropdown from "@/components/postDetail/joinProject/RecruitPositionDropdown";
 import {isEqual} from "lodash";
+import {numStrToBigInt} from "@/utils/common";
 
 function JoinProject({projectId, boardInfo}: { projectId: bigint, boardInfo: PostInfo }) {
     const recruitPosition = useRecoilValue(selectRecruitPositionState);
@@ -24,20 +25,19 @@ function JoinProject({projectId, boardInfo}: { projectId: bigint, boardInfo: Pos
             return;
         }
 
-        if (!recruitPosition || !recruitPosition.positionId) {
+        if (recruitPosition === '0') {
             setInfoSnackbar("포지션을 선택해 주세요.");
             return;
         }
 
         const title = "확인";
-        const content = <span><span
-            className='font-bold'>{recruitPosition?.positionName}</span> 포지션으로 참여요청 하시겠습니까?</span>;
+        const content = <span>선택하신 포지션으로 참여요청 하시겠습니까?</span>;
 
         setModalState({
             isOpen: true,
             title,
             content,
-            onClickConfirmHandler: () => joinProject({projectId, positionId: recruitPosition.positionId})
+            onClickConfirmHandler: () => joinProject({projectId, positionId: numStrToBigInt(recruitPosition)})
         });
     }
 
