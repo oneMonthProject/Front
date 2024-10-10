@@ -7,3 +7,4 @@ export const PROJECT_APPLY_STATUS = {
 } as const;
 
 
+export const defaultPositionSelectItem = {name: "포지션", value: '0',};

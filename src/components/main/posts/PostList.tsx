@@ -46,7 +46,9 @@ const PostList = () => {
 
     return (
         <section className="mt-6 mobile:mt-2">
-            <ul className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-5 '>
+            <ul
+                role='list'
+                className='grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10 mobile:gap-5 '>
                 {
                     infos.map((info) => (
                             <li

@@ -2,8 +2,8 @@ import { PositionItem, TechStackWithCategory } from "@/utils/type";
 import { atom } from "recoil";
 
 export const PostTabs = {
-  myProjects: {label: '내 프로젝트', name: 'myProjects'},
-  recruits: {label: '프로젝트 모집', name: 'recruits'}
+  myProjects: {label: '참여 프로젝트', name: 'myProjects'},
+  recruits: {label: '팀 프로젝트', name: 'recruits'}
 } as const;
 
 type PostTabType = typeof PostTabs[keyof typeof PostTabs];
@@ -12,7 +12,7 @@ type PostTabType = typeof PostTabs[keyof typeof PostTabs];
 export const activeTabState = atom<PostTabType>({
   key: "activeTabState",
   default: {
-    label: '프로젝트 모집', name: 'recruits'
+    label: '팀 프로젝트', name: 'recruits'
   }
 });
 
@@ -23,9 +23,9 @@ export const selectedTechStackState = atom<TechStackWithCategory[]>({
 });
 
 // 포지션 드롭박스 선택값
-export const selectedPositionState = atom<PositionItem | null>({
+export const selectedPositionState = atom<string>({
   key: "selectedPositionState",
-  default: null
+  default: '0'
 });
 
 // 게시글 검색값

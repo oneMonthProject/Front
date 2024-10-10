@@ -39,6 +39,7 @@ function MyProjectPosts() {
 
     return (
         <section className='my-10'>
+            <h2 className='sr-only'>참여 프로젝트</h2>
             <ul
                 className="grid justify-items-center pc:grid-cols-4 tablet:grid-cols-2 mobile:grid-cols-1 mt-8 mobile:mt-2 gap-10">
                 {

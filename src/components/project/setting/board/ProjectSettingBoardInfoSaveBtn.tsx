@@ -24,7 +24,7 @@ function ProjectSettingBoardInfoSaveBtn({initData}: { initData: ProjectSettingBo
                 const invalidateSettingBoard = queryClient.invalidateQueries({queryKey: ['projectSettingBoardInfo']});
                 const invalidatePostInfo = queryClient.invalidateQueries({queryKey: ['postInfo']});
                 await Promise.all([invalidateSettingBoard, invalidatePostInfo]);
-                setSuccessSnackbar("프로젝트 모집 게시글을 수정했습니다.");
+                setSuccessSnackbar("팀 프로젝트 게시글을 수정했습니다.");
             } else {
                 setErrorSnackbar(message);
             }
