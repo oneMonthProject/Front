@@ -69,6 +69,8 @@ function CalendarInput({
                 ) : <></>
             }
             <input
+                tabIndex={-1}
+                aria-live='assertive'
                 type="text"
                 value={date ?? ""}
                 readOnly
@@ -77,13 +79,19 @@ function CalendarInput({
                 className="mobile:text-sm block rounded-lg flex-1 appearance-none border border-gray-300 w-full py-2 pr-10 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent disabled:text-gray-700/60"
                 {...props}
             />
-            <button className="absolute right-2 bottom-3 text-greyDarkblue disabled:text-greyDarkblue/50"
-                    onClick={handleClick} disabled={disabled}>
+            <button
+                aria-label={`${label || ''} 달력 팝업`}
+                aria-expanded={isOpen}
+                aria-controls='datePicker-popup'
+                type="button"
+                className="absolute right-2 bottom-3 text-greyDarkblue disabled:text-greyDarkblue/50"
+                onClick={handleClick} disabled={disabled}>
                 <AiTwotoneCalendar className="h-5 w-5" aria-hidden={true}/>
             </button>
             {isOpen && (
                 <div className="absolute z-50">
                     <DatePicker
+                        id='datePicker-popup'
                         selected={date ? new Date(date) : null}
                         onChange={handleChange}
                         inline

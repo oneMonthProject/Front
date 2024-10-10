@@ -29,15 +29,15 @@ export default function MultiSelect<T, V>({
                                 <span className="text-red-500 required-dot ml-1.5 align-middle">*</span> : <></>}
                         </Listbox.Label>
                     )}
-                    <div className="relative">
+                    <div className="relative ">
                         <Listbox.Button
-                            className="mobile:text-sm w-full cursor-default rounded-lg border-1 flex-1 appearance-none border py-2 pl-4 pr-10 text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
-              <span className={classNames(values.length > 0 ? '' : 'text-greyUnselect', 'block truncate')}>
-                {values.length > 0 ? values.map((value) => value.name).join(', ') : placeholder}
-              </span>
-                            <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
-                <AiFillCaretDown className="w-5 text-gray-400" aria-hidden="true"/>
-              </span>
+                            className="w-full min-h-[42px] py-2 pl-4 pr-10 flex-1 appearance-none mobile:text-sm cursor-default rounded-lg border-1 border text-left bg-white border-gray-300 text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                              <span className={classNames(values.length > 0 ? '' : 'text-greyUnselect', 'block truncate')}>
+                                {values.length > 0 ? values.map((value) => value.name).join(', ') : placeholder}
+                              </span>
+                              <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
+                                <AiFillCaretDown aria-hidden="true" className="w-5 text-gray-400" />
+                              </span>
                         </Listbox.Button>
                         <Transition
                             show={open}
