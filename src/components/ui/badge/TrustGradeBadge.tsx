@@ -44,7 +44,7 @@ function TrustGradeBadge({text, badgeStyle = 'emo', ...props}: TrustBradeBadgePr
 
     return (
         <>
-            <span className='sr-only'>T-level: {text}</span>
+            <span className='sr-only'>{`신뢰등급: ${text}`}</span>
             {
                 badgeStyle === 'text'
                     ?
@@ -54,6 +54,7 @@ function TrustGradeBadge({text, badgeStyle = 'emo', ...props}: TrustBradeBadgePr
                     </span>
                     :
                     <FaRegSmile
+                        aria-hidden={true}
                         className={
                             classNames(`${textColor}`, props.className ? props.className : '')}
                         size={badgeSize}
