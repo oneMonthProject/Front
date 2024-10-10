@@ -1,5 +1,5 @@
 import {useMutation, useQueryClient} from "@tanstack/react-query";
-import {CreatePostForm} from "@/app/register/_utils/type";
+import {CreatePostForm} from "@/app/postRegister/_utils/type";
 import {createPost as createPostAPI} from "@/service/post/post";
 import {isEqual} from "lodash";
 import {useRouter} from "next/navigation";

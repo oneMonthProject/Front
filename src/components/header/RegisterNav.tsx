@@ -9,7 +9,7 @@ function RegisterNav() {
     const isDesktop = useMediaQuery({query: '(min-width: 1280px)'});
 
     return (
-        <Link href='/register' aria-label='프로젝트 생성 페이지'>
+        <Link href='/postRegister' aria-label='프로젝트 생성 페이지'>
             <div aria-hidden='true' className='mx-4 tablet:text-[20px] mobile:text-[16px] text-black100 font-semibold'>
                 {
                     isDesktop ? '새 프로젝트' : <IoCreateOutline className='h-6 w-6'/>

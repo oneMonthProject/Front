@@ -10,7 +10,6 @@ function ProjectIntro() {
         <TextArea
             id="information"
             label="프로젝트 소개"
-            placeholder="프로젝트에 대해 소개해주세요."
             rows={10}
             cols={25}
             value={content}

@@ -29,7 +29,6 @@ const MultiPositionSelect = ({positions, setPositions, required}: MultiPositionS
             setValues={(item) => setPositions(item.map(v => v.value))}
             items={positionList}
             label="모집 분야"
-            placeholder="모집 분야를 선택해주세요."
             required={required}
         />
     )

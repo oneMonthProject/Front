@@ -5,16 +5,15 @@ import {selectRecruitPositionState} from "@/store/postDetail/PostDetailStateStor
 import {PostDetailPosition} from "@/utils/type";
 import {BsChevronDown} from "@react-icons/all-files/bs/BsChevronDown";
 import {Listbox, Transition} from "@headlessui/react";
-import {bigIntToString, classNames, numStrToBigInt} from "@/utils/common";
+import {bigIntToString, classNames} from "@/utils/common";
 import {compareItems} from "@/app/_boardUtil/common";
-
-const defaultSelectItem = {name: "선택", value: '0', };
+import {defaultPositionSelectItem} from "@/app/_boardUtil/constant";
 
 function RecruitPositionDropdown({recruitPositions}: { recruitPositions: PostDetailPosition[] }) {
     const {dropdownRef, openDropdown, setOpenDropdown} = useDropdownState();
     const [recruitPosition, setRecruitPosition] = useRecoilState(selectRecruitPositionState);
 
-    const positionItems = [defaultSelectItem, ...recruitPositions.map(({position: {positionId, name}}) => ({
+    const positionItems = [defaultPositionSelectItem, ...recruitPositions.map(({position: {positionId, name}}) => ({
         name,
         value: bigIntToString(positionId)
     }))];

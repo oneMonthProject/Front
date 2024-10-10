@@ -1,12 +1,12 @@
 import {PositionItem, PostInfo, ResponseBody, TechStackWithCategory} from "@/utils/type";
 import _, {isEqual} from "lodash";
 import {request, requestWithAuth} from "@/service/project/request";
-import {CreatePostForm} from "@/app/register/_utils/type";
+import {CreatePostForm} from "@/app/postRegister/_utils/type";
 import {throwErrorIfInvalid} from "@/utils/common";
 
 export interface SearchParams {
     techStacks: TechStackWithCategory[];
-    position: PositionItem | null;
+    position: string;
     keyword: string;
     page: number;
 }
@@ -18,8 +18,8 @@ const createQueryParams = (params: SearchParams) => {
     techStacks.forEach((stack) =>
         queryParams.append("technologyIds", stack.techStackId.toString())
     );
-    if (position) {
-        queryParams.append("positionId", position.positionId.toString());
+    if (position !== '0') {
+        queryParams.append("positionId", position);
     }
     if (!isEqual(keyword, "")) {
         queryParams.append("keyword", keyword);
@@ -33,7 +33,7 @@ const createQueryParams = (params: SearchParams) => {
  * 게시글 목록 조회
  * @param params
  */
-export const getPostList = async (params: SearchParams = {techStacks: [], position: null, page: 0, keyword: ''}) => {
+export const getPostList = async (params: SearchParams = {techStacks: [], position: '0', page: 0, keyword: ''}) => {
     const queryParams = createQueryParams(params);
     return await request('GET', `/api/post/search?${queryParams}`);
 };

@@ -1,13 +1,13 @@
 'use client';
 import React, {useEffect} from "react";
-import TitleSection from "./titleSection/TitleSection";
-import ProjectInfoSection from "./infoSection/ProjectInfoSection";
-import ProjectIntroSection from "./bodySection/ProjectIntroSection";
+import TitleSection from "./TitleSection";
+import ProjectInfoSection from "./ProjectInfoSection";
+import ProjectIntroSection from "./ProjectIntroSection";
 import {useQuery} from "@tanstack/react-query";
 import {PostInfo, ResponseBody} from "@/utils/type";
 import {getPost} from "@/service/post/post";
 import PostDetailSkeleton from "@/components/ui/skeleton/postDetail/PostDetailSkeleton";
-import JoinProject from "@/components/postDetail/joinProject/JoinProject";
+import JoinProject from "@/components/postDetail/JoinProject";
 import useProjectInfoSummary from "@/hooks/useProjectInfoSummary";
 import {numStrToBigInt} from "@/utils/common";
 import {useResetRecoilState} from "recoil";
@@ -38,22 +38,18 @@ const PostDetail = ({postId, projectId}: { postId: string, projectId: string }) 
     const postInfoData = postInfo!.data!;
 
     return (
-        <div className="p-5 mobile:p-1">
-            <header>
-                <TitleSection boardInfo={postInfoData}/>
-            </header>
-            <main>
-                <ProjectInfoSection
-                    projectInfo={projectInfoData}
-                    contact={postInfoData.contact}
-                    boardPositions={postInfoData.boardPositions}
-                />
-                <ProjectIntroSection content={postInfoData.content}/>
-            </main>
+        <article className="p-5 mobile:p-1">
+            <TitleSection boardInfo={postInfoData}/>
+            <ProjectInfoSection
+                projectInfo={projectInfoData}
+                contact={postInfoData.contact}
+                boardPositions={postInfoData.boardPositions}
+            />
+            <ProjectIntroSection content={postInfoData.content}/>
             <footer className="flex-col mb-5">
                 <JoinProject projectId={projectInfoData.projectId} boardInfo={postInfoData}/>
             </footer>
-        </div>
+        </article>
     );
 
 

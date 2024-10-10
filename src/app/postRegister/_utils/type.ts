@@ -1,5 +1,5 @@
 import {ArrayValue, PositionId, TechStackValueType} from "@/utils/type";
-import {recruitmentCountList} from "@/app/register/_utils/constant";
+import {recruitmentCountList} from "@/app/postRegister/_utils/constant";
 
 
 export type CreatePost = {

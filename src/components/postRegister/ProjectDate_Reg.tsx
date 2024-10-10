@@ -12,14 +12,12 @@ function ProjectDate_Reg() {
             <CalendarInput
                 id="startDate"
                 label="시작 날짜"
-                placeholder="날짜를 선택해주세요."
                 date={startDate}
                 setDate={(value) => setStartDate({startDate:value})}
             />
             <CalendarInput
                 id="endDate"
                 label="종료 날짜"
-                placeholder="날짜를 선택해주세요."
                 date={endDate}
                 setDate={(value) => setEndDate({endDate:value})}
             />

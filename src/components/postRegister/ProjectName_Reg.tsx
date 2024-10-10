@@ -10,7 +10,6 @@ function ProjectName_Reg() {
         <Input
             id="projectName"
             label="프로젝트 이름"
-            placeholder="이름을 입력해주세요."
             value={name}
             onChange={(e) => setProjectName({name: e.target.value})}
         />

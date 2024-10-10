@@ -1,5 +1,5 @@
 import {atom, selector, selectorFamily} from "recoil";
-import {CreatePost, CreatePostForm, CreatePostKey, CreateProject, CreateProjectKey} from "@/app/register/_utils/type";
+import {CreatePost, CreatePostForm, CreatePostKey, CreateProject, CreateProjectKey} from "@/app/postRegister/_utils/type";
 
 
 export const createPostStateStore = atom<CreatePost>({

@@ -4,7 +4,7 @@ import Image from "next/image";
 import {useRecoilState} from "recoil";
 import {postSearchValue} from "@/store/post/PostStateStore";
 
-const Search = () => {
+const TitleSearch = () => {
     const [searchValue, setSearchValue] = useRecoilState(postSearchValue);
     const [value, setValue] = useState(searchValue);
 
@@ -37,4 +37,4 @@ const Search = () => {
     );
 };
 
-export default Search;
+export default TitleSearch;

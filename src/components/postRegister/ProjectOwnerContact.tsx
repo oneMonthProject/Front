@@ -8,8 +8,7 @@ function ProjectOwnerContact() {
 
     return (
         <Input id="contact"
-               label="연락 방법"
-               placeholder="오픈 카톡 링크 / 이메일 / 구글 폼 주소"
+               label="연락 방법 (오픈 카톡 링크 / 이메일 / 구글 폼 주소)"
                value={contact}
                onChange={(e) => setContact({contact:e.target.value})}
         />

@@ -14,7 +14,6 @@ function ProjectTech() {
                 (item: readonly TechStackValueType[]) => setTechIds({technologyIds: item})
             }
             label="사용 스택"
-            placeholder="사용 스택을 선택해주세요."
         />
     );
 }

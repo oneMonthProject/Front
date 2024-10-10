@@ -7,7 +7,7 @@ import useSnackbar from "@/hooks/useSnackbar";
 import {useRecoilValue, useSetRecoilState} from "recoil";
 import {confirmModalState} from "@/store/CommonStateStore";
 import {selectRecruitPositionState} from "@/store/postDetail/PostDetailStateStore";
-import RecruitPositionDropdown from "@/components/postDetail/joinProject/RecruitPositionDropdown";
+import RecruitPositionDropdown from "@/components/postDetail/RecruitPositionDropdown";
 import {isEqual} from "lodash";
 import {numStrToBigInt} from "@/utils/common";
 
@@ -46,12 +46,12 @@ function JoinProject({projectId, boardInfo}: { projectId: bigint, boardInfo: Pos
 
 
     return (
-        <div className="flex justify-center gap-5 mt-5">
+        <section className="flex justify-center gap-5 mt-5">
             <RecruitPositionDropdown recruitPositions={boardInfo.boardPositions}/>
             <Button type="button" size="lg" onClickHandler={onConfirmHandler} disabled={isUpdating}>
                 참여하기
             </Button>
-        </div>
+        </section>
     );
 }
 
