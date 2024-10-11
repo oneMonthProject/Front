@@ -62,7 +62,7 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                     {
                         boardPositions.length > 0 &&
                         <section>
-                            <h4 id='recruit-card-position' className='sr-only'>모집 포지션</h4>
+                            <h4 id={`recruit-card-position-${boardId}`} className='sr-only'>모집 포지션</h4>
                             <article className="flex items-center gap-2 mt-5">
                                 <ul aria-labelledby='recruit-card-position'
                                     className='basis-[200px] mobile:basis-[180px] flex items-center'>
@@ -81,9 +81,10 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                                 {
                                     boardPositions.length > 3 &&
                                     <div className='flex items-center space-x-2'>
-                                        <span aria-label='외에'>
+                                        <div>
+                                            <span className='sr-only'>외 </span>
                                             <FaPlusCircle aria-hidden={true}/>
-                                        </span>
+                                        </div>
                                         <div
                                             className='pt-1 leading-none text-greyDarkblue/80 font-semibold'>
                                             {boardPositions.length - 3}
@@ -115,7 +116,8 @@ const PostCard = ({postInfo}: { postInfo: PostCardInfo }) => {
                             {
                                 technologyStacks.length > 5 &&
                                 <div className='flex items-center space-x-2'>
-                                    <div aria-label='외에'>
+                                    <div>
+                                        <span className='sr-only'>외 </span>
                                         <FaPlusCircle aria-hidden={true}/>
                                     </div>
                                     <div

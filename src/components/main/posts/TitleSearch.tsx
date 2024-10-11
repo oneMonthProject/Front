@@ -24,7 +24,7 @@ const TitleSearch = () => {
                 height={14}
             />
             <input
-                role='search'
+                role='searchbox'
                 placeholder='게시글 제목'
                 title='게시글 제목'
                 type="text"
