@@ -7,9 +7,9 @@ import Snackbar from "@/components/ui/Snackbar";
 import StaticDataProvider from "@/app/StaticDataProvider";
 
 export const metadata: Metadata = {
-    title: "trustcrews",
+    title: "TRUSTCREWS | 책임감 있는 사이드 프로젝트 팀, 팀원을 구하는 방법",
     description:
-        "성실한 개발자들과의 사이드 프로젝트",
+        "무책임한 팀원들로 흐지부지 되는 사이드 프로젝트는 이제 그만! TRUSTCREWS 에서 책임감 있는 사이드 프로젝트 팀원을 모집하고 TO-DO를 관리해보세요.",
 };
 
 
