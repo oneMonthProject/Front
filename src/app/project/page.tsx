@@ -13,10 +13,8 @@ function ProjectPage({searchParams: {projectId, userId}}: { searchParams: { proj
     const queryClient = useQueryClient();
 
     useEffect(() => {
-        return () => {
-            queryClient.invalidateQueries({queryKey: ['currentUserProjectAuth']});
-        }
-    }, [queryClient]);
+        queryClient.invalidateQueries({queryKey: ['currentUserProjectAuth', projectId]});
+    }, [queryClient, projectId]);
 
     return (
         <>

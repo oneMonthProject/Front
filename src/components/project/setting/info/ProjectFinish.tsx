@@ -14,8 +14,7 @@ function ProjectFinish({projectId}: { projectId: string }) {
             const res = await endProjectAPI(projectId);
             if (res.result === 'success') {
                 setSnackbar({show: true, type: 'SUCCESS', content: '프로젝트를 종료했습니다.'});
-                router.push("/");
-                router.refresh();
+                router.replace("/");
             } else if (res.result === 'fail') {
                 setSnackbar({show: true, type: 'ERROR', content: res.message});
             } else {
