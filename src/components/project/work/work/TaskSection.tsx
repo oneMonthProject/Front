@@ -20,16 +20,17 @@ function TaskSection({projectId}: { projectId: string }) {
 
     // milestoneActiveStateStore 초기화
     useEffect(() => {
-        if ( initActiveMilestone && activeMilestone.activeMilestoneIndex === null) {
+        if (initActiveMilestone && activeMilestone.activeMilestoneIndex === null) {
             setActiveMilestone({
                 activeMilestone: initActiveMilestone,
                 activeMilestoneId: initActiveMilestoneId,
                 activeMilestoneIndex: initActiveMilestone.index!
             });
         }
-    }, [ initActiveMilestone, activeMilestone.activeMilestoneIndex, setActiveMilestone, initActiveMilestoneId]);
+    }, [initActiveMilestone, activeMilestone.activeMilestoneIndex, setActiveMilestone, initActiveMilestoneId]);
 
-    if (isMilestoneFetching || activeMilestone.activeMilestoneIndex === null) return <TaskSectionSkeleton/>;
+    if (isMilestoneFetching) return <TaskSectionSkeleton/>;
+    if(milestoneList.length > 0 && activeMilestone.activeMilestoneIndex === null) return <TaskSectionSkeleton/>;
 
     return milestoneList.length > 0
         ? (
